@@ -10,6 +10,9 @@ const config: Config = {
     container: {
       center: true,
       padding: "1rem",
+      screens: {
+        xl: "1140px", // xl:max-w-7xl
+      }
     },
     extend: {},
   },

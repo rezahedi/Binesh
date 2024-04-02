@@ -6,7 +6,7 @@ export default async function Header() {
   // const session = await getServerSession(authOptions);
 
   return (
-    <header className='sticky top-0 flex flex-row items-center container xl:max-w-7xl'>
+    <header className='sticky top-0 flex flex-row items-center container'>
       <h1 className='uppercase font-semibold text-3xl'><span className='text-4xl'>🌐</span> Binesh</h1>
       <nav>
         <ul className='flex gap-1'>
