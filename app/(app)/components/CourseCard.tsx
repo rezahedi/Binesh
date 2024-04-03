@@ -24,7 +24,7 @@ export default function CourseCard({
         {category}
         {level && ` . LEVEL ${level}`}&nbsp;
       </p>
-      <h4 className="flex-1 text-lg font-semibold">
+      <h4 className="flex-1 text-lg font-semibold text-balance">
         {name}
       </h4>
       {progress>-1 &&
