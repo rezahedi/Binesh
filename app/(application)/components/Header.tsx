@@ -1,4 +1,4 @@
-import { StreakButton } from '@app/components'
+import { StreakButton } from '@application/components'
 // import { getServerSession } from "next-auth/next";
 // import { authOptions } from "@/lib/auth";
 

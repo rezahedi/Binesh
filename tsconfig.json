@@ -19,7 +19,7 @@
     ],
     "paths": {
       "@/*": ["./app/*"],
-      "@app/*": ["./app/(app)/*"],
+      "@application/*": ["./app/(application)/*"],
       "@admin/*": ["./app/(admin)/*"],
       "@website/*": ["./app/(website)/*"],
     }

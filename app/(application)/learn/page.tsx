@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { CourseCard, Streak } from "@app/components";
+import { CourseCard, Streak } from "@application/components";
 
 export default async function ApplicationPage() {
   const session = await getServerSession(authOptions);

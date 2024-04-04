@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Streak } from '@app/components'
+import { Streak } from '@application/components'
 
 export default function StreakButton() {
   const [modal, setModal] = useState(false)
