@@ -1,6 +1,39 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Image from "next/image"
+import Link from "next/link"
+import {
+  Home,
+  LineChart,
+  Package,
+  Package2,
+  PanelLeft,
+  Search,
+  Settings,
+  ShoppingCart,
+  Users2,
+} from "lucide-react"
+import { Input } from "@admin/components/ui/input"
+import { Button } from "@admin/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@admin/components/ui/dropdown-menu"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@admin/components/ui/breadcrumb"
+import { Sheet, SheetContent, SheetTrigger } from "@admin/components/ui/sheet"
+import ToggleSidebarBtn from "@admin/components/layout/ToggleSidebarBtn"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +49,183 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+          <div id='sidebarNav' className="group isOpen flex flex-row min-h-screen w-full bg-muted/40">
+            <aside className="w-14 lg:w-20 lg:group-[.isOpen]:w-56 border-r bg-background hidden md:block transition-all duration-200">
+              <div className="fixed w-14 lg:w-20 lg:group-[.isOpen]:w-56 inset-y-0 left-0 z-10 flex flex-col py-5 px-2 lg:px-5 transition-all duration-200 overflow-hidden">
+                <nav className="flex flex-col flex-1 gap-4">
+                  <Link
+                    href="#"
+                    className="flex size-9 md:w-full items-center p-2 gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+                  >
+                    <Package2 className="size-5 min-w-5" />
+                    <span className="hidden lg:group-[.isOpen]:block">Binesh</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <Home className="size-5 min-w-5" />
+                    <span className="hidden lg:group-[.isOpen]:block">Dashboard</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground"
+                  >
+                    <ShoppingCart className="size-5 min-w-5" />
+                    <span className="hidden lg:group-[.isOpen]:block">Orders</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <Package className="size-5 min-w-5" />
+                    <span className="hidden lg:group-[.isOpen]:block">Products</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <Users2 className="size-5 min-w-5" />
+                    <span className="hidden lg:group-[.isOpen]:block">Customers</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <LineChart className="size-5 min-w-5" />
+                    <span className="hidden lg:group-[.isOpen]:block">Analytics</span>
+                  </Link>
+                  <div className="flex-1"></div>
+                  <Link
+                    href="#"
+                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <Settings className="size-5 min-w-5" />
+                    <span className="hidden lg:group-[.isOpen]:block">Settings</span>
+                  </Link>
+                  <ToggleSidebarBtn className="hidden lg:flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground">
+                    <PanelLeft className="size-5 min-w-5" />
+                    <span className="hidden lg:group-[.isOpen]:block text-nowrap">Toggle Menu</span>
+                  </ToggleSidebarBtn>
+                </nav>
+              </div>
+            </aside>
+            <div className="flex-1 flex flex-col sm:gap-4 sm:py-4">
+              <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button size="icon" variant="outline" className="md:hidden">
+                      <PanelLeft className="size-5" />
+                      <span className="sr-only">Toggle Menu</span>
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="md:max-w-xs">
+                    <nav className="grid gap-6 text-lg font-medium">
+                      <Link
+                        href="#"
+                        className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+                      >
+                        <Package2 className="size-5 transition-all group-hover:scale-110" />
+                        <span className="sr-only">Acme Inc</span>
+                      </Link>
+                      <Link
+                        href="#"
+                        className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                      >
+                        <Home className="size-5" />
+                        Dashboard
+                      </Link>
+                      <Link
+                        href="#"
+                        className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                      >
+                        <ShoppingCart className="size-5" />
+                        Orders
+                      </Link>
+                      <Link
+                        href="#"
+                        className="flex items-center gap-4 px-2.5 text-foreground"
+                      >
+                        <Package className="size-5" />
+                        Products
+                      </Link>
+                      <Link
+                        href="#"
+                        className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                      >
+                        <Users2 className="size-5" />
+                        Customers
+                      </Link>
+                      <Link
+                        href="#"
+                        className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                      >
+                        <LineChart className="size-5" />
+                        Settings
+                      </Link>
+                    </nav>
+                  </SheetContent>
+                </Sheet>
+                <Breadcrumb className="hidden md:flex">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link href="#">Dashboard</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link href="#">Products</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>All Products</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+                <div className="relative ml-auto flex-1 md:grow-0">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="Search..."
+                    className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
+                  />
+                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="overflow-hidden rounded-full"
+                    >
+                      <Image
+                        src="/placeholder-user.jpg"
+                        width={36}
+                        height={36}
+                        alt="Avatar"
+                        className="overflow-hidden"
+                      />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuItem>Support</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </header>
+              <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+                {children}
+              </main>
+            </div>
+          </div>
+      </body>
     </html>
   );
 }
