@@ -49,6 +49,7 @@ model User {
   image           String?
   accounts        Account[]
   sessions        Session[]
+  projects        AdminUsers[]
   // user preferred timezone, used to calculate user's local time and convert all DB's UTC times to user's local time
   timezone        String   @default("America/Los_Angeles")
   // TODO: Handle daylight saving time transitions
@@ -64,6 +65,22 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Role {
+  admin
+  editor
+}
+
+model AdminUsers {
+  id          String @id @default(uuid())
+  role        Role
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+
+  @@unique([userId])
 }
 
 model Categories {
