@@ -1,8 +1,10 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaClient } from "@prisma/client"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { getSearchParams } from "@/utils/urls";
 // import EmailProvider, { SendVerificationRequestParams } from "next-auth/providers/email";
 // import { Resend } from 'resend';
 // import { recordEvent } from "@/app/lib/tinybird";
@@ -85,3 +87,35 @@ export const authOptions: NextAuthOptions = {
     }
   }*/
 };
+
+export interface Session {
+  user: {
+    email: string;
+    id: string;
+    name: string;
+    image?: string;
+  };
+}
+
+// Internal use only (for admin portal)
+interface WithAdminHandler {
+  ({
+    req,
+    params,
+    searchParams,
+  }: {
+    req: Request;
+    params: Record<string, string>;
+    searchParams: Record<string, string>;
+  }): Promise<Response>;
+}
+
+export const withAdmin =
+  (handler: WithAdminHandler) =>
+  async (req: Request, { params }: { params: Record<string, string> }) => {
+
+    // TODO: Check if user is admin
+
+    const searchParams = getSearchParams(req.url);
+    return handler({ req, params, searchParams });
+  };
