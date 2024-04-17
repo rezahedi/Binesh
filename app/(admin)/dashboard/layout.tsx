@@ -43,9 +43,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: any;
 }>) {
+  // get data for breadcrumbs
+
   return (
     <html lang="en">
       <body className={inter.className}>
