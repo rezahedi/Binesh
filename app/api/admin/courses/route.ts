@@ -11,7 +11,7 @@ export const GET = withAdmin(async ({ searchParams }) => {
     page,
   } = searchParams as {
     search?: string;
-    sort?: "createdAt" | "clicks" | "lastClicked";
+    sort?: "createdAt" | "updatedAt";
     page?: string;
   };
 
@@ -35,7 +35,7 @@ export const GET = withAdmin(async ({ searchParams }) => {
       orderBy: {
         [sort]: "desc",
       },
-      take: 100,
+      take: 10,
       ...(page && {
         skip: (parseInt(page) - 1) * 100,
       }),
