@@ -117,16 +117,11 @@ export default function Courses() {
                 <span className="sr-only">Image</span>
               </TableHead>
               <TableHead>Name</TableHead>
-              <TableHead className="hidden md:table-cell">
-                Category
-              </TableHead>
+              <TableHead className="hidden md:table-cell">Category</TableHead>
+              <TableHead className="hidden md:table-cell">Level</TableHead>
+              <TableHead className="hidden md:table-cell">Lessons</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="hidden md:table-cell">
-                Lessons
-              </TableHead>
-              <TableHead className="hidden md:table-cell">
-                Created at
-              </TableHead>
+              <TableHead className="hidden md:table-cell">Created at</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>
@@ -153,11 +148,14 @@ export default function Courses() {
                   {course.category.name}
                 </Link>
               </TableCell>
-              <TableCell>
-                <Badge variant="outline">{['Draft', 'Reviewing', 'Published', 'Archived'][Math.floor(Math.random() * 3)]}</Badge>
+              <TableCell className="hidden md:table-cell">
+                {course.level}
               </TableCell>
               <TableCell className="hidden md:table-cell">
                 {course.lessens}
+              </TableCell>
+              <TableCell>
+                <Badge variant="outline">{['Draft', 'Reviewing', 'Published', 'Archived'][Math.floor(Math.random() * 3)]}</Badge>
               </TableCell>
               <TableCell className="hidden md:table-cell">
                 {course.createdAt.toLocaleString()}
