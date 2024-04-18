@@ -36,15 +36,7 @@ import {
   TableHeader,
   TableRow,
 } from "@admin/components/ui/table"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@admin/components/ui/pagination"
+import PaginationBlock from "@admin/components/ui/PaginationBlock"
 
 export default function Courses() {
   const { courses, isValidating } = useCourses();
@@ -186,22 +178,7 @@ export default function Courses() {
         )}
       </CardContent>
       <CardFooter>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <PaginationBlock count={count} />
       </CardFooter>
     </Card>
     </div>
