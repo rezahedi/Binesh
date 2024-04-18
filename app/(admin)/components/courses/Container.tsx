@@ -36,6 +36,15 @@ import {
   TableHeader,
   TableRow,
 } from "@admin/components/ui/table"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@admin/components/ui/pagination"
 
 export default function Courses() {
   const { courses, isValidating } = useCourses();
@@ -92,6 +101,9 @@ export default function Courses() {
         <CardTitle>Courses</CardTitle>
         <CardDescription>
           Manage courses and view their lessons.
+          <span className="float-right text-xs text-muted-foreground">
+            Showing <b>1-10</b> of <b>{count}</b> products
+          </span>
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -176,10 +188,22 @@ export default function Courses() {
         )}
       </CardContent>
       <CardFooter>
-        <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>{count}</strong>{" "}
-          products
-        </div>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </CardFooter>
     </Card>
     </div>
