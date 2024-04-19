@@ -37,6 +37,7 @@ import {
   TableRow,
 } from "@admin/components/ui/table"
 import PaginationBlock from "@admin/components/ui/PaginationBlock"
+import FilterDropdown from "../ui/FilterDropdown";
 
 export default function Courses() {
   const { courses, isValidating } = useCourses();
@@ -46,38 +47,8 @@ export default function Courses() {
     <div className="space-y-2">
     <div className="flex items-center">
       <div className="flex items-center gap-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="h-8 gap-1">
-              <ListFilter className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Filter by Category
-              </span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuCheckboxItem checked>All categories</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Mathematics</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Biology</DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="h-8 gap-1">
-              <ListFilter className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Filter by Status
-              </span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuCheckboxItem checked>All Status</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Reviewing</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Published</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <FilterDropdown name="Filter by Category" defaultOption="All categories" options={["Mathematics", "Biology"]} />
+        <FilterDropdown name="Filter by Status" defaultOption="All Status" options={["Draft", "Reviewing", "Published", "Archived"]} />
       </div>
       <div className="ml-auto">
         <Button size="sm" className="h-8 gap-1">
