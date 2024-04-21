@@ -1,3 +1,4 @@
+import useRouterStuff from "@/hooks/use-router-stuff"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -19,6 +20,10 @@ type FilterDropdownProps = {
 }
 
 export default function FilterDropdown({name, defaultOption, options}: FilterDropdownProps) {
+  const { searchParams } = useRouterStuff()
+
+  // TODO: Get the current filter from the query string
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
