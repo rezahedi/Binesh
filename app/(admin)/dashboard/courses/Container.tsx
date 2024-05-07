@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from "react";
 import useCourses from "@/lib/swr/use-courses";
 import useCoursesCount from "@/lib/swr/use-courses-count";
 import Image from "next/image"
@@ -38,10 +39,17 @@ import {
 } from "@admin/components/ui/table"
 import PaginationBlock from "@admin/components/ui/PaginationBlock"
 import FilterDropdown from "@admin/components/ui/FilterDropdown";
+import dynamic from "next/dynamic";
+const AddEditModal = dynamic(() => import('@admin/dashboard/courses/AddEditModal'));
 
 export default function Courses() {
   const { courses, isValidating } = useCourses();
   const { data: count } = useCoursesCount();
+  const [showAddEditModal, setShowAddEditModal] = useState<boolean>(false);
+
+  const handleAddCourse = () => {
+    setShowAddEditModal(true)
+  }
 
   return (
     <div className="space-y-2">
@@ -51,12 +59,13 @@ export default function Courses() {
         <FilterDropdown name="Filter by Status" defaultOption="All Status" options={["Draft", "Reviewing", "Published", "Archived"]} />
       </div>
       <div className="ml-auto">
-        <Button size="sm" className="h-8 gap-1">
+        <Button size="sm" className="h-8 gap-1" onClick={handleAddCourse}>
           <PlusCircle className="h-3.5 w-3.5" />
           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
             Add Course
           </span>
         </Button>
+        {showAddEditModal && <AddEditModal setShowModal={setShowAddEditModal} />}
       </div>
     </div>
     <Card>
