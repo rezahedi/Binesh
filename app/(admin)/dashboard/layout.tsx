@@ -33,7 +33,7 @@ import {
   BreadcrumbSeparator,
 } from "@admin/components/ui/breadcrumb"
 import { Sheet, SheetContent, SheetTrigger } from "@admin/components/ui/sheet"
-import ToggleSidebarBtn from "@admin/components/layout/ToggleSidebarBtn"
+import Navbar from "@admin/components/layout/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,73 +54,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
           <div id='sidebarNav' className="group isOpen flex flex-row min-h-screen w-full bg-muted/40">
-            <aside className="w-14 lg:w-20 lg:group-[.isOpen]:w-56 border-r bg-background hidden md:block transition-all duration-200">
-              <div className="fixed w-14 lg:w-20 lg:group-[.isOpen]:w-56 inset-y-0 left-0 z-10 flex flex-col py-5 px-2 lg:px-5 transition-all duration-200 overflow-hidden">
-                <nav className="flex flex-col flex-1 gap-4">
-                  <Link
-                    href="#"
-                    className="flex size-9 md:w-full items-center p-2 gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-                  >
-                    <Package2 className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block">Binesh</span>
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <Home className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block">Dashboard</span>
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground"
-                  >
-                    <ShoppingCart className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block">Courses</span>
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <Package className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block">Categories</span>
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <Package className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block">Learning Paths</span>
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <LineChart className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block">Analytics</span>
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <Users2 className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block">Users</span>
-                  </Link>
-                  <div className="flex-1"></div>
-                  <Link
-                    href="#"
-                    className="flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <Settings className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block">Settings</span>
-                  </Link>
-                  <ToggleSidebarBtn className="hidden lg:flex gap-2 size-9 md:w-full items-center p-2 rounded-lg text-muted-foreground transition-colors hover:text-foreground">
-                    <PanelLeft className="size-5 min-w-5" />
-                    <span className="hidden lg:group-[.isOpen]:block text-nowrap">Toggle Menu</span>
-                  </ToggleSidebarBtn>
-                </nav>
-              </div>
-            </aside>
+            <Navbar />
             <div className="flex-1 flex flex-col sm:gap-4 sm:py-4">
               <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
                 <Sheet>
