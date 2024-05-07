@@ -37,7 +37,7 @@ import {
   TableRow,
 } from "@admin/components/ui/table"
 import PaginationBlock from "@admin/components/ui/PaginationBlock"
-import FilterDropdown from "../ui/FilterDropdown";
+import FilterDropdown from "@admin/components/ui/FilterDropdown";
 
 export default function Courses() {
   const { courses, isValidating } = useCourses();

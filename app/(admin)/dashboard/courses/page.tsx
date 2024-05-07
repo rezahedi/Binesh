@@ -1,4 +1,4 @@
-import Courses from "@admin/components/courses/Container"
+import Courses from "@admin/dashboard/courses/Container"
 
 export default function Page() {
   return (
