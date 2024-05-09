@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export const GET = withAdmin(async ({ searchParams }) => {
+  const ROWS_PER_PAGE = 10
   const {
     search,
     sort = "createdAt",
@@ -35,9 +36,9 @@ export const GET = withAdmin(async ({ searchParams }) => {
       orderBy: {
         [sort]: "desc",
       },
-      take: 10,
+      take: ROWS_PER_PAGE,
       ...(page && {
-        skip: (parseInt(page) - 1) * 100,
+        skip: (parseInt(page) - 1) * ROWS_PER_PAGE,
       }),
     }
   );
