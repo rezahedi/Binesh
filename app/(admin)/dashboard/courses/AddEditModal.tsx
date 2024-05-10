@@ -5,7 +5,7 @@ import { Input } from "@admin/components/ui/input"
 import { Textarea } from "@admin/components/ui/textarea"
 import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@admin/components/ui/select"
 import { Button } from "@admin/components/ui/button"
-import { UploadIcon } from "lucide-react"
+import { ImageIcon } from "lucide-react"
 
 export default function AddEditModal({
   setShowModal,
@@ -64,14 +64,14 @@ export default function AddEditModal({
                 <Input id="category" placeholder="Enter course category" required />
               </div>
             </div>
-            <div>
-              <div className="space-y-2 flex flex-col items-center justify-center p-6 aspect-square border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-gray-400">
-                <UploadIcon className="w-10 h-10 text-gray-400" />
-                <p className="text-gray-400 text-sm">Drop your image here.</p>
-                <Button size="sm" variant="outline">
-                  Select Files
-                  <input id="image" className="hidden" multiple type="file" />
-                </Button>
+            <div className='space-y-2'>
+              <div className="space-y-2">
+                <Label htmlFor="image">Image</Label>
+                <Input id="image" required type="file" />
+              </div>
+              <div className="space-y-2 flex flex-col items-center justify-center aspect-square border border-gray-200 rounded-lg">
+                <ImageIcon className="w-10 h-10 text-gray-400" />
+                <p className="text-gray-400 text-sm">Image will appear here.</p>
               </div>
             </div>
           </div>
