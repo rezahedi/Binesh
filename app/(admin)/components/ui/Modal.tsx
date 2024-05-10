@@ -7,14 +7,16 @@ import {
 
 export default function Modal({
   setShowModal,
+  className,
   children,
 }: {
-  setShowModal: Dispatch<SetStateAction<boolean>>
+  setShowModal: Dispatch<SetStateAction<boolean>>,
+  className?: string,
   children: React.ReactNode
 }) {
   return (
     <Dialog open onOpenChange={setShowModal}>
-      <DialogContent>
+      <DialogContent className={className}>
         {children}
       </DialogContent>
     </Dialog>
