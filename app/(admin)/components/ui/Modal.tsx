@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 import {
   Dialog,
   DialogContent,
-  DialogTrigger,
+  DialogOverlay,
 } from "@admin/components/ui/dialog"
 
 export default function Modal({
@@ -16,6 +16,7 @@ export default function Modal({
 }) {
   return (
     <Dialog open onOpenChange={setShowModal}>
+      <DialogOverlay className='animate-fade-in bg-white bg-opacity-50 backdrop-blur-md' />
       <DialogContent className={className}>
         {children}
       </DialogContent>
