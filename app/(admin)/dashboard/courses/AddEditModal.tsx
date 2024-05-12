@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import Modal from '@admin/components/ui/Modal'
 import { Label } from "@admin/components/ui/label"
 import { Input } from "@admin/components/ui/input"
@@ -13,6 +13,8 @@ export default function AddEditModal({
   setShowModal: Dispatch<SetStateAction<boolean>>
 }) {
 
+  const [image, setImage] = useState<string | null>(null)
+
   // Get form data
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -26,6 +28,16 @@ export default function AddEditModal({
     const slug = e.target.value.toLowerCase().replace(/\s/g, "-")
     const slugInput = document.getElementById("slug") as HTMLInputElement
     slugInput.value = slug
+  }
+
+  const setImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files
+      || e.target.files.length === 0
+      || !e.target.files[0].type.includes('image')
+    ) return
+
+    const file = e.target.files[0]
+    setImage(URL.createObjectURL(file))
   }
 
   return (
@@ -67,11 +79,17 @@ export default function AddEditModal({
             <div className='space-y-2'>
               <div className="space-y-2">
                 <Label htmlFor="image">Image</Label>
-                <Input id="image" required type="file" />
+                <Input id="image" required type="file" onChange={setImagePreview} />
               </div>
               <div className="space-y-2 flex flex-col items-center justify-center aspect-square border border-gray-200 rounded-lg">
-                <ImageIcon className="w-10 h-10 text-gray-400" />
-                <p className="text-gray-400 text-sm">Image will appear here.</p>
+                {image ? (
+                  <img src={image} alt="Course image" className="object-contain w-full h-full rounded-lg" />
+                ) : (
+                  <>
+                    <ImageIcon className="w-10 h-10 text-gray-400" />
+                    <p className="text-gray-400 text-sm">Image will appear here.</p>
+                  </>
+                )}
               </div>
             </div>
           </div>
