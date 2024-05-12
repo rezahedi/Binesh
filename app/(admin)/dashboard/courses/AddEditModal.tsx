@@ -30,6 +30,7 @@ export default function AddEditModal({
     slugInput.value = slug
   }
 
+  // Set image preview
   const setImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files
       || e.target.files.length === 0
@@ -52,34 +53,34 @@ export default function AddEditModal({
             <div>
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Enter course name" onChange={createSlug} required />
+                <Input id="name" name="name" placeholder="Enter course name" onChange={createSlug} required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="slug">Slug</Label>
-                <Input id="slug" placeholder="Enter course slug" />
+                <Input id="slug" name="slug" placeholder="Enter course slug" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="level">Level</Label>
-                <Select required>
+                <Select required name="level">
                   <SelectTrigger>
                     <SelectValue placeholder="Select level" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="beginner">Beginner</SelectItem>
-                    <SelectItem value="intermediate">Intermediate</SelectItem>
-                    <SelectItem value="advanced">Advanced</SelectItem>
+                    <SelectItem value="1">Beginner</SelectItem>
+                    <SelectItem value="2">Intermediate</SelectItem>
+                    <SelectItem value="3">Advanced</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
-                <Input id="category" placeholder="Enter course category" required />
+                <Input id="category" name='category' placeholder="Enter course category" required />
               </div>
             </div>
             <div className='space-y-2'>
               <div className="space-y-2">
                 <Label htmlFor="image">Image</Label>
-                <Input id="image" required type="file" onChange={setImagePreview} />
+                <Input id="image" name="image" required type="file" onChange={setImagePreview} />
               </div>
               <div className="space-y-2 flex flex-col items-center justify-center aspect-square border border-gray-200 rounded-lg">
                 {image ? (
@@ -95,7 +96,7 @@ export default function AddEditModal({
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
-            <Textarea id="description" placeholder="Enter course description" required />
+            <Textarea id="description" name="description" placeholder="Enter course description" required />
           </div>
           <Button className="w-full" type="submit">
             Create Course
