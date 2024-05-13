@@ -15,12 +15,19 @@ export default function AddEditModal({
 
   const [image, setImage] = useState<string | null>(null)
 
-  // Get form data
+  // Form Submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    // Get data
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries())
-    console.log(data)
+
+    // TODO: Validate and sanitize data
+    
+    // TODO: Send data to the server
+
+    // TODO: Refresh the courses list and close the modal
   }
 
   // Create slug
