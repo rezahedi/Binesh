@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react'
+import { useState, useMemo, Dispatch, SetStateAction } from 'react'
 import Modal from '@admin/components/ui/Modal'
 import { Label } from "@admin/components/ui/label"
 import { Input } from "@admin/components/ui/input"
@@ -6,18 +6,41 @@ import { Textarea } from "@admin/components/ui/textarea"
 import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@admin/components/ui/select"
 import { Button } from "@admin/components/ui/button"
 import { ImageIcon } from "lucide-react"
+import { CourseProps } from '@/lib/types'
 
 export default function AddEditModal({
   setShowModal,
+  props,
 }: {
-  setShowModal: Dispatch<SetStateAction<boolean>>
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+  props?:CourseProps
 }) {
 
-  const [image, setImage] = useState<string | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false);
+
+  const [data, setData] = useState<CourseProps>(
+    props || {
+      id: "",
+      name: "",
+      slug: "",
+      level: 1,
+      categoryID: "",
+      image: "",
+      description: "",
+      lessens: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  );
+
+  const { name, slug, level, categoryID, image, description } = data;
 
   // Form Submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    setSaving(true)
 
     // Get data
     const formData = new FormData(e.currentTarget)
@@ -28,6 +51,8 @@ export default function AddEditModal({
     // TODO: Send data to the server
 
     // TODO: Refresh the courses list and close the modal
+    
+    setSaving(false)
   }
 
   // Create slug
@@ -38,15 +63,29 @@ export default function AddEditModal({
   }
 
   // Set image preview
-  const setImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files
       || e.target.files.length === 0
       || !e.target.files[0].type.includes('image')
     ) return
 
     const file = e.target.files[0]
-    setImage(URL.createObjectURL(file))
+    setImagePreview(URL.createObjectURL(file))
   }
+
+  const saveDisabled = useMemo(
+    () =>
+      saving ||
+      !name ||
+      !slug ||
+      !level ||
+      !categoryID ||
+      !description ||
+      !image ||
+      (props &&
+        Object.entries(props).every(([key, value]) => data[key as keyof typeof data] === value)),
+    [props, data],
+  );
 
   return (
     <Modal setShowModal={setShowModal}>
@@ -60,15 +99,35 @@ export default function AddEditModal({
             <div>
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" name="name" placeholder="Enter course name" onChange={createSlug} required />
+                <Input
+                  id="name"
+                  name="name"
+                  value={name}
+                  onChange={(e) => {
+                    createSlug(e);
+                    setData({ ...data, name: e.target.value });
+                  }}
+                  placeholder="Enter course name" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="slug">Slug</Label>
-                <Input id="slug" name="slug" placeholder="Enter course slug" />
+                <Input
+                  id="slug"
+                  name="slug"
+                  value={slug}
+                  onChange={(e) => {
+                    setData({ ...data, slug: e.target.value });
+                  }}
+                  placeholder="Enter course slug" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="level">Level</Label>
-                <Select required name="level">
+                <Select
+                  required
+                  name="level"
+                  value={level.toString()}
+                  onValueChange={(value) => setData({ ...data, level: parseInt(value) })}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select level" />
                   </SelectTrigger>
@@ -81,17 +140,32 @@ export default function AddEditModal({
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
-                <Input id="category" name='category' placeholder="Enter course category" required />
+                <Input
+                  id="category"
+                  name='category'
+                  value={categoryID}
+                  onChange={(e) => {
+                    setData({ ...data, categoryID: e.target.value });
+                  }}
+                  placeholder="Enter course category" required />
               </div>
             </div>
             <div className='space-y-2'>
               <div className="space-y-2">
                 <Label htmlFor="image">Image</Label>
-                <Input id="image" name="image" required type="file" onChange={setImagePreview} />
+                <Input
+                  id="image"
+                  name="image"
+                  value={image}
+                  onChange={(e) => {
+                    handleImagePreview(e);
+                    setData({ ...data, image: e.target.value });
+                  }}
+                  required type="file" />
               </div>
               <div className="space-y-2 flex flex-col items-center justify-center aspect-square border border-gray-200 rounded-lg">
-                {image ? (
-                  <img src={image} alt="Course image" className="object-contain w-full h-full rounded-lg" />
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Course image" className="object-contain w-full h-full rounded-lg" />
                 ) : (
                   <>
                     <ImageIcon className="w-10 h-10 text-gray-400" />
@@ -103,9 +177,17 @@ export default function AddEditModal({
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
-            <Textarea id="description" name="description" placeholder="Enter course description" required />
+            <Textarea
+              id="description"
+              name="description"
+              value={description}
+              onChange={(e) => {
+                handleImagePreview(e);
+                setData({ ...data, description: e.target.value });
+              }}
+              placeholder="Enter course description" required />
           </div>
-          <Button className="w-full" type="submit">
+          <Button className="w-full" type="submit" disabled={saveDisabled}>
             Create Course
           </Button>
         </form>
