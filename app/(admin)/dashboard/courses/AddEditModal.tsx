@@ -56,10 +56,8 @@ export default function AddEditModal({
   }
 
   // Create slug
-  const createSlug = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const slug = e.target.value.toLowerCase().replace(/\s/g, "-")
-    const slugInput = document.getElementById("slug") as HTMLInputElement
-    slugInput.value = slug
+  const createSlug = (stringValue: string): string => {
+    return stringValue.toLowerCase().replace(/\s/g, "-")
   }
 
   // Set image preview
@@ -104,8 +102,11 @@ export default function AddEditModal({
                   name="name"
                   value={name}
                   onChange={(e) => {
-                    createSlug(e);
-                    setData({ ...data, name: e.target.value });
+                    let newSlug = slug
+                    // Check if slug manually doesn't changed
+                    if(slug == '' || slug === createSlug(name))
+                      newSlug = createSlug(e.target.value)
+                    setData({ ...data, name: e.target.value, slug: newSlug});
                   }}
                   placeholder="Enter course name" required />
               </div>
@@ -116,7 +117,9 @@ export default function AddEditModal({
                   name="slug"
                   value={slug}
                   onChange={(e) => {
-                    setData({ ...data, slug: e.target.value });
+
+                    if(name)
+                    setData({ ...data, slug: createSlug(e.target.value) });
                   }}
                   placeholder="Enter course slug" />
               </div>
