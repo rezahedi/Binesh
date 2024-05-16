@@ -45,3 +45,23 @@ export const GET = withAdmin(async ({ searchParams }) => {
 
   return NextResponse.json(response);
 });
+
+// TODO: This endpoint not checked yet
+
+export const POST = withAdmin(async ({ req }) => {
+  const { name, slug, level, categoryID, image, description } = await req.json();
+
+  const response = await prisma.courses.create({
+    data: {
+      name,
+      slug,
+      level,
+      lessens: 0,
+      categoryID,
+      image,
+      description,
+    },
+  });
+
+  return NextResponse.json(response);
+});
