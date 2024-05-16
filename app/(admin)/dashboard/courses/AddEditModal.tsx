@@ -7,6 +7,8 @@ import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@
 import { Button } from "@admin/components/ui/button"
 import { ImageIcon } from "lucide-react"
 import { CourseProps } from '@/lib/types'
+import { mutate } from 'swr'
+import { toast } from "sonner"
 
 export default function AddEditModal({
   setShowModal,
@@ -34,7 +36,7 @@ export default function AddEditModal({
     },
   );
 
-  const { name, slug, level, categoryID, image, description } = data;
+  const { id, name, slug, level, categoryID, image, description } = data;
 
   // Form Submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,11 +50,30 @@ export default function AddEditModal({
 
     // TODO: Validate and sanitize data
     
-    // TODO: Send data to the server
+    // Send data to the server
+    fetch(endpoint.url, {
+      method: endpoint.method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(async (res) => {
+      if(res.status === 200 || res.status === 201) {
+        await mutate(
+                (key) =>
+                  typeof key === "string" && key.startsWith("/api/admin/courses"),
+                undefined,
+                { revalidate: true },
+              ),
+        toast.success(endpoint.successMessage);
+        setShowModal(false)
+      } else {
+        const error = await res.json()
+        toast.error(error.message)
+      }
 
-    // TODO: Refresh the courses list and close the modal
-    
-    setSaving(false)
+      setSaving(false)
+    });
   }
 
   // Create slug
@@ -83,6 +104,22 @@ export default function AddEditModal({
       (props &&
         Object.entries(props).every(([key, value]) => data[key as keyof typeof data] === value)),
     [props, data],
+  );
+
+  const endpoint = useMemo(
+    () =>
+      id
+        ? {
+            method: "PATCH",
+            url: `/api/admin/courses/${id}`,
+            successMessage: "Successfully updated the course!",
+          }
+        : {
+            method: "POST",
+            url: `/api/admin/courses`,
+            successMessage: "Successfully added the new course!",
+          },
+    [id],
   );
 
   return (
@@ -185,7 +222,6 @@ export default function AddEditModal({
               name="description"
               value={description}
               onChange={(e) => {
-                handleImagePreview(e);
                 setData({ ...data, description: e.target.value });
               }}
               placeholder="Enter course description" required />
