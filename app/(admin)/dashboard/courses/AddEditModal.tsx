@@ -51,6 +51,7 @@ export default function AddEditModal({
     // TODO: Validate and sanitize data
     
     // Send data to the server
+    console.log('fetch:', endpoint.url, endpoint.method, data)
     fetch(endpoint.url, {
       method: endpoint.method,
       headers: {
@@ -58,6 +59,7 @@ export default function AddEditModal({
       },
       body: JSON.stringify(data)
     }).then(async (res) => {
+      console.log('res:', res)
       if(res.status === 200 || res.status === 201) {
         await mutate(
                 (key) =>
