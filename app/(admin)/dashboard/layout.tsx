@@ -34,6 +34,7 @@ import {
 } from "@admin/components/ui/breadcrumb"
 import { Sheet, SheetContent, SheetTrigger } from "@admin/components/ui/sheet"
 import Navbar from "@admin/components/layout/Navbar";
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +54,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Toaster />
           <div id='sidebarNav' className="group isOpen flex flex-row min-h-screen w-full bg-muted/40">
             <Navbar />
             <div className="flex-1 flex flex-col sm:gap-4 sm:py-4">
