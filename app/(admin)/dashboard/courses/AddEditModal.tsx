@@ -10,7 +10,7 @@ import { CourseProps } from '@/lib/types'
 import { mutate } from 'swr'
 import { toast } from "sonner"
 
-export default function AddEditModal({
+export default async function AddEditModal({
   setShowModal,
   props,
 }: {
@@ -94,6 +94,7 @@ export default function AddEditModal({
     setImagePreview(URL.createObjectURL(file))
   }
 
+  // Check required input values to enable save button
   const saveDisabled = useMemo(
     () =>
       saving ||
@@ -108,6 +109,7 @@ export default function AddEditModal({
     [props, data],
   );
 
+  // Set endpoint
   const endpoint = useMemo(
     () =>
       id
@@ -123,6 +125,9 @@ export default function AddEditModal({
           },
     [id],
   );
+
+  // Fetch categories for select
+  // const categories = await fetch("/api/admin/categories");
 
   return (
     <Modal setShowModal={setShowModal}>
