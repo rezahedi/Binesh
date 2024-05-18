@@ -10,7 +10,7 @@ import { CourseProps } from '@/lib/types'
 import { mutate } from 'swr'
 import { toast } from "sonner"
 
-export default async function AddEditModal({
+export default function AddEditModal({
   setShowModal,
   props,
 }: {
