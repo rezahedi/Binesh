@@ -2,7 +2,7 @@ import useRouterStuff from "@/hooks/use-router-stuff";
 import { fetcher } from "@/utils/fetcher";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { CourseProps, CategoryProps } from "../types";
+import { CourseProps, CategoryProps } from "@/lib/types";
 
 export default function useCourses() {
   const { getQueryString } = useRouterStuff();
