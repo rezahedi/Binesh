@@ -1,13 +1,5 @@
-const fakeCourseData = {
-  name: "Programming with Python",
-  description: "Learn the basics of programming with Python",
-  img: "https://ds055uzetaobb.cloudfront.net/category-images/Home_LLP_Illustrations_CS_2x-G6468Y.png",
-  lessons: 23,
-  slug: "programming-with-python",
-  category: "CS & Programming",
-  level: "2",
-  progress: 15
-}
+import { CourseProps } from '@/lib/types'
+
 const fakeLessonsData = [
   {
     name: "Generalize",
@@ -29,10 +21,19 @@ const fakeLessonsData = [
   }
 ]
 
-export default function page(
+export default async function page(
   { params }:
   { params: { courseSlug: string } }
 ) {
+  
+  // fetch courses from /api/admin/courses
+  let course: CourseProps = {} as CourseProps
+  await fetch('http://localhost:3000/api/admin/courses/' + params.courseSlug, { method: 'GET' })
+    .then(async res => {
+      course = await res.json()
+    })
+  console.log('course details:', course)
+
   return (
     <div className="container flex gap-10 flex-col md:flex-row">
       <div className="flex-1">
@@ -42,17 +43,17 @@ export default function page(
 
           <div className="md:mt-10 md:p-8 md:border border-gray-200 rounded-lg">
             <img
-              src={fakeCourseData.img} alt={fakeCourseData.name}
+              src={course.image} alt={course.name}
               width={96} height={96} loading="lazy"
               className="float-right md:float-none"
             />
             <h1 className="md:my-6 text-2xl md:text-4xl font-bold text-balance">
-              Course: {fakeCourseData.name}
+              Course: {course.name}
             </h1>
             <p className="my-3 md:my-6 text-gray-700 text-balance">
-              {fakeCourseData.description}
+              {course.description}
             </p>
-            <b>{fakeCourseData.lessons} Lessons</b>
+            <b>{course.lessens} Lessons</b>
           </div>
 
         </div>
