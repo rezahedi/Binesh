@@ -28,7 +28,7 @@ export default async function page(
 ) {
   
   // fetch courses from /api/admin/courses
-  let course: CourseProps = {} as CourseProps
+  let course: CourseProps | null = null
   await fetch('http://localhost:3000/api/admin/courses/' + params.courseSlug, { method: 'GET' })
     .then(async res => {
       if(res.status === 200) {
@@ -36,6 +36,7 @@ export default async function page(
       }
     })
 
+  console.log('course:', course)
   if(!course) {
     return notFound()
   }
