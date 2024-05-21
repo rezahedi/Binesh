@@ -1,5 +1,5 @@
+import { CourseCard } from '@application/components'
 import { CourseProps } from '@/lib/types'
-import Link from 'next/link'
 
 export default async function Page() {
   
@@ -13,9 +13,11 @@ export default async function Page() {
   return (
     <div className="container">
       <h3 className="font-semibold text-xl">Courses</h3>
-      {courses.map((course) => (
-        <div key={course.id}><Link href={`./courses/${course.slug}`}>{course.name}</Link></div>
-      ))}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {courses.map((course) => (
+          <CourseCard key={course.id} {...course} progress={Math.random()*100} />
+        ))}
+      </div>
     </div>
   )
 }
