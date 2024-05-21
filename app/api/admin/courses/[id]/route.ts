@@ -15,6 +15,10 @@ export const GET = withAdmin(async ({ params }) => {
       where: { slug },
     }
   );
+  
+  // If course doesn't exists
+  if(!response)
+    return NextResponse.json({ message: `Course not found` }, { status: 404 });
 
   return NextResponse.json(response);
 });
