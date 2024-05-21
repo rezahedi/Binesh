@@ -13,6 +13,9 @@ export const GET = withAdmin(async ({ params }) => {
   const response = await prisma.courses.findFirst(
     {
       where: { slug },
+      include: {
+        category: true,
+      },
     }
   );
   
