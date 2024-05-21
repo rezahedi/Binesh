@@ -190,7 +190,7 @@ export default function AddEditModal({
                   setData={(value) => {
                     setData({ ...data, categoryID: value });
                   }}
-                />
+                  required />
               </div>
             </div>
             <div className='space-y-2'>

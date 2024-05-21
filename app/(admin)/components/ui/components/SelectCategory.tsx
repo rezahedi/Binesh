@@ -41,10 +41,12 @@ const items = [
 
 export default function SelectCategory({
   value,
-  setData
+  setData,
+  required=false,
 }: {
   value: string,
-  setData: (value: string) => void
+  setData: (value: string) => void,
+  required?: boolean,
 }) {
   const [open, setOpen] = useState(false)
   const { categories } = useCategories()
@@ -66,7 +68,7 @@ export default function SelectCategory({
       </PopoverTrigger>
       <PopoverContent className="p-0">
         <Command>
-          <CommandInput name="test" placeholder="Search category..." />
+          <CommandInput name="test" placeholder="Search category..." required={required} />
           <CommandList>
             <CommandEmpty>No category found.</CommandEmpty>
             {categories && categories.map((item) => (
