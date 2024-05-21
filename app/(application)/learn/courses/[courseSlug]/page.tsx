@@ -1,4 +1,5 @@
 import { CourseProps } from '@/lib/types'
+import { notFound } from 'next/navigation'
 
 const fakeLessonsData = [
   {
@@ -30,9 +31,14 @@ export default async function page(
   let course: CourseProps = {} as CourseProps
   await fetch('http://localhost:3000/api/admin/courses/' + params.courseSlug, { method: 'GET' })
     .then(async res => {
-      course = await res.json()
+      if(res.status === 200) {
+        course = await res.json()
+      }
     })
-  console.log('course details:', course)
+
+  if(!course) {
+    return notFound()
+  }
 
   return (
     <div className="container flex gap-10 flex-col md:flex-row">
