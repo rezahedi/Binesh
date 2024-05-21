@@ -9,6 +9,7 @@ export default function CourseCard(props: any) {
     image,
     level='',
     categoryID,
+    category,
     progress=-1,
     ...rest
   } = props;
@@ -24,7 +25,7 @@ export default function CourseCard(props: any) {
         flex flex-col gap-2">
       <img src={image} alt={name} width={96} height={96} loading="lazy" className="pb-1" />
       <p className="uppercase text-xs font-medium text-orange-600">
-        {categoryID}
+        {category.name}
         {level && ` . LEVEL ${level}`}&nbsp;
       </p>
       <h4 className="flex-1 text-lg font-semibold text-balance">
