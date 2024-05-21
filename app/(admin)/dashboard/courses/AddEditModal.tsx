@@ -138,7 +138,7 @@ export default function AddEditModal({
           <div className="grid grid-cols-2 gap-4">
             <div>
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">Name *</Label>
                 <Input
                   id="name"
                   name="name"
@@ -153,7 +153,7 @@ export default function AddEditModal({
                   placeholder="Enter course name" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="slug">Slug</Label>
+                <Label htmlFor="slug">Slug *</Label>
                 <Input
                   id="slug"
                   name="slug"
@@ -166,7 +166,7 @@ export default function AddEditModal({
                   placeholder="Enter course slug" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="level">Level</Label>
+                <Label htmlFor="level">Level *</Label>
                 <Select
                   required
                   name="level"
@@ -184,7 +184,7 @@ export default function AddEditModal({
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="category">Category</Label>
+                <Label htmlFor="category">Category *</Label>
                 <SelectCategory
                   value={categoryID}
                   setData={(value) => {
@@ -195,7 +195,7 @@ export default function AddEditModal({
             </div>
             <div className='space-y-2'>
               <div className="space-y-2">
-                <Label htmlFor="image">Image</Label>
+                <Label htmlFor="image">Image *</Label>
                 <Input
                   id="image"
                   name="image"
@@ -219,7 +219,7 @@ export default function AddEditModal({
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">Description *</Label>
             <Textarea
               id="description"
               name="description"
