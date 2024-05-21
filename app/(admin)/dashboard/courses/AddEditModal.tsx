@@ -9,6 +9,7 @@ import { ImageIcon } from "lucide-react"
 import { CourseProps } from '@/lib/types'
 import { mutate } from 'swr'
 import { toast } from "sonner"
+import SelectCategory from '@admin/components/ui/components/SelectCategory'
 
 export default function AddEditModal({
   setShowModal,
@@ -126,9 +127,6 @@ export default function AddEditModal({
     [id],
   );
 
-  // Fetch categories for select
-  // const categories = await fetch("/api/admin/categories");
-
   return (
     <Modal setShowModal={setShowModal}>
       <div className="mx-auto max-w-2xl space-y-6">
@@ -187,14 +185,12 @@ export default function AddEditModal({
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
-                <Input
-                  id="category"
-                  name='category'
+                <SelectCategory
                   value={categoryID}
-                  onChange={(e) => {
-                    setData({ ...data, categoryID: e.target.value });
+                  setData={(value) => {
+                    setData({ ...data, categoryID: value });
                   }}
-                  placeholder="Enter course category" required />
+                />
               </div>
             </div>
             <div className='space-y-2'>
