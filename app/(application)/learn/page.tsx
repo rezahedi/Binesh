@@ -7,68 +7,76 @@ export default async function ApplicationPage() {
 
   const fakeCourses01 = [
     {
-      img: "https://ds055uzetaobb.cloudfront.net/category-images/Home_LLP_Illustrations_CS_2x-G6468Y.png",
+      image: "https://ds055uzetaobb.cloudfront.net/category-images/Home_LLP_Illustrations_CS_2x-G6468Y.png",
       name: "Programming with Python",
       slug: "programming-with-python",
       category: "CS & Programming",
+      description: "",
       level: "2",
       progress: 15
     },
     {
-      img: "https://ds055uzetaobb.cloudfront.net/category-images/Home_LLP_Illustrations_Science_2x-pzKyWT.png",
+      image: "https://ds055uzetaobb.cloudfront.net/category-images/Home_LLP_Illustrations_Science_2x-pzKyWT.png",
       name: "Scientific Thinking",
       slug: "scientific-thinking",
       category: "Science",
+      description: "",
       level: "1",
       progress: 34
     },
     {
-      img: "https://ds055uzetaobb.cloudfront.net/chapter/logic-HzWHci.png",
+      image: "https://ds055uzetaobb.cloudfront.net/chapter/logic-HzWHci.png",
       name: "Logic",
       slug: "logic",
       category: "Mathematics",
+      description: "",
       level: "3",
       progress: 67
     },
     {
-      img: "https://ds055uzetaobb.cloudfront.net/chapter/search_engines-7eREls.png",
+      image: "https://ds055uzetaobb.cloudfront.net/chapter/search_engines-7eREls.png",
       name: "Search Engines",
       slug: "search-engines",
       category: "Computer Science",
+      description: "",
       level: "2",
       progress: -1,
     }
   ];
   const fakeCourses02 = [
     {
-      img: "https://ds055uzetaobb.cloudfront.net/brioche/chapter/CreativeCoding-0UXjZM.png",
+      image: "https://ds055uzetaobb.cloudfront.net/brioche/chapter/CreativeCoding-0UXjZM.png",
       name: "Creative Coding",
       slug: "creative-coding",
       category: "CS & Programming",
+      description: "",
       level: "2",
       progress: -1,
     },
     {
-      img: "https://ds055uzetaobb.cloudfront.net/brioche/chapter/Unlocking_Rental_Value_on_Airbnb-q5fgR6.png",
+      image: "https://ds055uzetaobb.cloudfront.net/brioche/chapter/Unlocking_Rental_Value_on_Airbnb-q5fgR6.png",
       name: "Case Study: Unlocking Rental Value on Airbnb",
       slug: "case-study-unlocking-rental-value-on-airbnb",
       category: "Data Analysis",
+      description: "",
       level: "31",
       progress: -1,
     },
     {
-      img: "https://ds055uzetaobb.cloudfront.net/brioche/chapter/Going_Viral_on_X-5fajSI.png",
+      image: "https://ds055uzetaobb.cloudfront.net/brioche/chapter/Going_Viral_on_X-5fajSI.png",
       name: "Going Viral on X",
       slug: "going-viral-on-x",
       category: "Data Analysis",
+      description: "",
       level: "2",
       progress: 3
     },
     {
-      img: "https://ds055uzetaobb.cloudfront.net/brioche/chapter/Group_22039-1OE8tE.png",
+      image: "https://ds055uzetaobb.cloudfront.net/brioche/chapter/Group_22039-1OE8tE.png",
       name: "Modeling with Multiple Variables",
       slug: "modeling-with-multiple-variables",
       category: "Economics",
+      description: "",
       level: "5",
       progress: 31
     }

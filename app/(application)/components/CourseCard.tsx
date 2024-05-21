@@ -1,14 +1,16 @@
 
-export default function CourseCard({
-  img, name, slug, category, level='', progress=-1
-}: {
-  img: string,
-  name: string,
-  slug: string,
-  category?: string,
-  level?: string,
-  progress: number
-}) {
+export default function CourseCard(props: any) {
+  let {
+    id,
+    name,
+    description,
+    slug,
+    image,
+    level='',
+    categoryID,
+    progress=-1,
+    ...rest
+  } = props;
 
   if (progress>100) progress = 100;
 
@@ -19,9 +21,9 @@ export default function CourseCard({
         hover:shadow-[4px_4px_0_rgba(0,0,0,0.1)] hover:border-black
         transition-all duration-300
         flex flex-col gap-2">
-      <img src={img} alt={name} width={96} height={96} loading="lazy" className="pb-1" />
+      <img src={image} alt={name} width={96} height={96} loading="lazy" className="pb-1" />
       <p className="uppercase text-xs font-medium text-orange-600">
-        {category}
+        {categoryID}
         {level && ` . LEVEL ${level}`}&nbsp;
       </p>
       <h4 className="flex-1 text-lg font-semibold text-balance">
