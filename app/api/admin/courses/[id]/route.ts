@@ -6,6 +6,19 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
+
+export const GET = withAdmin(async ({ params }) => {
+  const { id: slug } = params;
+
+  const response = await prisma.courses.findFirst(
+    {
+      where: { slug },
+    }
+  );
+
+  return NextResponse.json(response);
+});
+
 export const PATCH = withAdmin(async ({ req, params }) => {
   const { id } = params;
   const { name, slug, level, categoryID, image, description } = await req.json();
@@ -40,9 +53,9 @@ export const PATCH = withAdmin(async ({ req, params }) => {
 
     return NextResponse.json(response);
   } catch (error) {
-    if (error.code === "P2002") {
-      throw new Error(`Course with name ${name} already exists`);
-    }
+    // if (error && error.code === "P2002") {
+    //   throw new Error(`Course with name ${name} already exists`);
+    // }
 
     throw error;
   }
