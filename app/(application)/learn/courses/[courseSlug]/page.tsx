@@ -1,6 +1,14 @@
 import { CourseProps, LessonsProps } from '@/lib/types'
 import { notFound } from 'next/navigation'
 import { Footprints, MapPin } from 'lucide-react'
+import { tree } from 'next/dist/build/templates/app-page'
+
+const treeClasses = [
+  'self-center',
+  'self-start',
+  'self-center',
+  'self-end',
+]
 
 export default async function page(
   { params }:
@@ -8,7 +16,7 @@ export default async function page(
 ) {
   
   // fetch courses from /api/admin/courses
-  let course: CourseProps = await fetch('http://localhost:3000/api/admin/courses/' + params.courseSlug, { method: 'GET' })
+  const course: CourseProps = await fetch('http://localhost:3000/api/admin/courses/' + params.courseSlug, { method: 'GET' })
     .then(async res => {
       if(res.status === 200) {
         return await res.json()
@@ -58,17 +66,22 @@ export default async function page(
 
       <div className="flex-1 py-24 h-[2000px]" style={{backgroundImage: "url('/assets/lesson-path-bg-pattern.svg')", backgroundPositionY: "0", backgroundSize: "100% auto", backgroundRepeat: "repeat"}}>
         <b>Lessons:</b>
-        {lessons.map((lesson) => (
-          <div key={lesson.id}>
-            <button className="group rotate-45 relative inline-flex size-12 items-center justify-center overflow-hidden rounded-full border border-[#a30036] p-6 font-medium text-[#a30036] transition-all duration-100 shadow-[5px_5px_#a30036] hover:translate-y-[3px] hover:shadow-[3px_3px_#a30036] active:translate-y-[7px] active:shadow-[0px_0px_#a30036]">
-              <span className='-rotate-45'>
-                <Footprints />
+        <div className='flex flex-col'>
+          {lessons.map((lesson, index) => (
+            <div key={lesson.id} className={`p-8 w-fit ${treeClasses[index%4]} flex flex-col gap-3 items-center`}>
+              <button className="group rotate-45 relative inline-flex size-12 items-center justify-center overflow-hidden rounded-full border border-[#a30036] p-6 font-medium text-[#a30036] transition-all duration-100 shadow-[5px_5px_#a30036] hover:translate-y-[3px] hover:shadow-[3px_3px_#a30036] active:translate-y-[7px] active:shadow-[0px_0px_#a30036]">
+                <span className='-rotate-45'>
+                  <Footprints />
+                </span>
+              </button>
+              <span className='text-sm max-w-36 text-balance text-center'>
+                {lesson.name}
               </span>
-            </button>
-            <a href={`./${params.courseSlug}/${lesson.slug}`}>{lesson.name}</a>
-            <p>{lesson.description}</p>
-          </div>
-        ))}
+              {/* <a href={`./${params.courseSlug}/${lesson.slug}`}>{lesson.name}</a>
+              <p>{lesson.description}</p> */}
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>
