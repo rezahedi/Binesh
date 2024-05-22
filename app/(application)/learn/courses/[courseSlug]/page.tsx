@@ -1,5 +1,6 @@
 import { CourseProps, LessonsProps } from '@/lib/types'
 import { notFound } from 'next/navigation'
+import { Footprints, MapPin } from 'lucide-react'
 
 export default async function page(
   { params }:
@@ -59,6 +60,11 @@ export default async function page(
         <b>Lessons:</b>
         {lessons.map((lesson) => (
           <div key={lesson.id}>
+            <button className="group rotate-45 relative inline-flex size-12 items-center justify-center overflow-hidden rounded-full border border-[#a30036] p-6 font-medium text-[#a30036] transition-all duration-100 shadow-[5px_5px_#a30036] hover:translate-y-[3px] hover:shadow-[3px_3px_#a30036] active:translate-y-[7px] active:shadow-[0px_0px_#a30036]">
+              <span className='-rotate-45'>
+                <Footprints />
+              </span>
+            </button>
             <a href={`./${params.courseSlug}/${lesson.slug}`}>{lesson.name}</a>
             <p>{lesson.description}</p>
           </div>
