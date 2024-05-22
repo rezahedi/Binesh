@@ -1,7 +1,7 @@
 import { CourseProps, LessonsProps } from '@/lib/types'
 import { notFound } from 'next/navigation'
 import { Footprints, MapPin } from 'lucide-react'
-import { tree } from 'next/dist/build/templates/app-page'
+import { CenterLeft, LeftCenter, CenterRight, RightCenter } from './components'
 
 const treeClasses = [
   'self-center',
@@ -79,6 +79,10 @@ export default async function page(
               </span>
               {/* <a href={`./${params.courseSlug}/${lesson.slug}`}>{lesson.name}</a>
               <p>{lesson.description}</p> */}
+              {index%4 === 0 && <CenterLeft />}
+              {index%4 === 1 && <LeftCenter />}
+              {index%4 === 2 && <CenterRight />}
+              {index%4 === 3 && <RightCenter />}
             </div>
           ))}
         </div>
