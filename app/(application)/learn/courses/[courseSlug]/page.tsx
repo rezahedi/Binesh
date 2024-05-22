@@ -1,26 +1,5 @@
-import { CourseProps } from '@/lib/types'
+import { CourseProps, LessonsProps } from '@/lib/types'
 import { notFound } from 'next/navigation'
-
-const fakeLessonsData = [
-  {
-    name: "Generalize",
-    slug: "introduction",
-    description: "Algebra was never meant to be memorized. Learn a new way to see.",
-    progress: 100
-  },
-  {
-    name: "Rewrite, Rethink, Redraw",
-    slug: "fractions",
-    description: "Explore fractal patterns and compound interest in the mathematics of fractions.",
-    progress: 0
-  },
-  {
-    name: "Thinking Forwards and Backwards",
-    slug: "toggle-tag-mechanic-3",
-    description: "To solve new problems, you need to be able to think in several directions.",
-    progress: -1
-  }
-]
 
 export default async function page(
   { params }:
@@ -36,6 +15,18 @@ export default async function page(
     })
 
   if( !course || !course.id ) {
+    return notFound()
+  }
+
+  // fetch lessons from /api/admin/courses/[courseSlug]/lessons
+  const lessons: LessonsProps[] = await fetch('http://localhost:3000/api/admin/courses/' + params.courseSlug + '/lessons', { method: 'GET' })
+    .then(async res => {
+      if(res.status === 200) {
+        return await res.json()
+      }
+    })
+
+  if( !lessons || lessons.length === 0 ) {
     return notFound()
   }
 
@@ -66,9 +57,10 @@ export default async function page(
 
       <div className="flex-1 py-24 h-[2000px]" style={{backgroundImage: "url('/assets/lesson-path-bg-pattern.svg')", backgroundPositionY: "0", backgroundSize: "100% auto", backgroundRepeat: "repeat"}}>
         <b>Lessons:</b>
-        {fakeLessonsData.map((lesson, index) => (
-          <div key={index}>
+        {lessons.map((lesson) => (
+          <div key={lesson.id}>
             <a href={`./${params.courseSlug}/${lesson.slug}`}>{lesson.name}</a>
+            <p>{lesson.description}</p>
           </div>
         ))}
       </div>
