@@ -1,6 +1,7 @@
-import { Courses, Categories } from "@prisma/client";
+import { Courses, Categories, Lessons } from "@prisma/client";
 
 export type CourseProps = Courses;
+export type LessonsProps = Lessons;
 export type CategoryProps = Categories;
 
 export const roles = ["admin", "editor"] as const;
