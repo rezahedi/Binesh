@@ -41,7 +41,8 @@ export default function LessonCard(
             <p>
               {lesson.description}
             </p>
-            <button className='mt-2 font-semibold rounded-full text-orange-600 border-2 border-orange-600 p-2 w-32'>
+            <button className='mt-2 font-semibold rounded-full text-orange-600 border-2 border-orange-300 py-2 px-8 hover:border-orange-600 transition active:scale-95
+            '>
               Start lesson
             </button>
           </PopoverContent>
