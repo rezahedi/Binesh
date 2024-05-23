@@ -63,7 +63,7 @@ export default async function page(
         backgroundRepeat: "repeat"
       }}>
         <b>Lessons:</b>
-        <div className='flex flex-col'>
+        <div className='flex flex-col w-[454px] mx-auto'>
           {lessons.map((lesson, index) => (
             <LessonCard key={lesson.id} lesson={lesson} index={index} />
           ))}
