@@ -6,9 +6,11 @@ export default async function page(
   { params }:
   { params: { courseSlug: string } }
 ) {
+
+  const { courseSlug } = params
   
   // fetch courses from /api/admin/courses
-  const course: CourseProps = await fetch('http://localhost:3000/api/admin/courses/' + params.courseSlug, { method: 'GET' })
+  const course: CourseProps = await fetch('http://localhost:3000/api/admin/courses/' + courseSlug, { method: 'GET' })
     .then(async res => {
       if(res.status === 200) {
         return await res.json()
@@ -20,7 +22,7 @@ export default async function page(
   }
 
   // fetch lessons from /api/admin/courses/[courseSlug]/lessons
-  const lessons: LessonsProps[] = await fetch('http://localhost:3000/api/admin/courses/' + params.courseSlug + '/lessons', { method: 'GET' })
+  const lessons: LessonsProps[] = await fetch('http://localhost:3000/api/admin/courses/' + courseSlug + '/lessons', { method: 'GET' })
     .then(async res => {
       if(res.status === 200) {
         return await res.json()
@@ -65,7 +67,7 @@ export default async function page(
         <b>Lessons:</b>
         <div className='flex flex-col w-[454px] mx-auto'>
           {lessons.map((lesson, index) => (
-            <LessonCard key={lesson.id} lesson={lesson} index={index} />
+            <LessonCard key={lesson.id} {...{lesson, index, courseSlug}} />
           ))}
         </div>
       </div>

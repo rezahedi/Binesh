@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { LessonsProps } from '@/lib/types'
 import { Footprints, MapPin } from 'lucide-react'
 import { CenterLeft, LeftCenter, CenterRight, RightCenter } from './'
@@ -17,10 +18,12 @@ const treeClasses = [
 export default function LessonCard(
   {
     lesson,
-    index
+    index,
+    courseSlug
   }: {
     lesson: LessonsProps,
-    index: number
+    index: number,
+    courseSlug: string
   }
 ) {
   return (
@@ -41,10 +44,10 @@ export default function LessonCard(
             <p>
               {lesson.description}
             </p>
-            <button className='mt-2 font-semibold rounded-full text-orange-600 border-2 border-orange-300 py-2 px-8 hover:border-orange-600 transition active:scale-95
+            <Link href={`./${courseSlug}/${lesson.slug}`} className='mt-2 font-semibold rounded-full text-orange-600 border-2 border-orange-300 py-2 px-8 hover:border-orange-600 transition active:scale-95
             '>
               Start lesson
-            </button>
+            </Link>
           </PopoverContent>
         </Popover>
         <span className='text-sm w-36 text-balance text-center'>
