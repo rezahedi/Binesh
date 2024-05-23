@@ -56,7 +56,12 @@ export default async function page(
         </div>
       </div>
 
-      <div className="flex-1 py-24 h-[2000px]" style={{backgroundImage: "url('/assets/lesson-path-bg-pattern.svg')", backgroundPositionY: "0", backgroundSize: "100% auto", backgroundRepeat: "repeat"}}>
+      <div className="flex-1 py-24 h-[2000px]" style={{
+        backgroundImage: "url('/assets/lesson-path-bg-pattern.svg')",
+        backgroundPositionY: "0",
+        backgroundSize: "100% auto",
+        backgroundRepeat: "repeat"
+      }}>
         <b>Lessons:</b>
         <div className='flex flex-col'>
           {lessons.map((lesson, index) => (
