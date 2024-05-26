@@ -13,7 +13,9 @@ export default function Layout({
         </div>
         <div className="grow">
           <div className="max-w-2xl mx-auto">
-            Progress bar
+            <div className="w-full bg-gray-200 rounded-full h-2.5">
+              <div className="bg-[#29cc57] h-2.5 rounded-full" style={{width: '45%'}}></div>
+            </div>
           </div>
         </div>
         <div>
