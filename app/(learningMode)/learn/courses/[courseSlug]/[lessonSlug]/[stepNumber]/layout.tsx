@@ -1,3 +1,5 @@
+import { X, Zap } from "lucide-react";
+
 export default function Layout({
   children,
 }: Readonly<{
@@ -5,10 +7,18 @@ export default function Layout({
 }>) {
   return (
     <div>
-      <header>
-        <div>Close button</div>
-        <div>Progress bar</div>
-        <div>Streak or Hearts</div>
+      <header className="flex sticky shadow-lg p-6">
+        <div>
+          <X />
+        </div>
+        <div className="grow">
+          <div className="max-w-2xl mx-auto">
+            Progress bar
+          </div>
+        </div>
+        <div>
+          <Zap />
+        </div>
       </header>
       <main>
         {children}
