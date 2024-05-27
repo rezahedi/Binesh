@@ -7,7 +7,7 @@ export default function Layout({
 }>) {
   return (
     <div>
-      <header className="flex sticky shadow-lg p-6">
+      <header className="flex items-center sticky shadow-lg p-6">
         <div>
           <X />
         </div>
@@ -19,7 +19,7 @@ export default function Layout({
           </div>
         </div>
         <div>
-          <Zap />
+          <Zap className="text-[#ea580c]" />
         </div>
       </header>
       <main>
