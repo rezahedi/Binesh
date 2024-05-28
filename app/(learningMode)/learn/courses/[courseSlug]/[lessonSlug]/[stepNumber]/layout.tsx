@@ -7,7 +7,7 @@ export default function Layout({
 }>) {
   return (
     <div>
-      <header className="flex items-center sticky shadow-lg p-6">
+      <header className="flex items-center sticky top-0 bg-white shadow-lg p-6">
         <div>
           <X />
         </div>
