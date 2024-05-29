@@ -1,4 +1,5 @@
 import { X, Zap } from "lucide-react";
+import ProgressBar from "./components/ProgressBar";
 
 export default function Layout({
   children,
@@ -12,34 +13,18 @@ export default function Layout({
           <X />
         </div>
         <div className="grow">
-          <div className="max-w-2xl mx-auto flex">
-            <div className="group cursor-pointer py-3" style={{width:'10%'}}>
-              <div className="border border-transparent rounded-full p-0.5">
-                <div className="w-full bg-gray-200 rounded-full h-2 group-hover:bg-gray-300">
-                  <div className="bg-[#29cc57] h-full rounded-full group-hover:bg-[#179e7e]" style={{width: '100%'}}></div>
-                </div>
-              </div>
+          <div className="max-w-2xl mx-auto flex gap-0.5">
+            <div style={{width:'10%'}}>
+              <ProgressBar progress={100} />
             </div>
-            <div className="group cursor-pointer py-3" style={{width:'30%'}}>
-              <div className="border border-gray-300 rounded-full p-0.5">
-                <div className="w-full bg-gray-200 rounded-full h-2 group-hover:bg-gray-300">
-                  <div className="bg-[#29cc57] h-full rounded-full group-hover:bg-[#179e7e]" style={{width: '45%'}}></div>
-                </div>
-              </div>
+            <div style={{width:'30%'}}>
+              <ProgressBar progress={45} focused />
             </div>
-            <div className="group cursor-pointer py-3" style={{width:'20%'}}>
-              <div className="border border-transparent rounded-full p-0.5">
-                <div className="w-full bg-gray-200 rounded-full h-2 group-hover:bg-gray-300">
-                  <div className="bg-[#29cc57] h-full rounded-full group-hover:bg-[#179e7e]" style={{width: '0%'}}></div>
-                </div>
-              </div>
+            <div style={{width:'20%'}}>
+              <ProgressBar progress={0} />
             </div>
-            <div className="group cursor-pointer py-3" style={{width:'40%'}}>
-              <div className="border border-transparent rounded-full p-0.5">
-                <div className="w-full bg-gray-200 rounded-full h-2 group-hover:bg-gray-300">
-                  <div className="bg-[#29cc57] h-full rounded-full group-hover:bg-[#179e7e]" style={{width: '0%'}}></div>
-                </div>
-              </div>
+            <div style={{width:'40%'}}>
+              <ProgressBar progress={0} />
             </div>
           </div>
         </div>
