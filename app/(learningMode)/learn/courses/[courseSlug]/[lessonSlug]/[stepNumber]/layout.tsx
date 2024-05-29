@@ -1,5 +1,5 @@
 import { X, Zap } from "lucide-react";
-import ProgressBar from "./components/ProgressBar";
+import MegaProgressBar from "./components/MegaProgressBar";
 
 export default function Layout({
   children,
@@ -13,20 +13,12 @@ export default function Layout({
           <X />
         </div>
         <div className="grow">
-          <div className="max-w-2xl mx-auto flex gap-0.5">
-            <div style={{width:'10%'}}>
-              <ProgressBar progress={100} />
-            </div>
-            <div style={{width:'30%'}}>
-              <ProgressBar progress={45} focused />
-            </div>
-            <div style={{width:'20%'}}>
-              <ProgressBar progress={0} />
-            </div>
-            <div style={{width:'40%'}}>
-              <ProgressBar progress={0} />
-            </div>
-          </div>
+          <MegaProgressBar className="max-w-2xl mx-auto" parts={[
+            { percentage: 10, progress: 100 },
+            { percentage: 30, progress: 45 },
+            { percentage: 20, progress: 0 },
+            { percentage: 40, progress: 0 }
+          ]} />
         </div>
         <div>
           <Zap className="text-[#ea580c]" />
