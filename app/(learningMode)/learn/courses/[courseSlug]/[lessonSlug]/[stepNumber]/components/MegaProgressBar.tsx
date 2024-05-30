@@ -1,18 +1,18 @@
 import ProgressBar from './ProgressBar'
 
 export default function MegaProgressBar({
-  parts,
+  steps,
   className
 }: {
-  parts: { percentage: number, progress: number }[],
+  steps: { percentage: number, progress: number }[],
   className?: string
 }) {
 
   return (
     <div className={`${className} flex gap-0.5`}>
-      {parts.map((data, index) => (
-        <div key={index} style={{width:`${data.percentage}%`}}>
-          <ProgressBar progress={data.progress} />
+      {steps.map((step, index) => (
+        <div key={index} style={{width:`${step.percentage}%`}}>
+          <ProgressBar progress={step.progress} />
         </div>
       ))}
     </div>

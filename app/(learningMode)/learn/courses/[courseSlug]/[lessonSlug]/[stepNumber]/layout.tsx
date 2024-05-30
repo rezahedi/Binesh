@@ -13,7 +13,7 @@ export default function Layout({
           <X />
         </div>
         <div className="grow">
-          <MegaProgressBar className="max-w-2xl mx-auto" parts={[
+          <MegaProgressBar className="max-w-2xl mx-auto" steps={[
             { percentage: 10, progress: 100 },
             { percentage: 30, progress: 45 },
             { percentage: 20, progress: 0 },
