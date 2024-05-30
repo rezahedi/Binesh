@@ -4,7 +4,11 @@ export default function MegaProgressBar({
   steps,
   className
 }: {
-  steps: { percentage: number, progress: number }[],
+  steps: {
+    title: string,
+    percentage: number,
+    progress: number
+  }[],
   className?: string
 }) {
 
@@ -12,7 +16,7 @@ export default function MegaProgressBar({
     <div className={`${className} flex gap-0.5`}>
       {steps.map((step, index) => (
         <div key={index} style={{width:`${step.percentage}%`}}>
-          <ProgressBar progress={step.progress} />
+          <ProgressBar progress={step.progress} title={step.title} />
         </div>
       ))}
     </div>
