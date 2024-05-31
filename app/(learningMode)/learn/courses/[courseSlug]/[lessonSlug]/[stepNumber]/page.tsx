@@ -51,6 +51,8 @@ export default function Page(
     }
   }, [currentStep]);
 
+  // TODO: I should scroll to the point that the new part's top is on the top of the screen
+  // TODO: Because may some parts are too long and the user should see the new part from the top
   // Scroll to bottom when parts change
   useEffect(() => {
     window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
