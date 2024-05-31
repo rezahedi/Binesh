@@ -23,11 +23,23 @@ export default function Page(
 
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [parts, setParts] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setParts([
-      fakeParts[0].content,
-    ]);
+    (async () => {
+      setLoading(true);
+  
+      // TODO: Fetch all the parts
+
+      // Timeout to simulate loading
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Set the first part
+      setParts([
+        fakeParts[0].content,
+      ]);
+  
+      setLoading(false);
+    })();
   }, []);
 
   useEffect(() => {
@@ -46,15 +58,23 @@ export default function Page(
 
       <div className='font-bold text-2xl'>{params.stepNumber}</div>
 
-      <div>
-        {parts.map((part, index) => (
-          <p className='py-4' key={index}>{part}</p>
-        ))}
-      </div>
-
-      {parseInt(params.stepNumber) < fakeParts.length &&
-        <button className='bg-blue-500 text-white px-4 py-2 rounded' onClick={()=>setCurrentStep(currentStep+1)}>Continue</button>
+      {loading &&
+        <div className='text-orange-500 font-semibold text-xl'>Loading...</div>
       }
+
+      {parts.length > 0 &&
+        <>
+          <div>
+            {parts.map((part, index) => (
+              <p className='py-4' key={index}>{part}</p>
+            ))}
+          </div>
+          {parseInt(params.stepNumber) < fakeParts.length &&
+            <button className='bg-blue-500 text-white px-4 py-2 rounded' onClick={()=>setCurrentStep(currentStep+1)}>Continue</button>
+          }
+        </>
+      }
+
     </div>
   )
 }
