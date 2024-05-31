@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { X, Zap } from "lucide-react";
 import MegaProgressBar from "./components/MegaProgressBar";
 
@@ -10,7 +11,9 @@ export default function Layout({
     <div>
       <header className="flex items-center sticky top-0 bg-white shadow-lg p-6">
         <div>
-          <X />
+          <Link href="../">
+            <X />
+          </Link>
         </div>
         <div className="grow">
           <MegaProgressBar className="max-w-2xl mx-auto" steps={[
