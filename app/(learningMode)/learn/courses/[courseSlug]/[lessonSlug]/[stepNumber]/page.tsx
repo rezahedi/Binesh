@@ -43,7 +43,7 @@ export default function Page(
   }, []);
 
   useEffect(() => {
-    if (currentStep > 0) {
+    if (currentStep > 0 && currentStep < fakeParts.length) {
       setParts([
         ...parts,
         fakeParts[currentStep].content,
