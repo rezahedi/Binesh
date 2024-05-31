@@ -51,6 +51,10 @@ export default function Page(
     }
   }, [currentStep]);
 
+  // Scroll to bottom when parts change
+  useEffect(() => {
+    window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+  }, [parts]);
 
   return (
     <div>
