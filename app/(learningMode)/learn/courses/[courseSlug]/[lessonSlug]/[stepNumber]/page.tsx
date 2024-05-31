@@ -15,7 +15,7 @@ const fakeParts = [
   { title: 'Step 10', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores temporibus qui beatae repellat quo quis libero quisquam dicta. Rem eum nam et praesentium nemo numquam eos porro blanditiis veritatis qui.' },
 ];
 
-export default function page(
+export default function Page(
   { params }:
   { params: { courseSlug: string, lessonSlug: string, stepNumber: string } }
 ) {
