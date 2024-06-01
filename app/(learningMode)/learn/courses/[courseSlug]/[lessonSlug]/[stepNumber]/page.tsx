@@ -19,7 +19,6 @@ export default function Page(
   { params }:
   { params: { courseSlug: string, lessonSlug: string, stepNumber: string } }
 ) {
-  console.log(params)
 
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [parts, setParts] = useState<string[]>([]);
