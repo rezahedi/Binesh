@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense, lazy } from 'react'
+import steps from '@contents/computer-science/beginners-python-programming/welcome-to-python';
+import ShowStep from './components/ShowStep';
 
 const fakeParts = [
-  { title: 'Step 1', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati quidem corporis nostrum nemo error voluptate repellendus ratione, quasi doloremque illum? Corrupti expedita magni modi porro omnis id, fuga consequatur facere? Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fuga quae explicabo voluptas a excepturi, quibusdam dicta ratione dignissimos hic iure amet nulla soluta architecto minus natus. Cum, eaque officia!' },
+  { title: 'Step 1', component: './contents/Part1.tsx', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati quidem corporis nostrum nemo error voluptate repellendus ratione, quasi doloremque illum? Corrupti expedita magni modi porro omnis id, fuga consequatur facere? Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fuga quae explicabo voluptas a excepturi, quibusdam dicta ratione dignissimos hic iure amet nulla soluta architecto minus natus. Cum, eaque officia!' },
   { title: 'Step 2', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores temporibus qui beatae repellat quo quis libero quisquam dicta. Rem eum nam et praesentium nemo numquam eos porro blanditiis veritatis qui.' },
   { title: 'Step 3', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa saepe quod veritatis obcaecati atque, tempora iusto? Ipsum tempore nesciunt, quisquam rem iure itaque, velit harum quos commodi exercitationem, atque iusto! Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae, ea consectetur quisquam vel architecto ex iure tempora itaque quasi nihil accusamus saepe, repellendus delectus iusto obcaecati dolor harum. Harum.' },
   { title: 'Step 4', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae tempora officia repudiandae perspiciatis dolores natus ab harum aliquid nemo reprehenderit deserunt at maxime inventore ipsa quo, quis iusto culpa delectus.' },
@@ -15,14 +17,21 @@ const fakeParts = [
   { title: 'Step 10', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores temporibus qui beatae repellat quo quis libero quisquam dicta. Rem eum nam et praesentium nemo numquam eos porro blanditiis veritatis qui.' },
 ];
 
+// Utility function to dynamically import a component
+const dynamicImport = (path: string) => {
+  return lazy(() => import(`${path}`));
+};
+
 export default function Page(
   { params }:
   { params: { courseSlug: string, lessonSlug: string, stepNumber: string } }
 ) {
 
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [parts, setParts] = useState<string[]>([]);
+  const [parts, setParts] = useState<typeof steps[0][]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  // const LazyComponent = lazy(() => import('@contents/Part1'));
+  // const LazyComponent = lazy(() => import('@contents/computer-science/beginners-python-programming/welcome-to-python'));
 
   useEffect(() => {
     (async () => {
@@ -34,7 +43,7 @@ export default function Page(
       await new Promise(resolve => setTimeout(resolve, 2000));
       // Set the first part
       setParts([
-        fakeParts[0].content,
+        steps[0],
       ]);
   
       setLoading(false);
@@ -45,7 +54,7 @@ export default function Page(
     if (currentStep > 0 && currentStep < fakeParts.length) {
       setParts([
         ...parts,
-        fakeParts[currentStep].content,
+        steps[currentStep],
       ]);
     }
   }, [currentStep]);
@@ -56,6 +65,13 @@ export default function Page(
   useEffect(() => {
     window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
   }, [parts]);
+
+  const checkAnswer = (answer: number): boolean => {
+    if (answer !== steps[currentStep].answer) {
+      return false;
+    }
+    return true;
+  }
 
   return (
     <div>
@@ -70,11 +86,11 @@ export default function Page(
       {parts.length > 0 &&
         <>
           <div>
-            {parts.map((part, index) => (
-              <p className='py-4' key={index}>{part}</p>
+            {parts.map((step, index) => (
+              <ShowStep key={index} {...step} checkAnswer={checkAnswer} />
             ))}
           </div>
-          {parseInt(params.stepNumber) < fakeParts.length &&
+          {parseInt(params.stepNumber) < steps.length &&
             <button className='bg-blue-500 text-white px-4 py-2 rounded' onClick={()=>setCurrentStep(currentStep+1)}>Continue</button>
           }
         </>
