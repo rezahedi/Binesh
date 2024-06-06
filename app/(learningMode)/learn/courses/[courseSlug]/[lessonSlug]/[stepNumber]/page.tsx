@@ -5,7 +5,7 @@ import ShowStep from './components/ShowStep';
 
 type Step = {
   title: string,
-  content: () => React.ReactNode,
+  content: ( { setAnswer }: { setAnswer: (answer: number | undefined) => void } ) => React.ReactNode,
   answer: number | undefined,
 }
 
@@ -57,9 +57,12 @@ export default function Page(
   }, [parts]);
 
   const checkAnswer = (answer: number): boolean => {
+    console.log('(answer, user answer) = ', answer, allParts[currentStep].answer);
     if (answer !== allParts[currentStep].answer) {
+      console.log('Wrong answer');
       return false;
     }
+    console.log('Correct answer');
     return true;
   }
 
