@@ -21,6 +21,9 @@ export default function ShowStep(
 
   const check = () => {
     if (userAnswer === undefined) return;
+    
+    // TODO: Should check answer here and setResult for parent component
+    
     checkAnswer(userAnswer);
   }
   
