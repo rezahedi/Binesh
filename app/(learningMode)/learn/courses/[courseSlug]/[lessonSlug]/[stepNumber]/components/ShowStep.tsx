@@ -1,12 +1,19 @@
 
+type Step = {
+  title: string,
+  content: () => React.ReactNode,
+  answer: number | undefined,
+}
+
 export default function ShowStep(
-  { title, content: Content, answer, checkAnswer }:
   {
-    title: string,
-    content: () => React.ReactNode,
-    answer: number,
-    checkAnswer: (answer: number) => boolean
-  }
+    title,
+    content: Content,
+    answer,
+    checkAnswer
+  }:
+    Step &
+    { checkAnswer: (answer: number) => boolean }
 ) {
   return (
     <>

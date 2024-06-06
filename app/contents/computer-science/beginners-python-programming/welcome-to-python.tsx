@@ -12,13 +12,11 @@ const steps = [
   },
   {
     title: 'Step 2',
-    answer: 16,
+    answer: undefined,
     content: () => 
       <>
         <h2>Step 2</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
-        <p>What is the result of equation of 3 * 2 ?</p>
-        4 * 4 = <input type="number" />
       </>
   }, 
   {

@@ -6,7 +6,7 @@ import ShowStep from './components/ShowStep';
 type Step = {
   title: string,
   content: () => React.ReactNode,
-  answer: number,
+  answer: number | undefined,
 }
 
 export default function Page(
@@ -80,7 +80,10 @@ export default function Page(
               <ShowStep key={index} {...step} checkAnswer={checkAnswer} />
             ))}
           </div>
-          {parseInt(params.stepNumber) < allParts.length &&
+          {parts[ parts.length-1 ].answer !== undefined &&
+            <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={()=>setCurrentStep(currentStep+1)}>Check</button>
+          }
+          {parts[ parts.length-1 ].answer === undefined && parseInt(params.stepNumber) < allParts.length &&
             <button className='bg-blue-500 text-white px-4 py-2 rounded' onClick={()=>setCurrentStep(currentStep+1)}>Continue</button>
           }
         </>
