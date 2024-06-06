@@ -1,4 +1,3 @@
-import React from 'react'
 
 export default function ShowStep(
   { title, content: Content, answer, checkAnswer }:
