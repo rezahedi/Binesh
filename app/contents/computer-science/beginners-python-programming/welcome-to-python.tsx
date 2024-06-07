@@ -1,4 +1,6 @@
-const steps = [
+import { Step } from "@/lib/types";
+
+const steps: Step[] = [
   {
     title: 'Step 1',
     answer: 4,

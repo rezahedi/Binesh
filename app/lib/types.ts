@@ -17,3 +17,9 @@ export interface UserProps {
   role: RoleProps;
   projects?: { projectId: string }[];
 }
+
+export type Step = {
+  title: string,
+  content: ( { setAnswer }: { setAnswer: (answer: number | undefined) => void } ) => React.ReactNode,
+  answer: number | undefined,
+}

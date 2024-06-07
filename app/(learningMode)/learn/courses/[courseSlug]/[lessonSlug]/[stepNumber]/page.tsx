@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import ShowStep from './components/ShowStep';
-
-type Step = {
-  title: string,
-  content: ( { setAnswer }: { setAnswer: (answer: number | undefined) => void } ) => React.ReactNode,
-  answer: number | undefined,
-}
+import { Step } from '@/lib/types';
 
 export default function Page(
   { params }:

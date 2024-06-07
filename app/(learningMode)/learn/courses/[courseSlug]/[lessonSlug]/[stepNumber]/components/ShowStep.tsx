@@ -1,10 +1,5 @@
 import { useState } from 'react';
-
-type Step = {
-  title: string,
-  content: ( { setAnswer }: { setAnswer: (answer: number | undefined) => void } ) => React.ReactNode,
-  answer: number | undefined,
-}
+import { Step } from '@/lib/types';
 
 export default function ShowStep(
   {
@@ -23,7 +18,7 @@ export default function ShowStep(
     if (userAnswer === undefined) return;
     
     // TODO: Should check answer here and setResult for parent component
-    
+
     checkAnswer(userAnswer);
   }
   
