@@ -2,16 +2,15 @@ import { Step } from "@/lib/types";
 
 const steps: Step[] = [
   {
-    title: 'Step 1',
-    answer: 4,
+    title: 'Understanding Variables',
+    answer: undefined,
     content: (
       { setAnswer }: { setAnswer: (answer: number | undefined) => void }
     ) => 
       <>
-        <h2>Step 1</h2>
-        <p>Lorem ipsum <b>dolor sit</b> amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
-        <p>What is the result of equation of 2 + 2 ?</p>
-        2 + 2 = <input type="number" onChange={(e) => setAnswer(e.target.valueAsNumber)} />
+        <img src="/app/contents/computer-science/beginners-python-programming/bookend-JGNY9Y.png" width={270} />
+        <h2>Understanding Variables</h2>
+        <p>In this course, we'll learn how to solve equations and apply them to real situations. Before we can write and solve equations, let's investigate <b>variables</b> — placeholders for unknown quantities.</p>
       </>
   },
   {
@@ -21,8 +20,12 @@ const steps: Step[] = [
       { setAnswer }: { setAnswer: (answer: number | undefined) => void }
     ) => 
       <>
-        <h2>Step 2</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
+        <p>The scale shows the weight of the items in kilograms (kg).</p>
+        <img src="./app/contents/computer-science/beginners-python-programming/bookend-JGEC3W.png" width={270} />
+        <div className="quiz-solvable">
+          <p>What's the weight of one square?</p>
+          <input type="number" onChange={(e) => setAnswer(e.target.valueAsNumber)} /> kg
+        </div>
       </>
   }, 
   {
@@ -32,9 +35,10 @@ const steps: Step[] = [
       { setAnswer }: { setAnswer: (answer: number | undefined) => void }
     ) => 
       <>
+        <img src="./bookend-2KRMW4.png" width={270} />
         <h2>Step 3</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
-        <p>What is the result of equation of 3 * 3 ?</p>
+        <p>What's the weight of one triangle?</p>
         3 * 3 = <input type="number" onChange={(e) => setAnswer(e.target.valueAsNumber)} />
       </>
   }
