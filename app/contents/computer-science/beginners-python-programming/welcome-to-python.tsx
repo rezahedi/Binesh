@@ -1,4 +1,5 @@
 import { Step } from "@/lib/types";
+import Image from "next/image";
 
 const steps: Step[] = [
   {
@@ -8,7 +9,7 @@ const steps: Step[] = [
       { setAnswer }: { setAnswer: (answer: number | undefined) => void }
     ) => 
       <>
-        <img src="/app/contents/computer-science/beginners-python-programming/bookend-JGNY9Y.png" width={270} />
+        <Image src="/app/contents/computer-science/beginners-python-programming/bookend-JGNY9Y.png" width={270} height={270} />
         <h2>Understanding Variables</h2>
         <p>In this course, we'll learn how to solve equations and apply them to real situations. Before we can write and solve equations, let's investigate <b>variables</b> — placeholders for unknown quantities.</p>
       </>
@@ -21,7 +22,7 @@ const steps: Step[] = [
     ) => 
       <>
         <p>The scale shows the weight of the items in kilograms (kg).</p>
-        <img src="./app/contents/computer-science/beginners-python-programming/bookend-JGEC3W.png" width={270} />
+        <Image src="/app/contents/computer-science/beginners-python-programming/bookend-JGEC3W.png" width={270} height={270} />
         <div className="quiz-solvable">
           <p>What's the weight of one square?</p>
           <input type="number" onChange={(e) => setAnswer(e.target.valueAsNumber)} /> kg
@@ -35,7 +36,7 @@ const steps: Step[] = [
       { setAnswer }: { setAnswer: (answer: number | undefined) => void }
     ) => 
       <>
-        <img src="./bookend-2KRMW4.png" width={270} />
+        <Image src="/app/contents/computer-science/beginners-python-programming/bookend-2KRMW4.png" width={270} height={270} />
         <h2>Step 3</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
         <p>What's the weight of one triangle?</p>
