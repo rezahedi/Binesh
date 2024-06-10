@@ -7,12 +7,14 @@ export default function ShowStep(
     content: Content,
     answer,
     checkAnswer,
-    gotoNextStep,
+    continueAction,
+    isLastStep=false,
   }:
     Step &
     {
       checkAnswer: (answer: number) => boolean;
-      gotoNextStep: () => void
+      continueAction: () => void;
+      isLastStep?: boolean;
     }
 ) {
 
@@ -36,7 +38,7 @@ export default function ShowStep(
 
   const finishStep = () => {
     setStepFinished(true);
-    gotoNextStep();
+    continueAction();
   }
   
   return (
@@ -52,7 +54,9 @@ export default function ShowStep(
         <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={check}>Check</button>
       }
       {(!hasQuiz || quizAnswered) && !stepFinished &&
-        <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={finishStep}>Continue</button>
+        <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={finishStep}>
+          {isLastStep ? 'Finish' : 'Continue'}
+        </button>
       }
     </>
   )

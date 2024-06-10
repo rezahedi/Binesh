@@ -61,6 +61,20 @@ export default function Page(
     return true;
   }
 
+  const isThereNextStep = currentStep < allParts.length-1
+  const isLastStep = currentStep === allParts.length-1
+
+  const gotoNextStep = () => {
+    if (isThereNextStep)
+      setCurrentStep(currentStep+1);
+    else{
+      console.log('Finished');
+  
+      // TODO: Go back to the lesson page
+
+    }
+  }
+
   return (
     <div>
       <h1>Course: {params.courseSlug} / Lesson: {params.lessonSlug} / Step: {params.stepNumber}</h1>
@@ -72,19 +86,11 @@ export default function Page(
       }
 
       {parts.length > 0 &&
-        <>
-          <div>
-            {parts.map((step, index) => (
-              <ShowStep key={index} {...step} checkAnswer={checkAnswer} gotoNextStep={()=>setCurrentStep(currentStep+1)} />
-            ))}
-          </div>
-          {parts[ parts.length-1 ].answer !== undefined &&
-            <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={()=>setCurrentStep(currentStep+1)}>Check</button>
-          }
-          {parts[ parts.length-1 ].answer === undefined && parseInt(params.stepNumber) < allParts.length &&
-            <button className='bg-blue-500 text-white px-4 py-2 rounded' onClick={()=>setCurrentStep(currentStep+1)}>Continue</button>
-          }
-        </>
+        <div>
+          {parts.map((step, index) => (
+            <ShowStep key={index} {...step} checkAnswer={checkAnswer} continueAction={gotoNextStep} isLastStep={isLastStep} />
+          ))}
+        </div>
       }
 
     </div>
