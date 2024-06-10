@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Step } from '@/lib/types';
+import { cn } from '@/utils/cn';
 
 export default function ShowStep(
   {
@@ -42,7 +43,7 @@ export default function ShowStep(
   }
   
   return (
-    <>
+    <div className={cn('min-h-fit py-6', !stepFinished ? 'h-full' : '')}>
       <Content setAnswer={setUserAnswer} />
       {result === false &&
         <p className='text-red-500'>😵‍💫 Wrong answer</p>
@@ -58,6 +59,6 @@ export default function ShowStep(
           {isLastStep ? 'Finish' : 'Continue'}
         </button>
       }
-    </>
+    </div>
   )
 }

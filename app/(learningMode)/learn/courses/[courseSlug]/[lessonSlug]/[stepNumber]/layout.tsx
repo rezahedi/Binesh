@@ -8,7 +8,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="flex flex-col h-screen min-h-fit">
       <header className="flex items-center sticky top-0 bg-white shadow-lg p-6">
         <div>
           <Link href="../">
@@ -27,7 +27,7 @@ export default function Layout({
           <Zap className="text-[#ea580c]" />
         </div>
       </header>
-      <main className="max-w-2xl mx-auto py-6">
+      <main className="max-w-2xl mx-auto h-full">
         {children}
       </main>
     </div>

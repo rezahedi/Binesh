@@ -76,23 +76,19 @@ export default function Page(
   }
 
   return (
-    <div>
-      <h1>Course: {params.courseSlug} / Lesson: {params.lessonSlug} / Step: {params.stepNumber}</h1>
-
-      <div className='font-bold text-2xl'>{params.stepNumber}</div>
-
+    <>
       {loading &&
         <div className='text-orange-500 font-semibold text-xl'>Loading...</div>
       }
 
       {parts.length > 0 &&
-        <div>
+        <>
           {parts.map((step, index) => (
             <ShowStep key={index} {...step} checkAnswer={checkAnswer} continueAction={gotoNextStep} isLastStep={isLastStep} />
           ))}
-        </div>
+        </>
       }
 
-    </div>
+    </>
   )
 }
