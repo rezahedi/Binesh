@@ -18,6 +18,7 @@ export default function ShowStep(
 
   const [userAnswer, setUserAnswer] = useState<number | undefined>(undefined);
   const [result, setResult] = useState<boolean | undefined>(undefined);
+  const [stepFinished, setStepFinished] = useState<boolean>(false);
 
   const check = () => {
     if (userAnswer === undefined) return;
@@ -32,6 +33,11 @@ export default function ShowStep(
   const hasQuiz = answer !== undefined;
 
   const quizAnswered = result !== undefined;
+
+  const finishStep = () => {
+    setStepFinished(true);
+    gotoNextStep();
+  }
   
   return (
     <>
@@ -45,8 +51,8 @@ export default function ShowStep(
       {hasQuiz && !quizAnswered &&
         <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={check}>Check</button>
       }
-      {!hasQuiz || quizAnswered &&
-        <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={gotoNextStep}>Continue</button>
+      {(!hasQuiz || quizAnswered) && !stepFinished &&
+        <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={finishStep}>Continue</button>
       }
     </>
   )
