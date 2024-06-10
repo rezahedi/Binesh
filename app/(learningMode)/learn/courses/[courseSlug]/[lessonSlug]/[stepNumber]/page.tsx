@@ -75,7 +75,7 @@ export default function Page(
         <>
           <div>
             {parts.map((step, index) => (
-              <ShowStep key={index} {...step} checkAnswer={checkAnswer} />
+              <ShowStep key={index} {...step} checkAnswer={checkAnswer} gotoNextStep={()=>setCurrentStep(currentStep+1)} />
             ))}
           </div>
           {parts[ parts.length-1 ].answer !== undefined &&
