@@ -16,7 +16,7 @@ export default function MegaProgressBar({
     <div className={`${className} flex gap-0.5`}>
       {steps.map((step, index) => (
         <div key={index} style={{width:`${step.percentage}%`}}>
-          <ProgressBar {...step} />
+          <ProgressBar {...step} focused={index===0} />
         </div>
       ))}
     </div>
