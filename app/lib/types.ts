@@ -18,6 +18,10 @@ export interface UserProps {
   projects?: { projectId: string }[];
 }
 
+export type Part = {
+  title: string,
+  steps: number,
+}
 export type Step = {
   title: string,
   content: ( { setAnswer }: { setAnswer: (answer: number | undefined) => void } ) => React.ReactNode,

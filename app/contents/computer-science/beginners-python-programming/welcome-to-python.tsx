@@ -1,4 +1,16 @@
-import { Step } from "@/lib/types";
+import { Part, Step } from "@/lib/types";
+
+const parts: Part[] = [
+  {
+    title: 'Understanding Python',
+    steps: 3
+  },
+  {
+    title: 'Variables and Data Types',
+    steps: 2
+  }
+];
+export { parts };
 
 const steps: Step[] = [
   {
