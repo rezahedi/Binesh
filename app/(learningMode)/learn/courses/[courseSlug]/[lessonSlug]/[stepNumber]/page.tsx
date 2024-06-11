@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import ShowStep from './components/ShowStep';
+import Header from "./components/Header";
 import { Step } from '@/lib/types';
 
 export default function Page(
@@ -76,19 +77,21 @@ export default function Page(
   }
 
   return (
-    <>
-      {loading &&
-        <div className='text-orange-500 font-semibold text-xl'>Loading...</div>
-      }
+    <div className="flex flex-col h-screen min-h-fit">
+      <Header />
+      <main className="max-w-2xl mx-auto h-full">
+        {loading &&
+          <div className='text-orange-500 font-semibold text-xl'>Loading...</div>
+        }
 
-      {parts.length > 0 &&
-        <>
-          {parts.map((step, index) => (
-            <ShowStep key={index} {...step} checkAnswer={checkAnswer} continueAction={gotoNextStep} isLastStep={isLastStep} />
-          ))}
-        </>
-      }
-
-    </>
+        {parts.length > 0 &&
+          <>
+            {parts.map((step, index) => (
+              <ShowStep key={index} {...step} checkAnswer={checkAnswer} continueAction={gotoNextStep} isLastStep={isLastStep} />
+            ))}
+          </>
+        }
+      </main>
+    </div>
   )
 }
