@@ -59,6 +59,7 @@ model User {
   streak          Int      @default(0)
   learningGoal    Int      @default(1) // Learning goal (Casual:3min, Regular:10min, Serious:15min, Intense:30min, Hardcore:60min)
   CourseProgress  CourseProgress[]
+  LessonProgress  LessonProgress[]
 }
 
 model VerificationToken {
@@ -121,6 +122,7 @@ model Lessons {
   updatedAt   DateTime @updatedAt
   courseID    String
   course      Courses    @relation(fields: [courseID], references: [id])
+  LessonProgress  LessonProgress[]
 
   @@unique([courseID, slug])
 }
@@ -136,4 +138,17 @@ model CourseProgress {
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userID], references: [id], onDelete: Cascade)
   course      Courses  @relation(fields: [courseID], references: [id], onDelete: Cascade)
+}
+
+model LessonProgress {
+  id          String   @id @default(uuid())
+  userID      String
+  lessonID    String
+  progress    String   // ex: 4/10 means 4 out of 10 steps completed
+  resumeURL   String
+  progressMap String   // Map of progress in each step or part and all the quiz's answers
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userID], references: [id], onDelete: Cascade)
+  lesson      Lessons  @relation(fields: [lessonID], references: [id], onDelete: Cascade)
 }
