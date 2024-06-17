@@ -138,6 +138,8 @@ model CourseProgress {
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userID], references: [id], onDelete: Cascade)
   course      Courses  @relation(fields: [courseID], references: [id], onDelete: Cascade)
+
+  @@unique([userID, courseID])
 }
 
 model LessonProgress {
@@ -151,4 +153,6 @@ model LessonProgress {
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [userID], references: [id], onDelete: Cascade)
   lesson      Lessons  @relation(fields: [lessonID], references: [id], onDelete: Cascade)
+
+  @@unique([userID, lessonID])
 }
