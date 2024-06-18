@@ -22,9 +22,12 @@ export default function Page(
   const [allSteps, setAllSteps] = useState<Step[]>([]);
   const [parts, setParts] = useState<ProgressBarPart[]>([]);
 
+  // TODO: Get the current part from the URL and minus 1 to get the current array's index
+  const currentPart = 1 - 1;
+
   const userProgressfakeData = [
     {
-      currentStep: 1,
+      currentStep: 0,
     },
     {
       currentStep: 0,
@@ -38,7 +41,7 @@ export default function Page(
       // TODO: Fetch all the parts
       const { default: steps, parts } = await import('@contents/computer-science/beginners-python-programming/welcome-to-python');
 
-      // Update parts with user progress and setParts
+      // Update parts with user progress
       const partsWithUserProgress = parts.map((part, index) => {
         return {
           ...part,
@@ -64,6 +67,12 @@ export default function Page(
 
   useEffect(() => {
     if (currentStep > 0 && currentStep < allSteps.length) {
+      
+      // TODO: Update the user progress in the parts
+      const newParts = [...parts];
+      newParts[currentPart].currentStep = currentStep;
+      setParts(newParts);
+
       setCompletedSteps([
         ...completedSteps,
         allSteps[currentStep],
@@ -94,11 +103,7 @@ export default function Page(
   const gotoNextStep = () => {
     if (isThereNextStep) {
       setCurrentStep(currentStep+1);
-      // updateUserProgressSteps({
-      //   title: allSteps[currentStep].title,
-      //   steps: allSteps.length,
-      //   currentStep: currentStep,
-      // });
+
       console.log('Finished', currentStep * 100 / allSteps.length);
     } else {
       console.log('Finished');
@@ -107,12 +112,6 @@ export default function Page(
 
     }
   }
-
-  // const updateUserProgressSteps = (step: ProgressBarPart) => {
-  //   const newUserProgressSteps = [...userProgressSteps];
-  //   newUserProgressSteps[0].progress = step.progress;
-  //   setUserProgressSteps(newUserProgressSteps);
-  // }
 
   return (
     <div className="flex flex-col h-screen min-h-fit">
