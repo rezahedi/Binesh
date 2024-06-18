@@ -1,20 +1,30 @@
 import Link from "next/link";
 import { X, Zap } from "lucide-react";
 import MegaProgressBar from "./MegaProgressBar";
-import { parts } from "@contents/computer-science/beginners-python-programming/welcome-to-python";
 
-export default function Header() {
+type ProgressBarStep = {
+  title: string;
+  steps: number;
+  currentStep?: number;
+}
 
-  const sumOfPartsSteps = parts.reduce((acc, part) => acc + part.steps, 0);
-  const steps: Array<{ title: string, percentage: number, progress: number }> = [];
+export default function Header({
+  userProgressSteps,
+}: {
+  userProgressSteps: ProgressBarStep[],
+}) {
 
-  parts.forEach((part, index) => {
-    steps.push({
-      title: part.title,
-      percentage: Math.round((part.steps / sumOfPartsSteps) * 100),
-      progress: 0,
-    });
-  })
+  const sumOfAllSteps = userProgressSteps.reduce((acc, part) => acc + part.steps, 0);
+
+  if (userProgressSteps.length === 0) {
+    const steps: ProgressBarStep[] = [];
+    userProgressSteps.forEach((part, index) => {
+      steps.push({
+        ...part,
+        currentStep: part.currentStep ? part.currentStep : 0,
+      });
+    })
+  }
 
   return (
     <header className="flex items-center sticky top-0 bg-white shadow-lg p-6">
@@ -24,7 +34,7 @@ export default function Header() {
         </Link>
       </div>
       <div className="grow">
-        <MegaProgressBar className="max-w-2xl mx-auto" steps={steps} />
+        <MegaProgressBar className="max-w-2xl mx-auto" steps={userProgressSteps} />
       </div>
       <div>
         <Zap className="text-[#ea580c]" />

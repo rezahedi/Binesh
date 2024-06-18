@@ -5,23 +5,49 @@ import ShowStep from './components/ShowStep';
 import Header from "./components/Header";
 import { Step } from '@/lib/types';
 
+type ProgressBarPart = {
+  title: string;
+  steps: number;
+  currentStep?: number;
+}
+
 export default function Page(
   { params }:
   { params: { courseSlug: string, lessonSlug: string, stepNumber: string } }
 ) {
 
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [parts, setParts] = useState<Step[]>([]);
+  const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [allParts, setAllParts] = useState<Step[]>([]);
+  const [allSteps, setAllSteps] = useState<Step[]>([]);
+  const [parts, setParts] = useState<ProgressBarPart[]>([]);
+
+  const userProgressfakeData = [
+    {
+      currentStep: 1,
+    },
+    {
+      currentStep: 0,
+    },
+  ]
 
   useEffect(() => {
     (async () => {
       setLoading(true);
   
       // TODO: Fetch all the parts
-      const { default: steps } = await import('@contents/computer-science/beginners-python-programming/welcome-to-python');
-      setAllParts(steps);
+      const { default: steps, parts } = await import('@contents/computer-science/beginners-python-programming/welcome-to-python');
+
+      // Update parts with user progress and setParts
+      const partsWithUserProgress = parts.map((part, index) => {
+        return {
+          ...part,
+          currentStep: userProgressfakeData[index].currentStep,
+        }
+      })
+      setParts(partsWithUserProgress);
+
+      setAllSteps(steps);
 
       setLoading(false);
     })();
@@ -31,16 +57,16 @@ export default function Page(
     if (loading) return;
 
     // Set the first part
-    setParts([
-      allParts[0],
+    setCompletedSteps([
+      allSteps[0],
     ]);
   }, [loading]);
 
   useEffect(() => {
-    if (currentStep > 0 && currentStep < allParts.length) {
-      setParts([
-        ...parts,
-        allParts[currentStep],
+    if (currentStep > 0 && currentStep < allSteps.length) {
+      setCompletedSteps([
+        ...completedSteps,
+        allSteps[currentStep],
       ]);
     }
   }, [currentStep]);
@@ -50,11 +76,11 @@ export default function Page(
   // Scroll to bottom when parts change
   useEffect(() => {
     window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
-  }, [parts]);
+  }, [completedSteps]);
 
   const checkAnswer = (answer: number): boolean => {
-    console.log('(answer, user answer) = ', answer, allParts[currentStep].answer);
-    if (answer !== allParts[currentStep].answer) {
+    console.log('(answer, user answer) = ', answer, allSteps[currentStep].answer);
+    if (answer !== allSteps[currentStep].answer) {
       console.log('Wrong answer');
       return false;
     }
@@ -62,13 +88,19 @@ export default function Page(
     return true;
   }
 
-  const isThereNextStep = currentStep < allParts.length-1
-  const isLastStep = currentStep === allParts.length-1
+  const isThereNextStep = currentStep < allSteps.length-1
+  const isLastStep = currentStep === allSteps.length-1
 
   const gotoNextStep = () => {
-    if (isThereNextStep)
+    if (isThereNextStep) {
       setCurrentStep(currentStep+1);
-    else{
+      // updateUserProgressSteps({
+      //   title: allSteps[currentStep].title,
+      //   steps: allSteps.length,
+      //   currentStep: currentStep,
+      // });
+      console.log('Finished', currentStep * 100 / allSteps.length);
+    } else {
       console.log('Finished');
   
       // TODO: Go back to the lesson page
@@ -76,17 +108,23 @@ export default function Page(
     }
   }
 
+  // const updateUserProgressSteps = (step: ProgressBarPart) => {
+  //   const newUserProgressSteps = [...userProgressSteps];
+  //   newUserProgressSteps[0].progress = step.progress;
+  //   setUserProgressSteps(newUserProgressSteps);
+  // }
+
   return (
     <div className="flex flex-col h-screen min-h-fit">
-      <Header />
+      <Header userProgressSteps={parts} />
       <main className="max-w-2xl mx-auto h-full">
         {loading &&
           <div className='text-orange-500 font-semibold text-xl'>Loading...</div>
         }
 
-        {parts.length > 0 &&
+        {completedSteps.length > 0 &&
           <>
-            {parts.map((step, index) => (
+            {completedSteps.map((step, index) => (
               <ShowStep key={index} {...step} checkAnswer={checkAnswer} continueAction={gotoNextStep} isLastStep={isLastStep} />
             ))}
           </>
