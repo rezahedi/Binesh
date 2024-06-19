@@ -20,7 +20,7 @@ export interface UserProps {
 
 export type Part = {
   title: string,
-  steps: number,
+  steps: Step[],
 }
 export type Step = {
   title: string,

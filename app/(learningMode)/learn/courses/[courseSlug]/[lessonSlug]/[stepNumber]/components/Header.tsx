@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { X, Zap } from "lucide-react";
 import MegaProgressBar from "./MegaProgressBar";
+import { Step } from "@/lib/types";
 
 type ProgressBarStep = {
   title: string;
-  steps: number;
+  steps: Step[];
   currentStep?: number;
 }
 
@@ -14,7 +15,7 @@ export default function Header({
   userProgressSteps: ProgressBarStep[],
 }) {
 
-  const sumOfAllSteps = userProgressSteps.reduce((acc, part) => acc + part.steps, 0);
+  const sumOfAllSteps = userProgressSteps.reduce((acc, part) => acc + part.steps.length, 0);
 
   if (userProgressSteps.length === 0) {
     const steps: ProgressBarStep[] = [];
@@ -34,7 +35,12 @@ export default function Header({
         </Link>
       </div>
       <div className="grow">
-        <MegaProgressBar className="max-w-2xl mx-auto" steps={userProgressSteps} />
+        <MegaProgressBar className="max-w-2xl mx-auto" steps={
+          userProgressSteps.map((part, index) => ({
+            ...part,
+            steps: part.steps.length,
+          }))
+          } />
       </div>
       <div>
         <Zap className="text-[#ea580c]" />

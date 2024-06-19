@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react'
 import ShowStep from './components/ShowStep';
 import Header from "./components/Header";
-import { Step } from '@/lib/types';
+import { Part, Step } from '@/lib/types';
 
 type ProgressBarPart = {
   title: string;
-  steps: number;
+  steps: Step[];
   currentStep?: number;
 }
 
@@ -23,7 +23,7 @@ export default function Page(
   const [parts, setParts] = useState<ProgressBarPart[]>([]);
 
   // TODO: Get the current part from the URL and minus 1 to get the current array's index
-  const currentPart = 1 - 1;
+  const currentPart = 2 - 1;
 
   const userProgressfakeData = [
     {
@@ -39,7 +39,7 @@ export default function Page(
       setLoading(true);
   
       // TODO: Fetch all the parts
-      const { default: steps, parts } = await import('@contents/computer-science/beginners-python-programming/welcome-to-python');
+      const { default: parts } = await import('@contents/computer-science/beginners-python-programming/welcome-to-python');
 
       // Update parts with user progress
       const partsWithUserProgress = parts.map((part, index) => {
@@ -50,7 +50,7 @@ export default function Page(
       })
       setParts(partsWithUserProgress);
 
-      setAllSteps(steps);
+      setAllSteps(parts[ currentPart ].steps);
 
       setLoading(false);
     })();
