@@ -2,6 +2,7 @@ import ProgressBar from './ProgressBar'
 
 export default function MegaProgressBar({
   steps,
+  currentPart,
   className
 }: {
   steps: {
@@ -9,6 +10,7 @@ export default function MegaProgressBar({
     steps: number,
     currentStep?: number,
   }[],
+  currentPart: number,
   className?: string
 }) {
 
@@ -21,7 +23,7 @@ export default function MegaProgressBar({
           <ProgressBar
             title={step.title}
             progress={Math.round( (step.currentStep ? step.currentStep : 0) * 100 / step.steps )}
-            focused={index===0}
+            focused={index===currentPart}
           />
         </div>
       ))}

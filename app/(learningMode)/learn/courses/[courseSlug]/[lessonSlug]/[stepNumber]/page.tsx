@@ -23,7 +23,7 @@ export default function Page(
   const [parts, setParts] = useState<ProgressBarPart[]>([]);
 
   // TODO: Get the current part from the URL and minus 1 to get the current array's index
-  const currentPart = 2 - 1;
+  const currentPart = parseInt(params.stepNumber) - 1;
 
   const userProgressfakeData = [
     {
@@ -115,7 +115,7 @@ export default function Page(
 
   return (
     <div className="flex flex-col h-screen min-h-fit">
-      <Header userProgressSteps={parts} />
+      <Header userProgressSteps={parts} currentPart={currentPart} />
       <main className="max-w-2xl mx-auto h-full">
         {loading &&
           <div className='text-orange-500 font-semibold text-xl'>Loading...</div>

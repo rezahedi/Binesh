@@ -11,8 +11,10 @@ type ProgressBarStep = {
 
 export default function Header({
   userProgressSteps,
+  currentPart,
 }: {
   userProgressSteps: ProgressBarStep[],
+  currentPart: number,
 }) {
 
   const sumOfAllSteps = userProgressSteps.reduce((acc, part) => acc + part.steps.length, 0);
@@ -35,12 +37,16 @@ export default function Header({
         </Link>
       </div>
       <div className="grow">
-        <MegaProgressBar className="max-w-2xl mx-auto" steps={
-          userProgressSteps.map((part, index) => ({
-            ...part,
-            steps: part.steps.length,
-          }))
-          } />
+        <MegaProgressBar
+          className="max-w-2xl mx-auto"
+          steps={
+            userProgressSteps.map((part, index) => ({
+              ...part,
+              steps: part.steps.length,
+            }))
+          }
+          currentPart={currentPart}
+        />
       </div>
       <div>
         <Zap className="text-[#ea580c]" />
