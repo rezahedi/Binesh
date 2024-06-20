@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import ShowStep from './components/ShowStep';
 import Header from "./components/Header";
 import { Part, Step } from '@/lib/types';
+import { redirect } from 'next/navigation';
 
 type ProgressBarPart = {
   title: string;
@@ -21,9 +22,12 @@ export default function Page(
   const [loading, setLoading] = useState<boolean>(true);
   const [allSteps, setAllSteps] = useState<Step[]>([]);
   const [parts, setParts] = useState<ProgressBarPart[]>([]);
+  const [error, setError] = useState<boolean>(false);
 
-  // TODO: Get the current part from the URL and minus 1 to get the current array's index
   const currentPart = parseInt(params.stepNumber) - 1;
+  if ( isNaN(currentPart) || currentPart < 0 ) {
+    setError(true);
+  }
 
   const userProgressfakeData = [
     {
@@ -40,6 +44,14 @@ export default function Page(
   
       // TODO: Fetch all the parts
       const { default: parts } = await import('@contents/computer-science/beginners-python-programming/welcome-to-python');
+
+      // Check if the current part exists
+      if ( parts.length <= currentPart ) {
+        Promise.resolve();
+        setLoading(false);
+        setError(true);
+        return;
+      }
 
       // Update parts with user progress
       const partsWithUserProgress = parts.map((part, index) => {
@@ -64,6 +76,10 @@ export default function Page(
       allSteps[0],
     ]);
   }, [loading]);
+
+  useEffect(() => {
+    if (error) redirect('../');
+  }, [error]);
 
   useEffect(() => {
     if (currentStep > 0 && currentStep < allSteps.length) {
@@ -119,6 +135,9 @@ export default function Page(
       <main className="max-w-2xl mx-auto h-full">
         {loading &&
           <div className='text-orange-500 font-semibold text-xl'>Loading...</div>
+        }
+        {error &&
+          <div className='font-semibold text-xl'>{error}</div>
         }
 
         {completedSteps.length > 0 &&
