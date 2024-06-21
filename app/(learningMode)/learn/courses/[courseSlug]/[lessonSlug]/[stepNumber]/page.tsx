@@ -23,10 +23,10 @@ export default function Page(
   const [allSteps, setAllSteps] = useState<Step[]>([]);
   const [parts, setParts] = useState<ProgressBarPart[]>([]);
   const [error, setError] = useState<boolean>(false);
+  const [currentPart, setCurrentPart] = useState<number>( parseInt(params.stepNumber) - 1 );
 
-  const currentPart = parseInt(params.stepNumber) - 1;
   if ( isNaN(currentPart) || currentPart < 0 ) {
-    setError(true);
+    redirect('../');
   }
 
   const userProgressfakeData = [
@@ -122,6 +122,7 @@ export default function Page(
 
       console.log('Finished', currentStep * 100 / allSteps.length);
     } else {
+      setCurrentP
       console.log('Finished');
   
       // TODO: Go back to the lesson page
