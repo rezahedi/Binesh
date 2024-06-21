@@ -122,7 +122,6 @@ export default function Page(
 
       console.log('Finished', currentStep * 100 / allSteps.length);
     } else {
-      setCurrentP
       console.log('Finished');
   
       // TODO: Go back to the lesson page
