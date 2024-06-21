@@ -38,7 +38,7 @@ export default function Header({
       </div>
       <div className="grow">
         <MegaProgressBar
-          className="max-w-2xl mx-auto"
+          className="max-w-2xl mx-auto px-4"
           steps={
             userProgressSteps.map((part, index) => ({
               ...part,

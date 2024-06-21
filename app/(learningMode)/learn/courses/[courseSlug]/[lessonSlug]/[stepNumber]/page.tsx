@@ -132,7 +132,7 @@ export default function Page(
   return (
     <div className="flex flex-col h-screen min-h-fit">
       <Header userProgressSteps={parts} currentPart={currentPart} />
-      <main className="max-w-2xl mx-auto h-full">
+      <main className="max-w-2xl mx-auto px-4 h-full">
         {loading &&
           <div className='text-orange-500 font-semibold text-xl'>Loading...</div>
         }
