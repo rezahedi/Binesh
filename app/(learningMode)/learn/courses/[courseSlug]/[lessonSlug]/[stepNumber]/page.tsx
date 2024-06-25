@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import ShowStep from './components/ShowStep';
 import Header from "./components/Header";
 import { Part, Step } from '@/lib/types';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 type ProgressBarPart = {
   title: string;
@@ -16,7 +16,7 @@ export default function Page(
   { params }:
   { params: { courseSlug: string, lessonSlug: string, stepNumber: string } }
 ) {
-
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -82,7 +82,7 @@ export default function Page(
   }, [error]);
 
   useEffect(() => {
-    if (currentStep > 0 && currentStep < allSteps.length) {
+    if (currentStep >= 0 && currentStep < allSteps.length) {
       
       // TODO: Update the user progress in the parts
       const newParts = [...parts];
@@ -90,7 +90,7 @@ export default function Page(
       setParts(newParts);
 
       setCompletedSteps([
-        ...completedSteps,
+        ...(currentStep ===0 ? [] : completedSteps), 
         allSteps[currentStep],
       ]);
     }
@@ -114,7 +114,7 @@ export default function Page(
   }
 
   const isThereNextStep = currentStep < allSteps.length-1
-  const isLastStep = currentStep === allSteps.length-1
+  const isLastStep = currentStep === allSteps.length-1 || !parts[currentPart+1]
 
   const gotoNextStep = () => {
     if (isThereNextStep) {
@@ -122,7 +122,19 @@ export default function Page(
 
       console.log('Finished', currentStep * 100 / allSteps.length);
     } else {
-      console.log('Finished');
+
+      // TODO: Update the user progress in the parts and set current part finished
+      const newParts = [...parts];
+      newParts[currentPart].currentStep = currentStep+1;
+      setParts(newParts);
+
+      if(currentPart+1 < parts.length) {
+        setAllSteps(parts[currentPart+1].steps);
+        setCurrentPart(currentPart+1);
+        setCurrentStep(0);
+        router.push(`/learn/courses/${params.courseSlug}/${params.lessonSlug}/${(currentPart+2).toString()}`);
+        console.log('Finished');
+      }
   
       // TODO: Go back to the lesson page
 
