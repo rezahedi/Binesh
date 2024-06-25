@@ -14,7 +14,7 @@ const parts: Part[] = [
             <h2>Step 1</h2>
             <p>Lorem ipsum <b>dolor sit</b> amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
             <p>What is the result of equation of 2 + 2 ?</p>
-            2 + 2 = <input type="number" onChange={(e) => setAnswer(e.target.valueAsNumber)} />
+            2 + 2 = <input type="number" className="rounded-md w-20 border-2 border-green-500 mx-2 p-2" autoFocus onChange={(e) => setAnswer(e.target.valueAsNumber)} /> 
           </>
       },
       {
@@ -38,7 +38,7 @@ const parts: Part[] = [
             <h2>Step 3</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
             <p>What is the result of equation of 3 * 3 ?</p>
-            3 * 3 = <input type="number" onChange={(e) => setAnswer(e.target.valueAsNumber)} />
+            3 * 3 = <input type="number" className="rounded-md w-20 border-2 border-green-500 mx-2 p-2" autoFocus onChange={(e) => setAnswer(e.target.valueAsNumber)} />
           </>
       }
     ]
