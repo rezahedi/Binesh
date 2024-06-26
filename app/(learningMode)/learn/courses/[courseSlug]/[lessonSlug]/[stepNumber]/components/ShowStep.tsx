@@ -43,7 +43,7 @@ export default function ShowStep(
   }
   
   return (
-    <div className={cn('min-h-fit py-6', !stepFinished ? 'h-full' : '')}>
+    <div className='min-h-fit pt-8 pb-12'>
       <Content setAnswer={setUserAnswer} />
       {result === false &&
         <p className='text-red-500'>😵‍💫 Wrong answer</p>
