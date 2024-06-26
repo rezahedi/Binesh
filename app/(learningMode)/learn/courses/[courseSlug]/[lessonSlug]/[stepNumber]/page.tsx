@@ -16,19 +16,9 @@ export default function Page(
   { params }:
   { params: { courseSlug: string, lessonSlug: string, stepNumber: string } }
 ) {
-  const router = useRouter();
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [allSteps, setAllSteps] = useState<Step[]>([]);
-  const [parts, setParts] = useState<ProgressBarPart[]>([]);
-  const [error, setError] = useState<boolean>(false);
+
   const [currentPart, setCurrentPart] = useState<number>( parseInt(params.stepNumber) - 1 );
-
-  if ( isNaN(currentPart) || currentPart < 0 ) {
-    redirect('../');
-  }
-
+  
   const userProgressfakeData = [
     {
       currentStep: currentPart==1 ? 3 : 0,
@@ -37,6 +27,21 @@ export default function Page(
       currentStep: 0,
     },
   ]
+
+  const router = useRouter();
+  const [currentStep, setCurrentStep] = useState<number>(
+    userProgressfakeData[currentPart].currentStep
+  );
+  const [completedSteps, setCompletedSteps] = useState<Step[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [allSteps, setAllSteps] = useState<Step[]>([]);
+  const [parts, setParts] = useState<ProgressBarPart[]>([]);
+  const [error, setError] = useState<boolean>(false);
+
+  if ( isNaN(currentPart) || currentPart < 0 ) {
+    redirect('../');
+  }
+
 
   useEffect(() => {
     (async () => {
@@ -71,10 +76,11 @@ export default function Page(
   useEffect(() => {
     if (loading) return;
 
-    // Set the first part
-    setCompletedSteps([
-      allSteps[0],
-    ]);
+    // Set completed steps by user progress data
+    setCompletedSteps(
+      allSteps.slice(0, currentStep+1)
+    );
+
   }, [loading]);
 
   useEffect(() => {
