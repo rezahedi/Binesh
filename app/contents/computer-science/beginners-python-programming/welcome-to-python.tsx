@@ -11,10 +11,12 @@ const parts: Part[] = [
           { setAnswer }: { setAnswer: (answer: number | undefined) => void }
         ) => 
           <>
-            <h2>Step 1</h2>
-            <p>Lorem ipsum <b>dolor sit</b> amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
-            <p>What is the result of equation of 2 + 2 ?</p>
-            2 + 2 = <input type="number" className="rounded-md w-20 border-2 border-green-500 mx-2 p-2" autoFocus onChange={(e) => setAnswer(e.target.valueAsNumber)} /> 
+            <h2 className="font-bold text-2xl py-2">How to plus two numbers?</h2>
+            <p className="py-2">In Math, we can add two numbers together by using the plus sign (+). For example, 1 + 2 = 3.</p>
+            <div className="bg-gray-200 p-2 rounded-md p-4 my-2">
+              <p>What is the result of below equation?</p> 
+              2 + 2 = <input type="number" className="rounded-md w-20 border-2 border-green-500 mx-2 p-2" autoFocus onChange={(e) => setAnswer(e.target.valueAsNumber)} /> 
+            </div>
           </>
       },
       {
@@ -24,8 +26,8 @@ const parts: Part[] = [
           { setAnswer }: { setAnswer: (answer: number | undefined) => void }
         ) => 
           <>
-            <h2>Step 2</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
+            <h2 className="font-bold text-2xl py-2">Step 2</h2>
+            <p className="py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
           </>
       }, 
       {
@@ -35,10 +37,12 @@ const parts: Part[] = [
           { setAnswer }: { setAnswer: (answer: number | undefined) => void }
         ) => 
           <>
-            <h2>Step 3</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
-            <p>What is the result of equation of 3 * 3 ?</p>
-            3 * 3 = <input type="number" className="rounded-md w-20 border-2 border-green-500 mx-2 p-2" autoFocus onChange={(e) => setAnswer(e.target.valueAsNumber)} />
+            <h2 className="font-bold text-2xl py-2">How to multiply two numbers?</h2>
+            <p className="py-2">In Math, we can multiply two numbers together by using the multiplication sign (×). For example, 2 × 3 = 6.</p>
+            <div className="bg-gray-200 p-2 rounded-md p-4 my-2">
+              <p>What is the result of below equation?</p> 
+              3 × 3 = <input type="number" className="rounded-md w-20 border-2 border-green-500 mx-2 p-2" autoFocus onChange={(e) => setAnswer(e.target.valueAsNumber)} />
+            </div>
           </>
       }
     ]
@@ -53,8 +57,8 @@ const parts: Part[] = [
           { setAnswer }: { setAnswer: (answer: number | undefined) => void }
         ) => 
           <>
-            <h2>Step 2 from part 2</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
+            <h2 className="font-bold text-2xl py-2">Step 2 from part 2</h2>
+            <p className="py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
           </>
       },
       {
@@ -64,8 +68,8 @@ const parts: Part[] = [
           { setAnswer }: { setAnswer: (answer: number | undefined) => void }
         ) => 
           <>
-            <h2>Step 2 from part 2</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
+            <h2 className="font-bold text-2xl py-2">Step 2 from part 2</h2>
+            <p className="py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
           </>
       }
     ]
