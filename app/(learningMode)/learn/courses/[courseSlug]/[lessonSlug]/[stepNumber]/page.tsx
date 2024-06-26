@@ -31,7 +31,7 @@ export default function Page(
 
   const userProgressfakeData = [
     {
-      currentStep: 0,
+      currentStep: currentPart==1 ? 3 : 0,
     },
     {
       currentStep: 0,
