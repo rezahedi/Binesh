@@ -1,3 +1,4 @@
+import RadioList from "@/contents/components/RadioList";
 import { Part } from "@/lib/types";
 
 const parts: Part[] = [
@@ -21,13 +22,17 @@ const parts: Part[] = [
       },
       {
         title: 'Step 2',
-        answer: undefined,
+        answer: 2,
         content: (
           { setAnswer }: { setAnswer: (answer: number | undefined) => void }
         ) => 
           <>
             <h2 className="font-bold text-2xl py-2">Step 2</h2>
             <p className="py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatum aperiam labore ab est commodi optio, dolores nihil! Iusto recusandae aspernatur adipisci libero enim corrupti ad sed alias deleniti laboriosam!</p>
+            <div className="bg-gray-200 p-2 rounded-md p-4 my-2">
+              <p>What's the total weight on the scale?</p> 
+              <RadioList list={['c + c + c + c', '4c', '4 . c', 'All of the above']} />
+            </div>
           </>
       }, 
       {
