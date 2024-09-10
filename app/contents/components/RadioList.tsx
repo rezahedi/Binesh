@@ -3,9 +3,11 @@ import { cn } from '@/utils/cn';
 export default function RadioList({
   list,
   className='',
+  onChange,
 }: {
   list: string[];
   className?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
 
   return (
@@ -13,15 +15,14 @@ export default function RadioList({
       {list.map((option, index) => (
         <label
           key={index}
-          htmlFor={`i-${index}`}
-          className='cursor-pointer border-2 border-transparent rounded-xl px-2 py-1 has-[:checked]:border-green-500 focus-within:has-[:checked]:border-black'
+          className='cursor-pointer border-2 border-transparent rounded-xl px-2 py-1 has-[:checked]:border-green-500 focus-within:has-[:checked]:border-black focus-within:border-black'
         >
           <input
             name='radioList'
             className={cn(className, 'outline-none mr-2')}
             type='radio'
-            id={`i-${index}`}
-            value={option}
+            value={index+1}
+            onFocus={(e)=>onChange(e)}
           />
           <span className='ml-2'>
             {option}
