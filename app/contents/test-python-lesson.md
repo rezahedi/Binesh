@@ -1,3 +1,9 @@
+---
+title: "Introduction to Gravity"
+subject: "Physics"
+level: "Beginner"
+---
+
 ## Part 1
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati quidem corporis nostrum nemo error voluptate repellendus ratione, quasi doloremque illum? Corrupti expedita magni modi porro omnis id, fuga consequatur facere? Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fuga quae explicabo voluptas a excepturi, quibusdam dicta ratione dignissimos hic iure amet nulla soluta architecto minus natus. Cum, eaque officia!
 
@@ -29,11 +35,35 @@ Which of the following is a programming language?
 ## Part 4
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae tempora officia repudiandae perspiciatis dolores natus ab harum aliquid nemo reprehenderit deserunt at maxime inventore ipsa quo, quis iusto culpa delectus.
 
+---
+
+Look at the image and find the correct weight.
+
+![This is title](../../public/vercel.svg)
+
+```
+2 + 2 = [=4]
+```
+
 ## Part 5
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati quidem corporis nostrum nemo error voluptate repellendus ratione, quasi doloremque illum? Corrupti expedita magni modi porro omnis id, fuga consequatur facere? Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fuga quae explicabo voluptas a excepturi, quibusdam dicta ratione dignissimos hic iure amet nulla soluta architecto minus natus. Cum, eaque officia!
+in quiz dare
+
+```
+__What is the output of 2 + 2?__
+2 + 2 = [=4]
+```
 
 ## Part 6
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores temporibus qui beatae repellat quo quis libero quisquam dicta. Rem eum nam et praesentium nemo numquam eos porro blanditiis veritatis qui.
+
+<!-- Question -->
+Which of the following is a programming language?
+- [ ] HTML
+- [ ] CSS
+- [ ] JavaScript
+- [ ] Python
+<!-- Answer: C, D -->
+<!-- Question -->
 
 ## Part 7
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa saepe quod veritatis obcaecati atque, tempora iusto? Ipsum tempore nesciunt, quisquam rem iure itaque, velit harum quos commodi exercitationem, atque iusto! Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae, ea consectetur quisquam vel architecto ex iure tempora itaque quasi nihil accusamus saepe, repellendus delectus iusto obcaecati dolor harum. Harum.
