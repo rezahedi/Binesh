@@ -6,7 +6,7 @@ export type SectionType = {
 export const parseSections = (section: string): SectionType[] => {
   return section
     .split("\n# ")
-    .filter(Boolean)
+    .filter((str) => str.trim())
     .map((step) => {
       const [content, quizSection] = splitOnce(step, "---");
       return {
