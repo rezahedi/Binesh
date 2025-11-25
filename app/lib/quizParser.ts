@@ -1,4 +1,5 @@
 export type SectionType = {
+  title: string;
   content: string;
   quiz: QuizType | null;
 };
@@ -8,9 +9,11 @@ export const parseSections = (section: string): SectionType[] => {
     .split("\n# ")
     .filter((str) => str.trim())
     .map((step) => {
-      const [content, quizSection] = splitOnce(step, "---");
+      const [contentSection, quizSection] = splitOnce(step, "---");
+      const [title, content] = splitOnce(contentSection, "\n");
       return {
-        content: "# " + content.trim(),
+        title: title.trim(),
+        content: content.trim(),
         quiz: parseQuizBlock(quizSection.trim()),
       };
     });
