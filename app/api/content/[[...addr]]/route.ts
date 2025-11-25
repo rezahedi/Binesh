@@ -21,9 +21,8 @@ export const GET = withAdmin(async ({params}: {params: {addr?: string[]}}) => {
     const steps: SectionType[] = parseSections(content);
 
     return NextResponse.json({
-      addr: params.addr,
-      path: filePath,
-      data: {...data, steps},
+      ...data,
+      steps,
     });
   } catch (err) {
     console.error(err);
