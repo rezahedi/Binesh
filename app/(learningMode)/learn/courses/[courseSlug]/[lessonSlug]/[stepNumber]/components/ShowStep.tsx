@@ -1,5 +1,3 @@
-import {useState} from "react";
-import {cn} from "@/utils/cn";
 import {SectionType} from "@/lib/quizParser";
 import QuizRenderer from "./quizzes/QuizRenderer";
 import Markdown from "react-markdown";

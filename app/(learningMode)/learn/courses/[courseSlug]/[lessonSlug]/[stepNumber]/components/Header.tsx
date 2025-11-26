@@ -1,10 +1,13 @@
 import Link from "next/link";
 import {X, Zap} from "lucide-react";
 import ProgressBar from "./ProgressBar";
-import useProgress from "../useProgress";
+import {useProgress} from "../ProgressContext";
 
 export default function Header() {
-  const {progress} = useProgress();
+  const {currentStep, stepCount} = useProgress();
+  const percentage = stepCount
+    ? Math.round((currentStep / stepCount) * 100)
+    : 0;
 
   return (
     <header className="flex items-center sticky top-0 bg-white shadow-lg p-6">
@@ -17,7 +20,7 @@ export default function Header() {
         <ProgressBar
           className="max-w-2xl mx-auto px-4"
           title=""
-          progress={progress}
+          progress={percentage}
           focused={true}
         />
       </div>
