@@ -19,10 +19,10 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores temporibus qui 
 
 ---
 
-What is the output of 2 + 2?
+What is the output of 4 / 2?
 
-```quiz:fill:number:4
-2 + 2 = [ ]
+```quiz:fill:number:2
+4 / 2 = [ ] chand mishe
 ```
 
 # Part 3
@@ -46,10 +46,8 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae tempora officia 
 
 ---
 
-What is the output of 2 + 2?
-
-```quiz:fill:number:4
-2 + 2 = [ ]
+```quiz:fill:string:gonna
+Winters here [ ] be really cold sometimes, so make sure you bring warm clothes!
 ```
 
 # Part 5
