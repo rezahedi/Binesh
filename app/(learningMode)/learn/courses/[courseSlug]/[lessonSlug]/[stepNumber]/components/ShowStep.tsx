@@ -1,64 +1,42 @@
-import { useState } from 'react';
-import { Step } from '@/lib/types';
-import { cn } from '@/utils/cn';
+import {SectionType} from "@/lib/quizParser";
+import QuizRenderer from "./quizzes/QuizRenderer";
+import Markdown from "react-markdown";
+import Img from "./markdown/Img";
+import {useProgress} from "../ProgressContext";
+import {useState} from "react";
 
-export default function ShowStep(
-  {
-    title,
-    content: Content,
-    answer,
-    checkAnswer,
-    continueAction,
-    isLastStep=false,
-  }:
-    Step &
-    {
-      checkAnswer: (answer: number) => boolean;
-      continueAction: () => void;
-      isLastStep?: boolean;
-    }
-) {
+export default function ShowStep({
+  step,
+  index,
+}: {
+  step: SectionType;
+  index: number;
+}) {
+  const {nextStep, currentStep} = useProgress();
+  const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
-  const [userAnswer, setUserAnswer] = useState<number | undefined>(undefined);
-  const [result, setResult] = useState<boolean | undefined>(undefined);
-  const [stepFinished, setStepFinished] = useState<boolean>(false);
+  // TODO: Temporary solution, find a better way than passing step's `index` to check if this is the curr step
+  const haveQuiz = Boolean(step.quiz);
+  const isCurrent = index + 1 === currentStep;
+  const isQuizFinished = quizResult;
 
-  const check = () => {
-    if (userAnswer === undefined) return;
-    
-    // TODO: Should check answer here and setResult for parent component
+  const isNextReady = isCurrent && (!haveQuiz || (haveQuiz && isQuizFinished));
 
-    setResult(
-      checkAnswer(userAnswer)
-    );
-  }
-
-  const hasQuiz = answer !== undefined;
-
-  const quizAnswered = result !== undefined;
-
-  const finishStep = () => {
-    setStepFinished(true);
-    continueAction();
-  }
-  
   return (
-    <div className='min-h-fit pt-8 pb-12'>
-      <Content setAnswer={setUserAnswer} />
-      {result === false &&
-        <p className='text-red-500'>😵‍💫 Wrong answer</p>
-      }
-      {result === true &&
-        <p className='text-green-500'>🎉 Correct answer</p>
-      }
-      {hasQuiz && !quizAnswered &&
-        <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={check}>Check</button>
-      }
-      {(!hasQuiz || quizAnswered) && !stepFinished &&
-        <button className='bg-green-500 text-white px-4 py-2 rounded' onClick={finishStep}>
-          {isLastStep ? 'Finish' : 'Continue'}
-        </button>
-      }
+    <div className="min-h-fit pt-8 pb-12">
+      <Markdown components={{img: Img}}>{step.content}</Markdown>
+      <Markdown components={{img: Img}}></Markdown>
+      {step.quiz && (
+        <QuizRenderer
+          quiz={step.quiz}
+          isActive={isCurrent && !isQuizFinished}
+          onCheck={setQuizResult}
+        />
+      )}
+      {quizResult !== null && (
+        <p>{quizResult ? "✅ Correct" : "❌ Incorrect"}</p>
+      )}
+      {isNextReady && <button onClick={nextStep}>Next</button>}
     </div>
-  )
+  );
 }
