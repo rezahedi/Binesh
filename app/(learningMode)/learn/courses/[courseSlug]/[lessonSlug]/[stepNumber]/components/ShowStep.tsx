@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {cn} from "@/utils/cn";
 import {SectionType} from "@/lib/quizParser";
-import Quiz from "./Quiz";
+import QuizRenderer from "./quizzes/QuizRenderer";
 
 export default function ShowStep({step}: {step: SectionType}) {
   return (
@@ -9,7 +9,7 @@ export default function ShowStep({step}: {step: SectionType}) {
       <p>{step.content}</p>
       <p>{step.quiz?.content}</p>
       <p>{step.quiz?.type}</p>
-      {step.quiz && <Quiz quiz={step.quiz} />}
+      {step.quiz && <QuizRenderer quiz={step.quiz} />}
     </div>
   );
 }
