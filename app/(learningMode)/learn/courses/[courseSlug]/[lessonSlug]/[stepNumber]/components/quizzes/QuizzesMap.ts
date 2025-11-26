@@ -1,7 +1,10 @@
 import {QuizKind, QuizType} from "@/lib/quizParser";
 import {CheckListQuiz, FillInQuiz, RadioQuiz} from "./";
 
-const quizComponentMap: Record<QuizKind, React.FC<{quiz: QuizType}>> = {
+const quizComponentMap: Record<
+  QuizKind,
+  React.FC<{quiz: QuizType; isActive: boolean}>
+> = {
   radio: RadioQuiz,
   checkList: CheckListQuiz,
   fill: FillInQuiz,

@@ -1,9 +1,23 @@
 import {CheckListQuizType, QuizType} from "@/lib/quizParser";
 import React, {useState} from "react";
 
-const CheckListQuiz = ({quiz}: {quiz: QuizType}) => {
+const CheckListQuiz = ({
+  quiz,
+  isActive,
+}: {
+  quiz: QuizType;
+  isActive: boolean;
+}) => {
   const [userAnswer, setUserAnswer] = useState<string[]>([]);
   const quizBlock = quiz.quizBlock as CheckListQuizType;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isActive) return;
+
+    const index = e.target.value;
+    if (e.target.checked) setUserAnswer([...userAnswer, index]);
+    else setUserAnswer(userAnswer.filter((val) => val !== index));
+  };
 
   return (
     <div>
@@ -15,15 +29,8 @@ const CheckListQuiz = ({quiz}: {quiz: QuizType}) => {
               name="userAnswer"
               value={index}
               checked={userAnswer.includes(String(index))}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  setUserAnswer([...userAnswer, String(index)]);
-                } else {
-                  setUserAnswer(
-                    userAnswer.filter((val) => val !== String(index))
-                  );
-                }
-              }}
+              onChange={handleChange}
+              readOnly={!isActive}
             />
             {option}
           </label>

@@ -18,14 +18,12 @@ const Content = () => {
       )}
       {error && <div className="font-semibold text-xl">{error}</div>}
 
-      {steps.length > 0 && (
-        <>
-          {steps.slice(0, currentStep).map((step, index) => (
-            <ShowStep key={index} step={step} />
+      {steps.length > 0 &&
+        steps
+          .slice(0, currentStep)
+          .map((step, index) => (
+            <ShowStep key={index} step={step} index={index} />
           ))}
-          <button onClick={nextStep}>Next</button>
-        </>
-      )}
     </main>
   );
 };

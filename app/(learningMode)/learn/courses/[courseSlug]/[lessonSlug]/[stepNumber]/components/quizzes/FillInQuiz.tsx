@@ -1,10 +1,16 @@
 import {FillQuizType, QuizType} from "@/lib/quizParser";
 import React, {useState} from "react";
 
-const FillInQuiz = ({quiz}: {quiz: QuizType}) => {
+const FillInQuiz = ({quiz, isActive}: {quiz: QuizType; isActive: boolean}) => {
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
   const quizBlock = quiz.quizBlock as FillQuizType;
   const [pre, suf] = quizBlock.content.split("[ ]");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isActive) return;
+
+    setUserAnswer(e.target.value);
+  };
 
   return (
     <div>
@@ -16,7 +22,8 @@ const FillInQuiz = ({quiz}: {quiz: QuizType}) => {
           name="userAnswer"
           type={quizBlock.inputType}
           defaultValue={userAnswer || ""}
-          onChange={(e) => setUserAnswer(e.target.value)}
+          onChange={handleChange}
+          readOnly={!isActive}
         />
         {quizBlock.inputType}
         {suf}
