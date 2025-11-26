@@ -1,9 +1,9 @@
-import {type CheckListQuiz, QuizType} from "@/lib/quizParser";
+import {CheckListQuizType, QuizType} from "@/lib/quizParser";
 import React, {useState} from "react";
 
 const CheckListQuiz = ({quiz}: {quiz: QuizType}) => {
   const [userAnswer, setUserAnswer] = useState<string[]>([]);
-  const quizBlock = quiz.quizBlock as CheckListQuiz;
+  const quizBlock = quiz.quizBlock as CheckListQuizType;
 
   return (
     <div>

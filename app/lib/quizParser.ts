@@ -33,7 +33,7 @@ export type QuizType = {
 };
 
 export type QuizKind = "radio" | "checkList" | "fill";
-export type QuizBlock = RadioQuiz | CheckListQuiz | FillQuiz;
+export type QuizBlock = RadioQuizType | CheckListQuizType | FillQuizType;
 const QUIZ_TYPES: QuizKind[] = ["radio", "checkList", "fill"];
 
 const parseQuizBlock = (str: string): QuizType | null => {
@@ -72,27 +72,27 @@ const parseListOptions = (quiz: string) => {
   return {options, checked};
 };
 
-export type RadioQuiz = {options: string[]; answer: number};
+export type RadioQuizType = {options: string[]; answer: number};
 
-const parseRadioQuiz = (quiz: string): RadioQuiz | null => {
+const parseRadioQuiz = (quiz: string): RadioQuizType | null => {
   const {options, checked} = parseListOptions(quiz);
   if (checked.length !== 1) return null; // must be exactly one correct
 
   return {options, answer: checked[0]};
 };
 
-export type CheckListQuiz = {options: string[]; answer: number[]};
+export type CheckListQuizType = {options: string[]; answer: number[]};
 
-const parseCheckListQuiz = (quiz: string): CheckListQuiz | null => {
+const parseCheckListQuiz = (quiz: string): CheckListQuizType | null => {
   const {options, checked} = parseListOptions(quiz);
   if (checked.length === 0) return null;
 
   return {options, answer: checked};
 };
 
-export type FillQuiz = {inputType: string; answer: string; content: string};
+export type FillQuizType = {inputType: string; answer: string; content: string};
 
-const parseFillQuiz = (quiz: string): FillQuiz | null => {
+const parseFillQuiz = (quiz: string): FillQuizType | null => {
   const regex = /:(\w+):([^\r\n]*)\r?\n(.*\[ ?\].*)/m;
   const match = quiz.match(regex);
   if (!match) return null;

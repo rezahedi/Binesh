@@ -1,9 +1,9 @@
-import {FillQuiz, QuizType} from "@/lib/quizParser";
+import {FillQuizType, QuizType} from "@/lib/quizParser";
 import React, {useState} from "react";
 
 const FillInQuiz = ({quiz}: {quiz: QuizType}) => {
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
-  const quizBlock = quiz.quizBlock as FillQuiz;
+  const quizBlock = quiz.quizBlock as FillQuizType;
   const [pre, suf] = quizBlock.content.split("[ ]");
 
   return (
