@@ -16,11 +16,11 @@ export default function ShowStep({
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
   // TODO: Temporary solution, find a better way than passing step's `index` to check if this is the curr step
-  // TODO: Also inactive if quiz result come as true
-  const isActive = index + 1 === currentStep;
+  const haveQuiz = Boolean(step.quiz);
+  const isCurrent = index + 1 === currentStep;
+  const isQuizFinished = quizResult;
 
-  const isNextReady =
-    (isActive && !step.quiz) || (isActive && step.quiz && quizResult);
+  const isNextReady = isCurrent && (!haveQuiz || (haveQuiz && isQuizFinished));
 
   return (
     <div className="min-h-fit pt-8 pb-12">
@@ -29,7 +29,7 @@ export default function ShowStep({
       {step.quiz && (
         <QuizRenderer
           quiz={step.quiz}
-          isActive={isActive}
+          isActive={isCurrent && !isQuizFinished}
           onCheck={setQuizResult}
         />
       )}
