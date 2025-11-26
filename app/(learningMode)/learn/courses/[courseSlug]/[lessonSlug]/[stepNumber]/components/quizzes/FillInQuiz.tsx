@@ -1,8 +1,17 @@
 import {FillQuizType, QuizType} from "@/lib/quizParser";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
-const FillInQuiz = ({quiz, isActive}: {quiz: QuizType; isActive: boolean}) => {
+const FillInQuiz = ({
+  quiz,
+  isActive,
+  onCheck,
+}: {
+  quiz: QuizType;
+  isActive: boolean;
+  onCheck: (state: boolean) => void;
+}) => {
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const quizBlock = quiz.quizBlock as FillQuizType;
   const [pre, suf] = quizBlock.content.split("[ ]");
 
@@ -12,9 +21,23 @@ const FillInQuiz = ({quiz, isActive}: {quiz: QuizType; isActive: boolean}) => {
     setUserAnswer(e.target.value);
   };
 
+  const handleCheckAnswer = () => {
+    if (userAnswer === null) return;
+
+    if (quizBlock.inputType === "string")
+      return setIsCorrect(
+        userAnswer.toLowerCase() === quizBlock.answer.toLowerCase()
+      );
+
+    setIsCorrect(userAnswer === quizBlock.answer);
+  };
+
+  useEffect(() => {
+    if (isCorrect !== null) onCheck(isCorrect);
+  }, [isCorrect]);
+
   return (
     <div>
-      Fill-in Quiz
       <p>
         {pre}
         <input
@@ -25,10 +48,13 @@ const FillInQuiz = ({quiz, isActive}: {quiz: QuizType; isActive: boolean}) => {
           onChange={handleChange}
           readOnly={!isActive}
         />
-        {quizBlock.inputType}
         {suf}
       </p>
-      {quizBlock.answer} = {userAnswer}
+      {isActive && !isCorrect && (
+        <button onClick={handleCheckAnswer} disabled={userAnswer === null}>
+          Check Answer
+        </button>
+      )}
     </div>
   );
 };

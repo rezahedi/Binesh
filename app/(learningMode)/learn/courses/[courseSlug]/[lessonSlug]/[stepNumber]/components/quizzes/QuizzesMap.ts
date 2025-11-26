@@ -3,7 +3,11 @@ import {CheckListQuiz, FillInQuiz, RadioQuiz} from "./";
 
 const quizComponentMap: Record<
   QuizKind,
-  React.FC<{quiz: QuizType; isActive: boolean}>
+  React.FC<{
+    quiz: QuizType;
+    isActive: boolean;
+    onCheck: (state: boolean) => void;
+  }>
 > = {
   radio: RadioQuiz,
   checkList: CheckListQuiz,
