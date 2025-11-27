@@ -3,10 +3,8 @@ import { CourseProps } from "@/lib/types";
 
 export default async function Page() {
   // fetch courses from /api/admin/courses
-  let courses: CourseProps[] = [];
-  await fetch("http://localhost:3000/api/admin/courses").then(async (res) => {
-    courses = await res.json();
-  });
+  const result = await fetch("http://localhost:3000/api/admin/courses");
+  const courses: CourseProps[] = await result.json();
 
   return (
     <div className="container">

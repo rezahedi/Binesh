@@ -16,6 +16,7 @@ import { CourseProps } from "@/lib/types";
 import { mutate } from "swr";
 import { toast } from "sonner";
 import SelectCategory from "@admin/components/ui/components/SelectCategory";
+import Image from "next/image";
 
 export default function AddEditModal({
   setShowModal,
@@ -226,7 +227,7 @@ export default function AddEditModal({
               </div>
               <div className="space-y-2 flex flex-col items-center justify-center aspect-square border border-gray-200 rounded-lg">
                 {imagePreview ? (
-                  <img
+                  <Image
                     src={imagePreview}
                     alt="Course image"
                     className="object-contain w-full h-full rounded-lg"

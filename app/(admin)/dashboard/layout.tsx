@@ -10,7 +10,6 @@ import {
   Package2,
   PanelLeft,
   Search,
-  Settings,
   ShoppingCart,
   Users2,
 } from "lucide-react";
@@ -49,6 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
   params: any;
 }>) {
+  console.log(params);
   // get data for breadcrumbs
 
   return (

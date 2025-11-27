@@ -1,7 +1,6 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import { getServerSession } from "next-auth/next";
+import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
+// import GoogleProvider from "next-auth/providers/google";
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { getSearchParams } from "@/utils/urls";

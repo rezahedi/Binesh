@@ -5,7 +5,7 @@ import useCourses from "@/lib/swr/use-courses";
 import useCoursesCount from "@/lib/swr/use-courses-count";
 import Image from "next/image";
 import Link from "next/link";
-import { ListFilter, MoreHorizontal, PlusCircle } from "lucide-react";
+import { MoreHorizontal, PlusCircle } from "lucide-react";
 
 import { Badge } from "@admin/components/ui/badge";
 import { Button } from "@admin/components/ui/button";
@@ -19,7 +19,6 @@ import {
 } from "@admin/components/ui/card";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -145,11 +144,12 @@ export default function Courses() {
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline">
-                        {
+                        Published
+                        {/* {
                           ["Draft", "Reviewing", "Published", "Archived"][
                             Math.floor(Math.random() * 3)
                           ]
-                        }
+                        } */}
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">

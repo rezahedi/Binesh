@@ -1,18 +1,20 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function CourseCard(props: any) {
-  let {
-    id,
+  const {
+    // id,
     name,
-    description,
+    // description,
     slug,
     image,
     level = "",
-    categoryID,
+    // categoryID,
     category,
-    progress = -1,
-    ...rest
+    // ...rest
   } = props;
+
+  let { progress = -1 } = props;
 
   if (progress > 100) progress = 100;
 
@@ -25,7 +27,7 @@ export default function CourseCard(props: any) {
         transition-all duration-300
         flex flex-col gap-2"
     >
-      <img
+      <Image
         src={image}
         alt={name}
         width={96}
