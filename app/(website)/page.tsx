@@ -1,6 +1,3 @@
-
 export default function WebsitePage() {
-  return (
-    <div>Website</div>
-  )
+  return <div>Website</div>;
 }

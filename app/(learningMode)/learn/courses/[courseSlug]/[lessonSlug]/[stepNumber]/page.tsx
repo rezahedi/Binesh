@@ -1,14 +1,15 @@
 "use client";
 
 import Header from "./components/Header";
-import {ProgressProvider} from "./ProgressContext";
+import { ProgressProvider } from "./ProgressContext";
 import Content from "./components/Content";
 
 export default function Page({
   params,
 }: {
-  params: {courseSlug: string; lessonSlug: string; stepNumber: string};
+  params: { courseSlug: string; lessonSlug: string; stepNumber: string };
 }) {
+  console.log(params);
   return (
     <ProgressProvider>
       <div className="flex flex-col h-screen min-h-fit">

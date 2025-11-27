@@ -1,5 +1,5 @@
-import {SectionType} from "@/lib/quizParser";
-import {useEffect, useState} from "react";
+import { SectionType } from "@/lib/quizParser";
+import { useEffect, useState } from "react";
 
 const useSteps = () => {
   const [steps, setSteps] = useState<SectionType[]>([]);
@@ -25,7 +25,7 @@ const useSteps = () => {
     })();
   }, []);
 
-  return {steps, loading, error};
+  return { steps, loading, error };
 };
 
 export default useSteps;

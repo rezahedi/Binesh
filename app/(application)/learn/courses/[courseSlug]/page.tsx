@@ -1,14 +1,19 @@
-import {CourseProps, LessonsProps} from "@/lib/types";
-import {notFound} from "next/navigation";
-import {LessonCard} from "./components";
+import { CourseProps, LessonsProps } from "@/lib/types";
+import { notFound } from "next/navigation";
+import { LessonCard } from "./components";
+import Image from "next/image";
 
-export default async function page({params}: {params: {courseSlug: string}}) {
-  const {courseSlug} = params;
+export default async function page({
+  params,
+}: {
+  params: { courseSlug: string };
+}) {
+  const { courseSlug } = params;
 
   // fetch courses from /api/admin/courses
   const course: CourseProps = await fetch(
     "http://localhost:3000/api/admin/courses/" + courseSlug,
-    {method: "GET"}
+    { method: "GET" }
   ).then(async (res) => {
     if (res.status === 200) {
       return await res.json();
@@ -22,7 +27,7 @@ export default async function page({params}: {params: {courseSlug: string}}) {
   // fetch lessons from /api/admin/courses/[courseSlug]/lessons
   const lessons: LessonsProps[] = await fetch(
     "http://localhost:3000/api/admin/courses/" + courseSlug + "/lessons",
-    {method: "GET"}
+    { method: "GET" }
   ).then(async (res) => {
     if (res.status === 200) {
       return await res.json();
@@ -42,7 +47,7 @@ export default async function page({params}: {params: {courseSlug: string}}) {
           </a>
 
           <div className="md:mt-10 md:p-8 md:border border-gray-200 rounded-lg">
-            <img
+            <Image
               src={course.image}
               alt={course.name}
               width={96}
@@ -73,7 +78,7 @@ export default async function page({params}: {params: {courseSlug: string}}) {
         <b>Lessons:</b>
         <div className="flex flex-col w-[454px] mx-auto">
           {lessons.map((lesson, index) => (
-            <LessonCard key={lesson.id} {...{lesson, index, courseSlug}} />
+            <LessonCard key={lesson.id} {...{ lesson, index, courseSlug }} />
           ))}
         </div>
       </div>

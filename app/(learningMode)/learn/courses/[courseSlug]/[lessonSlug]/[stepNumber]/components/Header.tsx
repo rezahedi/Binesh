@@ -1,10 +1,10 @@
 import Link from "next/link";
-import {X, Zap} from "lucide-react";
+import { X, Zap } from "lucide-react";
 import ProgressBar from "./ProgressBar";
-import {useProgress} from "../ProgressContext";
+import { useProgress } from "../ProgressContext";
 
 export default function Header() {
-  const {currentStep, stepCount} = useProgress();
+  const { currentStep, stepCount } = useProgress();
   const percentage = stepCount
     ? Math.round((currentStep / stepCount) * 100)
     : 0;

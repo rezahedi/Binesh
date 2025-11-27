@@ -1,5 +1,5 @@
-import {QuizKind, QuizType} from "@/lib/quizParser";
-import {CheckListQuiz, FillInQuiz, RadioQuiz} from "./";
+import { QuizKind, QuizType } from "@/lib/quizParser";
+import { CheckListQuiz, FillInQuiz, RadioQuiz } from "./";
 
 const quizComponentMap: Record<
   QuizKind,

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 import {
   Home,
   LineChart,
@@ -13,9 +13,9 @@ import {
   Settings,
   ShoppingCart,
   Users2,
-} from "lucide-react"
-import { Input } from "@admin/components/ui/input"
-import { Button } from "@admin/components/ui/button"
+} from "lucide-react";
+import { Input } from "@admin/components/ui/input";
+import { Button } from "@admin/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +23,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@admin/components/ui/dropdown-menu"
+} from "@admin/components/ui/dropdown-menu";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -31,10 +31,10 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@admin/components/ui/breadcrumb"
-import { Sheet, SheetContent, SheetTrigger } from "@admin/components/ui/sheet"
+} from "@admin/components/ui/breadcrumb";
+import { Sheet, SheetContent, SheetTrigger } from "@admin/components/ui/sheet";
 import Navbar from "@admin/components/layout/Navbar";
-import { Toaster } from 'sonner'
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -55,7 +55,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Toaster />
-        <div id='sidebarNav' className="group isOpen flex flex-row min-h-screen w-full bg-muted/40">
+        <div
+          id="sidebarNav"
+          className="group isOpen flex flex-row min-h-screen w-full bg-muted/40"
+        >
           <Navbar />
           <div className="flex-1 flex flex-col sm:gap-4 sm:py-4">
             <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -131,13 +134,17 @@ export default function RootLayout({
                 <BreadcrumbList>
                   <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                      <Link href={`${process.env.NEXT_ADMIN_BASE}`}>Dashboard</Link>
+                      <Link href={`${process.env.NEXT_ADMIN_BASE}`}>
+                        Dashboard
+                      </Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                      <Link href={`${process.env.NEXT_ADMIN_BASE}/courses`}>Courses</Link>
+                      <Link href={`${process.env.NEXT_ADMIN_BASE}/courses`}>
+                        Courses
+                      </Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />

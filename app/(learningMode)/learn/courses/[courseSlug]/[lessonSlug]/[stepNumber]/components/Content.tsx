@@ -1,11 +1,11 @@
 import ShowStep from "./ShowStep";
 import useSteps from "../useSteps";
-import {useProgress} from "../ProgressContext";
-import {useEffect} from "react";
+import { useProgress } from "../ProgressContext";
+import { useEffect } from "react";
 
 const Content = () => {
-  const {steps, loading, error} = useSteps();
-  const {currentStep, setStepCount, nextStep} = useProgress();
+  const { steps, loading, error } = useSteps();
+  const { currentStep, setStepCount } = useProgress();
 
   useEffect(() => {
     setStepCount(steps.length);

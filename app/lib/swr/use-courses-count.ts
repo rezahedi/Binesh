@@ -14,14 +14,12 @@ export default function useCoursesCount() {
   }, []);
 
   const { data, error } = useSWR<any>(
-    admin
-      ? `/api/admin/courses/count${getQueryString()}`
-      : null,
+    admin ? `/api/admin/courses/count${getQueryString()}` : null,
     fetcher,
     {
       dedupingInterval: 30000,
       keepPreviousData: true,
-    },
+    }
   );
 
   return {

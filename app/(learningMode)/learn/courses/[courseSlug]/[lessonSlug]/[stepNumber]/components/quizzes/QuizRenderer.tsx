@@ -1,4 +1,4 @@
-import {QuizType} from "@/lib/quizParser";
+import { QuizType } from "@/lib/quizParser";
 import quizComponentMap from "./QuizzesMap";
 
 const QuizRenderer = ({

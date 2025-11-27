@@ -19,11 +19,15 @@ export interface UserProps {
 }
 
 export type Part = {
-  title: string,
-  steps: Step[],
-}
+  title: string;
+  steps: Step[];
+};
 export type Step = {
-  title: string,
-  content: ( { setAnswer }: { setAnswer: (answer: number | undefined) => void } ) => React.ReactNode,
-  answer: number | undefined,
-}
+  title: string;
+  content: ({
+    setAnswer,
+  }: {
+    setAnswer: (answer: number | undefined) => void;
+  }) => React.ReactNode;
+  answer: number | undefined;
+};

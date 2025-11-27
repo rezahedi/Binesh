@@ -27,7 +27,7 @@ export default function useCourses() {
       dedupingInterval: 20000,
       revalidateOnFocus: false,
       keepPreviousData: true,
-    },
+    }
   );
 
   return {
