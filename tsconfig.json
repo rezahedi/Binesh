@@ -33,6 +33,9 @@
       ],
       "@contents/*": [
         "./app/contents/*"
+      ],
+      "@db/*": [
+        "./app/db/*"
       ]
     },
   },
