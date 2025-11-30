@@ -46,7 +46,7 @@ export default function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: any;
+  params: unknown;
 }>) {
   console.log(params);
   // get data for breadcrumbs

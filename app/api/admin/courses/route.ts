@@ -1,14 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { withAdmin } from "@/lib/auth";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { desc, eq, getTableColumns, like, or } from "drizzle-orm";
 import db from "@/db";
 import { categories, courses } from "@/db/schema";
-import { getSearchParams } from "@/utils/urls";
 
 const prisma = new PrismaClient();
 
-export const GET = withAdmin(async ({ req, searchParams }) => {
+export const GET = withAdmin(async ({ searchParams }) => {
   const ROWS_PER_PAGE = 10;
   const {
     search,

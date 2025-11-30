@@ -1,4 +1,4 @@
-import { useState, useMemo, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import Modal from "@admin/components/ui/Modal";
 import { Label } from "@admin/components/ui/label";
 import { Input } from "@admin/components/ui/input";
@@ -12,7 +12,7 @@ import {
 } from "@admin/components/ui/select";
 import { Button } from "@admin/components/ui/button";
 import { ImageIcon } from "lucide-react";
-import { CourseProps } from "@/lib/types";
+import { CourseProps, NewCourseProps } from "@/lib/types";
 import { mutate } from "swr";
 import { toast } from "sonner";
 import SelectCategory from "@admin/components/ui/components/SelectCategory";
@@ -29,22 +29,22 @@ export default function AddEditModal({
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const [data, setData] = useState<CourseProps>(
+  const [data, setData] = useState<NewCourseProps>(
     props || {
       id: "",
       name: "",
+      description: "",
       slug: "",
       level: 1,
       categoryID: "",
       image: "",
-      description: "",
       lessens: 0,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toDateString(),
+      updatedAt: new Date().toDateString(),
     }
   );
 
-  const { id, name, slug, level, categoryID, image, description } = data;
+  const { id, name, description, slug, level, categoryID, image } = data;
 
   // Form Submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,6 +58,19 @@ export default function AddEditModal({
 
     // TODO: Validate and sanitize data
 
+    // Set endpoint
+    const endpoint = id
+      ? {
+          method: "PATCH",
+          url: `/api/admin/courses/${id}`,
+          successMessage: "Successfully updated the course!",
+        }
+      : {
+          method: "POST",
+          url: `/api/admin/courses`,
+          successMessage: "Successfully added the new course!",
+        };
+
     // Send data to the server
     console.log("fetch:", endpoint.url, endpoint.method, data);
     fetch(endpoint.url, {
@@ -69,13 +82,13 @@ export default function AddEditModal({
     }).then(async (res) => {
       console.log("res:", res);
       if (res.status === 200 || res.status === 201) {
-        (await mutate(
+        await mutate(
           (key) =>
             typeof key === "string" && key.startsWith("/api/admin/courses"),
           undefined,
           { revalidate: true }
-        ),
-          toast.success(endpoint.successMessage));
+        );
+        toast.success(endpoint.successMessage);
         setShowModal(false);
       } else {
         const error = await res.json();
@@ -100,38 +113,18 @@ export default function AddEditModal({
   };
 
   // Check required input values to enable save button
-  const saveDisabled = useMemo(
-    () =>
-      saving ||
-      !name ||
-      !slug ||
-      !level ||
-      !categoryID ||
-      !description ||
-      !image ||
-      (props &&
-        Object.entries(props).every(
-          ([key, value]) => data[key as keyof typeof data] === value
-        )),
-    [props, data]
-  );
-
-  // Set endpoint
-  const endpoint = useMemo(
-    () =>
-      id
-        ? {
-            method: "PATCH",
-            url: `/api/admin/courses/${id}`,
-            successMessage: "Successfully updated the course!",
-          }
-        : {
-            method: "POST",
-            url: `/api/admin/courses`,
-            successMessage: "Successfully added the new course!",
-          },
-    [id]
-  );
+  const saveDisabled = () =>
+    saving ||
+    !name ||
+    !slug ||
+    !level ||
+    !categoryID ||
+    !description ||
+    !image ||
+    (props &&
+      Object.entries(props).every(
+        ([key, value]) => data[key as keyof typeof data] === value
+      ));
 
   return (
     <Modal setShowModal={setShowModal}>

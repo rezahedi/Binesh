@@ -5,7 +5,7 @@ import useSWR from "swr";
 export default function useCoursesCount() {
   const { getQueryString } = useRouterStuff();
 
-  const { data, error } = useSWR<any>(
+  const { data, error } = useSWR<string>(
     window.location.pathname.startsWith("/dashboard")
       ? `/api/admin/courses/count${getQueryString()}`
       : null,
@@ -17,7 +17,7 @@ export default function useCoursesCount() {
   );
 
   return {
-    data,
+    data: Number(data),
     loading: !data && !error,
     error,
   };

@@ -1,6 +1,7 @@
-import { Courses, Categories, Lessons } from "@/db/schema";
+import { Courses, Categories, Lessons, NewCourses } from "@/db/schema";
 
 export type CourseProps = Courses;
+export type NewCourseProps = NewCourses;
 export type LessonsProps = Lessons;
 export type CategoryProps = Categories;
 
