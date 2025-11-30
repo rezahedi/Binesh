@@ -1,14 +1,11 @@
-import { PrismaClient } from "@prisma/client";
-import { withAdmin } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { desc, eq, getTableColumns, like, or } from "drizzle-orm";
 import db from "@/db";
 import { categories, courses } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
 
-const prisma = new PrismaClient();
-
-export const GET = withAdmin(async ({ req, searchParams }) => {
+export const GET = async (request: NextRequest) => {
+  const searchParams = getSearchParams(request.url);
   const ROWS_PER_PAGE = 10;
   const {
     search,
@@ -47,25 +44,4 @@ export const GET = withAdmin(async ({ req, searchParams }) => {
     limit: ROWS_PER_PAGE,
     data: rows,
   });
-});
-
-// TODO: This endpoint not checked yet
-
-export const POST = withAdmin(async ({ req }) => {
-  const { name, slug, level, categoryID, image, description } =
-    await req.json();
-
-  const response = await prisma.courses.create({
-    data: {
-      name,
-      slug,
-      level,
-      lessens: 0,
-      categoryID,
-      image,
-      description,
-    },
-  });
-
-  return NextResponse.json(response);
-});
+};
