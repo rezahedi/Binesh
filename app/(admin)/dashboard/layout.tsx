@@ -134,7 +134,7 @@ export default function RootLayout({
                 <BreadcrumbList>
                   <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                      <Link href={`${process.env.NEXT_ADMIN_BASE}`}>
+                      <Link href={`${process.env.NEXT_PUBLIC_ADMIN_BASE}`}>
                         Dashboard
                       </Link>
                     </BreadcrumbLink>
@@ -142,7 +142,9 @@ export default function RootLayout({
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                      <Link href={`${process.env.NEXT_ADMIN_BASE}/courses`}>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_ADMIN_BASE}/courses`}
+                      >
                         Courses
                       </Link>
                     </BreadcrumbLink>

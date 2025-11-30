@@ -13,10 +13,10 @@ export default async function Header() {
       <nav>
         <ul className="flex gap-1">
           <li>
-            <a href={process.env.NEXT_APP_BASE}>Home</a>
+            <a href={process.env.NEXT_PUBLIC_APP_BASE}>Home</a>
           </li>
           <li>
-            <a href={`${process.env.NEXT_APP_BASE}/courses`}>Courses</a>
+            <a href={`${process.env.NEXT_PUBLIC_APP_BASE}/courses`}>Courses</a>
           </li>
         </ul>
       </nav>
