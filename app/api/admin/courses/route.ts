@@ -41,12 +41,7 @@ export const GET = withAdmin(async ({ req, searchParams }) => {
 
   const rows = await query.execute();
 
-  return NextResponse.json({
-    search: search,
-    page: page,
-    limit: ROWS_PER_PAGE,
-    data: rows,
-  });
+  return NextResponse.json(rows);
 });
 
 // TODO: This endpoint not checked yet

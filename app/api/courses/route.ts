@@ -38,10 +38,5 @@ export const GET = async (request: NextRequest) => {
 
   const rows = await query.execute();
 
-  return NextResponse.json({
-    search: search,
-    page: page,
-    limit: ROWS_PER_PAGE,
-    data: rows,
-  });
+  return NextResponse.json(rows);
 };
