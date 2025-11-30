@@ -17,6 +17,7 @@ import { mutate } from "swr";
 import { toast } from "sonner";
 import SelectCategory from "@admin/components/ui/components/SelectCategory";
 import Image from "next/image";
+import { createSlug } from "@/utils/urls";
 
 export default function AddEditModal({
   setShowModal,
@@ -83,11 +84,6 @@ export default function AddEditModal({
 
       setSaving(false);
     });
-  };
-
-  // Create slug
-  const createSlug = (stringValue: string): string => {
-    return stringValue.toLowerCase().replace(/\s/g, "-");
   };
 
   // Set image preview

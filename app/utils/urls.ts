@@ -8,3 +8,7 @@ export const getSearchParams = (url: string) => {
 
   return params;
 };
+
+export const createSlug = (stringValue: string): string => {
+  return stringValue.toLowerCase().replace(/\s/g, "-");
+};
