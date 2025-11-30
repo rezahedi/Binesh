@@ -245,7 +245,7 @@ export default function AddEditModal({
               required
             />
           </div>
-          <Button className="w-full" type="submit" disabled={saveDisabled}>
+          <Button className="w-full" type="submit" disabled={saveDisabled()}>
             Create Course
           </Button>
         </form>
