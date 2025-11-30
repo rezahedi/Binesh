@@ -1,17 +1,15 @@
 import useRouterStuff from "@/hooks/use-router-stuff";
 import { fetcher } from "@/utils/fetcher";
 import useSWR from "swr";
-import { CourseProps, CategoryProps } from "@/lib/types";
+import { CourseWithCategoryProps } from "@/lib/types";
 
 export default function useCourses() {
-  const { getQueryString } = useRouterStuff();
+  const { pathname, getQueryString } = useRouterStuff();
 
-  const { data: courses, isValidating } = useSWR<
-    (CourseProps & {
-      category: CategoryProps;
-    })[]
+  const { data, isLoading, error, isValidating } = useSWR<
+    CourseWithCategoryProps[]
   >(
-    window.location.pathname.startsWith("/dashboard")
+    pathname.startsWith("/dashboard")
       ? `/api/admin/courses${getQueryString()}`
       : `/api/courses${getQueryString()}`,
     fetcher,
@@ -23,7 +21,9 @@ export default function useCourses() {
   );
 
   return {
-    courses,
+    courses: data,
+    isLoading,
+    error,
     isValidating,
   };
 }

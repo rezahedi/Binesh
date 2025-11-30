@@ -1,14 +1,17 @@
+import { CourseWithCategoryProps } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CourseCard(props: any) {
+export default function CourseCard(
+  props: CourseWithCategoryProps & { progress: number }
+) {
   const {
     // id,
     name,
     // description,
     slug,
     image,
-    level = "",
+    level,
     // categoryID,
     category,
     // ...rest
@@ -20,7 +23,7 @@ export default function CourseCard(props: any) {
 
   return (
     <Link
-      href={`${process.env.NEXT_APP_BASE}/courses/${slug}`}
+      href={`${process.env.NEXT_APP_BASE}/courses/${category.slug}/${slug}`}
       className="p-6 border border-gray-200 rounded-xl
         shadow-[2px_2px_0_rgba(0,0,0,0.1)]
         hover:shadow-[4px_4px_0_rgba(0,0,0,0.1)] hover:border-black
@@ -37,7 +40,7 @@ export default function CourseCard(props: any) {
       />
       <p className="uppercase text-xs font-medium text-orange-600">
         {category.name}
-        {level != "" && ` . LEVEL ${level}`}
+        {String(level) != "" && ` . LEVEL ${level}`}
       </p>
       <h4 className="flex-1 text-lg font-semibold text-balance">{name}</h4>
       {progress > -1 && (
