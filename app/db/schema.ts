@@ -112,7 +112,7 @@ export const courses = pgTable(
     slug: text().notNull(),
     image: text().notNull(),
     level: integer().notNull(),
-    lessens: integer().notNull(),
+    lessonsCount: integer("lessons_count").notNull(),
     createdAt: timestamp({ precision: 3, mode: "string" })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
