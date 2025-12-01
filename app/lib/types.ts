@@ -6,6 +6,9 @@ export type LessonsProps = Lessons;
 export type CategoryProps = Categories;
 
 export type CourseWithCategoryProps = Courses & { category: Categories };
+export type CourseWithDetailProps = CourseWithCategoryProps & {
+  lessons: Lessons[];
+};
 
 export const roles = ["admin", "editor"] as const;
 

@@ -140,6 +140,7 @@ export const lessons = pgTable(
     id: text().primaryKey().notNull(),
     name: text().notNull(),
     description: text().notNull(),
+    content: text("content").notNull(),
     slug: text().notNull(),
     unit: integer().notNull(),
     part: integer().notNull(),

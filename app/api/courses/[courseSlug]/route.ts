@@ -13,11 +13,12 @@ export const GET = async (
 ) => {
   const { courseSlug } = await params;
 
+  const { content, ...lessonsColumns } = getTableColumns(lessons);
   const response = await db
     .select({
       ...getTableColumns(courses),
       category: getTableColumns(categories),
-      lessons: getTableColumns(lessons),
+      lessons: lessonsColumns,
     })
     .from(courses)
     .where(eq(courses.slug, courseSlug))
