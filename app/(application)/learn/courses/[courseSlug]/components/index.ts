@@ -12,4 +12,4 @@ export {
   LeftCenter,
   CenterRight,
   RightCenter,
-}
+};

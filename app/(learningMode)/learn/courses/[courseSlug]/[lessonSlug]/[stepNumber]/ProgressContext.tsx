@@ -15,7 +15,7 @@ type ContextType = {
 
 const ProgressContext = createContext<ContextType | undefined>(undefined);
 
-const ProgressProvider = ({children}: {children: React.ReactNode}) => {
+const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [stepCount, setStepCount] = useState<number | null>(null);
 
@@ -25,7 +25,7 @@ const ProgressProvider = ({children}: {children: React.ReactNode}) => {
 
   return (
     <ProgressContext.Provider
-      value={{currentStep, stepCount, nextStep, setStepCount}}
+      value={{ currentStep, stepCount, nextStep, setStepCount }}
     >
       {children}
     </ProgressContext.Provider>
@@ -40,4 +40,4 @@ const useProgress = () => {
   return context;
 };
 
-export {ProgressProvider, useProgress};
+export { ProgressProvider, useProgress };

@@ -1,4 +1,4 @@
-import {cn} from "@/utils/cn";
+import { cn } from "@/utils/cn";
 
 export default function ProgressBar({
   title = "",
@@ -26,7 +26,7 @@ export default function ProgressBar({
         <div className="w-full bg-gray-200 rounded-full h-2 group-hover:bg-gray-300">
           <div
             className="bg-[#29cc57] h-full rounded-full group-hover:bg-[#179e7e] transition-all duration-200"
-            style={{width: `${progress}%`}}
+            style={{ width: `${progress}%` }}
           ></div>
         </div>
       </div>

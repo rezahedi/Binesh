@@ -1,9 +1,9 @@
-import {SectionType} from "@/lib/quizParser";
+import { SectionType } from "@/lib/quizParser";
 import QuizRenderer from "./quizzes/QuizRenderer";
 import Markdown from "react-markdown";
 import Img from "./markdown/Img";
-import {useProgress} from "../ProgressContext";
-import {useState} from "react";
+import { useProgress } from "../ProgressContext";
+import { useState } from "react";
 
 export default function ShowStep({
   step,
@@ -12,7 +12,7 @@ export default function ShowStep({
   step: SectionType;
   index: number;
 }) {
-  const {nextStep, currentStep} = useProgress();
+  const { nextStep, currentStep } = useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
   // TODO: Temporary solution, find a better way than passing step's `index` to check if this is the curr step
@@ -24,8 +24,8 @@ export default function ShowStep({
 
   return (
     <div className="min-h-fit pt-8 pb-12">
-      <Markdown components={{img: Img}}>{step.content}</Markdown>
-      <Markdown components={{img: Img}}></Markdown>
+      <Markdown components={{ img: Img }}>{step.content}</Markdown>
+      <Markdown components={{ img: Img }}></Markdown>
       {step.quiz && (
         <QuizRenderer
           quiz={step.quiz}

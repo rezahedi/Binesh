@@ -1,18 +1,14 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import { getServerSession } from "next-auth/next";
+import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
-import { PrismaClient } from "@prisma/client"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
+// import GoogleProvider from "next-auth/providers/google";
+import { PrismaClient } from "@prisma/client";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { getSearchParams } from "@/utils/urls";
 // import EmailProvider, { SendVerificationRequestParams } from "next-auth/providers/email";
 // import { Resend } from 'resend';
 // import { recordEvent } from "@/app/lib/tinybird";
 
-if (
-  !process.env.AUTH_GITHUB_ID ||
-  !process.env.AUTH_GITHUB_SECRET
-) {
+if (!process.env.AUTH_GITHUB_ID || !process.env.AUTH_GITHUB_SECRET) {
   throw new Error("Auth required env variables are not set");
 }
 
@@ -30,7 +26,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.AUTH_GITHUB_ID,
       clientSecret: process.env.AUTH_GITHUB_SECRET,
     }),
-/*
+    /*
     EmailProvider({
       server: '',
       from: 'noreply@rezahedi.dev',
@@ -61,23 +57,23 @@ export const authOptions: NextAuthOptions = {
 */
   ],
   debug: process.env.NODE_ENV === "development",
-  
+
   callbacks: {
-    async session({user, session}) {
+    async session({ user, session }) {
       if (session.user) {
-        let res = await prisma.user.findUnique({
+        const res = await prisma.user.findUnique({
           where: {
-            id: user.id
-          }
+            id: user.id,
+          },
         });
-        session.user.timezone = res!.timezone
+        session.user.timezone = res!.timezone;
         session.user.id = user.id;
       }
 
       return session;
     },
   },
-/*  pages: {
+  /*  pages: {
     signIn: "/signin",
   },
   events: {
@@ -113,7 +109,6 @@ interface WithAdminHandler {
 export const withAdmin =
   (handler: WithAdminHandler) =>
   async (req: Request, { params }: { params: Record<string, string> }) => {
-
     // TODO: Check if user is admin
 
     const searchParams = getSearchParams(req.url);

@@ -1,19 +1,21 @@
-import {SectionType} from "@/lib/quizParser";
-import {useEffect, useState} from "react";
+import { SectionType } from "@/lib/quizParser";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
 const useSteps = () => {
   const [steps, setSteps] = useState<SectionType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const { courseSlug, lessonSlug } = useParams();
 
   useEffect(() => {
+    if (!courseSlug || !lessonSlug) return;
+
     (async () => {
       setLoading(true);
 
       // TODO: Fetch all the parts
-      const response = await fetch(
-        "/api/content/computer-science/beginners-python-programming/welcome-to-python.md"
-      );
+      const response = await fetch(`/api/courses/${courseSlug}/${lessonSlug}`);
       if (!response.ok) {
         setError(true);
         setLoading(false);
@@ -23,9 +25,9 @@ const useSteps = () => {
       setSteps(data.steps);
       setLoading(false);
     })();
-  }, []);
+  }, [courseSlug, lessonSlug]);
 
-  return {steps, loading, error};
+  return { steps, loading, error };
 };
 
 export default useSteps;

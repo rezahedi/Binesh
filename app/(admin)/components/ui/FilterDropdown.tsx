@@ -1,27 +1,23 @@
-import useRouterStuff from "@/hooks/use-router-stuff"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@admin/components/ui/dropdown-menu"
-import { Button } from "@admin/components/ui/button"
-import {
-  ListFilter,
-} from "lucide-react"
+} from "@admin/components/ui/dropdown-menu";
+import { Button } from "@admin/components/ui/button";
+import { ListFilter } from "lucide-react";
 
 type FilterDropdownProps = {
-  name: string
-  defaultOption: string
-  options: string[]
-}
+  name: string;
+  defaultOption: string;
+  options: string[];
+};
 
-export default function FilterDropdown({name, defaultOption, options}: FilterDropdownProps) {
-  const { searchParams } = useRouterStuff()
-
+export default function FilterDropdown({
+  name,
+  defaultOption,
+  options,
+}: FilterDropdownProps) {
   // TODO: Get the current filter from the query string
 
   return (
@@ -35,11 +31,15 @@ export default function FilterDropdown({name, defaultOption, options}: FilterDro
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuCheckboxItem checked>{defaultOption}</DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem checked>
+          {defaultOption}
+        </DropdownMenuCheckboxItem>
         {options.map((option, index) => (
-          <DropdownMenuCheckboxItem key={index}>{option}</DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem key={index}>
+            {option}
+          </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

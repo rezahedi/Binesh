@@ -1,13 +1,15 @@
-import React from 'react'
+export default async function page({
+  params,
+}: {
+  params: Promise<{ courseSlug: string; lessonSlug: string }>;
+}) {
+  const { courseSlug, lessonSlug } = await params;
 
-export default function page(
-  { params }:
-  { params: { courseSlug: string, lessonSlug: string } }
-) {
-  console.log(params)
   return (
     <div>
-      <h1>Course: {params.courseSlug} / Lesson: {params.lessonSlug}</h1>
+      <h1>
+        Course: {courseSlug} / Lesson: {lessonSlug}
+      </h1>
     </div>
-  )
+  );
 }

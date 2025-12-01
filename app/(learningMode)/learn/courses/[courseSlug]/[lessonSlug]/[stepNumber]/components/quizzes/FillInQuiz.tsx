@@ -1,5 +1,5 @@
-import {FillQuizType, QuizType} from "@/lib/quizParser";
-import React, {useEffect, useState} from "react";
+import { FillQuizType, QuizType } from "@/lib/quizParser";
+import React, { useEffect, useState } from "react";
 
 const FillInQuiz = ({
   quiz,
@@ -34,7 +34,7 @@ const FillInQuiz = ({
 
   useEffect(() => {
     if (isCorrect !== null) onCheck(isCorrect);
-  }, [isCorrect]);
+  }, [isCorrect, onCheck]);
 
   return (
     <div>

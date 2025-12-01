@@ -1,6 +1,3 @@
-
 export default function Page() {
-  return (
-    <p>Learning Path page</p>
-  )
+  return <p>Learning Path page</p>;
 }

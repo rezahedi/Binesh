@@ -1,7 +1,7 @@
 import Link from "next/link";
-import {LessonsProps} from "@/lib/types";
-import {Footprints, MapPin} from "lucide-react";
-import {CenterLeft, LeftCenter, CenterRight, RightCenter} from "./";
+import { LessonsProps } from "@/lib/types";
+import { Footprints } from "lucide-react";
+import { CenterLeft, LeftCenter, CenterRight, RightCenter } from "./";
 import {
   Popover,
   PopoverContent,

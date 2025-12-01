@@ -1,5 +1,5 @@
-import {QuizType, RadioQuizType} from "@/lib/quizParser";
-import React, {useEffect, useState} from "react";
+import { QuizType, RadioQuizType } from "@/lib/quizParser";
+import React, { useEffect, useState } from "react";
 
 const RadioQuiz = ({
   quiz,
@@ -28,7 +28,7 @@ const RadioQuiz = ({
 
   useEffect(() => {
     if (isCorrect !== null) onCheck(isCorrect);
-  }, [isCorrect]);
+  }, [isCorrect, onCheck]);
 
   return (
     <div>

@@ -1,55 +1,53 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
 import { withAdmin } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import { desc, eq, getTableColumns, like, or } from "drizzle-orm";
+import db from "@/db";
+import { categories, courses } from "@/db/schema";
 
 const prisma = new PrismaClient();
 
 export const GET = withAdmin(async ({ searchParams }) => {
-  const ROWS_PER_PAGE = 10
+  const ROWS_PER_PAGE = 10;
   const {
     search,
     sort = "createdAt",
-    page,
+    page = "1",
   } = searchParams as {
     search?: string;
     sort?: "createdAt" | "updatedAt";
     page?: string;
   };
 
-  const response = await prisma.courses.findMany(
-    {
-      where: {
-        ...(search && {
-          OR: [
-            {
-              name: { contains: search },
-            },
-            {
-              description: { contains: search },
-            },
-          ],
-        }),
-      },
-      include: {
-        category: true,
-      },
-      orderBy: {
-        [sort]: "desc",
-      },
-      take: ROWS_PER_PAGE,
-      ...(page && {
-        skip: (parseInt(page) - 1) * ROWS_PER_PAGE,
-      }),
-    }
-  );
+  const query = db
+    .select({
+      ...getTableColumns(courses),
+      category: getTableColumns(categories),
+    })
+    .from(courses)
+    .offset((Number(page) - 1) * ROWS_PER_PAGE)
+    .limit(ROWS_PER_PAGE)
+    .orderBy(desc(courses[sort]))
+    .leftJoin(categories, eq(courses.categoryID, categories.id));
 
-  return NextResponse.json(response);
+  if (search)
+    query.where(
+      or(
+        like(courses.name, `%${search}%`),
+        like(courses.description, `%${search}%`)
+      )
+    );
+
+  const rows = await query.execute();
+
+  return NextResponse.json(rows);
 });
 
 // TODO: This endpoint not checked yet
 
 export const POST = withAdmin(async ({ req }) => {
-  const { name, slug, level, categoryID, image, description } = await req.json();
+  const { name, slug, level, categoryID, image, description } =
+    await req.json();
 
   const response = await prisma.courses.create({
     data: {

@@ -1,5 +1,5 @@
-import {CheckListQuizType, QuizType} from "@/lib/quizParser";
-import React, {useEffect, useState} from "react";
+import { CheckListQuizType, QuizType } from "@/lib/quizParser";
+import React, { useEffect, useState } from "react";
 
 const CheckListQuiz = ({
   quiz,
@@ -33,7 +33,7 @@ const CheckListQuiz = ({
 
   useEffect(() => {
     if (isCorrect !== null) onCheck(isCorrect);
-  }, [isCorrect]);
+  }, [isCorrect, onCheck]);
 
   return (
     <div>

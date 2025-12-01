@@ -1,14 +1,8 @@
-import Image from "next/image"
-import Link from "next/link"
-import {
-  File,
-  ListFilter,
-  MoreHorizontal,
-  PlusCircle,
-} from "lucide-react"
+import Image from "next/image";
+import { File, ListFilter, MoreHorizontal, PlusCircle } from "lucide-react";
 
-import { Badge } from "@admin/components/ui/badge"
-import { Button } from "@admin/components/ui/button"
+import { Badge } from "@admin/components/ui/badge";
+import { Button } from "@admin/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,7 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@admin/components/ui/card"
+} from "@admin/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -25,7 +19,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@admin/components/ui/dropdown-menu"
+} from "@admin/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -33,13 +27,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@admin/components/ui/table"
+} from "@admin/components/ui/table";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@admin/components/ui/tabs"
+} from "@admin/components/ui/tabs";
 
 export default function Dashboard() {
   return (
@@ -70,9 +64,7 @@ export default function Dashboard() {
                 Active
               </DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>
-                Archived
-              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button size="sm" variant="outline" className="h-8 gap-1">
@@ -140,9 +132,7 @@ export default function Dashboard() {
                   <TableCell className="hidden md:table-cell">
                     $499.99
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    25
-                  </TableCell>
+                  <TableCell className="hidden md:table-cell">25</TableCell>
                   <TableCell className="hidden md:table-cell">
                     2023-07-12 10:42 AM
                   </TableCell>
@@ -198,12 +188,11 @@ export default function Dashboard() {
           </CardContent>
           <CardFooter>
             <div className="text-xs text-muted-foreground">
-              Showing <strong>1-10</strong> of <strong>32</strong>{" "}
-              products
+              Showing <strong>1-10</strong> of <strong>32</strong> products
             </div>
           </CardFooter>
         </Card>
       </TabsContent>
     </Tabs>
-  )
+  );
 }

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import {ClassAttributes, ImgHTMLAttributes} from "react";
-import {ExtraProps} from "react-markdown";
+import { ClassAttributes, ImgHTMLAttributes } from "react";
+import { ExtraProps } from "react-markdown";
 
 const Img = ({
   src,
