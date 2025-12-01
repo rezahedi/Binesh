@@ -1,6 +1,7 @@
 import {
   CourseProps,
   CourseWithCategoryProps,
+  CourseWithDetailProps,
   LessonsProps,
 } from "@/lib/types";
 import { notFound } from "next/navigation";
@@ -10,33 +11,25 @@ import Image from "next/image";
 export default async function page({
   params,
 }: {
-  params: { courseSlug: string };
+  params: Promise<{ courseSlug: string }>;
 }) {
-  const { courseSlug } = params;
+  const { courseSlug } = await params;
 
   // fetch courses from /api/admin/courses
-  const course: CourseWithCategoryProps = await fetch(
-    "http://localhost:3000/api/admin/courses/" + courseSlug,
+  const courseDetail: CourseWithDetailProps = await fetch(
+    "http://localhost:3000/api/courses/" + courseSlug,
     { method: "GET" }
   ).then(async (res) => {
     if (res.status === 200) {
       return await res.json();
     }
   });
+
+  const { lessons, ...course } = courseDetail;
 
   if (!course || !course.id) {
     return notFound();
   }
-
-  // fetch lessons from /api/admin/courses/[courseSlug]/lessons
-  const lessons: LessonsProps[] = await fetch(
-    "http://localhost:3000/api/admin/courses/" + courseSlug + "/lessons",
-    { method: "GET" }
-  ).then(async (res) => {
-    if (res.status === 200) {
-      return await res.json();
-    }
-  });
 
   if (!lessons || lessons.length === 0) {
     return notFound();

@@ -1,7 +1,17 @@
+import matter from "gray-matter";
+
 export type SectionType = {
   title: string;
   content: string;
   quiz: QuizType | null;
+};
+
+export const parseLesson = (
+  markdownContent: string
+): { metadata: Record<string, string>; steps: SectionType[] } => {
+  const { data: metadata, content } = matter(markdownContent);
+  const steps: SectionType[] = parseSections(content);
+  return { metadata, steps };
 };
 
 export const parseSections = (section: string): SectionType[] => {
