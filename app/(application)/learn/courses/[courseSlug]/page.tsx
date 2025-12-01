@@ -1,9 +1,4 @@
-import {
-  CourseProps,
-  CourseWithCategoryProps,
-  CourseWithDetailProps,
-  LessonsProps,
-} from "@/lib/types";
+import { CourseWithDetailProps } from "@/lib/types";
 import { notFound } from "next/navigation";
 import { LessonCard } from "./components";
 import Image from "next/image";

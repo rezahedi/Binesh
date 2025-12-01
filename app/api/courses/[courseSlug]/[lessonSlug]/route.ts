@@ -35,7 +35,7 @@ export const GET = async (
     return NextResponse.json({ message: `Lesson not found` }, { status: 404 });
 
   // Parse markdown content
-  const { metadata, steps } = parseLesson(lessonResult[0].content);
+  const { steps } = parseLesson(lessonResult[0].content);
 
   return NextResponse.json({
     ...lessonResult[0],

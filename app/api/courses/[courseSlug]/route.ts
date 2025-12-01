@@ -13,7 +13,9 @@ export const GET = async (
 ) => {
   const { courseSlug } = await params;
 
-  const { content, ...lessonsColumns } = getTableColumns(lessons);
+  const { content: _content, ...lessonsColumns } = getTableColumns(lessons);
+  void _content;
+
   const response = await db
     .select({
       ...getTableColumns(courses),

@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { withAdmin } from "@/lib/auth";
 import { NextResponse } from "next/server";
-import { eq, getTableColumns, or } from "drizzle-orm";
+import { eq, getTableColumns } from "drizzle-orm";
 import db from "@/db";
 import { categories, courses } from "@/db/schema";
 

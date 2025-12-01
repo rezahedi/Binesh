@@ -9,6 +9,8 @@ const useSteps = () => {
   const { courseSlug, lessonSlug } = useParams();
 
   useEffect(() => {
+    if (!courseSlug || !lessonSlug) return;
+
     (async () => {
       setLoading(true);
 
@@ -23,7 +25,7 @@ const useSteps = () => {
       setSteps(data.steps);
       setLoading(false);
     })();
-  }, []);
+  }, [courseSlug, lessonSlug]);
 
   return { steps, loading, error };
 };
