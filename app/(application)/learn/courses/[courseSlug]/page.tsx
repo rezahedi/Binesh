@@ -65,7 +65,7 @@ export default async function page({
             <p className="my-3 md:my-6 text-gray-700 text-balance">
               {course.description}
             </p>
-            <b>{course.lessens} Lessons</b>
+            <b>{course.lessonsCount} Lessons</b>
           </div>
         </div>
       </div>

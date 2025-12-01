@@ -38,7 +38,7 @@ export default function AddEditModal({
       level: 1,
       categoryID: "",
       image: "",
-      lessens: 0,
+      lessonsCount: 0,
       createdAt: new Date().toDateString(),
       updatedAt: new Date().toDateString(),
     }
