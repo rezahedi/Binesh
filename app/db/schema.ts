@@ -148,16 +148,16 @@ export const lessons = pgTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp({ precision: 3, mode: "string" }).notNull(),
-    courseId: text().notNull(),
+    courseID: text().notNull(),
   },
   (table) => [
     uniqueIndex("Lessons_courseID_slug_key").using(
       "btree",
-      table.courseId.asc().nullsLast().op("text_ops"),
+      table.courseID.asc().nullsLast().op("text_ops"),
       table.slug.asc().nullsLast().op("text_ops")
     ),
     foreignKey({
-      columns: [table.courseId],
+      columns: [table.courseID],
       foreignColumns: [courses.id],
       name: "Lessons_courseID_fkey",
     })

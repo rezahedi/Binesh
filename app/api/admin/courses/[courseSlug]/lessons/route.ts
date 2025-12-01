@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export const GET = withAdmin(async ({ params, searchParams }) => {
-  const { id: courseSlug } = params;
+  const { courseSlug } = params;
   const { search, sort = "part" } = searchParams as {
     search?: string;
     sort?: "part" | "createdAt" | "updatedAt";

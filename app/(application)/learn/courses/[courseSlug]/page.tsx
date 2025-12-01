@@ -1,4 +1,8 @@
-import { CourseProps, LessonsProps } from "@/lib/types";
+import {
+  CourseProps,
+  CourseWithCategoryProps,
+  LessonsProps,
+} from "@/lib/types";
 import { notFound } from "next/navigation";
 import { LessonCard } from "./components";
 import Image from "next/image";
@@ -11,7 +15,7 @@ export default async function page({
   const { courseSlug } = params;
 
   // fetch courses from /api/admin/courses
-  const course: CourseProps = await fetch(
+  const course: CourseWithCategoryProps = await fetch(
     "http://localhost:3000/api/admin/courses/" + courseSlug,
     { method: "GET" }
   ).then(async (res) => {

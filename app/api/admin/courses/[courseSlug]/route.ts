@@ -1,30 +1,33 @@
-// TODO: This entire code not checked yet
-
 import { PrismaClient } from "@prisma/client";
 import { withAdmin } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import { eq, getTableColumns, or } from "drizzle-orm";
+import db from "@/db";
+import { categories, courses } from "@/db/schema";
 
 const prisma = new PrismaClient();
 
 export const GET = withAdmin(async ({ params }) => {
-  const { id: slug } = params;
+  const { courseSlug } = await params;
 
-  const response = await prisma.courses.findFirst({
-    where: { slug },
-    include: {
-      category: true,
-    },
-  });
+  const response = await db
+    .select({
+      ...getTableColumns(courses),
+      category: getTableColumns(categories),
+    })
+    .from(courses)
+    .where(eq(courses.slug, courseSlug))
+    .leftJoin(categories, eq(courses.categoryID, categories.id));
 
   // If course doesn't exists
-  if (!response)
+  if (response.length !== 1)
     return NextResponse.json({ message: `Course not found` }, { status: 404 });
 
-  return NextResponse.json(response);
+  return NextResponse.json(response[0]);
 });
 
 export const PATCH = withAdmin(async ({ req, params }) => {
-  const { id } = params;
+  const { id } = await params;
   const { name, slug, level, categoryID, image, description } =
     await req.json();
 
