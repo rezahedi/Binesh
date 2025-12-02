@@ -12,7 +12,7 @@ export default function Header({ className }: { className?: string }) {
 
   return (
     <header
-      className={cn("flex items-center bg-white shadow-lg p-5", className)}
+      className={cn("flex items-center bg-white shadow-lg z-10 p-5", className)}
     >
       <div>
         <Link href="../">
