@@ -24,7 +24,7 @@ export default function ShowStep({
 
   return (
     <div className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}>
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col">
         <Markdown components={{ img: Img }}>{step.content}</Markdown>
         <Markdown components={{ img: Img }}></Markdown>
         {step.quiz && (
@@ -35,12 +35,23 @@ export default function ShowStep({
           />
         )}
       </div>
-      <div>
-        {quizResult !== null && (
-          <p>{quizResult ? "✅ Correct" : "❌ Incorrect"}</p>
-        )}
-        {isNextReady && <button onClick={nextStep}>Next</button>}
-      </div>
+      {isNextReady && (
+        <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
+          <div className="flex-1">
+            {quizResult !== null && (
+              <p className="font-semibold text-xl text-[#29cc57]">
+                {quizResult ? "🎉 Correct" : "😩 Incorrect"}
+              </p>
+            )}
+          </div>
+          <button
+            className="font-semibold p-3 px-6 rounded-full bg-[#29cc57] text-white cursor-pointer"
+            onClick={nextStep}
+          >
+            Continue
+          </button>
+        </div>
+      )}
     </div>
   );
 }

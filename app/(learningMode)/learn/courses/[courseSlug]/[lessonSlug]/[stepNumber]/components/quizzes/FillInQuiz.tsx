@@ -37,23 +37,37 @@ const FillInQuiz = ({
   }, [isCorrect, onCheck]);
 
   return (
-    <div>
-      <p>
-        {pre}
-        <input
-          className="border"
-          name="userAnswer"
-          type={quizBlock.inputType}
-          defaultValue={userAnswer || ""}
-          onChange={handleChange}
-          readOnly={!isActive}
-        />
-        {suf}
-      </p>
+    <div className="flex-1 flex flex-col">
+      <div className="flex-1">
+        <div className="my-4 p-4 px-6 rounded-lg bg-gray-100">
+          {pre}
+          <input
+            className="border"
+            name="userAnswer"
+            type={quizBlock.inputType}
+            defaultValue={userAnswer || ""}
+            onChange={handleChange}
+            readOnly={!isActive}
+          />
+          {suf}
+          <p>
+            {quizBlock.answer} = {userAnswer}
+          </p>
+        </div>
+        {isCorrect !== null && (
+          <p>{isCorrect ? "🎉 Correct" : "😩 Incorrect"}</p>
+        )}
+      </div>
       {isActive && !isCorrect && (
-        <button onClick={handleCheckAnswer} disabled={userAnswer === null}>
-          Check Answer
-        </button>
+        <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
+          <button
+            onClick={handleCheckAnswer}
+            disabled={userAnswer === null}
+            className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-zinc-800 disabled:bg-zinc-100 text-white disabled:text-zinc-400 cursor-pointer disabled:cursor-not-allowed"
+          >
+            Check
+          </button>
+        </div>
       )}
     </div>
   );
