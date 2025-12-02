@@ -6,7 +6,7 @@ const markdownComponents = {
 };
 
 const ReactMarkdown = ({ children }: { children?: string | null }) => {
-  if (children) return null;
+  if (!children) return null;
 
   return <Markdown components={markdownComponents}>{children}</Markdown>;
 };
