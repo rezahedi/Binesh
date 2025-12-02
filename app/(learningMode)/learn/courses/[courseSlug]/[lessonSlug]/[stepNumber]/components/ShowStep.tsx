@@ -1,7 +1,7 @@
 import { SectionType } from "@/lib/quizParser";
 import QuizRenderer from "./quizzes/QuizRenderer";
 import Markdown from "react-markdown";
-import Img from "./markdown/Img";
+import markdownComponents from "./markdown";
 import { useProgress } from "../ProgressContext";
 import { useState } from "react";
 
@@ -25,7 +25,7 @@ export default function ShowStep({
   return (
     <div className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}>
       <div className="flex-1 flex flex-col">
-        <Markdown components={{ img: Img }}>{step.content}</Markdown>
+        <Markdown components={markdownComponents}>{step.content}</Markdown>
         {step.quiz && (
           <QuizRenderer
             quiz={step.quiz}
