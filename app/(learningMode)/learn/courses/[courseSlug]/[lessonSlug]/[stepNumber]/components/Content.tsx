@@ -1,19 +1,29 @@
 import ShowStep from "./ShowStep";
 import useSteps from "../useSteps";
 import { useProgress } from "../ProgressContext";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { cn } from "@/utils/cn";
 
 const Content = ({ className }: { className?: string }) => {
   const { steps, loading, error } = useSteps();
   const { currentStep, setStepCount } = useProgress();
+  const scrollableDiv = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setStepCount(steps.length);
   }, [steps, setStepCount]);
 
+  useEffect(() => {
+    if (!scrollableDiv.current) return;
+
+    scrollableDiv.current.scrollTo({
+      top: scrollableDiv.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [currentStep]);
+
   return (
-    <main className={cn("overflow-y-auto", className)}>
+    <div ref={scrollableDiv} className={cn("overflow-y-auto", className)}>
       <div className="h-full max-w-2xl mx-auto px-4">
         {loading && (
           <div className="text-orange-500 font-semibold text-xl">
@@ -29,7 +39,7 @@ const Content = ({ className }: { className?: string }) => {
               <ShowStep key={index} step={step} index={index} />
             ))}
       </div>
-    </main>
+    </div>
   );
 };
 
