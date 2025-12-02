@@ -24,16 +24,16 @@ export default function ShowStep({
 
   return (
     <div className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}>
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1">
         <Markdown components={markdownComponents}>{step.content}</Markdown>
-        {step.quiz && (
-          <QuizRenderer
-            quiz={step.quiz}
-            isActive={isCurrent && !isQuizFinished}
-            onCheck={setQuizResult}
-          />
-        )}
       </div>
+      {step.quiz && (
+        <QuizRenderer
+          quiz={step.quiz}
+          isActive={isCurrent && !isQuizFinished}
+          onCheck={setQuizResult}
+        />
+      )}
       {isNextReady && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
           <div className="flex-1">

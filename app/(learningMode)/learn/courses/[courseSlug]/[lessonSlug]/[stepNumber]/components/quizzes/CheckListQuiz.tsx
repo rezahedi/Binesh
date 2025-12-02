@@ -46,8 +46,8 @@ const CheckListQuiz = ({
   }, [isCorrect, onCheck]);
 
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="flex-1">
+    <>
+      <div className="flex-10">
         <div className="my-4 p-6 px-8 rounded-xl bg-gray-50">
           <Markdown components={markdownComponents}>{quiz.content}</Markdown>
           <div
@@ -100,7 +100,7 @@ const CheckListQuiz = ({
           </button>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
