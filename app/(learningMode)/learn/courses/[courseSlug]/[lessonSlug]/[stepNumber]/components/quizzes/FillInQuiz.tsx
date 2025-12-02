@@ -1,5 +1,7 @@
 import { FillQuizType, QuizType } from "@/lib/quizParser";
 import React, { useEffect, useState } from "react";
+import Markdown from "react-markdown";
+import Img from "../markdown/Img";
 
 const FillInQuiz = ({
   quiz,
@@ -40,6 +42,7 @@ const FillInQuiz = ({
     <div className="flex-1 flex flex-col">
       <div className="flex-1">
         <div className="my-4 p-4 px-6 rounded-lg bg-gray-100">
+          <Markdown components={{ img: Img }}>{quiz.content}</Markdown>
           {pre}
           <input
             className="border"

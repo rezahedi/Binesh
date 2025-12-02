@@ -26,7 +26,6 @@ export default function ShowStep({
     <div className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}>
       <div className="flex-1 flex flex-col">
         <Markdown components={{ img: Img }}>{step.content}</Markdown>
-        <Markdown components={{ img: Img }}></Markdown>
         {step.quiz && (
           <QuizRenderer
             quiz={step.quiz}
