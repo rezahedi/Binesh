@@ -23,20 +23,24 @@ export default function ShowStep({
   const isNextReady = isCurrent && (!haveQuiz || (haveQuiz && isQuizFinished));
 
   return (
-    <div className="min-h-fit pt-8 pb-12">
-      <Markdown components={{ img: Img }}>{step.content}</Markdown>
-      <Markdown components={{ img: Img }}></Markdown>
-      {step.quiz && (
-        <QuizRenderer
-          quiz={step.quiz}
-          isActive={isCurrent && !isQuizFinished}
-          onCheck={setQuizResult}
-        />
-      )}
-      {quizResult !== null && (
-        <p>{quizResult ? "✅ Correct" : "❌ Incorrect"}</p>
-      )}
-      {isNextReady && <button onClick={nextStep}>Next</button>}
+    <div className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}>
+      <div className="flex-1">
+        <Markdown components={{ img: Img }}>{step.content}</Markdown>
+        <Markdown components={{ img: Img }}></Markdown>
+        {step.quiz && (
+          <QuizRenderer
+            quiz={step.quiz}
+            isActive={isCurrent && !isQuizFinished}
+            onCheck={setQuizResult}
+          />
+        )}
+      </div>
+      <div>
+        {quizResult !== null && (
+          <p>{quizResult ? "✅ Correct" : "❌ Incorrect"}</p>
+        )}
+        {isNextReady && <button onClick={nextStep}>Next</button>}
+      </div>
     </div>
   );
 }

@@ -7,9 +7,9 @@ import Content from "./components/Content";
 export default function Page() {
   return (
     <ProgressProvider>
-      <div className="flex flex-col h-screen min-h-fit">
+      <div className="flex flex-col h-screen">
         <Header />
-        <Content />
+        <Content className="flex-1" />
       </div>
     </ProgressProvider>
   );
