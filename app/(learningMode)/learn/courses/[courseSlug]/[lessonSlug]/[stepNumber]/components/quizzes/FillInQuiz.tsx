@@ -20,6 +20,7 @@ const FillInQuiz = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isActive) return;
 
+    setIsCorrect(null);
     setUserAnswer(e.target.value);
   };
 
@@ -41,7 +42,7 @@ const FillInQuiz = ({
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex-1">
-        <div className="my-4 p-4 px-6 rounded-lg bg-gray-100">
+        <div className="my-4 p-6 px-8 rounded-xl bg-gray-50">
           <Markdown components={markdownComponents}>{quiz.content}</Markdown>
           {pre}
           <input
