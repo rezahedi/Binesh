@@ -4,13 +4,12 @@ import { useProgress } from "../ProgressContext";
 import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 
-export default function ShowStep({
-  step,
-  index,
-}: {
+interface ShowStepProps extends React.ComponentProps<"div"> {
   step: SectionType;
   index: number;
-}) {
+}
+
+export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   const { nextStep, currentStep } = useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
@@ -22,7 +21,10 @@ export default function ShowStep({
   const isNextReady = isCurrent && (!haveQuiz || (haveQuiz && isQuizFinished));
 
   return (
-    <div className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}>
+    <div
+      className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}
+      {...restProps}
+    >
       <div className="flex-1">
         <ReactMarkdown>{step.content}</ReactMarkdown>
       </div>
