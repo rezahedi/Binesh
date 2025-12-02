@@ -49,6 +49,8 @@ const FillInQuiz = ({
           <input
             className={cn(
               `rounded-xl p-2 px-3 text-center font-medium border-2 border-zinc-300 hover:border-blue-300 hover:bg-blue-50 field-sizing-content max-w-2xs`,
+              quizBlock.inputType == "number" &&
+                `[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`,
               isCorrect !== null
                 ? isCorrect === true
                   ? `border-green-300 bg-green-50 text-green-700`
