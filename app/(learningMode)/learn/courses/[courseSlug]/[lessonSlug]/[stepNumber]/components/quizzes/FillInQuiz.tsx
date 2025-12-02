@@ -2,6 +2,7 @@ import { FillQuizType, QuizType } from "@/lib/quizParser";
 import React, { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import markdownComponents from "../markdown";
+import { cn } from "@/utils/cn";
 
 const FillInQuiz = ({
   quiz,
@@ -46,17 +47,26 @@ const FillInQuiz = ({
           <Markdown components={markdownComponents}>{quiz.content}</Markdown>
           {pre}
           <input
-            className="border"
+            className={cn(
+              `rounded-xl p-2 px-3 text-center font-medium border-2 border-zinc-300 hover:border-blue-300 hover:bg-blue-50 field-sizing-content max-w-2xs`,
+              isCorrect !== null
+                ? isCorrect === true
+                  ? `border-green-300 bg-green-50 text-green-700`
+                  : `border-red-300 bg-red-50 text-red-700`
+                : ``,
+              !isActive && `pointer-events-none`
+            )}
             name="userAnswer"
             type={quizBlock.inputType}
+            size={quizBlock.answer.length}
+            style={{
+              minWidth: `${quizBlock.answer.length + (quizBlock.inputType == "number" ? 3 : 0)}em`,
+            }}
             defaultValue={userAnswer || ""}
             onChange={handleChange}
             readOnly={!isActive}
           />
           {suf}
-          <p>
-            {quizBlock.answer} = {userAnswer}
-          </p>
         </div>
         {isCorrect !== null && (
           <p>{isCorrect ? "🎉 Correct" : "😩 Incorrect"}</p>
