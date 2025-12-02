@@ -88,9 +88,6 @@ const CheckListQuiz = ({
             ))}
           </div>
         </div>
-        {isCorrect !== null && (
-          <p>{isCorrect ? "🎉 Correct" : "😩 Incorrect"}</p>
-        )}
       </div>
       {isActive && !isCorrect && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
