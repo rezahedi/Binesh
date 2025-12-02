@@ -1,8 +1,7 @@
 import { QuizType, RadioQuizType } from "@/lib/quizParser";
 import React, { useEffect, useState } from "react";
-import Markdown from "react-markdown";
-import markdownComponents from "../markdown";
 import { cn } from "@/utils/cn";
+import ReactMarkdown from "@/lib/markdown";
 
 const RadioQuiz = ({
   quiz,
@@ -39,7 +38,7 @@ const RadioQuiz = ({
     <>
       <div className="flex-10">
         <div className="my-4 p-6 px-8 rounded-xl bg-gray-50">
-          <Markdown components={markdownComponents}>{quiz.content}</Markdown>
+          <ReactMarkdown>{quiz.content}</ReactMarkdown>
           <div
             className={cn(
               `grid gap-3 mt-4`,
