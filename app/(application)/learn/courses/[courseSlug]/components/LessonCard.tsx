@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { LessonsProps } from "@/lib/types";
 import { Footprints } from "lucide-react";
-import { CenterLeft, LeftCenter, CenterRight, RightCenter } from "./";
 import {
   Popover,
   PopoverContent,
@@ -49,18 +48,6 @@ export default function LessonCard({
           {lesson.name}
         </span>
       </div>
-      {index % 4 === 0 && (
-        <CenterLeft className="absolute top-[77px] left-[-110px] w-[454px] text-[#e5e5e5]" />
-      )}
-      {index % 4 === 1 && (
-        <LeftCenter className="absolute top-[77px] left-[-52px] w-[250px] text-[#e5e5e5]" />
-      )}
-      {index % 4 === 2 && (
-        <CenterRight className="absolute top-[-97px] left-[113px] w-[250px] text-[#e5e5e5]" />
-      )}
-      {index % 4 === 3 && (
-        <RightCenter className="absolute top-[77px] left-[-244px] w-[450px] text-[#e5e5e5]" />
-      )}
     </div>
   );
 }
