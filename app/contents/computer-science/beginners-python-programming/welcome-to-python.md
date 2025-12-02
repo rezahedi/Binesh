@@ -19,7 +19,9 @@ Veniam, fuga quae explicabo voluptas a excepturi, quibusdam dicta ratione dignis
 
 Lorem ipsum dolor sit amet consectetur $E = mc^2$ adipisicing elit. Dolores temporibus qui beatae repellat quo quis **libero quisquam dicta**. Rem eum nam et praesentium nemo numquam eos porro blanditiis veritatis qui.
 
-$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+```math
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+```
 
 ![Scale Photo Sample](/_temp/Molecules-nHpvAL.png)
 
@@ -34,6 +36,8 @@ What is the output of $4 / 2$?
 # Part 3
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa saepe quod veritatis obcaecati atque, tempora iusto? Ipsum tempore nesciunt, quisquam rem iure itaque, velit harum quos commodi exercitationem, [atque iusto](#)! Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae, ea consectetur quisquam vel architecto ex iure tempora itaque quasi nihil accusamus saepe, _repellendus delectus iusto obcaecati dolor harum_. Harum.
+
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
 ---
 
