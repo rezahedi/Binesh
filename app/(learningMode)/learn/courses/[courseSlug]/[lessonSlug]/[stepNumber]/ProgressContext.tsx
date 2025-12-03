@@ -20,6 +20,7 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
   const [stepCount, setStepCount] = useState<number | null>(null);
 
   const nextStep = () => {
+    if (stepCount === null || currentStep >= stepCount) return;
     setCurrentStep((prev) => prev + 1);
   };
 

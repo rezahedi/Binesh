@@ -3,12 +3,14 @@ import useSteps from "../useSteps";
 import { useProgress } from "../ProgressContext";
 import { useEffect, useRef } from "react";
 import { cn } from "@/utils/cn";
+import Link from "next/link";
 
 const Content = ({ className }: { className?: string }) => {
   const { steps, loading, error } = useSteps();
-  const { currentStep, setStepCount } = useProgress();
+  const { currentStep, stepCount, setStepCount } = useProgress();
   const mainElement = useRef<HTMLDivElement>(null);
   const currentStepElement = useRef<HTMLDivElement>(null);
+  const isLastStep = currentStep === stepCount;
 
   useEffect(() => {
     setStepCount(steps.length);
@@ -47,6 +49,16 @@ const Content = ({ className }: { className?: string }) => {
                 ref={currentStep === index + 1 ? currentStepElement : undefined}
               />
             ))}
+        {isLastStep && (
+          <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
+            <div className="flex-1">Algebra</div>
+            <Link href={"./2"}>
+              <button className="font-semibold p-3 px-6 rounded-full bg-[#29cc57] text-white cursor-pointer">
+                Next Lesson
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
