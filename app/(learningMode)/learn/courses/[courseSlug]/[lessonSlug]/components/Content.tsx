@@ -51,12 +51,9 @@ const Content = ({ className }: { className?: string }) => {
             ))}
         {isLastStep && (
           <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
-            <div className="flex-1">Algebra</div>
-            <Link href={"./2"}>
-              <button className="font-semibold p-3 px-6 rounded-full bg-[#29cc57] text-white cursor-pointer">
-                Next Lesson
-              </button>
-            </Link>
+            <button className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-[#29cc57] text-white cursor-pointer">
+              Finish
+            </button>
           </div>
         )}
       </div>

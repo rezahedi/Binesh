@@ -1,15 +1,16 @@
-export default async function page({
-  params,
-}: {
-  params: Promise<{ courseSlug: string; lessonSlug: string }>;
-}) {
-  const { courseSlug, lessonSlug } = await params;
+"use client";
 
+import Header from "./components/Header";
+import { ProgressProvider } from "./ProgressContext";
+import Content from "./components/Content";
+
+export default function Page() {
   return (
-    <div>
-      <h1>
-        Course: {courseSlug} / Lesson: {lessonSlug}
-      </h1>
-    </div>
+    <ProgressProvider>
+      <div className="flex flex-col h-screen">
+        <Header />
+        <Content className="flex-1" />
+      </div>
+    </ProgressProvider>
   );
 }
