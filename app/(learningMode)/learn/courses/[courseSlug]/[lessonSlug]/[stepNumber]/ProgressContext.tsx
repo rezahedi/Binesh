@@ -8,25 +8,30 @@ import {
 
 type ContextType = {
   currentStep: number;
-  stepCount: number | null;
   nextStep: () => void;
-  setStepCount: Dispatch<SetStateAction<number | null>>;
+  totalSteps: number | null;
+  setTotalSteps: Dispatch<SetStateAction<number | null>>;
 };
 
 const ProgressContext = createContext<ContextType | undefined>(undefined);
 
 const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [stepCount, setStepCount] = useState<number | null>(null);
+  const [totalSteps, setTotalSteps] = useState<number | null>(null);
 
   const nextStep = () => {
-    if (stepCount === null || currentStep >= stepCount) return;
+    if (totalSteps === null || currentStep >= totalSteps) return;
     setCurrentStep((prev) => prev + 1);
   };
 
   return (
     <ProgressContext.Provider
-      value={{ currentStep, stepCount, nextStep, setStepCount }}
+      value={{
+        currentStep,
+        nextStep,
+        totalSteps,
+        setTotalSteps,
+      }}
     >
       {children}
     </ProgressContext.Provider>

@@ -10,7 +10,7 @@ interface ShowStepProps extends React.ComponentProps<"div"> {
 }
 
 export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
-  const { nextStep, currentStep, stepCount } = useProgress();
+  const { nextStep, currentStep, totalSteps } = useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
   // TODO: Temporary solution, find a better way than passing step's `index` to check if this is the curr step
@@ -19,7 +19,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   const isQuizFinished = quizResult;
 
   const isNextReady = isCurrent && (!haveQuiz || (haveQuiz && isQuizFinished));
-  const isLastStep = currentStep === stepCount;
+  const isLastStep = currentStep === totalSteps;
 
   return (
     <div

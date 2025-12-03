@@ -7,14 +7,14 @@ import Link from "next/link";
 
 const Content = ({ className }: { className?: string }) => {
   const { steps, loading, error } = useSteps();
-  const { currentStep, stepCount, setStepCount } = useProgress();
+  const { currentStep, totalSteps, setTotalSteps } = useProgress();
   const mainElement = useRef<HTMLDivElement>(null);
   const currentStepElement = useRef<HTMLDivElement>(null);
-  const isLastStep = currentStep === stepCount;
+  const isLastStep = currentStep === totalSteps;
 
   useEffect(() => {
-    setStepCount(steps.length);
-  }, [steps, setStepCount]);
+    setTotalSteps(steps.length);
+  }, [steps, setTotalSteps]);
 
   // Smooth scroll down on next step
   useEffect(() => {

@@ -5,9 +5,9 @@ import { useProgress } from "../ProgressContext";
 import { cn } from "@/utils/cn";
 
 export default function Header({ className }: { className?: string }) {
-  const { currentStep, stepCount } = useProgress();
-  const percentage = stepCount
-    ? Math.round((currentStep / stepCount) * 100)
+  const { currentStep, totalSteps } = useProgress();
+  const percentage = totalSteps
+    ? Math.round((currentStep / totalSteps) * 100)
     : 0;
 
   return (
