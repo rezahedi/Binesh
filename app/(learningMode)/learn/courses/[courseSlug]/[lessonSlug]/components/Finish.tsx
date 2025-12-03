@@ -26,7 +26,7 @@ const Finish = () => {
       <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
         <button
           onClick={handleContinue}
-          className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-[#29cc57] text-white cursor-pointer"
+          className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-zinc-800 text-white cursor-pointer"
         >
           Continue
         </button>
