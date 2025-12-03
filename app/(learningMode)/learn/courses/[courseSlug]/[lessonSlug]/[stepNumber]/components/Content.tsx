@@ -29,7 +29,7 @@ const Content = ({ className }: { className?: string }) => {
   }, [currentStep]);
 
   return (
-    <div ref={mainElement} className={cn("overflow-y-auto", className)}>
+    <div ref={mainElement} className={cn("overflow-y-scroll", className)}>
       <div className="h-full max-w-2xl mx-auto px-4">
         {loading && (
           <div className="text-orange-500 font-semibold text-xl">
