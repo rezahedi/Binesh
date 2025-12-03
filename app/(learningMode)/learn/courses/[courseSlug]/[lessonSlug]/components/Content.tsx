@@ -1,62 +1,32 @@
-import ShowStep from "./ShowStep";
-import useSteps from "../useSteps";
 import { useProgress } from "../ProgressContext";
-import { useEffect, useRef } from "react";
-import { cn } from "@/utils/cn";
-import Link from "next/link";
+import { useState } from "react";
+import Finish from "./Finish";
+import StartLesson from "./StartLesson";
 
-const Content = ({ className }: { className?: string }) => {
-  const { steps, loading, error } = useSteps();
-  const { currentStep, totalSteps, setTotalSteps } = useProgress();
-  const mainElement = useRef<HTMLDivElement>(null);
-  const currentStepElement = useRef<HTMLDivElement>(null);
+const Content = () => {
+  const { currentStep, totalSteps } = useProgress();
   const isLastStep = currentStep === totalSteps;
+  const [showFinish, setSHowFinish] = useState<boolean>(false);
 
-  useEffect(() => {
-    setTotalSteps(steps.length);
-  }, [steps, setTotalSteps]);
+  const handleFinish = () => {
+    setSHowFinish(true);
+  };
 
-  // Smooth scroll down on next step
-  useEffect(() => {
-    if (!mainElement.current || !currentStepElement.current) return;
-
-    const headerHeight: number =
-      document.querySelector("header")?.offsetHeight || 0;
-    mainElement.current.scrollTo({
-      top: currentStepElement.current?.offsetTop - headerHeight,
-      behavior: "smooth",
-    });
-  }, [currentStep]);
+  if (showFinish) return <Finish />;
 
   return (
-    <div ref={mainElement} className={cn("overflow-y-scroll", className)}>
-      <div className="h-full max-w-2xl mx-auto px-4">
-        {loading && (
-          <div className="text-orange-500 font-semibold text-xl">
-            Loading...
-          </div>
-        )}
-        {error && <div className="font-semibold text-xl">{error}</div>}
-
-        {steps.length > 0 &&
-          steps
-            .slice(0, currentStep)
-            .map((step, index) => (
-              <ShowStep
-                key={index}
-                step={step}
-                index={index}
-                ref={currentStep === index + 1 ? currentStepElement : undefined}
-              />
-            ))}
-        {isLastStep && (
-          <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
-            <button className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-[#29cc57] text-white cursor-pointer">
-              Finish
-            </button>
-          </div>
-        )}
-      </div>
+    <div className="flex flex-col h-screen">
+      <StartLesson />
+      {isLastStep && (
+        <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
+          <button
+            onClick={handleFinish}
+            className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-[#29cc57] text-white cursor-pointer"
+          >
+            Finish
+          </button>
+        </div>
+      )}
     </div>
   );
 };
