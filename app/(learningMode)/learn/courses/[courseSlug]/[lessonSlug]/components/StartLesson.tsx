@@ -2,10 +2,9 @@ import ShowStep from "./ShowStep";
 import useSteps from "../useSteps";
 import { useProgress } from "../ProgressContext";
 import { useEffect, useRef } from "react";
-import { cn } from "@/utils/cn";
 import Header from "./Header";
 
-const StartLesson = ({ className }: { className?: string }) => {
+const StartLesson = () => {
   const { steps, loading, error } = useSteps();
   const { currentStep, setTotalSteps } = useProgress();
   const mainElement = useRef<HTMLDivElement>(null);
@@ -28,10 +27,10 @@ const StartLesson = ({ className }: { className?: string }) => {
   }, [currentStep]);
 
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <Header />
-      <div ref={mainElement} className="overflow-y-scroll flex-1">
-        <div className="max-w-2xl mx-auto px-4">
+      <div ref={mainElement} className="flex-1 overflow-y-scroll">
+        <div className="h-full max-w-2xl mx-auto px-4">
           {loading && (
             <div className="text-orange-500 font-semibold text-xl">
               Loading...
@@ -54,7 +53,7 @@ const StartLesson = ({ className }: { className?: string }) => {
               ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
