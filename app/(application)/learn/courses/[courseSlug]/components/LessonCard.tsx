@@ -36,7 +36,7 @@ export default function LessonCard({
             <h3 className="text-xl font-bold">{lesson.name}</h3>
             <p>{lesson.description}</p>
             <Link
-              href={`./${courseSlug}/${lesson.slug}/1`}
+              href={`./${courseSlug}/${lesson.slug}`}
               className="mt-2 font-semibold rounded-full text-orange-600 border-2 border-orange-300 py-2 px-8 hover:border-orange-600 transition active:scale-95
             "
             >
