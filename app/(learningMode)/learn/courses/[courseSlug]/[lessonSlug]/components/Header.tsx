@@ -15,7 +15,7 @@ export default function Header({ className }: { className?: string }) {
       className={cn("flex items-center bg-white shadow-lg z-10 p-5", className)}
     >
       <div>
-        <Link href="../">
+        <Link href="./">
           <XIcon />
         </Link>
       </div>
