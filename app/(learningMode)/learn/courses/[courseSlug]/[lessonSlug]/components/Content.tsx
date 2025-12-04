@@ -4,8 +4,7 @@ import Finish from "./Finish";
 import StartLesson from "./StartLesson";
 
 const Content = () => {
-  const { currentStep, totalSteps } = useProgress();
-  const isLastStep = currentStep === totalSteps;
+  const { finished } = useProgress();
   const [showFinish, setSHowFinish] = useState<boolean>(false);
 
   const handleFinish = () => {
@@ -17,7 +16,7 @@ const Content = () => {
   return (
     <div className="flex flex-col h-screen">
       <StartLesson />
-      {isLastStep && (
+      {finished && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
           <button
             onClick={handleFinish}

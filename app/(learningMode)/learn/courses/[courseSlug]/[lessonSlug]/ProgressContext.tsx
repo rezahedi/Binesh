@@ -11,6 +11,7 @@ type ContextType = {
   nextStep: () => void;
   totalSteps: number | null;
   setTotalSteps: Dispatch<SetStateAction<number | null>>;
+  finished: boolean;
 };
 
 const ProgressContext = createContext<ContextType | undefined>(undefined);
@@ -18,9 +19,13 @@ const ProgressContext = createContext<ContextType | undefined>(undefined);
 const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [totalSteps, setTotalSteps] = useState<number | null>(null);
+  const [finished, setFinishedState] = useState<boolean>(false);
 
   const nextStep = () => {
-    if (totalSteps === null || currentStep >= totalSteps) return;
+    if (totalSteps === null) return;
+
+    if (currentStep === totalSteps) return setFinishedState(true);
+
     setCurrentStep((prev) => prev + 1);
   };
 
@@ -31,6 +36,7 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
         nextStep,
         totalSteps,
         setTotalSteps,
+        finished,
       }}
     >
       {children}
