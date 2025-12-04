@@ -2,7 +2,7 @@ import { RadioQuizType } from "@/lib/quizParser";
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
-import { IQuizProp } from "./QuizzesMap";
+import { IQuizProp } from "./QuizRenderer";
 
 const RadioQuiz = ({
   quiz,
