@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { LessonsProps } from "@/lib/types";
 import { Footprints } from "lucide-react";
-import { CenterLeft, LeftCenter, CenterRight, RightCenter } from "./";
 import {
   Popover,
   PopoverContent,
@@ -37,7 +36,7 @@ export default function LessonCard({
             <h3 className="text-xl font-bold">{lesson.name}</h3>
             <p>{lesson.description}</p>
             <Link
-              href={`./${courseSlug}/${lesson.slug}/1`}
+              href={`./${courseSlug}/${lesson.slug}`}
               className="mt-2 font-semibold rounded-full text-orange-600 border-2 border-orange-300 py-2 px-8 hover:border-orange-600 transition active:scale-95
             "
             >
@@ -49,18 +48,6 @@ export default function LessonCard({
           {lesson.name}
         </span>
       </div>
-      {index % 4 === 0 && (
-        <CenterLeft className="absolute top-[77px] left-[-110px] w-[454px] text-[#e5e5e5]" />
-      )}
-      {index % 4 === 1 && (
-        <LeftCenter className="absolute top-[77px] left-[-52px] w-[250px] text-[#e5e5e5]" />
-      )}
-      {index % 4 === 2 && (
-        <CenterRight className="absolute top-[-97px] left-[113px] w-[250px] text-[#e5e5e5]" />
-      )}
-      {index % 4 === 3 && (
-        <RightCenter className="absolute top-[77px] left-[-244px] w-[450px] text-[#e5e5e5]" />
-      )}
     </div>
   );
 }

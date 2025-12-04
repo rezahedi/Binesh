@@ -17,21 +17,27 @@ Veniam, fuga quae explicabo voluptas a excepturi, quibusdam dicta ratione dignis
 
 # Part 2
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores temporibus qui beatae repellat quo quis **libero quisquam dicta**. Rem eum nam et praesentium nemo numquam eos porro blanditiis veritatis qui.
+Lorem ipsum dolor sit amet consectetur $E = mc^2$ adipisicing elit. Dolores temporibus qui beatae repellat quo quis **libero quisquam dicta**. Rem eum nam et praesentium nemo numquam eos porro blanditiis veritatis qui.
+
+```math
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+```
 
 ![Scale Photo Sample](/_temp/Molecules-nHpvAL.png)
 
 ---
 
-What is the output of 4 / 2?
+What is the output of $4 / 2$?
 
 ```quiz:fill:number:2
-4 / 2 = [ ] chand mishe
+4 / 2 = [ ]
 ```
 
 # Part 3
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa saepe quod veritatis obcaecati atque, tempora iusto? Ipsum tempore nesciunt, quisquam rem iure itaque, velit harum quos commodi exercitationem, [atque iusto](#)! Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae, ea consectetur quisquam vel architecto ex iure tempora itaque quasi nihil accusamus saepe, _repellendus delectus iusto obcaecati dolor harum_. Harum.
+
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
 ---
 
@@ -47,6 +53,8 @@ Which of the following is a programming language?
 # Part 4
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae tempora officia repudiandae perspiciatis dolores natus ab harum aliquid nemo reprehenderit deserunt at maxime inventore ipsa quo, quis iusto culpa delectus.
+
+![Scale Photo Sample](/Screenshot-2024-06-10-095546.png)
 
 ---
 

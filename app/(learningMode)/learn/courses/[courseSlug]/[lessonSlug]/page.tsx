@@ -1,15 +1,12 @@
-export default async function page({
-  params,
-}: {
-  params: Promise<{ courseSlug: string; lessonSlug: string }>;
-}) {
-  const { courseSlug, lessonSlug } = await params;
+"use client";
 
+import { ProgressProvider } from "./ProgressContext";
+import Content from "./components/Content";
+
+export default function Page() {
   return (
-    <div>
-      <h1>
-        Course: {courseSlug} / Lesson: {lessonSlug}
-      </h1>
-    </div>
+    <ProgressProvider>
+      <Content />
+    </ProgressProvider>
   );
 }

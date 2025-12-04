@@ -59,7 +59,7 @@ export default async function page({
       </div>
 
       <div
-        className="flex-1 py-24 h-[2000px]"
+        className="flex-1 py-24"
         style={{
           backgroundImage: "url('/assets/lesson-path-bg-pattern.svg')",
           backgroundPositionY: "0",
