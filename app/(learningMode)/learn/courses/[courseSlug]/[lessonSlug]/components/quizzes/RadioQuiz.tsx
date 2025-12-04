@@ -1,5 +1,5 @@
 import { QuizType, RadioQuizType } from "@/lib/quizParser";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
 
@@ -13,6 +13,7 @@ const RadioQuiz = ({
   onCheck: (state: boolean) => void;
 }) => {
   const [userAnswer, setUserAnswer] = useState<number | null>(null);
+  // TODO: If quizResult from ShowStep passed down here, isCorrect state is not necessary.
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const quizBlock = quiz.quizBlock as RadioQuizType;
   // TODO: Keep track of options selected by user as answer but it's wrong and disable them.
@@ -27,12 +28,10 @@ const RadioQuiz = ({
   const handleCheckAnswer = () => {
     if (userAnswer === null) return;
 
-    setIsCorrect(userAnswer === quizBlock.answer);
+    const result = userAnswer === quizBlock.answer;
+    setIsCorrect(result);
+    onCheck(result);
   };
-
-  useEffect(() => {
-    if (isCorrect !== null) onCheck(isCorrect);
-  }, [isCorrect, onCheck]);
 
   return (
     <>

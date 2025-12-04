@@ -1,5 +1,5 @@
 import { FillQuizType, QuizType } from "@/lib/quizParser";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
 
@@ -13,6 +13,7 @@ const FillInQuiz = ({
   onCheck: (state: boolean) => void;
 }) => {
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
+  // TODO: If quizResult from ShowStep passed down here, isCorrect state is not necessary.
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const quizBlock = quiz.quizBlock as FillQuizType;
   const [pre, suf] = quizBlock.content.split("[ ]");
@@ -27,17 +28,15 @@ const FillInQuiz = ({
   const handleCheckAnswer = () => {
     if (userAnswer === null) return;
 
+    let result: boolean;
+
     if (quizBlock.inputType === "string")
-      return setIsCorrect(
-        userAnswer.toLowerCase() === quizBlock.answer.toLowerCase()
-      );
+      result = userAnswer.toLowerCase() === quizBlock.answer.toLowerCase();
+    else result = userAnswer === quizBlock.answer;
 
-    setIsCorrect(userAnswer === quizBlock.answer);
+    setIsCorrect(result);
+    onCheck(result);
   };
-
-  useEffect(() => {
-    if (isCorrect !== null) onCheck(isCorrect);
-  }, [isCorrect, onCheck]);
 
   return (
     <>

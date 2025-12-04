@@ -1,5 +1,5 @@
 import { CheckListQuizType, QuizType } from "@/lib/quizParser";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
 
@@ -13,6 +13,7 @@ const CheckListQuiz = ({
   onCheck: (state: boolean) => void;
 }) => {
   const [userAnswer, setUserAnswer] = useState<number[]>([]);
+  // TODO: If quizResult from ShowStep passed down here, isCorrect state is not necessary.
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const quizBlock = quiz.quizBlock as CheckListQuizType;
 
@@ -37,12 +38,10 @@ const CheckListQuiz = ({
     if (userAnswer.length !== quizBlock.answer.length)
       return setIsCorrect(false);
 
-    setIsCorrect(userAnswer.every((a) => quizBlock.answer.includes(a)));
+    const result = userAnswer.every((a) => quizBlock.answer.includes(a));
+    setIsCorrect(result);
+    onCheck(result);
   };
-
-  useEffect(() => {
-    if (isCorrect !== null) onCheck(isCorrect);
-  }, [isCorrect, onCheck]);
 
   return (
     <>
