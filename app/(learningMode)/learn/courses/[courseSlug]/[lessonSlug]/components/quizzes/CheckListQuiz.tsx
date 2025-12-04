@@ -1,20 +1,16 @@
-import { CheckListQuizType, QuizType } from "@/lib/quizParser";
+import { CheckListQuizType } from "@/lib/quizParser";
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
+import { IQuizProp } from "./QuizzesMap";
 
 const CheckListQuiz = ({
   quiz,
   isActive,
-  onCheck,
-}: {
-  quiz: QuizType;
-  isActive: boolean;
-  onCheck: (state: boolean) => void;
-}) => {
+  quizResult: isCorrect,
+  onCheck: setIsCorrect,
+}: IQuizProp) => {
   const [userAnswer, setUserAnswer] = useState<number[]>([]);
-  // TODO: If quizResult from ShowStep passed down here, isCorrect state is not necessary.
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const quizBlock = quiz.quizBlock as CheckListQuizType;
 
   // TODO: Let the user know if the answer is partially correct
@@ -38,9 +34,7 @@ const CheckListQuiz = ({
     if (userAnswer.length !== quizBlock.answer.length)
       return setIsCorrect(false);
 
-    const result = userAnswer.every((a) => quizBlock.answer.includes(a));
-    setIsCorrect(result);
-    onCheck(result);
+    setIsCorrect(userAnswer.every((a) => quizBlock.answer.includes(a)));
   };
 
   return (

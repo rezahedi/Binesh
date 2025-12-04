@@ -32,6 +32,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
         <QuizRenderer
           quiz={step.quiz}
           isActive={isCurrent && !isQuizFinished}
+          quizResult={quizResult}
           onCheck={setQuizResult}
         />
       )}

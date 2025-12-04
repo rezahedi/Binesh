@@ -1,20 +1,16 @@
-import { FillQuizType, QuizType } from "@/lib/quizParser";
+import { FillQuizType } from "@/lib/quizParser";
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
+import { IQuizProp } from "./QuizzesMap";
 
 const FillInQuiz = ({
   quiz,
   isActive,
-  onCheck,
-}: {
-  quiz: QuizType;
-  isActive: boolean;
-  onCheck: (state: boolean) => void;
-}) => {
+  quizResult: isCorrect,
+  onCheck: setIsCorrect,
+}: IQuizProp) => {
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
-  // TODO: If quizResult from ShowStep passed down here, isCorrect state is not necessary.
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const quizBlock = quiz.quizBlock as FillQuizType;
   const [pre, suf] = quizBlock.content.split("[ ]");
 
@@ -35,7 +31,6 @@ const FillInQuiz = ({
     else result = userAnswer === quizBlock.answer;
 
     setIsCorrect(result);
-    onCheck(result);
   };
 
   return (
