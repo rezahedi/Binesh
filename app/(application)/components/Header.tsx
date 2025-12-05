@@ -6,18 +6,18 @@ export default async function Header() {
   // const session = await getServerSession(authOptions);
 
   return (
-    <header className="sticky top-0 bg-background w-full shadow-lg">
-      <div className="container max-w-7xl py-2 mx-auto flex gap-2 items-center">
-        <h1 className="flex gap-2 items-center">
+    <header className="sticky top-0 bg-background w-full shadow-lg z-10">
+      <div className="container max-w-7xl px-2 py-1 mx-auto flex gap-2 items-center">
+        <h1 className="flex gap-1 items-center mb-2">
           <div className="text-5xl">🛸</div>
-          <div className="text-3xl uppercase font-bold pt-2">Binesh</div>
+          <div className="text-3xl font-bold pt-2">BINESH</div>
         </h1>
         <nav className="grow">
           <ul className="flex gap-1 justify-center text-lg">
             <li>
               <a
                 href={process.env.NEXT_PUBLIC_APP_BASE}
-                className="p-2 px-4 rounded-full hover:bg-secondary"
+                className="p-3 px-6 rounded-full hover:bg-secondary"
               >
                 Home
               </a>
@@ -25,7 +25,7 @@ export default async function Header() {
             <li>
               <a
                 href={`${process.env.NEXT_PUBLIC_APP_BASE}/courses`}
-                className="p-2 px-4 rounded-full hover:bg-secondary"
+                className="p-3 px-6 rounded-full hover:bg-secondary"
               >
                 Courses
               </a>
@@ -34,10 +34,10 @@ export default async function Header() {
         </nav>
         <div className="flex gap-2 items-center">
           <StreakButton />
-          <button className="text-sm p-2 px-4 rounded-full border border-primary text-primary cursor-pointer">
+          <button className="text-base p-2 px-6 rounded-full border border-primary text-primary cursor-pointer">
             Login
           </button>
-          <button className="text-sm p-2 px-4 rounded-full bg-primary text-primary-foreground cursor-pointer">
+          <button className="text-base p-2 px-6 rounded-full bg-primary text-primary-foreground cursor-pointer">
             Register
           </button>
         </div>

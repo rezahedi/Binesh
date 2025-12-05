@@ -19,17 +19,12 @@ export default function LessonCard({
   courseSlug: string;
 }) {
   return (
-    <div
-      key={lesson.id}
-      className={`p-8 w-fit ${treeClasses[index % 4]} relative h-36 w-36`}
-    >
-      <div className="absolute flex flex-col gap-3 items-center">
+    <div key={lesson.id} className={`p-8 ${treeClasses[index % 4]} relative`}>
+      <div className="flex gap-3 items-center">
         <Popover>
           <PopoverTrigger asChild>
-            <button className="group rotate-45 relative inline-flex size-12 items-center justify-center overflow-hidden rounded-full border border-orange-600 p-6 font-medium text-orange-600 transition-all duration-100 shadow-[5px_5px] hover:translate-y-[3px] hover:shadow-[3px_3px] active:translate-y-[7px] active:shadow-[0px_0px]">
-              <span className="-rotate-45">
-                <Footprints />
-              </span>
+            <button className="group relative block-flex size-12 items-center justify-center -mt-2 rounded-full border border-orange-600 font-medium text-orange-600 transition-all duration-100 shadow-[0_5px] hover:translate-y-[3px] hover:shadow-[0_3px] active:translate-y-[7px] active:shadow-[0px_0px]">
+              <Footprints className="w-12" />
             </button>
           </PopoverTrigger>
           <PopoverContent className="flex flex-col gap-4 items-center w-80 p-6 rounded-xl overflow-hidden bg-white text-balance text-center shadow-xl shadow-[0px_0px_25px_-5px_#0000003b]">
@@ -44,7 +39,7 @@ export default function LessonCard({
             </Link>
           </PopoverContent>
         </Popover>
-        <span className="text-sm w-36 text-balance text-center">
+        <span className="text-base font-semibold w-36 text-balance">
           {lesson.name}
         </span>
       </div>
