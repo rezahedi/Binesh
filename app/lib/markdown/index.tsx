@@ -14,13 +14,15 @@ const ReactMarkdown = ({ children }: { children?: string | null }) => {
   if (!children) return null;
 
   return (
-    <Markdown
-      remarkPlugins={[remarkMath]}
-      rehypePlugins={[rehypeKatex]}
-      components={markdownComponents}
-    >
-      {children}
-    </Markdown>
+    <div className="content">
+      <Markdown
+        remarkPlugins={[remarkMath]}
+        rehypePlugins={[rehypeKatex]}
+        components={markdownComponents}
+      >
+        {children}
+      </Markdown>
+    </div>
   );
 };
 
