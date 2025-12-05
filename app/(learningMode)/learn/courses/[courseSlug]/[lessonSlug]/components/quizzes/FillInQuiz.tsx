@@ -51,6 +51,7 @@ const FillInQuiz = ({
                 : ``,
               !isActive && `pointer-events-none`
             )}
+            id={quiz.id}
             name="userAnswer"
             type={quizBlock.inputType}
             size={quizBlock.answer.length}

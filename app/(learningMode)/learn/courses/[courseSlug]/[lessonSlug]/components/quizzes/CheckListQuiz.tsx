@@ -50,7 +50,7 @@ const CheckListQuiz = ({
           >
             {quizBlock.options.map((option, index) => (
               <label
-                htmlFor={`randomString-${index}`}
+                htmlFor={`${quiz.id}-${index}`}
                 key={index}
                 tabIndex={0}
                 className={cn(
@@ -66,7 +66,7 @@ const CheckListQuiz = ({
                 )}
               >
                 <input
-                  id={`randomString-${index}`}
+                  id={`${quiz.id}-${index}`}
                   type="checkbox"
                   name="userAnswer"
                   value={index}

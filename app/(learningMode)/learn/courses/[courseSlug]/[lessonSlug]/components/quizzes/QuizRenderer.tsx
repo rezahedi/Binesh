@@ -1,10 +1,8 @@
 import { QuizKind, QuizType } from "@/lib/quizParser";
 import { CheckListQuiz, FillInQuiz, RadioQuiz } from "./";
 
-// FIXME: Provide a unique ID for each step, to use it in Id-ing inputs, labels and etc.
-
 export interface IQuizProp {
-  quiz: QuizType;
+  quiz: QuizType & { id: string };
   isActive: boolean;
   quizResult: boolean | null;
   onCheck: (state: boolean | null) => void;

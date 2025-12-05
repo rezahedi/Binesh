@@ -40,7 +40,7 @@ const RadioQuiz = ({
           >
             {quizBlock.options.map((option, index) => (
               <label
-                htmlFor={`randomStr-${index}`}
+                htmlFor={`${quiz.id}-${index}`}
                 key={index}
                 tabIndex={0}
                 className={cn(
@@ -56,7 +56,7 @@ const RadioQuiz = ({
                 )}
               >
                 <input
-                  id={`randomStr-${index}`}
+                  id={`${quiz.id}-${index}`}
                   type="radio"
                   name="userAnswer"
                   value={index}

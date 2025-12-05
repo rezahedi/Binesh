@@ -30,7 +30,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
       </div>
       {step.quiz && (
         <QuizRenderer
-          quiz={step.quiz}
+          quiz={{ ...step.quiz, id: step.id }}
           isActive={isCurrent && !isQuizFinished}
           quizResult={quizResult}
           onCheck={setQuizResult}
