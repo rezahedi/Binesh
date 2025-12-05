@@ -54,7 +54,7 @@ export default async function page({
         </div>
       </div>
 
-      <div className="flex-6">
+      <div className="flex-6 md:mb-30">
         <div className="flex flex-col mx-auto">
           {lessons.map((lesson, index) => (
             <LessonCard key={lesson.id} {...{ lesson, index, courseSlug }} />
