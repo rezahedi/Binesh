@@ -68,7 +68,7 @@ const CheckListQuiz = ({
                 <input
                   id={`${quiz.id}-${index}`}
                   type="checkbox"
-                  name="userAnswer"
+                  name={quiz.id}
                   value={index}
                   checked={userAnswer.includes(index)}
                   onChange={handleChange}

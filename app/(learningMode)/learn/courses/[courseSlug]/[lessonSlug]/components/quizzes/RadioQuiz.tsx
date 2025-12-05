@@ -58,7 +58,7 @@ const RadioQuiz = ({
                 <input
                   id={`${quiz.id}-${index}`}
                   type="radio"
-                  name="userAnswer"
+                  name={quiz.id}
                   value={index}
                   checked={userAnswer === index}
                   onChange={handleChange}
