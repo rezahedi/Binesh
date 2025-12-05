@@ -11,7 +11,7 @@ export default async function Header() {
       <div className="container max-w-7xl px-2 py-1 mx-auto flex gap-2 items-center">
         <h1>
           <Link
-            href="./"
+            href="/"
             className="flex gap-1 items-center hover:text-primary pb-2"
           >
             <div className="text-5xl">🛸</div>
