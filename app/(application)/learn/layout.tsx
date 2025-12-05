@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        <div className="max-w-7xl mx-auto px-2">{children}</div>
+        <div className="max-w-7xl mx-auto px-2 mt-3 md:mt-10">{children}</div>
       </body>
     </html>
   );

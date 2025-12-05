@@ -31,10 +31,10 @@ export default async function page({
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-2 flex gap-10 flex-col md:flex-row">
+    <div className="flex gape-4 md:gap-10 flex-col md:flex-row">
       <div className="flex-5">
         <div className="sticky top-30">
-          <div className="mt-10 p-8 md:border-[3px] md:border-b-[6px] border-gray-200 rounded-3xl">
+          <div className="p-8 md:border-[3px] md:border-b-[6px] border-gray-200 rounded-3xl">
             <Image
               src={course.image}
               alt={course.name}
@@ -54,7 +54,7 @@ export default async function page({
         </div>
       </div>
 
-      <div className="flex-6 py-10">
+      <div className="flex-6">
         <div className="flex flex-col mx-auto">
           {lessons.map((lesson, index) => (
             <LessonCard key={lesson.id} {...{ lesson, index, courseSlug }} />
