@@ -1,18 +1,9 @@
-"use client";
-import { useState } from "react";
-import { Streak } from "@application/components";
+import { ZapIcon } from "lucide-react";
 
 export default function StreakButton() {
-  const [modal, setModal] = useState(false);
-
   return (
-    <button onClick={() => setModal(!modal)} className="relative">
-      3⚡
-      {modal && (
-        <div className="absolute -right-3 bg-white border rounded-lg p-4 w-28 shadow-md">
-          <Streak />
-        </div>
-      )}
+    <button className="relative flex gap-1 items-center font-semibold text-lg">
+      3 <ZapIcon className="fill-destructive/90" stroke="none" />
     </button>
   );
 }

@@ -31,14 +31,10 @@ export default async function page({
   }
 
   return (
-    <div className="container flex gap-10 flex-col md:flex-row">
-      <div className="flex-1">
-        <div className="sticky top-10">
-          <a href="./" className="inline-block py-4">
-            &lt;- Courses
-          </a>
-
-          <div className="md:mt-10 md:p-8 md:border border-gray-200 rounded-lg">
+    <div className="flex gap-4 md:gap-10 flex-col md:flex-row">
+      <div className="flex-5">
+        <div className="sticky top-30">
+          <div className="p-8 bg-card border-[3px] border-b-[6px] border-gray-200 rounded-3xl">
             <Image
               src={course.image}
               alt={course.name}
@@ -58,17 +54,8 @@ export default async function page({
         </div>
       </div>
 
-      <div
-        className="flex-1 py-24"
-        style={{
-          backgroundImage: "url('/assets/lesson-path-bg-pattern.svg')",
-          backgroundPositionY: "0",
-          backgroundSize: "100% auto",
-          backgroundRepeat: "repeat",
-        }}
-      >
-        <b>Lessons:</b>
-        <div className="flex flex-col w-[454px] mx-auto">
+      <div className="flex-6 md:mb-30">
+        <div className="flex flex-col mx-auto">
           {lessons.map((lesson, index) => (
             <LessonCard key={lesson.id} {...{ lesson, index, courseSlug }} />
           ))}

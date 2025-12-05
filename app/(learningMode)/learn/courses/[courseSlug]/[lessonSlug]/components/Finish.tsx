@@ -7,7 +7,7 @@ const Finish = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen max-w-2xl mx-auto px-4">
       <div className="flex-1 flex flex-col justify-center items-center text-center">
         <Image
           src={"/_temp/classical_mechanics-JYFpGo.png"}
@@ -20,13 +20,15 @@ const Finish = () => {
           <br />
           Complete!
         </h2>
-        <span className="font-semibold text-zinc-400 uppercase">Total XP</span>
+        <span className="font-semibold text-muted-foreground uppercase">
+          Total XP
+        </span>
         <h2 className="font-bold text-6xl mt-2">80</h2>
       </div>
-      <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
+      <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
         <button
           onClick={handleContinue}
-          className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-zinc-800 text-white cursor-pointer"
+          className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-foreground text-background cursor-pointer"
         >
           Continue
         </button>

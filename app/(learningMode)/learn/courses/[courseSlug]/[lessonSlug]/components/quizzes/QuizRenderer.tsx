@@ -2,7 +2,7 @@ import { QuizKind, QuizType } from "@/lib/quizParser";
 import { CheckListQuiz, FillInQuiz, RadioQuiz } from "./";
 
 export interface IQuizProp {
-  quiz: QuizType;
+  quiz: QuizType & { id: string };
   isActive: boolean;
   quizResult: boolean | null;
   onCheck: (state: boolean | null) => void;

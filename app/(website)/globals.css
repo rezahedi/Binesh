@@ -1,1 +1,115 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-quiz-success-50: var(--color-green-50);
+  --color-quiz-success-300: var(--color-green-300);
+  --color-quiz-success-700: var(--color-green-700);
+  --color-quiz-error-50: var(--color-red-50);
+  --color-quiz-error-300: var(--color-red-300);
+  --color-quiz-error-700: var(--color-red-700);
+  --color-quiz-select-50: var(--color-blue-50);
+  --color-quiz-select-300: var(--color-blue-300);
+  --color-quiz-select-700: var(--color-blue-700);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #ffffff;
+  --foreground: #3d3d3d;
+  --card: #e5e5e54d;
+  --card-foreground: #3d3d3d;
+  --primary: #00a63d;
+  --primary-foreground: var(--background);
+  --secondary: #ffda05;
+  --secondary-foreground: var(--foreground);
+  --muted: #e5e5e5;
+  --muted-foreground: #afafaf;
+  --accent: #456DFF;
+  --accent-foreground: var(--background);
+  --destructive: #dc1d26;
+  --border: #afafaf;
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: #131f24;
+  --foreground: #c2c2c2;
+  --card: #1d2f364d;
+  --card-foreground: #c2c2c2;
+  --primary: #00a63d;
+  --primary-foreground: var(--background);
+  --secondary: #ffda05;
+  --secondary-foreground: var(--background);
+  --muted: #1d2f36;
+  --muted-foreground: #425f6b;
+  --accent: #456DFF;
+  --accent-foreground: var(--foreground);
+  --destructive: #dc1d26;
+  --border: #425f6b;
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  .content {
+    h1, h2, h3, h4, h5 {
+      @apply py-2 font-bold
+    }
+    h1 {
+      @apply text-6xl
+    }
+    h2 {
+      @apply text-5xl
+    }
+    h3 {
+      @apply text-4xl
+    }
+    h4 {
+      @apply text-3xl
+    }
+    h5 {
+      @apply text-2xl
+    }
+    h6 {
+      @apply text-xl
+    }
+    p {
+      @apply py-2
+    }
+    ul, ol {
+      @apply py-2 list-disc pl-6;
+    }
+  }
+}

@@ -3,6 +3,7 @@ import QuizRenderer from "./quizzes/QuizRenderer";
 import { useProgress } from "../ProgressContext";
 import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
+import { FlagIcon } from "lucide-react";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
   step: SectionType;
@@ -25,28 +26,33 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
       className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}
       {...restProps}
     >
-      <div className="flex-1">
-        <ReactMarkdown>{step.content}</ReactMarkdown>
-      </div>
+      {step.content && (
+        <div className="flex-1">
+          <ReactMarkdown>{step.content}</ReactMarkdown>
+        </div>
+      )}
       {step.quiz && (
         <QuizRenderer
-          quiz={step.quiz}
+          quiz={{ ...step.quiz, id: step.id }}
           isActive={isCurrent && !isQuizFinished}
           quizResult={quizResult}
           onCheck={setQuizResult}
         />
       )}
       {isNextReady && !finished && (
-        <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
-          <div className="flex-1">
+        <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
+          <div className="flex-1 flex gap-3 items-center">
+            <button className="p-2 px-4 rounded-full text-muted-foreground border border-transparent hover:border-muted-foreground cursor-pointer flex gap-1 items-center">
+              <FlagIcon className="size-4" /> Report
+            </button>
             {quizResult !== null && (
-              <p className="font-semibold text-xl text-[#29cc57]">
+              <p className="font-semibold text-xl text-primary">
                 {quizResult ? "🎉 Correct" : "😩 Incorrect"}
               </p>
             )}
           </div>
           <button
-            className="font-semibold p-3 px-6 rounded-full bg-[#29cc57] text-white cursor-pointer"
+            className="font-semibold p-3 px-6 rounded-full bg-primary text-primary-foreground cursor-pointer"
             onClick={nextStep}
           >
             Continue

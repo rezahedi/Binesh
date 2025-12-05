@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { eq, getTableColumns } from "drizzle-orm";
+import { asc, eq, getTableColumns } from "drizzle-orm";
 import db from "@/db";
 import { categories, courses, lessons } from "@/db/schema";
 
@@ -25,7 +25,8 @@ export const GET = async (
     .from(courses)
     .where(eq(courses.slug, courseSlug))
     .leftJoin(categories, eq(courses.categoryID, categories.id))
-    .leftJoin(lessons, eq(lessons.courseID, courses.id));
+    .leftJoin(lessons, eq(lessons.courseID, courses.id))
+    .orderBy(asc(lessons.unit), asc(lessons.part));
 
   // If course doesn't exists
   if (response.length === 0)

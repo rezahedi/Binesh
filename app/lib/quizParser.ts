@@ -1,6 +1,8 @@
+import { generateRandomString } from "@/utils/string";
 import matter from "gray-matter";
 
 export type SectionType = {
+  id: string;
   title: string;
   content: string;
   quiz: QuizType | null;
@@ -18,10 +20,11 @@ export const parseSections = (section: string): SectionType[] => {
   return section
     .split("\n# ")
     .filter((str) => str.trim())
-    .map((step) => {
+    .map((step, index) => {
       const [contentSection, quizSection] = splitOnce(step, "---");
       const [title, content] = splitOnce(contentSection, "\n");
       return {
+        id: generateRandomString() + String(index),
         title: title.trim(),
         content: content.trim(),
         quiz: parseQuizBlock(quizSection.trim()),

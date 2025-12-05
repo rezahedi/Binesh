@@ -8,7 +8,7 @@ export default function ApplicationPage() {
 
   return (
     <div className="space-y-4">
-      <div className="container">
+      <div>
         <h3 className="py-3 font-semibold text-xl">Continue learning</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {isLoading && <div>Loading...</div>}
@@ -18,7 +18,7 @@ export default function ApplicationPage() {
             ))}
         </div>
       </div>
-      <div className="container">
+      <div>
         <h3 className="py-3 font-semibold text-xl">Recommended for you</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {isLoading && <div>Loading...</div>}
