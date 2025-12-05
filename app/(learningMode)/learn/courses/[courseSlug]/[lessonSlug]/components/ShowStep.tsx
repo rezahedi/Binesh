@@ -3,6 +3,7 @@ import QuizRenderer from "./quizzes/QuizRenderer";
 import { useProgress } from "../ProgressContext";
 import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
+import { FlagIcon } from "lucide-react";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
   step: SectionType;
@@ -40,7 +41,10 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
       )}
       {isNextReady && !finished && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
-          <div className="flex-1">
+          <div className="flex-1 flex gap-3 items-center">
+            <button className="p-2 px-4 rounded-full text-muted-foreground border border-transparent hover:border-muted-foreground cursor-pointer flex gap-1 items-center">
+              <FlagIcon className="size-4" /> Report
+            </button>
             {quizResult !== null && (
               <p className="font-semibold text-xl text-primary">
                 {quizResult ? "🎉 Correct" : "😩 Incorrect"}
