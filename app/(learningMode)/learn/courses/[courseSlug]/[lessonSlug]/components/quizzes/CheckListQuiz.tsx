@@ -40,7 +40,7 @@ const CheckListQuiz = ({
   return (
     <>
       <div className="flex-10">
-        <div className="my-4 p-6 px-8 rounded-xl bg-gray-50">
+        <div className="my-4 p-6 px-8 rounded-xl bg-card">
           <ReactMarkdown>{quiz.content}</ReactMarkdown>
           <div
             className={cn(
@@ -54,13 +54,13 @@ const CheckListQuiz = ({
                 key={index}
                 tabIndex={0}
                 className={cn(
-                  `rounded-xl p-4 px-6 cursor-pointer text-center font-medium border-2 border-zinc-300`,
-                  `hover:border-blue-300 hover:bg-blue-50`,
-                  `has-checked:border-blue-700 has-checked:bg-blue-50 has-checked:text-blue-700`,
+                  `rounded-xl p-4 px-6 cursor-pointer text-center font-medium border-2 border-border`,
+                  `hover:border-quiz-select-300 hover:bg-quiz-select-50`,
+                  `has-checked:border-quiz-select-700 has-checked:bg-quiz-select-50 has-checked:text-quiz-select-700`,
                   isCorrect !== null
                     ? isCorrect === true
-                      ? `has-checked:border-green-300 has-checked:bg-green-50 has-checked:text-green-700 relative after:hidden has-checked:after:block after:content-['✔'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-green-300`
-                      : `has-checked:border-red-300 has-checked:bg-red-50 has-checked:text-red-700 relative after:hidden has-checked:after:block after:content-['✘'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-red-300`
+                      ? `has-checked:border-quiz-success-300 has-checked:bg-quiz-success-50 has-checked:text-quiz-success-700 relative after:hidden has-checked:after:block after:content-['✔'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-quiz-success-300`
+                      : `has-checked:border-quiz-error-300 has-checked:bg-quiz-error-50 has-checked:text-quiz-error-700 relative after:hidden has-checked:after:block after:content-['✘'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-quiz-error-300`
                     : ``,
                   !isActive && `pointer-events-none`
                 )}
@@ -82,11 +82,11 @@ const CheckListQuiz = ({
         </div>
       </div>
       {isActive && !isCorrect && (
-        <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
+        <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
           <button
             onClick={handleCheckAnswer}
             disabled={userAnswer.length === 0}
-            className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-zinc-800 disabled:bg-zinc-100 text-white disabled:text-zinc-400 cursor-pointer disabled:cursor-not-allowed"
+            className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-foreground disabled:bg-muted text-background disabled:text-muted-foreground cursor-pointer disabled:cursor-not-allowed"
           >
             Check
           </button>

@@ -4,14 +4,15 @@
   "rsc": true,
   "tsx": true,
   "tailwind": {
-    "config": "tailwind.config.js",
-    "css": "app/(admin)/dashboard/globals.css",
+    "config": "",
+    "css": "app/(website)/globals.css",
     "baseColor": "slate",
     "cssVariables": true,
     "prefix": ""
   },
+  "iconLibrary": "lucide",
   "aliases": {
-    "components": "@/(admin)/components",
+    "components": "@/components",
     "utils": "@/utils/cn"
   }
 }

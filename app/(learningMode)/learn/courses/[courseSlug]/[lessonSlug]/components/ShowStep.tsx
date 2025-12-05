@@ -37,16 +37,16 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
         />
       )}
       {isNextReady && !finished && (
-        <div className="flex gap-2 items-center sticky bottom-0 bg-white py-3">
+        <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
           <div className="flex-1">
             {quizResult !== null && (
-              <p className="font-semibold text-xl text-[#29cc57]">
+              <p className="font-semibold text-xl text-primary">
                 {quizResult ? "🎉 Correct" : "😩 Incorrect"}
               </p>
             )}
           </div>
           <button
-            className="font-semibold p-3 px-6 rounded-full bg-[#29cc57] text-white cursor-pointer"
+            className="font-semibold p-3 px-6 rounded-full bg-primary text-primary-foreground cursor-pointer"
             onClick={nextStep}
           >
             Continue
