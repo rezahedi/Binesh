@@ -31,10 +31,10 @@ export default async function page({
   }
 
   return (
-    <div className="flex gape-4 md:gap-10 flex-col md:flex-row">
+    <div className="flex gap-4 md:gap-10 flex-col md:flex-row">
       <div className="flex-5">
         <div className="sticky top-30">
-          <div className="p-8 md:border-[3px] md:border-b-[6px] border-gray-200 rounded-3xl">
+          <div className="p-8 bg-card border-[3px] border-b-[6px] border-gray-200 rounded-3xl">
             <Image
               src={course.image}
               alt={course.name}

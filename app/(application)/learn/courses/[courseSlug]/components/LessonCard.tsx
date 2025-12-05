@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { LessonsProps } from "@/lib/types";
-import { Footprints } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -19,15 +18,22 @@ export default function LessonCard({
   courseSlug: string;
 }) {
   return (
-    <div key={lesson.id} className={`p-8 ${treeClasses[index % 4]} relative`}>
-      <div className="flex gap-3 items-center">
+    <div key={lesson.id} className={`py-4 ${treeClasses[index % 4]} relative`}>
+      <div className="group">
         <Popover>
           <PopoverTrigger asChild>
-            <button className="group relative block-flex size-12 items-center justify-center -mt-2 rounded-full border border-orange-600 font-medium text-orange-600 transition-all duration-100 shadow-[0_5px] hover:translate-y-[3px] hover:shadow-[0_3px] active:translate-y-[7px] active:shadow-[0px_0px]">
-              <Footprints className="w-12" />
+            <button className="flex gap-3 items-center cursor-pointer">
+              <span className="bg-[url('/assets/landing_zone.svg')] size-24">
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-100 block animate-bounce text-4xl size-full">
+                  🛸
+                </span>
+              </span>
+              <span className="text-base font-semibold w-44 text-balance text-left">
+                {lesson.name}
+              </span>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="flex flex-col gap-4 items-center w-80 p-6 rounded-xl overflow-hidden bg-white text-balance text-center shadow-xl shadow-[0px_0px_25px_-5px_#0000003b]">
+          <PopoverContent className="flex flex-col gap-4 items-center w-80 p-6 rounded-xl overflow-hidden bg-white text-balance text-center shadow-xl">
             <h3 className="text-xl font-bold">{lesson.name}</h3>
             <p>{lesson.description}</p>
             <Link
@@ -39,9 +45,6 @@ export default function LessonCard({
             </Link>
           </PopoverContent>
         </Popover>
-        <span className="text-base font-semibold w-36 text-balance">
-          {lesson.name}
-        </span>
       </div>
     </div>
   );
