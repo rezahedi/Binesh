@@ -25,9 +25,11 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
       className={`pt-8 flex flex-col ${isCurrent ? "h-full" : "pb-12"}`}
       {...restProps}
     >
-      <div className="flex-1">
-        <ReactMarkdown>{step.content}</ReactMarkdown>
-      </div>
+      {step.content && (
+        <div className="flex-1">
+          <ReactMarkdown>{step.content}</ReactMarkdown>
+        </div>
+      )}
       {step.quiz && (
         <QuizRenderer
           quiz={{ ...step.quiz, id: step.id }}
