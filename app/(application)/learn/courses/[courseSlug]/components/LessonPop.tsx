@@ -3,26 +3,13 @@
 import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { useSelectionSync } from "../SelectionSyncContext";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { usePathname } from "next/navigation";
 
 const LessonPop = () => {
-  const { selection: lesson, setSelection } = useSelectionSync();
+  const { selection: lesson } = useSelectionSync();
   const popRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
-
-  useEffect(() => {
-    if (!popRef || !setSelection) return;
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (popRef.current && !popRef.current.contains(e.target as Node)) {
-        setSelection(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [setSelection]);
 
   if (!lesson) return null;
 
