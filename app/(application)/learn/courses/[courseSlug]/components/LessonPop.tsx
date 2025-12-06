@@ -43,8 +43,10 @@ const LessonPop = () => {
         </p>
         <Link
           href={`${pathname}/${lesson.slug}`}
-          className="mt-2 font-semibold rounded-full text-accent border-2 border-accent py-2 px-8 transition active:scale-95
-            "
+          className={cn(
+            "font-semibold rounded-full text-accent border-2 border-accent py-2 px-8",
+            "border-b-[6px] active:border-b-2 active:mt-1"
+          )}
         >
           Start Lesson
         </Link>
