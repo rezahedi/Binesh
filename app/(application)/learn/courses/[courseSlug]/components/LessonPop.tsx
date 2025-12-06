@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSelectionSync } from "../SelectionSyncContext";
 import { useRef } from "react";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const LessonPop = () => {
   const { selection: lesson } = useSelectionSync();
@@ -18,7 +19,7 @@ const LessonPop = () => {
       ref={popRef}
       className={cn(
         "sticky bottom-10 p-6 rounded-xl overflow-hidden bg-background text-balance text-center shadow-2xl",
-        "w-md mx-auto border-[3px] border-b-[6px] border-accent rounded-3xl"
+        "w-md mx-auto border-[3px] border-b-[6px] border-accent/50 rounded-3xl"
       )}
     >
       <div className="flex flex-col gap-2 items-center">
@@ -28,14 +29,11 @@ const LessonPop = () => {
           Unit {lesson.unit} <span className="mx-2">·</span> Time{" "}
           {lesson.duration}m
         </p>
-        <Link
-          href={`${pathname}/${lesson.slug}`}
-          className={cn(
-            "font-semibold rounded-full text-accent border-2 border-accent py-2 px-8",
-            "border-b-[6px] active:border-b-2 active:mt-1"
-          )}
-        >
-          Start Lesson
+
+        <Link href={`${pathname}/${lesson.slug}`} className="w-10/12">
+          <Button variant={"accent"} className="font-semibold w-full">
+            Start Lesson
+          </Button>
         </Link>
       </div>
     </div>

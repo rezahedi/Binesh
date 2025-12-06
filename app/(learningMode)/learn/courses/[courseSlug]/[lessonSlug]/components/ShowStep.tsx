@@ -4,6 +4,7 @@ import { useProgress } from "../ProgressContext";
 import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 import { FlagIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
   step: SectionType;
@@ -42,21 +43,26 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
       {isNextReady && !finished && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
           <div className="flex-1 flex gap-3 items-center">
-            <button className="p-2 px-4 rounded-full text-muted-foreground border border-transparent hover:border-muted-foreground cursor-pointer flex gap-1 items-center">
+            <Button
+              variant={"ghost"}
+              className="text-muted-foreground"
+              size={"sm"}
+            >
               <FlagIcon className="size-4" /> Report
-            </button>
+            </Button>
             {quizResult !== null && (
               <p className="font-semibold text-xl text-primary">
                 {quizResult ? "🎉 Correct" : "😩 Incorrect"}
               </p>
             )}
           </div>
-          <button
-            className="font-semibold p-3 px-6 rounded-full bg-primary text-primary-foreground cursor-pointer"
+          <Button
             onClick={nextStep}
+            variant={"primary"}
+            className="font-semibold"
           >
             Continue
-          </button>
+          </Button>
         </div>
       )}
     </div>
