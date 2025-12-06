@@ -34,7 +34,7 @@ export default function LessonCard({
               height={30}
               alt="Alien Ship"
               className={cn(
-                "opacity-0 transition-opacity duration-100 block animate-bounce size-10 mx-auto",
+                "mt-3 opacity-0 transition-opacity duration-100 block animate-bounce size-10 mx-auto",
                 selection && selection?.id === lesson.id && "opacity-100"
               )}
             />
