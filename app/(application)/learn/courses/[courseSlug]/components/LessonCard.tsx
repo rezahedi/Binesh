@@ -15,6 +15,7 @@ export default function LessonCard({
   index: number;
 }) {
   const { selection, setSelection } = useSelectionSync();
+  const isSelected = selection && selection.id === lesson.id;
 
   const handleSelection = () => {
     setSelection(lesson);
@@ -35,11 +36,16 @@ export default function LessonCard({
               alt="Alien Ship"
               className={cn(
                 "mt-3 opacity-0 transition-opacity duration-100 block animate-bounce size-10 mx-auto",
-                selection && selection?.id === lesson.id && "opacity-100"
+                isSelected && "opacity-100"
               )}
             />
           </span>
-          <span className="text-base font-semibold w-44 text-balance text-left">
+          <span
+            className={cn(
+              "text-base font-semibold w-44 text-balance text-left group-hover:text-primary",
+              isSelected && "text-primary"
+            )}
+          >
             {lesson.name}
           </span>
         </button>
