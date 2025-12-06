@@ -3,6 +3,7 @@ import useSteps from "../useSteps";
 import { useProgress } from "../ProgressContext";
 import { useEffect, useRef } from "react";
 import Header from "./Header";
+import LoadingContent from "./LoadingContent";
 
 const StartLesson = () => {
   const { steps, loading, error } = useSteps();
@@ -31,12 +32,8 @@ const StartLesson = () => {
       <Header />
       <div ref={mainElement} className="flex-1 overflow-y-scroll">
         <div className="h-full max-w-2xl mx-auto px-4">
-          {loading && (
-            <div className="text-orange-500 font-semibold text-xl">
-              Loading...
-            </div>
-          )}
-          {error && <div className="font-semibold text-xl">{error}</div>}
+          <LoadingContent isActive={true} />
+          {/* {error && <div className="font-semibold text-xl">{error}</div>}
 
           {steps.length > 0 &&
             steps
@@ -50,7 +47,7 @@ const StartLesson = () => {
                     currentStep === index + 1 ? currentStepElement : undefined
                   }
                 />
-              ))}
+              ))} */}
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@admin/components/ui/popover";
+import Image from "next/image";
 
 const treeClasses = ["self-center", "self-start", "self-center", "self-end"];
 
@@ -24,9 +25,13 @@ export default function LessonCard({
           <PopoverTrigger asChild>
             <button className="flex gap-3 items-center cursor-pointer">
               <span className="bg-[url('/assets/landing_zone.svg')] size-24">
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-100 block animate-bounce text-4xl size-full">
-                  🛸
-                </span>
+                <Image
+                  src={"/assets/alien-ship.svg"}
+                  width={30}
+                  height={30}
+                  alt="Alien Ship"
+                  className="opacity-0 group-hover:opacity-100 transition-opacity duration-100 block animate-bounce size-10 mx-auto"
+                />
               </span>
               <span className="text-base font-semibold w-44 text-balance text-left">
                 {lesson.name}
