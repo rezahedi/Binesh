@@ -27,14 +27,14 @@ const StartLesson = () => {
     });
   }, [currentStep]);
 
+  if (loading) return <LoadingContent isActive={loading} />;
+
   return (
     <div className="flex flex-col h-screen">
       <Header />
       <div ref={mainElement} className="flex-1 overflow-y-scroll">
         <div className="h-full max-w-2xl mx-auto px-4">
-          <LoadingContent isActive={true} />
-          {/* {error && <div className="font-semibold text-xl">{error}</div>}
-
+          {error && <div className="font-semibold text-xl">{error}</div>}
           {steps.length > 0 &&
             steps
               .slice(0, currentStep)
@@ -47,7 +47,7 @@ const StartLesson = () => {
                     currentStep === index + 1 ? currentStepElement : undefined
                   }
                 />
-              ))} */}
+              ))}
         </div>
       </div>
     </div>

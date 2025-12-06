@@ -2,6 +2,8 @@ import { CourseWithDetailProps } from "@/lib/types";
 import { notFound } from "next/navigation";
 import { LessonCard } from "./components";
 import Image from "next/image";
+import LessonPop from "./components/LessonPop";
+import { SelectionSyncProvider } from "./SelectionSyncContext";
 
 export default async function page({
   params,
@@ -34,7 +36,7 @@ export default async function page({
     <div className="flex gap-4 md:gap-10 flex-col md:flex-row">
       <div className="flex-5">
         <div className="sticky top-30">
-          <div className="p-8 bg-card border-[3px] border-b-[6px] border-gray-200 rounded-3xl">
+          <div className="p-8 border-[3px] border-b-[6px] border-muted rounded-3xl">
             <Image
               src={course.image}
               alt={course.name}
@@ -44,9 +46,9 @@ export default async function page({
               className="float-right md:float-none"
             />
             <h1 className="md:my-6 text-2xl md:text-4xl font-bold text-balance">
-              Course: {course.name}
+              {course.name}
             </h1>
-            <p className="my-3 md:my-6 text-gray-700 text-balance">
+            <p className="my-3 md:my-6 text-card-foreground text-balance">
               {course.description}
             </p>
             <b>{course.lessonsCount} Lessons</b>
@@ -54,13 +56,14 @@ export default async function page({
         </div>
       </div>
 
-      <div className="flex-6 md:mb-30">
-        <div className="flex flex-col mx-auto">
+      <SelectionSyncProvider>
+        <div className="flex-6 flex flex-col mx-auto">
           {lessons.map((lesson, index) => (
-            <LessonCard key={lesson.id} {...{ lesson, index, courseSlug }} />
+            <LessonCard key={lesson.id} {...{ lesson, index }} />
           ))}
+          <LessonPop />
         </div>
-      </div>
+      </SelectionSyncProvider>
     </div>
   );
 }
