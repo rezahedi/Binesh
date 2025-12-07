@@ -10,9 +10,11 @@ const treeClasses = ["self-center", "self-start", "self-center", "self-end"];
 export default function LessonCard({
   lesson,
   index,
+  isCompleted = false,
 }: {
   lesson: LessonsProps;
   index: number;
+  isCompleted?: boolean;
 }) {
   const { selection, setSelection } = useSelectionSync();
   const isSelected = selection && selection.id === lesson.id;
@@ -43,6 +45,7 @@ export default function LessonCard({
           <span
             className={cn(
               "text-base font-semibold w-44 text-balance text-left group-hover:text-primary",
+              isCompleted && "text-muted-foreground",
               isSelected && "text-primary"
             )}
           >
