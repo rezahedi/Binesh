@@ -4,6 +4,7 @@ import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
 import { IQuizProp } from "./QuizRenderer";
 import { FlagIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const FillInQuiz = ({
   quiz,
@@ -72,17 +73,21 @@ const FillInQuiz = ({
       {isActive && !isCorrect && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
           <div className="flex-1">
-            <button className="p-2 px-4 rounded-full text-muted-foreground border border-transparent hover:border-muted-foreground cursor-pointer flex gap-1 items-center">
+            <Button
+              variant={"ghost"}
+              className="text-muted-foreground"
+              size={"sm"}
+            >
               <FlagIcon className="size-4" /> Report
-            </button>
+            </Button>
           </div>
-          <button
+          <Button
             onClick={handleCheckAnswer}
             disabled={userAnswer === null}
-            className="font-semibold p-3 px-6 rounded-full bg-foreground disabled:bg-muted text-background disabled:text-muted-foreground cursor-pointer disabled:cursor-not-allowed"
+            className="font-semibold"
           >
             Check
-          </button>
+          </Button>
         </div>
       )}
     </>

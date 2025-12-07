@@ -1,50 +1,57 @@
-import Link from "next/link";
+"use client";
+
 import { LessonsProps } from "@/lib/types";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@admin/components/ui/popover";
+import Image from "next/image";
+import { useSelectionSync } from "../SelectionSyncContext";
+import { cn } from "@/utils/cn";
 
 const treeClasses = ["self-center", "self-start", "self-center", "self-end"];
 
 export default function LessonCard({
   lesson,
   index,
-  courseSlug,
+  isCompleted = false,
 }: {
   lesson: LessonsProps;
   index: number;
-  courseSlug: string;
+  isCompleted?: boolean;
 }) {
+  const { selection, setSelection } = useSelectionSync();
+  const isSelected = selection && selection.id === lesson.id;
+
+  const handleSelection = () => {
+    setSelection(lesson);
+  };
+
   return (
     <div key={lesson.id} className={`py-4 ${treeClasses[index % 4]} relative`}>
       <div className="group">
-        <Popover>
-          <PopoverTrigger asChild>
-            <button className="flex gap-3 items-center cursor-pointer">
-              <span className="bg-[url('/assets/landing_zone.svg')] size-24">
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-100 block animate-bounce text-4xl size-full">
-                  🛸
-                </span>
-              </span>
-              <span className="text-base font-semibold w-44 text-balance text-left">
-                {lesson.name}
-              </span>
-            </button>
-          </PopoverTrigger>
-          <PopoverContent className="flex flex-col gap-4 items-center w-80 p-6 rounded-xl overflow-hidden bg-white text-balance text-center shadow-xl">
-            <h3 className="text-xl font-bold">{lesson.name}</h3>
-            <p>{lesson.description}</p>
-            <Link
-              href={`./${courseSlug}/${lesson.slug}`}
-              className="mt-2 font-semibold rounded-full text-orange-600 border-2 border-orange-300 py-2 px-8 hover:border-orange-600 transition active:scale-95
-            "
-            >
-              Start lesson
-            </Link>
-          </PopoverContent>
-        </Popover>
+        <button
+          onClick={handleSelection}
+          className="flex gap-3 items-center cursor-pointer"
+        >
+          <span className="bg-[url('/assets/landing_zone.svg')] size-24">
+            <Image
+              src={"/assets/alien-ship.svg"}
+              width={30}
+              height={30}
+              alt="Alien Ship"
+              className={cn(
+                "mt-3 opacity-0 transition-opacity duration-100 block animate-bounce size-10 mx-auto",
+                isSelected && "opacity-100"
+              )}
+            />
+          </span>
+          <span
+            className={cn(
+              "text-base font-semibold w-44 text-balance text-left group-hover:text-primary",
+              isCompleted && "text-muted-foreground",
+              isSelected && "text-primary"
+            )}
+          >
+            {lesson.name}
+          </span>
+        </button>
       </div>
     </div>
   );

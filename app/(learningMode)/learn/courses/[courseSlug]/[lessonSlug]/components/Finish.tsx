@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
@@ -26,12 +27,12 @@ const Finish = () => {
         <h2 className="font-bold text-6xl mt-2">80</h2>
       </div>
       <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
-        <button
+        <Button
           onClick={handleContinue}
-          className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-foreground text-background cursor-pointer"
+          className="font-semibold mx-auto w-1/2"
         >
           Continue
-        </button>
+        </Button>
       </div>
     </div>
   );

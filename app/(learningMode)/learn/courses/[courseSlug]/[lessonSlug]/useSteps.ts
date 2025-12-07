@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 
 const useSteps = () => {
   const [steps, setSteps] = useState<SectionType[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
   const { courseSlug, lessonSlug } = useParams();
 

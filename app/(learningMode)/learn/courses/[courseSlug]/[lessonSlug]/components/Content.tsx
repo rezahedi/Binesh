@@ -2,6 +2,7 @@ import { useProgress } from "../ProgressContext";
 import { useState } from "react";
 import Finish from "./Finish";
 import StartLesson from "./StartLesson";
+import { Button } from "@/components/ui/button";
 
 const Content = () => {
   const { finished } = useProgress();
@@ -19,12 +20,13 @@ const Content = () => {
       {finished && (
         <div className="sticky bottom-0 bg-background py-3">
           <div className="max-w-2xl mx-auto px-4 flex items-center">
-            <button
+            <Button
               onClick={handleFinish}
-              className="font-semibold p-3 px-6 mx-auto w-1/2 rounded-full bg-primary text-primary-foreground cursor-pointer"
+              variant={"primary"}
+              className="font-semibold mx-auto w-1/2"
             >
               Finish
-            </button>
+            </Button>
           </div>
         </div>
       )}

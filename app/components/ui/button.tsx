@@ -5,26 +5,30 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
 
 const buttonVariants = cva(
-  "cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "cursor-pointer shadow-[0_4px_0_0] active:shadow-none active:translate-y-1 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-foreground text-background hover:bg-foreground/90",
-        primary: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default:
+          "text-background bg-foreground/90 shadow-foreground hover:bg-foreground/70",
+        primary:
+          "text-primary-foreground bg-primary shadow-primary-dark hover:bg-primary-light",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "text-background bg-destructive shadow-destructive-dark hover:bg-destructive-light",
+        accent:
+          "text-accent-foreground bg-accent shadow-accent-dark hover:bg-accent-light",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border-2 border-foreground/80 shadow-foreground/80 hover:bg-foreground/5",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "text-secondary-foreground bg-secondary shadow-secondary-dark hover:bg-secondary-light",
+        ghost:
+          "border border-transparent shadow-transparent hover:shadow-muted hover:border-muted",
+        link: "text-primary underline-offset-4 hover:underline shadow-none active:translate-y-0.5",
       },
       size: {
         default: "px-6 py-3",
-        primary: "px-6 py-3",
-        sm: "px-5 py-2",
-        lg: "px-10 py-4",
+        sm: "px-4 py-2 text-sm shadow-[0_3px_0_0] active:translate-y-[3px]",
+        lg: "px-10 py-4 text-lg shadow-[0_4px_0_0] active:translate-y-[4px]",
         icon: "size-10",
       },
     },
