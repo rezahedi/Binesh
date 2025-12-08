@@ -1,11 +1,11 @@
 import { StreakButton } from "@application/components";
+import { stackClientApp } from "@stack/client";
+import { UserButton } from "@stackframe/stack";
 import Image from "next/image";
 import Link from "next/link";
-// import { getServerSession } from "next-auth/next";
-// import { authOptions } from "@/lib/auth";
 
 export default async function Header() {
-  // const session = await getServerSession(authOptions);
+  const user = await stackClientApp.getUser();
 
   return (
     <header className="sticky top-0 bg-background w-full shadow-lg z-10">
@@ -43,12 +43,17 @@ export default async function Header() {
         </nav>
         <div className="flex gap-2 items-center">
           <StreakButton />
-          <button className="text-base p-2 px-6 rounded-full border border-primary text-primary cursor-pointer">
-            Login
-          </button>
-          <button className="text-base p-2 px-6 rounded-full bg-primary text-primary-foreground cursor-pointer">
-            Register
-          </button>
+          {user ? (
+            <UserButton />
+          ) : (
+            <>
+              <Link href={"/handler/sign-in"}>
+                <button className="text-base p-2 px-6 rounded-full border border-primary text-primary cursor-pointer">
+                  Sign in
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
