@@ -10,7 +10,7 @@ export default async function WebsitePage() {
       {!user && (
         <>
           <Link href={"/handler/sign-in"}>Sign in</Link> -
-          <Link href={"/handler/sign-un"}>Sign un</Link>
+          <Link href={"/handler/sign-up"}>Sign up</Link>
         </>
       )}
       {user && (
