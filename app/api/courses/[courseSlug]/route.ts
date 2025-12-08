@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { asc, eq, getTableColumns } from "drizzle-orm";
+import { and, asc, eq, getTableColumns } from "drizzle-orm";
 import db from "@/db";
-import { categories, courses, lessons } from "@/db/schema";
+import { categories, courseProgress, courses, lessons } from "@/db/schema";
 
 export const GET = async (
   _request: NextRequest,
@@ -13,6 +13,9 @@ export const GET = async (
 ) => {
   const { courseSlug } = await params;
 
+  // TODO: Replace hard coded user id with real data
+  const userId = "c30952d5-2600-46f4-9044-37e54acfcb6b";
+
   const { content: _content, ...lessonsColumns } = getTableColumns(lessons);
   void _content;
 
@@ -20,11 +23,19 @@ export const GET = async (
     .select({
       ...getTableColumns(courses),
       category: getTableColumns(categories),
+      progress: getTableColumns(courseProgress),
       lessons: lessonsColumns,
     })
     .from(courses)
     .where(eq(courses.slug, courseSlug))
     .leftJoin(categories, eq(courses.categoryID, categories.id))
+    .leftJoin(
+      courseProgress,
+      and(
+        eq(courseProgress.courseID, courses.id),
+        eq(courseProgress.userID, userId)
+      )
+    )
     .leftJoin(lessons, eq(lessons.courseID, courses.id))
     .orderBy(asc(lessons.unit), asc(lessons.part));
 

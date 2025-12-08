@@ -260,10 +260,10 @@ export const lessonProgress = pgTable(
   "LessonProgress",
   {
     id: text().primaryKey().notNull(),
-    userId: text().notNull(),
-    lessonId: text().notNull(),
+    userID: text().notNull(),
+    lessonID: text().notNull(),
     progress: text().notNull(),
-    resumeUrl: text().notNull(),
+    resumeURL: text().notNull(),
     progressMap: text().notNull(),
     createdAt: timestamp({ precision: 3, mode: "string" })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -273,18 +273,18 @@ export const lessonProgress = pgTable(
   (table) => [
     uniqueIndex("LessonProgress_userID_lessonID_key").using(
       "btree",
-      table.userId.asc().nullsLast().op("text_ops"),
-      table.lessonId.asc().nullsLast().op("text_ops")
+      table.userID.asc().nullsLast().op("text_ops"),
+      table.lessonID.asc().nullsLast().op("text_ops")
     ),
     foreignKey({
-      columns: [table.userId],
+      columns: [table.userID],
       foreignColumns: [user.id],
       name: "LessonProgress_userID_fkey",
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
     foreignKey({
-      columns: [table.lessonId],
+      columns: [table.lessonID],
       foreignColumns: [lessons.id],
       name: "LessonProgress_lessonID_fkey",
     })
