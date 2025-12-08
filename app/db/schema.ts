@@ -224,10 +224,10 @@ export const courseProgress = pgTable(
   "CourseProgress",
   {
     id: text().primaryKey().notNull(),
-    userId: text().notNull(),
-    courseId: text().notNull(),
+    userID: text().notNull(),
+    courseID: text().notNull(),
     percentage: integer().notNull(),
-    resumeUrl: text().notNull(),
+    resumeURL: text().notNull(),
     createdAt: timestamp({ precision: 3, mode: "string" })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -236,18 +236,18 @@ export const courseProgress = pgTable(
   (table) => [
     uniqueIndex("CourseProgress_userID_courseID_key").using(
       "btree",
-      table.userId.asc().nullsLast().op("text_ops"),
-      table.courseId.asc().nullsLast().op("text_ops")
+      table.userID.asc().nullsLast().op("text_ops"),
+      table.courseID.asc().nullsLast().op("text_ops")
     ),
     foreignKey({
-      columns: [table.userId],
+      columns: [table.userID],
       foreignColumns: [user.id],
       name: "CourseProgress_userID_fkey",
     })
       .onUpdate("cascade")
       .onDelete("cascade"),
     foreignKey({
-      columns: [table.courseId],
+      columns: [table.courseID],
       foreignColumns: [courses.id],
       name: "CourseProgress_courseID_fkey",
     })
