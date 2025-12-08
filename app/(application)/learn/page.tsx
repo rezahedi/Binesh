@@ -14,7 +14,7 @@ export default function ApplicationPage() {
           {isLoading && <div>Loading...</div>}
           {courses &&
             courses.map((course, index) => (
-              <CourseCard key={index} {...course} progress={10} />
+              <CourseCard key={index} {...course} />
             ))}
         </div>
       </div>
@@ -24,7 +24,7 @@ export default function ApplicationPage() {
           {isLoading && <div>Loading...</div>}
           {courses &&
             courses.map((course, index) => (
-              <CourseCard key={index} {...course} progress={20} />
+              <CourseCard key={index} {...course} />
             ))}
         </div>
       </div>
