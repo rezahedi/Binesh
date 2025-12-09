@@ -15,7 +15,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx app/db/seed.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
