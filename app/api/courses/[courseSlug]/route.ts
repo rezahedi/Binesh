@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { and, asc, eq, getTableColumns } from "drizzle-orm";
 import db from "@/db";
-import { categories, courseProgress, courses, lessons } from "@/db/schema";
+import {
+  categories,
+  courseProgress,
+  courses,
+  lessonProgress,
+  lessons,
+} from "@/db/schema";
+import { stackServerApp } from "@stack/server";
 
 export const GET = async (
   _request: NextRequest,
@@ -13,8 +20,10 @@ export const GET = async (
 ) => {
   const { courseSlug } = await params;
 
-  // TODO: Replace hard coded user id with real data
-  const userId = "c30952d5-2600-46f4-9044-37e54acfcb6b";
+  const user = await stackServerApp.getUser();
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
 
   const { content: _content, ...lessonsColumns } = getTableColumns(lessons);
   void _content;
@@ -25,6 +34,7 @@ export const GET = async (
       category: getTableColumns(categories),
       progress: getTableColumns(courseProgress),
       lessons: lessonsColumns,
+      lessonProgress: getTableColumns(lessonProgress),
     })
     .from(courses)
     .where(eq(courses.slug, courseSlug))
@@ -32,12 +42,20 @@ export const GET = async (
     .leftJoin(
       courseProgress,
       and(
-        eq(courseProgress.courseID, courses.id),
-        eq(courseProgress.userID, userId)
+        eq(courseProgress.userID, user.id),
+        eq(courseProgress.courseID, courses.id)
       )
     )
     .leftJoin(lessons, eq(lessons.courseID, courses.id))
-    .orderBy(asc(lessons.unit), asc(lessons.part));
+    .orderBy(asc(lessons.unit), asc(lessons.part))
+    .leftJoin(
+      lessonProgress,
+      and(
+        eq(lessonProgress.userID, user.id),
+        eq(lessonProgress.courseID, courses.id),
+        eq(lessonProgress.lessonID, lessons.id)
+      )
+    );
 
   // If course doesn't exists
   if (response.length === 0)
@@ -45,6 +63,10 @@ export const GET = async (
 
   return NextResponse.json({
     ...response[0],
-    lessons: response.map((r) => r.lessons),
+    lessons: response.map((r, i) => ({
+      ...r.lessons,
+      progress: response[i].lessonProgress,
+    })),
+    lessonProgress: undefined,
   });
 };

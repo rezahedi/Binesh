@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { eq, getTableColumns, and } from "drizzle-orm";
-import db from "@/db";
-import { courses, lessons } from "@/db/schema";
 import { parseLesson } from "@/lib/quizParser";
+import { stackServerApp } from "@stack/server";
+import { getCourseBySlug, getLessonBySlug } from "@/(learningMode)/utils/db";
+import { LessonsProps } from "@/lib/types";
 
 export const GET = async (
   _request: NextRequest,
@@ -14,31 +14,29 @@ export const GET = async (
 ) => {
   const { courseSlug, lessonSlug } = await params;
 
-  const courseResult = await db
-    .select({ courseId: courses.id })
-    .from(courses)
-    .where(eq(courses.slug, courseSlug));
+  const user = await stackServerApp.getUser();
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
 
-  // If course doesn't exists
-  if (courseResult.length === 0)
-    return NextResponse.json({ message: `Course not found` }, { status: 404 });
-
-  const { courseId } = courseResult[0];
-
-  const lessonResult = await db
-    .select(getTableColumns(lessons))
-    .from(lessons)
-    .where(and(eq(lessons.courseID, courseId), eq(lessons.slug, lessonSlug)));
-
-  // If lesson doesn't exists
-  if (lessonResult.length === 0)
-    return NextResponse.json({ message: `Lesson not found` }, { status: 404 });
+  let courseId: string;
+  let lesson: LessonsProps;
+  try {
+    const result = await getCourseBySlug(courseSlug);
+    courseId = result.id;
+    lesson = await getLessonBySlug(courseId, lessonSlug);
+  } catch {
+    return NextResponse.json(
+      { message: `Course or lesson not found` },
+      { status: 404 }
+    );
+  }
 
   // Parse markdown content
-  const { steps } = parseLesson(lessonResult[0].content);
+  const { steps } = parseLesson(lesson.content);
 
   return NextResponse.json({
-    ...lessonResult[0],
+    ...lesson,
     content: undefined,
     steps,
   });
