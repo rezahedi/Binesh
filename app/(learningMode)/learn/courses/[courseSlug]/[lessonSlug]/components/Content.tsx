@@ -4,7 +4,7 @@ import Finish from "./Finish";
 import StartLesson from "./StartLesson";
 import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
-import { updateProgress } from "@/(learningMode)/actions/updateProgress";
+import { updateProgress } from "@/(learningMode)/actions/progress";
 
 const Content = () => {
   const { finished } = useProgress();
