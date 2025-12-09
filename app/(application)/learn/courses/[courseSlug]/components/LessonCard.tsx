@@ -1,7 +1,6 @@
 "use client";
 
 import { LessonWithProgressProps } from "@/lib/types";
-import Image from "next/image";
 import { useSelectionSync } from "../SelectionSyncContext";
 import { cn } from "@/utils/cn";
 import LandingZone from "./LandingZone";
