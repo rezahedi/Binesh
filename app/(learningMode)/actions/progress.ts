@@ -1,9 +1,10 @@
 "use server";
 
 import db from "@/db";
-import { lessonProgress, courseProgress, courses, lessons } from "@/db/schema";
+import { lessonProgress, courseProgress } from "@/db/schema";
 import { stackServerApp } from "@stack/server";
-import { and, count, eq, getTableColumns } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
+import { getCourseBySlug, getLessonBySlug } from "../utils/db";
 
 export async function updateProgress(courseSlug: string, lessonSlug: string) {
   const user = await stackServerApp.getUser();
@@ -80,28 +81,4 @@ export async function resetLessonProgress(
         eq(lessonProgress.lessonID, lessonSlug)
       )
     );
-}
-
-async function getCourseBySlug(courseSlug: string) {
-  const courseResult = await db
-    .select(getTableColumns(courses))
-    .from(courses)
-    .where(eq(courses.slug, courseSlug));
-  if (courseResult.length !== 1) {
-    throw new Error("Course not found");
-  }
-
-  return courseResult[0];
-}
-
-async function getLessonBySlug(courseId: string, lessonSlug: string) {
-  const lessonResult = await db
-    .select(getTableColumns(lessons))
-    .from(lessons)
-    .where(and(eq(lessons.courseID, courseId), eq(lessons.slug, lessonSlug)));
-  if (lessonResult.length !== 1) {
-    throw new Error("Lesson not found");
-  }
-
-  return lessonResult[0];
 }
