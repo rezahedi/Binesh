@@ -3,6 +3,7 @@ import { and, desc, eq, getTableColumns, like, or } from "drizzle-orm";
 import db from "@/db";
 import { categories, courseProgress, courses } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
+import { stackServerApp } from "@stack/server";
 
 export const GET = async (request: NextRequest) => {
   const searchParams = getSearchParams(request.url);
@@ -17,8 +18,11 @@ export const GET = async (request: NextRequest) => {
     page?: string;
   };
 
-  // TODO: Replace hard coded user id with real data
-  const userId = "c30952d5-2600-46f4-9044-37e54acfcb6b";
+  const user = await stackServerApp.getUser();
+
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
 
   const query = db
     .select({
@@ -34,8 +38,8 @@ export const GET = async (request: NextRequest) => {
     .leftJoin(
       courseProgress,
       and(
-        eq(courseProgress.courseID, courses.id),
-        eq(courseProgress.userID, userId)
+        eq(courseProgress.userID, user.id),
+        eq(courseProgress.courseID, courses.id)
       )
     );
 
