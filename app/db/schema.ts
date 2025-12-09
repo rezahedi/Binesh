@@ -87,10 +87,14 @@ export const lessonProgress = pgTable(
     userID: text("user_id")
       .notNull()
       .references(() => usersSync.id, { onDelete: "cascade" }),
+    courseID: uuid("course_id")
+      .notNull()
+      .references(() => courses.id, { onDelete: "cascade" }),
     lessonID: uuid("lesson_id")
       .notNull()
       .references(() => lessons.id, { onDelete: "cascade" }),
-    progress: text("progress").notNull(),
+    score: integer("score").notNull().default(0),
+    timeSpent: integer("time_spent").notNull(),
     resumeURL: text("resume_url").notNull(),
     progressMap: text("progress_map").notNull(),
     createdAt: timestamp("created_at", { mode: "string" })
@@ -101,8 +105,8 @@ export const lessonProgress = pgTable(
       .notNull(),
   },
   (table) => [
-    // Unique: user can have one progress row per lesson
-    uniqueIndex().on(table.userID, table.lessonID),
+    // Unique: user can have one progress row per lesson per course
+    uniqueIndex().on(table.userID, table.courseID, table.lessonID),
   ]
 );
 
