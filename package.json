@@ -12,8 +12,10 @@
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run prettier:fix && npm run lint:fix",
     "vercel-build": "prisma generate && next build",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate"
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
