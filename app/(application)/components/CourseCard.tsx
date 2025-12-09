@@ -33,10 +33,12 @@ export default function CourseCard(props: CourseWithCategoryProps) {
         loading="lazy"
         className="pb-1"
       />
-      <p className="uppercase text-xs font-medium text-orange-600">
-        {category.name}
-        {String(level) != "" && ` . LEVEL ${level}`}
-      </p>
+      {category && (
+        <p className="uppercase text-xs font-medium text-orange-600">
+          {category.name}
+          {String(level) != "" && ` . LEVEL ${level}`}
+        </p>
+      )}
       <h4 className="flex-1 text-lg font-semibold text-balance">{name}</h4>
       {progress && progress.percentage && (
         <div
