@@ -107,7 +107,7 @@ export default async function page({
             <LessonCard
               key={lesson.id}
               {...{ lesson, index }}
-              isCompleted={index < 3}
+              isCompleted={lesson.progress ? true : false}
             />
           ))}
           <LessonPop />

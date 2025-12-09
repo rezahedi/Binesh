@@ -45,7 +45,7 @@ export default function LessonCard({
           <span
             className={cn(
               "text-base font-semibold w-44 text-balance text-left group-hover:text-primary",
-              isCompleted && "text-muted-foreground",
+              !isCompleted && "text-muted-foreground",
               isSelected && "text-primary"
             )}
           >

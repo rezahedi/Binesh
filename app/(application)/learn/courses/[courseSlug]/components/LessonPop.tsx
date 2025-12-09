@@ -1,10 +1,9 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import Link from "next/link";
 import { useSelectionSync } from "../SelectionSyncContext";
 import { useRef } from "react";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const LessonPop = () => {
@@ -13,6 +12,10 @@ const LessonPop = () => {
   const pathname = usePathname();
 
   if (!lesson) return null;
+
+  const handleStartClick = () => {
+    redirect(`${pathname}/${lesson.slug}`);
+  };
 
   return (
     <div
@@ -30,11 +33,23 @@ const LessonPop = () => {
           {lesson.duration}m
         </p>
 
-        <Link href={`${pathname}/${lesson.slug}`} className="w-10/12">
-          <Button variant={"accent"} className="font-semibold w-full">
+        {lesson.progress ? (
+          <Button
+            onClick={handleStartClick}
+            variant={"outline"}
+            className="font-semibold w-10/12 bg-muted border-transparent shadow-foreground/40"
+          >
+            Review
+          </Button>
+        ) : (
+          <Button
+            onClick={handleStartClick}
+            variant={"accent"}
+            className="font-semibold w-10/12"
+          >
             Start Lesson
           </Button>
-        </Link>
+        )}
       </div>
     </div>
   );
