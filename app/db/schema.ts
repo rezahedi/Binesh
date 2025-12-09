@@ -8,7 +8,7 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
-export const categories = pgTable("Categories", {
+export const categories = pgTable("categories", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
   description: text("description").notNull(),
@@ -16,7 +16,7 @@ export const categories = pgTable("Categories", {
   image: text("image").notNull(),
 });
 
-export const courses = pgTable("Courses", {
+export const courses = pgTable("courses", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
   description: text("description").notNull(),
@@ -24,15 +24,15 @@ export const courses = pgTable("Courses", {
   image: text("image").notNull(),
   level: integer("level").notNull(),
   lessonsCount: integer("lessons_count").notNull(),
-  createdAt: timestamp("createdAt", { mode: "string" }).defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt", { mode: "string" }).defaultNow().notNull(),
-  categoryID: uuid("categoryID")
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
+  categoryID: uuid("category_id")
     .notNull()
     .references(() => categories.id, { onDelete: "restrict" }),
 });
 
 export const lessons = pgTable(
-  "Lessons",
+  "lessons",
   {
     id: uuid("id").defaultRandom().primaryKey(),
     name: text("name").notNull(),
@@ -42,13 +42,13 @@ export const lessons = pgTable(
     unit: integer("unit").notNull(),
     part: integer("part").notNull(),
     duration: integer("duration").notNull(),
-    createdAt: timestamp("createdAt", { mode: "string" })
+    createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp("updatedAt", { mode: "string" })
+    updatedAt: timestamp("updated_at", { mode: "string" })
       .defaultNow()
       .notNull(),
-    courseID: uuid("courseID")
+    courseID: uuid("course_id")
       .notNull()
       .references(() => courses.id, { onDelete: "restrict" }),
   },
@@ -56,21 +56,21 @@ export const lessons = pgTable(
 );
 
 export const courseProgress = pgTable(
-  "CourseProgress",
+  "course_progress",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    userID: text("userID")
+    userID: text("user_id")
       .notNull()
       .references(() => usersSync.id, { onDelete: "cascade" }),
-    courseID: uuid("courseID")
+    courseID: uuid("course_id")
       .notNull()
       .references(() => courses.id, { onDelete: "cascade" }),
     percentage: integer("percentage").notNull(),
-    resumeURL: text("resumeURL").notNull(),
-    createdAt: timestamp("createdAt", { mode: "string" })
+    resumeURL: text("resume_url").notNull(),
+    createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp("updatedAt", { mode: "string" })
+    updatedAt: timestamp("updated_at", { mode: "string" })
       .defaultNow()
       .notNull(),
   },
@@ -81,22 +81,22 @@ export const courseProgress = pgTable(
 );
 
 export const lessonProgress = pgTable(
-  "LessonProgress",
+  "lesson_progress",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    userID: text("userID")
+    userID: text("user_id")
       .notNull()
       .references(() => usersSync.id, { onDelete: "cascade" }),
-    lessonID: uuid("lessonID")
+    lessonID: uuid("lesson_id")
       .notNull()
       .references(() => lessons.id, { onDelete: "cascade" }),
     progress: text("progress").notNull(),
-    resumeURL: text("resumeURL").notNull(),
-    progressMap: text("progressMap").notNull(),
-    createdAt: timestamp("createdAt", { mode: "string" })
+    resumeURL: text("resume_url").notNull(),
+    progressMap: text("progress_map").notNull(),
+    createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp("updatedAt", { mode: "string" })
+    updatedAt: timestamp("updated_at", { mode: "string" })
       .defaultNow()
       .notNull(),
   },
