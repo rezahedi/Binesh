@@ -1,6 +1,6 @@
 "use client";
 
-import { LessonsProps } from "@/lib/types";
+import { LessonWithProgressProps } from "@/lib/types";
 import React, {
   createContext,
   Dispatch,
@@ -10,14 +10,16 @@ import React, {
 } from "react";
 
 type ContextType = {
-  selection: LessonsProps | null;
-  setSelection: Dispatch<SetStateAction<LessonsProps | null>>;
+  selection: LessonWithProgressProps | null;
+  setSelection: Dispatch<SetStateAction<LessonWithProgressProps | null>>;
 };
 
 const SelectionSyncContext = createContext<ContextType | undefined>(undefined);
 
 const SelectionSyncProvider = ({ children }: { children: React.ReactNode }) => {
-  const [selection, setSelection] = useState<LessonsProps | null>(null);
+  const [selection, setSelection] = useState<LessonWithProgressProps | null>(
+    null
+  );
 
   return (
     <SelectionSyncContext.Provider value={{ selection, setSelection }}>

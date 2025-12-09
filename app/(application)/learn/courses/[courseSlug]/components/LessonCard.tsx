@@ -1,6 +1,6 @@
 "use client";
 
-import { LessonsProps } from "@/lib/types";
+import { LessonWithProgressProps } from "@/lib/types";
 import Image from "next/image";
 import { useSelectionSync } from "../SelectionSyncContext";
 import { cn } from "@/utils/cn";
@@ -12,7 +12,7 @@ export default function LessonCard({
   index,
   isCompleted = false,
 }: {
-  lesson: LessonsProps;
+  lesson: LessonWithProgressProps;
   index: number;
   isCompleted?: boolean;
 }) {
