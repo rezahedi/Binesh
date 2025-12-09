@@ -5,11 +5,8 @@ import {
   text,
   integer,
   uniqueIndex,
-  pgEnum,
   uuid,
 } from "drizzle-orm/pg-core";
-
-export const role = pgEnum("Role", ["admin", "editor"]);
 
 export const categories = pgTable("Categories", {
   id: uuid("id").defaultRandom().primaryKey(),
