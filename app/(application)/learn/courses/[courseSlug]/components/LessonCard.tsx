@@ -1,9 +1,9 @@
 "use client";
 
-import { LessonsProps } from "@/lib/types";
-import Image from "next/image";
+import { LessonWithProgressProps } from "@/lib/types";
 import { useSelectionSync } from "../SelectionSyncContext";
 import { cn } from "@/utils/cn";
+import LandingZone from "./LandingZone";
 
 const treeClasses = ["self-center", "self-start", "self-center", "self-end"];
 
@@ -12,7 +12,7 @@ export default function LessonCard({
   index,
   isCompleted = false,
 }: {
-  lesson: LessonsProps;
+  lesson: LessonWithProgressProps;
   index: number;
   isCompleted?: boolean;
 }) {
@@ -30,22 +30,12 @@ export default function LessonCard({
           onClick={handleSelection}
           className="flex gap-3 items-center cursor-pointer"
         >
-          <span className="bg-[url('/assets/landing_zone.svg')] size-24">
-            <Image
-              src={"/assets/alien-ship.svg"}
-              width={30}
-              height={30}
-              alt="Alien Ship"
-              className={cn(
-                "mt-3 opacity-0 transition-opacity duration-100 block animate-bounce size-10 mx-auto",
-                isSelected && "opacity-100"
-              )}
-            />
-          </span>
+          <LandingZone isActive={isCompleted} isFocused={isSelected} />
           <span
             className={cn(
               "text-base font-semibold w-44 text-balance text-left group-hover:text-primary",
-              isCompleted && "text-muted-foreground",
+              !isCompleted &&
+                "text-foreground/40 group-hover:text-foreground/70",
               isSelected && "text-primary"
             )}
           >

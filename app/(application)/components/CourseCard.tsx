@@ -2,9 +2,7 @@ import { CourseWithCategoryProps } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function CourseCard(
-  props: CourseWithCategoryProps & { progress: number }
-) {
+export default function CourseCard(props: CourseWithCategoryProps) {
   const {
     // id,
     name,
@@ -15,12 +13,9 @@ export default function CourseCard(
     // categoryID,
     category,
     // ...rest
+    progress,
   } = props;
-
-  let { progress = -1 } = props;
-
-  if (progress > 100) progress = 100;
-
+  console.log(progress);
   return (
     <Link
       href={`${process.env.NEXT_PUBLIC_APP_BASE}/courses/${slug}`}
@@ -38,22 +33,24 @@ export default function CourseCard(
         loading="lazy"
         className="pb-1"
       />
-      <p className="uppercase text-xs font-medium text-orange-600">
-        {category.name}
-        {String(level) != "" && ` . LEVEL ${level}`}
-      </p>
+      {category && (
+        <p className="uppercase text-xs font-medium text-orange-600">
+          {category.name}
+          {String(level) != "" && ` . LEVEL ${level}`}
+        </p>
+      )}
       <h4 className="flex-1 text-lg font-semibold text-balance">{name}</h4>
-      {progress > -1 && (
+      {progress && (
         <div
           className="flex w-full h-2 bg-gray-100 rounded-full overflow-hidden"
           role="progressbar"
-          aria-valuenow={progress}
+          aria-valuenow={progress.percentage}
           aria-valuemin={0}
           aria-valuemax={100}
         >
           <div
             className="flex flex-col justify-center rounded-full overflow-hidden bg-[#179E7E] text-xs text-white text-center whitespace-nowrap transition duration-500"
-            style={{ width: `${progress}%` }}
+            style={{ width: `${progress.percentage}%` }}
           ></div>
         </div>
       )}

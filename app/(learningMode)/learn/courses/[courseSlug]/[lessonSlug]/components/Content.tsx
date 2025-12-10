@@ -3,13 +3,19 @@ import { useState } from "react";
 import Finish from "./Finish";
 import StartLesson from "./StartLesson";
 import { Button } from "@/components/ui/button";
+import { useParams } from "next/navigation";
+import { updateProgress } from "@/(learningMode)/actions/progress";
 
 const Content = () => {
   const { finished } = useProgress();
-  const [showFinish, setSHowFinish] = useState<boolean>(false);
+  const [showFinish, setShowFinish] = useState<boolean>(false);
+  const { courseSlug, lessonSlug } = useParams();
 
-  const handleFinish = () => {
-    setSHowFinish(true);
+  const handleFinish = async () => {
+    if (!courseSlug || !lessonSlug) return;
+
+    await updateProgress(String(courseSlug), String(lessonSlug));
+    setShowFinish(true);
   };
 
   if (showFinish) return <Finish />;

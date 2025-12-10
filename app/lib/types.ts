@@ -1,13 +1,30 @@
-import { Courses, Categories, Lessons, NewCourses } from "@/db/schema";
+import {
+  Courses,
+  Categories,
+  Lessons,
+  NewCourses,
+  CourseProgress,
+  LessonProgress,
+} from "@/db/schema";
 
 export type CourseProps = Courses;
 export type NewCourseProps = NewCourses;
 export type LessonsProps = Lessons;
+export type LessonProgressProps = LessonProgress;
 export type CategoryProps = Categories;
+export type CourseProgressProps = CourseProgress;
 
-export type CourseWithCategoryProps = Courses & { category: Categories };
+export type LessonWithProgressProps = Lessons & {
+  progress: LessonProgressProps | null;
+};
+
+export type CourseWithCategoryProps = Courses & {
+  category: Categories | null;
+} & {
+  progress: CourseProgressProps | null;
+};
 export type CourseWithDetailProps = CourseWithCategoryProps & {
-  lessons: Lessons[];
+  lessons: LessonWithProgressProps[];
 };
 
 export const roles = ["admin", "editor"] as const;

@@ -12,9 +12,7 @@ export default function Page() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {isLoading && <div>Loading...</div>}
         {courses &&
-          courses.map((course) => (
-            <CourseCard key={course.id} {...course} progress={60} />
-          ))}
+          courses.map((course) => <CourseCard key={course.id} {...course} />)}
       </div>
     </div>
   );

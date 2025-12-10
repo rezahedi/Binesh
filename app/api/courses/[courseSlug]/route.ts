@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { asc, eq, getTableColumns } from "drizzle-orm";
+import { and, asc, eq, getTableColumns } from "drizzle-orm";
 import db from "@/db";
-import { categories, courses, lessons } from "@/db/schema";
+import {
+  categories,
+  courseProgress,
+  courses,
+  lessonProgress,
+  lessons,
+} from "@/db/schema";
+import { stackServerApp } from "@stack/server";
 
 export const GET = async (
   _request: NextRequest,
@@ -13,6 +20,11 @@ export const GET = async (
 ) => {
   const { courseSlug } = await params;
 
+  const user = await stackServerApp.getUser();
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const { content: _content, ...lessonsColumns } = getTableColumns(lessons);
   void _content;
 
@@ -20,13 +32,30 @@ export const GET = async (
     .select({
       ...getTableColumns(courses),
       category: getTableColumns(categories),
+      progress: getTableColumns(courseProgress),
       lessons: lessonsColumns,
+      lessonProgress: getTableColumns(lessonProgress),
     })
     .from(courses)
     .where(eq(courses.slug, courseSlug))
     .leftJoin(categories, eq(courses.categoryID, categories.id))
+    .leftJoin(
+      courseProgress,
+      and(
+        eq(courseProgress.userID, user.id),
+        eq(courseProgress.courseID, courses.id)
+      )
+    )
     .leftJoin(lessons, eq(lessons.courseID, courses.id))
-    .orderBy(asc(lessons.unit), asc(lessons.part));
+    .orderBy(asc(lessons.unit), asc(lessons.part))
+    .leftJoin(
+      lessonProgress,
+      and(
+        eq(lessonProgress.userID, user.id),
+        eq(lessonProgress.courseID, courses.id),
+        eq(lessonProgress.lessonID, lessons.id)
+      )
+    );
 
   // If course doesn't exists
   if (response.length === 0)
@@ -34,6 +63,10 @@ export const GET = async (
 
   return NextResponse.json({
     ...response[0],
-    lessons: response.map((r) => r.lessons),
+    lessons: response.map((r, i) => ({
+      ...r.lessons,
+      progress: response[i].lessonProgress,
+    })),
+    lessonProgress: undefined,
   });
 };

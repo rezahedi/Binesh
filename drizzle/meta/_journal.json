@@ -5,8 +5,22 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1764350876796,
-      "tag": "0000_red_bullseye",
+      "when": 1765261429306,
+      "tag": "0000_moaning_darkhawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1765262283161,
+      "tag": "0001_abandoned_maelstrom",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1765292993132,
+      "tag": "0002_past_lilandra",
       "breakpoints": true
     }
   ]

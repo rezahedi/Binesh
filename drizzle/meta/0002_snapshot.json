@@ -1,11 +1,11 @@
 {
-  "id": "0422beb5-5ef5-4c7a-ab12-ec08bd63691a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "9d2de759-a6de-4f24-9a79-2025a4441f55",
+  "prevId": "cc1de5e9-ecf4-40f9-9e69-be0c7c0332a5",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.Categories": {
-      "name": "Categories",
+    "public.categories": {
+      "name": "categories",
       "schema": "",
       "columns": {
         "id": {
@@ -44,8 +44,8 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "Categories_slug_unique": {
-          "name": "Categories_slug_unique",
+        "categories_slug_unique": {
+          "name": "categories_slug_unique",
           "nullsNotDistinct": false,
           "columns": [
             "slug"
@@ -56,8 +56,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.CourseProgress": {
-      "name": "CourseProgress",
+    "public.course_progress": {
+      "name": "course_progress",
       "schema": "",
       "columns": {
         "id": {
@@ -67,14 +67,14 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "userID": {
-          "name": "userID",
+        "user_id": {
+          "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "courseID": {
-          "name": "courseID",
+        "course_id": {
+          "name": "course_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -85,21 +85,21 @@
           "primaryKey": false,
           "notNull": true
         },
-        "resumeURL": {
-          "name": "resumeURL",
+        "resume_url": {
+          "name": "resume_url",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "updatedAt": {
-          "name": "updatedAt",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -107,17 +107,17 @@
         }
       },
       "indexes": {
-        "CourseProgress_userID_courseID_index": {
-          "name": "CourseProgress_userID_courseID_index",
+        "course_progress_user_id_course_id_index": {
+          "name": "course_progress_user_id_course_id_index",
           "columns": [
             {
-              "expression": "userID",
+              "expression": "user_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
             },
             {
-              "expression": "courseID",
+              "expression": "course_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -130,13 +130,13 @@
         }
       },
       "foreignKeys": {
-        "CourseProgress_userID_users_sync_id_fk": {
-          "name": "CourseProgress_userID_users_sync_id_fk",
-          "tableFrom": "CourseProgress",
+        "course_progress_user_id_users_sync_id_fk": {
+          "name": "course_progress_user_id_users_sync_id_fk",
+          "tableFrom": "course_progress",
           "tableTo": "users_sync",
           "schemaTo": "neon_auth",
           "columnsFrom": [
-            "userID"
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -144,12 +144,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "CourseProgress_courseID_Courses_id_fk": {
-          "name": "CourseProgress_courseID_Courses_id_fk",
-          "tableFrom": "CourseProgress",
-          "tableTo": "Courses",
+        "course_progress_course_id_courses_id_fk": {
+          "name": "course_progress_course_id_courses_id_fk",
+          "tableFrom": "course_progress",
+          "tableTo": "courses",
           "columnsFrom": [
-            "courseID"
+            "course_id"
           ],
           "columnsTo": [
             "id"
@@ -164,8 +164,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Courses": {
-      "name": "Courses",
+    "public.courses": {
+      "name": "courses",
       "schema": "",
       "columns": {
         "id": {
@@ -211,22 +211,22 @@
           "primaryKey": false,
           "notNull": true
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "updatedAt": {
-          "name": "updatedAt",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "categoryID": {
-          "name": "categoryID",
+        "category_id": {
+          "name": "category_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -234,12 +234,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Courses_categoryID_Categories_id_fk": {
-          "name": "Courses_categoryID_Categories_id_fk",
-          "tableFrom": "Courses",
-          "tableTo": "Categories",
+        "courses_category_id_categories_id_fk": {
+          "name": "courses_category_id_categories_id_fk",
+          "tableFrom": "courses",
+          "tableTo": "categories",
           "columnsFrom": [
-            "categoryID"
+            "category_id"
           ],
           "columnsTo": [
             "id"
@@ -250,8 +250,8 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "Courses_slug_unique": {
-          "name": "Courses_slug_unique",
+        "courses_slug_unique": {
+          "name": "courses_slug_unique",
           "nullsNotDistinct": false,
           "columns": [
             "slug"
@@ -262,8 +262,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.LessonProgress": {
-      "name": "LessonProgress",
+    "public.lesson_progress": {
+      "name": "lesson_progress",
       "schema": "",
       "columns": {
         "id": {
@@ -273,45 +273,58 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "userID": {
-          "name": "userID",
+        "user_id": {
+          "name": "user_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "lessonID": {
-          "name": "lessonID",
+        "course_id": {
+          "name": "course_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "progress": {
-          "name": "progress",
+        "lesson_id": {
+          "name": "lesson_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "score": {
+          "name": "score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "time_spent": {
+          "name": "time_spent",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "resume_url": {
+          "name": "resume_url",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "resumeURL": {
-          "name": "resumeURL",
+        "progress_map": {
+          "name": "progress_map",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "progressMap": {
-          "name": "progressMap",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "updatedAt": {
-          "name": "updatedAt",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -319,17 +332,23 @@
         }
       },
       "indexes": {
-        "LessonProgress_userID_lessonID_index": {
-          "name": "LessonProgress_userID_lessonID_index",
+        "lesson_progress_user_id_course_id_lesson_id_index": {
+          "name": "lesson_progress_user_id_course_id_lesson_id_index",
           "columns": [
             {
-              "expression": "userID",
+              "expression": "user_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
             },
             {
-              "expression": "lessonID",
+              "expression": "course_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "lesson_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -342,13 +361,13 @@
         }
       },
       "foreignKeys": {
-        "LessonProgress_userID_users_sync_id_fk": {
-          "name": "LessonProgress_userID_users_sync_id_fk",
-          "tableFrom": "LessonProgress",
+        "lesson_progress_user_id_users_sync_id_fk": {
+          "name": "lesson_progress_user_id_users_sync_id_fk",
+          "tableFrom": "lesson_progress",
           "tableTo": "users_sync",
           "schemaTo": "neon_auth",
           "columnsFrom": [
-            "userID"
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -356,12 +375,25 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "LessonProgress_lessonID_Lessons_id_fk": {
-          "name": "LessonProgress_lessonID_Lessons_id_fk",
-          "tableFrom": "LessonProgress",
-          "tableTo": "Lessons",
+        "lesson_progress_course_id_courses_id_fk": {
+          "name": "lesson_progress_course_id_courses_id_fk",
+          "tableFrom": "lesson_progress",
+          "tableTo": "courses",
           "columnsFrom": [
-            "lessonID"
+            "course_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "lesson_progress_lesson_id_lessons_id_fk": {
+          "name": "lesson_progress_lesson_id_lessons_id_fk",
+          "tableFrom": "lesson_progress",
+          "tableTo": "lessons",
+          "columnsFrom": [
+            "lesson_id"
           ],
           "columnsTo": [
             "id"
@@ -376,8 +408,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Lessons": {
-      "name": "Lessons",
+    "public.lessons": {
+      "name": "lessons",
       "schema": "",
       "columns": {
         "id": {
@@ -429,33 +461,33 @@
           "primaryKey": false,
           "notNull": true
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "updatedAt": {
-          "name": "updatedAt",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "courseID": {
-          "name": "courseID",
+        "course_id": {
+          "name": "course_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {
-        "Lessons_courseID_slug_index": {
-          "name": "Lessons_courseID_slug_index",
+        "lessons_course_id_slug_index": {
+          "name": "lessons_course_id_slug_index",
           "columns": [
             {
-              "expression": "courseID",
+              "expression": "course_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -474,12 +506,12 @@
         }
       },
       "foreignKeys": {
-        "Lessons_courseID_Courses_id_fk": {
-          "name": "Lessons_courseID_Courses_id_fk",
-          "tableFrom": "Lessons",
-          "tableTo": "Courses",
+        "lessons_course_id_courses_id_fk": {
+          "name": "lessons_course_id_courses_id_fk",
+          "tableFrom": "lessons",
+          "tableTo": "courses",
           "columnsFrom": [
-            "courseID"
+            "course_id"
           ],
           "columnsTo": [
             "id"
