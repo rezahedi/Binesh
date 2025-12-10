@@ -19,7 +19,7 @@ interface ICancelLessonButtonProps
 }
 
 const CancelLessonButton = (props: ICancelLessonButtonProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClose = () => {
     setIsOpen(false);
