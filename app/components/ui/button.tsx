@@ -27,7 +27,7 @@ const buttonVariants = cva(
       },
       size: {
         default: "border-2 px-6 py-2.5",
-        sm: "border-1 px-4 py-1.5 text-sm shadow-[0_3px_0_0] active:translate-y-[3px]",
+        sm: "border px-4 py-1.5 text-sm shadow-[0_3px_0_0] active:translate-y-[3px]",
         lg: "border-2 px-10 py-3.5 text-lg shadow-[0_4px_0_0] active:translate-y-[4px]",
         icon: "p-0 size-10",
       },
