@@ -5,6 +5,8 @@ import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { stepPassed } from "@/(learningMode)/actions/trophy";
+import { useUser } from "@stackframe/stack";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
   step: SectionType;
@@ -14,6 +16,7 @@ interface ShowStepProps extends React.ComponentProps<"div"> {
 export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   const { nextStep, currentStep, finished } = useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
+  const user = useUser();
 
   // TODO: Temporary solution, find a better way than passing step's `index` to check if this is the curr step
   const haveQuiz = Boolean(step.quiz);
@@ -21,6 +24,13 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   const isQuizFinished = quizResult;
 
   const isNextReady = isCurrent && (!haveQuiz || (haveQuiz && isQuizFinished));
+
+  const handleNextStep = async () => {
+    if (!user) return;
+
+    stepPassed(user.id);
+    nextStep();
+  };
 
   return (
     <div
@@ -57,7 +67,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
             )}
           </div>
           <Button
-            onClick={nextStep}
+            onClick={handleNextStep}
             variant={"primary"}
             className="font-semibold"
           >
