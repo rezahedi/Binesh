@@ -7,6 +7,12 @@ export default async function WebsitePage() {
   return (
     <div>
       <h1>Website</h1>
+      <p>
+        <Link href={"/learn"}>Start Learning</Link>
+      </p>
+      <p>
+        <Link href={"/dashboard"}>Admin Dashboard</Link>
+      </p>
       {!user && (
         <>
           <Link href={"/handler/sign-in"}>Sign in</Link> -
