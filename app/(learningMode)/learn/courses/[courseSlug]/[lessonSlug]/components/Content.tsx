@@ -8,14 +8,14 @@ import { updateProgress } from "@/(learningMode)/actions/progress";
 
 const Content = () => {
   const { finished } = useProgress();
-  const [showFinish, setSHowFinish] = useState<boolean>(false);
+  const [showFinish, setShowFinish] = useState<boolean>(false);
   const { courseSlug, lessonSlug } = useParams();
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     if (!courseSlug || !lessonSlug) return;
 
-    updateProgress(String(courseSlug), String(lessonSlug));
-    setSHowFinish(true);
+    await updateProgress(String(courseSlug), String(lessonSlug));
+    setShowFinish(true);
   };
 
   if (showFinish) return <Finish />;

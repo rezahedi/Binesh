@@ -3,18 +3,19 @@
 import { cn } from "@/utils/cn";
 import { useSelectionSync } from "../SelectionSyncContext";
 import { useRef } from "react";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 const LessonPop = () => {
   const { selection: lesson } = useSelectionSync();
   const popRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   if (!lesson) return null;
 
   const handleStartClick = () => {
-    redirect(`${pathname}/${lesson.slug}`);
+    router.push(`${pathname}/${lesson.slug}`);
   };
 
   return (

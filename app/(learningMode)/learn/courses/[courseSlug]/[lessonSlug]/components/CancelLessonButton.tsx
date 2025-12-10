@@ -10,7 +10,7 @@ import {
 import { cn } from "@/utils/cn";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ButtonHTMLAttributes, useState } from "react";
 
 interface ICancelLessonButtonProps
@@ -20,15 +20,16 @@ interface ICancelLessonButtonProps
 
 const CancelLessonButton = (props: ICancelLessonButtonProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleClose = () => {
     setIsOpen(false);
-    redirect(props.redirectUrl);
+    router.push(props.redirectUrl);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button
           variant="ghost"
           size={"icon"}
