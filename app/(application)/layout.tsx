@@ -17,17 +17,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <StackProvider app={stackClientApp}>
-          <StackTheme>
-            <Header />
-            <div className="max-w-7xl mx-auto px-2 mt-6 md:mt-10">
-              {children}
-            </div>
-          </StackTheme>
-        </StackProvider>
-      </body>
-    </html>
+    <StackProvider app={stackClientApp}>
+      <StackTheme>
+        <Header />
+        <div className="max-w-7xl mx-auto px-2 mt-6 md:mt-10">{children}</div>
+      </StackTheme>
+    </StackProvider>
   );
 }
