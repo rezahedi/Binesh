@@ -75,7 +75,7 @@ export const courseProgress = pgTable(
       .notNull(),
   },
   (table) => [
-    // Unique: user can have one progress row per lesson
+    // Unique: user can have one progress row per course
     uniqueIndex().on(table.userID, table.courseID),
   ]
 );

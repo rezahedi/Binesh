@@ -72,13 +72,16 @@ export async function resetLessonProgress(
     throw new Error("Unauthorized");
   }
 
+  const { id: courseId } = await getCourseBySlug(courseSlug);
+  const { id: lessonId } = await getLessonBySlug(courseId, lessonSlug);
+
   await db
     .delete(lessonProgress)
     .where(
       and(
         eq(lessonProgress.userID, user.id),
-        eq(lessonProgress.courseID, courseSlug),
-        eq(lessonProgress.lessonID, lessonSlug)
+        eq(lessonProgress.courseID, courseId),
+        eq(lessonProgress.lessonID, lessonId)
       )
     );
 }

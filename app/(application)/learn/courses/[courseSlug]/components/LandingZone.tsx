@@ -26,7 +26,7 @@ const LandingZone = ({
                 "animate-pulse stroke-gray-300",
                 isActive && "stroke-yellow-300"
               )}
-              stroke-width="60"
+              strokeWidth="60"
             />
           )}
           <circle

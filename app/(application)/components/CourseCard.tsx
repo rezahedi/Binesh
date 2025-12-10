@@ -40,7 +40,7 @@ export default function CourseCard(props: CourseWithCategoryProps) {
         </p>
       )}
       <h4 className="flex-1 text-lg font-semibold text-balance">{name}</h4>
-      {progress && progress.percentage && (
+      {progress && (
         <div
           className="flex w-full h-2 bg-gray-100 rounded-full overflow-hidden"
           role="progressbar"

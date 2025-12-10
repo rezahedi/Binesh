@@ -6,7 +6,7 @@ async function main() {
   try {
     console.log(`Starting DB seed...`);
 
-    COURSES.forEach(async (course) => {
+    for (const course of COURSES) {
       const createdCategory = await db
         .insert(categories)
         .values({
@@ -34,8 +34,9 @@ async function main() {
 
         if (course.lessons.length > 0 && createdCourse.length > 0) {
           const courseID = createdCourse[0].insertedId;
-          course.lessons.forEach(async (lesson) => {
-            await db.insert(lessons).values({
+          const promises: Promise<unknown>[] = [];
+          course.lessons.forEach((lesson) => {
+            const res = db.insert(lessons).values({
               name: lesson.name,
               description: lesson.description,
               content: lesson.content,
@@ -45,10 +46,12 @@ async function main() {
               duration: lesson.duration,
               courseID: courseID,
             });
+            promises.push(res);
           });
+          await Promise.all(promises);
         }
       }
-    });
+    }
 
     console.log(`Finished`);
   } catch (err) {

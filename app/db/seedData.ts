@@ -78,7 +78,6 @@ export const COURSES = [
     ],
   },
   {
-    id: "6ed53afd-add4-45fb-a543-9c23f38417a5",
     name: "Astronomy 101",
     description: "Planetary motion and celestial objects",
     slug: "astronomy-101",
@@ -93,7 +92,6 @@ export const COURSES = [
     lessons: [],
   },
   {
-    id: "c81ed756-7296-41aa-931b-d91950614554",
     name: "Anatomy and Physiology",
     description: "Structure and function of the human body",
     slug: "anatomy-and-physiology",
@@ -108,7 +106,6 @@ export const COURSES = [
     lessons: [],
   },
   {
-    id: "d30ad410-b554-40bb-996f-26d8c98ba8f1",
     name: "Robotics Fundamentals",
     description: "Basics of robot design and control",
     slug: "robotics-fundamentals",
@@ -123,7 +120,6 @@ export const COURSES = [
     lessons: [],
   },
   {
-    id: "294ae65a-6e4a-4506-b266-895a7f3ba4b9",
     name: "Introduction to Genetics",
     description: "Principles of inheritance and genetic variation",
     slug: "genetics-intro",
@@ -138,7 +134,6 @@ export const COURSES = [
     lessons: [],
   },
   {
-    id: "32afb65f-1bc2-45d0-a60a-9550704b1adc",
     name: "Introduction to Electrical Engineering",
     description: "Circuits and basic electronics",
     slug: "electrical-engineering-intro",
@@ -153,7 +148,6 @@ export const COURSES = [
     lessons: [],
   },
   {
-    id: "34dc10c6-da90-4672-87bb-d9bba4524c05",
     name: "Introduction to Environmental Science",
     description: "Ecosystems and environmental issues",
     slug: "environmental-science-intro",
@@ -168,7 +162,6 @@ export const COURSES = [
     lessons: [],
   },
   {
-    id: "62487368-a572-45fc-a189-94f778b25625",
     name: "Organic Chemistry Basics",
     description: "Molecular structures and reactions",
     slug: "organic-chemistry-basics",
@@ -183,7 +176,6 @@ export const COURSES = [
     lessons: [],
   },
   {
-    id: "0f2416cd-54de-4a1b-8502-569bbd9bc6a1",
     name: "Classical Mechanics",
     description: "Newton's laws and motion equations",
     slug: "classical-mechanics",
@@ -198,7 +190,6 @@ export const COURSES = [
     lessons: [],
   },
   {
-    id: "d443cd69-48f1-424f-8168-3e6b4f7fb2f0",
     name: "Introduction to Calculus",
     description: "Fundamental concepts of differentiation and integration",
     slug: "calculus-intro",
