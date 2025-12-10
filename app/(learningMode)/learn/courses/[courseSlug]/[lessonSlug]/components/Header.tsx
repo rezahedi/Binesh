@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { XIcon, HeartIcon } from "lucide-react";
+import { HeartIcon } from "lucide-react";
 import ProgressBar from "./ProgressBar";
 import { useProgress } from "../ProgressContext";
 import { cn } from "@/utils/cn";
+import CancelLessonButton from "./CancelLessonButton";
 
 export default function Header({ className }: { className?: string }) {
   const { currentStep, totalSteps } = useProgress();
@@ -13,11 +13,7 @@ export default function Header({ className }: { className?: string }) {
   return (
     <header className={cn("bg-background shadow-lg z-10 p-4", className)}>
       <div className="max-w-2xl mx-auto flex items-center">
-        <div>
-          <Link href="./" className="block p-2 rounded-full hover:bg-muted">
-            <XIcon />
-          </Link>
-        </div>
+        <CancelLessonButton redirectUrl="./" />
         <div className="grow">
           <ProgressBar
             className="max-w-2xl mx-auto px-3"
