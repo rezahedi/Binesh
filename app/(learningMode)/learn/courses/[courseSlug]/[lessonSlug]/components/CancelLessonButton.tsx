@@ -19,12 +19,13 @@ interface ICancelLessonButtonProps
 }
 
 const CancelLessonButton = (props: ICancelLessonButtonProps) => {
+  const { redirectUrl, ...restProps } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
 
   const handleClose = () => {
     setIsOpen(false);
-    router.push(props.redirectUrl);
+    router.push(redirectUrl);
   };
 
   return (
@@ -34,7 +35,7 @@ const CancelLessonButton = (props: ICancelLessonButtonProps) => {
           variant="ghost"
           size={"icon"}
           className={cn("shadow-none hover:bg-muted", props.className)}
-          {...props}
+          {...restProps}
         >
           <XIcon />
         </Button>
