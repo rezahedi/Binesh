@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@website/globals.css";
+import "@/globals.css";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   title: "Dashboard | Binesh",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: Readonly<{
