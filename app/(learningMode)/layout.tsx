@@ -1,22 +1,25 @@
-import type { Metadata } from "next";
+"use client";
+
 import "@/globals.css";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackClientApp } from "@stack/client";
+import { useEffect } from "react";
 
-export const metadata: Metadata = {
-  title: "Home | Binesh",
-};
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    document.body.classList.add("h-screen", "overflow-hidden");
+    return () => {
+      document.body.classList.remove("h-screen", "overflow-hidden");
+    };
+  }, []);
+
   return (
-    <div className={"h-screen overflow-hidden"}>
-      <StackProvider app={stackClientApp}>
-        <StackTheme>{children}</StackTheme>
-      </StackProvider>
-    </div>
+    <StackProvider app={stackClientApp}>
+      <StackTheme>{children}</StackTheme>
+    </StackProvider>
   );
 }
