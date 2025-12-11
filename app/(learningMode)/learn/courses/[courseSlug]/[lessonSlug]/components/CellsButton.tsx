@@ -51,7 +51,7 @@ const CellsButton = ({ className }: { className?: string }) => {
       <PopoverTrigger asChild>
         <button className={cn(MAIN_BUTTON_CLASSES, className)}>
           {cells}
-          <BatteryIcon className="size-5 fill-destructive/90 stroke-destructive/90 -rotate-90" />
+          <BatteryIcon className="size-5 fill-secondary/90 stroke-secondary/90 -rotate-90" />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-72 text-center flex flex-col gap-3 bg-background shadow-xl py-6 px-8">
@@ -60,7 +60,7 @@ const CellsButton = ({ className }: { className?: string }) => {
           {Array.from({ length: cells }).map((_, i) => (
             <BatteryIcon
               key={i}
-              className="size-5 fill-destructive/90 stroke-destructive/90 -rotate-90"
+              className="size-5 fill-secondary/90 stroke-secondary/90 -rotate-90"
             />
           ))}
           {Array.from({ length: CELLS_MAXIMUM - cells }).map((_, i) => (
@@ -83,7 +83,7 @@ const CellsButton = ({ className }: { className?: string }) => {
         )}
         <p className="text-balance">{message}</p>
         <Button
-          variant={"outline"}
+          variant={"secondary"}
           size={"sm"}
           className="w-full flex justify-between"
           disabled={cells === CELLS_MAXIMUM}
