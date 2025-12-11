@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 import CancelLessonButton from "./CancelLessonButton";
 
 export default function Header({ className }: { className?: string }) {
-  const { currentStep, totalSteps } = useProgress();
+  const { cells, currentStep, totalSteps } = useProgress();
   const percentage = totalSteps
     ? Math.round((currentStep / totalSteps) * 100)
     : 0;
@@ -22,7 +22,8 @@ export default function Header({ className }: { className?: string }) {
         </div>
         <div>
           <button className="flex items-center gap-0.5 p-2 px-3 rounded-full hover:bg-muted cursor-pointer font-semibold text-lg">
-            3 <HeartIcon className="fill-destructive/90" stroke="0" />
+            {cells !== null ? cells : "?"}
+            <HeartIcon className="fill-destructive/90" stroke="0" />
           </button>
         </div>
       </div>

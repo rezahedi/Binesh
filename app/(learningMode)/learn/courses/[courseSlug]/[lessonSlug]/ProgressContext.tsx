@@ -5,8 +5,11 @@ import {
   useContext,
   useState,
 } from "react";
+import useCells from "./useCells";
 
 type ContextType = {
+  cells: number | null;
+  decrease: () => void;
   currentStep: number;
   nextStep: () => void;
   totalSteps: number | null;
@@ -20,6 +23,7 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [totalSteps, setTotalSteps] = useState<number | null>(null);
   const [finished, setFinishedState] = useState<boolean>(false);
+  const { cells, decrease } = useCells();
 
   const nextStep = () => {
     if (totalSteps === null) return;
@@ -32,6 +36,8 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ProgressContext.Provider
       value={{
+        cells,
+        decrease,
         currentStep,
         nextStep,
         totalSteps,
