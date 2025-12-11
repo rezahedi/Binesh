@@ -10,6 +10,8 @@ import useCells from "./useCells";
 type ContextType = {
   cells: number | null;
   decrease: () => void;
+  increase: () => void;
+  isLoading: boolean;
   currentStep: number;
   nextStep: () => void;
   totalSteps: number | null;
@@ -23,7 +25,7 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [totalSteps, setTotalSteps] = useState<number | null>(null);
   const [finished, setFinishedState] = useState<boolean>(false);
-  const { cells, decrease } = useCells();
+  const { cells, decrease, increase, isLoading } = useCells();
 
   const nextStep = () => {
     if (totalSteps === null) return;
@@ -38,6 +40,8 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         cells,
         decrease,
+        increase,
+        isLoading,
         currentStep,
         nextStep,
         totalSteps,

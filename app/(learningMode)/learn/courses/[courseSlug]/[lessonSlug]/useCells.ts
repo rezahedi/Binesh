@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@stackframe/stack";
-import { getUserEnergy, quizFailed } from "@/(learningMode)/actions/trophy";
+import {
+  getUserEnergy,
+  quizFailed,
+  refillCells,
+} from "@/(learningMode)/actions/trophy";
 
 const useCells = () => {
   const [cells, setCells] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const user = useUser();
 
   useEffect(() => {
@@ -22,12 +27,23 @@ const useCells = () => {
     if (!user) return;
     if (!cells || cells <= 0) return;
 
+    setIsLoading(true);
     setCells(cells - 1);
     console.log("Trophy mistake");
     await quizFailed(user.id);
+    setIsLoading(false);
   };
 
-  return { cells, decrease };
+  const increase = async () => {
+    if (!user || cells === null) return;
+
+    setIsLoading(true);
+    const response = await refillCells(user.id);
+    if (response) setCells(cells + 1);
+    setIsLoading(false);
+  };
+
+  return { cells, decrease, increase, isLoading };
 };
 
 export default useCells;
