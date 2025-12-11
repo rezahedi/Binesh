@@ -13,8 +13,10 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
+import { useState } from "react";
 
 const CellsButton = ({ className }: { className?: string }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { cells, increase } = useProgress();
   const user = useUser();
 
@@ -40,7 +42,7 @@ const CellsButton = ({ className }: { className?: string }) => {
         : "Still have Cells left! keep on learning";
 
   return (
-    <Popover>
+    <Popover open={cells === 0 || isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <button className={className}>
           {cells}

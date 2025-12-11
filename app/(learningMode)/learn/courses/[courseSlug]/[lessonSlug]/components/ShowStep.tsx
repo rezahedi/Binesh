@@ -14,7 +14,7 @@ interface ShowStepProps extends React.ComponentProps<"div"> {
 }
 
 export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
-  const { decrease, nextStep, currentStep, finished } = useProgress();
+  const { cells, decrease, nextStep, currentStep, finished } = useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
   const user = useUser();
 
@@ -22,6 +22,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   const haveQuiz = Boolean(step.quiz);
   const isCurrent = index + 1 === currentStep;
   const isQuizFinished = quizResult;
+  const haveCells = cells !== null && cells > 0;
 
   const isNextReady = isCurrent && (!haveQuiz || (haveQuiz && isQuizFinished));
 
@@ -55,7 +56,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
       {step.quiz && (
         <QuizRenderer
           quiz={{ ...step.quiz, id: step.id }}
-          isActive={isCurrent && !isQuizFinished}
+          isActive={isCurrent && !isQuizFinished && haveCells}
           quizResult={quizResult}
           onCheck={setQuizResult}
         />
@@ -80,6 +81,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
             onClick={handleNextStep}
             variant={"primary"}
             className="font-semibold"
+            disabled={!haveCells}
           >
             Continue
           </Button>
