@@ -3,6 +3,7 @@ import { stackClientApp } from "@stack/client";
 import { UserButton } from "@stackframe/stack";
 import Image from "next/image";
 import Link from "next/link";
+import PointsButton from "./PointsButton";
 
 export default async function Header() {
   const user = await stackClientApp.getUser();
@@ -42,6 +43,7 @@ export default async function Header() {
           </ul>
         </nav>
         <div className="flex gap-2 items-center">
+          <PointsButton />
           <StreakButton />
           {user ? (
             <UserButton />
