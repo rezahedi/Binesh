@@ -21,7 +21,7 @@ import {
   LEADERBOARD_KEY,
   ENERGY_SYSTEM_KEY,
   POINTS_TO_CELLS,
-  POINTS_TO_CELLS_MINIMUM,
+  POINTS_TO_UNLOCK_CELL,
 } from "@/constants/trophy";
 
 const trophy = new TrophyApiClient({
@@ -246,7 +246,7 @@ export async function getEnergySummary(
 export async function refillCells(userId: string) {
   try {
     const points = await getUserPoints(userId);
-    if (!points || points.total < POINTS_TO_CELLS_MINIMUM) return null;
+    if (!points || points.total < POINTS_TO_UNLOCK_CELL) return null;
 
     return await trophy.metrics.event(POINTS_TO_CELLS, {
       user: {

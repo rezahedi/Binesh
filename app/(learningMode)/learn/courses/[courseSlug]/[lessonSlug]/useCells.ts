@@ -38,8 +38,9 @@ const useCells = () => {
     if (!user || cells === null) return;
 
     setIsLoading(true);
+    setCells(cells + 1);
     const response = await refillCells(user.id);
-    if (response) setCells(cells + 1);
+    if (!response) setCells(cells - 1);
     setIsLoading(false);
   };
 

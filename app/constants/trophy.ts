@@ -7,5 +7,6 @@ export const POINTS_SYSTEM_KEY = "points";
 export const LEADERBOARD_KEY = "weekly-champions";
 export const ENERGY_SYSTEM_KEY = "cells";
 export const POINTS_TO_CELLS = "points-to-cells";
-export const POINTS_TO_CELLS_MINIMUM = 50;
 export const CELLS_MAXIMUM = 5;
+export const POINTS_TO_UNLOCK_CELL = 50;
+export const NEXT_CELL_RECHARGE_HOURS = 5;
