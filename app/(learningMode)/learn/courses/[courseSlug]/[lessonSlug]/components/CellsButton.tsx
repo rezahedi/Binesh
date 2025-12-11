@@ -54,7 +54,7 @@ const CellsButton = ({ className }: { className?: string }) => {
           <BatteryIcon className="size-5 fill-destructive/90 stroke-destructive/90 -rotate-90" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-64 text-center flex flex-col gap-3 bg-background shadow-xl">
+      <PopoverContent className="w-72 text-center flex flex-col gap-3 bg-background shadow-xl py-6 px-8">
         <b className="font-semibold text-lg">Cells Charge</b>
         <div className="flex justify-around">
           {Array.from({ length: cells }).map((_, i) => (

@@ -41,7 +41,7 @@ export default function StreakButton({ className }: { className?: string }) {
           )}
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit flex flex-col gap-5 bg-background shadow-xl">
+      <PopoverContent className="w-fit flex flex-col gap-5 bg-background shadow-xl py-6 px-8">
         <div className="flex justify-between">
           <div className="flex flex-col">
             <b className="font-bold text-5xl flex items-center gap-0.5">
