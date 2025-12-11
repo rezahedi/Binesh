@@ -15,7 +15,7 @@ export default function CourseCard(props: CourseWithCategoryProps) {
     // ...rest
     progress,
   } = props;
-  console.log(progress);
+
   return (
     <Link
       href={`${process.env.NEXT_PUBLIC_APP_BASE}/courses/${slug}`}
