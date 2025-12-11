@@ -34,7 +34,7 @@ export async function lessonCompleted(userId: string) {
       user: {
         id: userId,
       },
-      value: 10,
+      value: 1,
     });
   } catch (error) {
     console.error(`Trophy metric error on ${LESSON_COMPLETED}`, error);
@@ -239,6 +239,23 @@ export async function getEnergySummary(
     });
   } catch (error) {
     console.error("Get energy summary error:", error);
+    return null;
+  }
+}
+
+export async function refillCells(userId: string) {
+  try {
+    const points = await getUserPoints(userId);
+    if (!points || points.total < POINTS_TO_CELLS_MINIMUM) return null;
+
+    return await trophy.metrics.event(POINTS_TO_CELLS, {
+      user: {
+        id: userId,
+      },
+      value: 1,
+    });
+  } catch (error) {
+    console.error(`Trophy metric error on ${POINTS_TO_CELLS}`, error);
     return null;
   }
 }
