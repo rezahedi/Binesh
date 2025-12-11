@@ -14,19 +14,21 @@ const useTrophy = () => {
 
     (async () => {
       setIsLoading(true);
-      const streakResponse = await getStreak(user.id);
-      const pointsResponse = await getUserPoints(user.id);
-      if (streakResponse) {
-        setStreak(streakResponse);
-        console.log("Streak:", streakResponse);
-      }
-      if (pointsResponse) {
-        setPoints(pointsResponse);
-        console.log("Points:", pointsResponse);
-      }
+      const streakResponse = getStreak(user.id);
+      const pointsResponse = getUserPoints(user.id);
+      Promise.all([streakResponse, pointsResponse]).then((responses) => {
+        if (responses[0]) {
+          setStreak(responses[0]);
+          console.log("Streak:", responses[0]);
+        }
+        if (responses[1]) {
+          setPoints(responses[1]);
+          console.log("Points:", responses[1]);
+        }
+      });
       setIsLoading(false);
     })();
-  }, [user]);
+  }, [user, streak, points]);
 
   return { streak, points, isLoading };
 };
