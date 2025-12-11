@@ -11,15 +11,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   useEffect(() => {
-    document.body.classList.add("h-screen", "overflow-hidden");
+    document.body.style.overflow = "hidden";
+    document.body.style.height = "100vh";
     return () => {
-      document.body.classList.remove("h-screen", "overflow-hidden");
+      document.body.style.overflow = "auto";
+      document.body.style.height = "auto";
     };
   }, []);
 
   return (
-    <StackProvider app={stackClientApp}>
-      <StackTheme>{children}</StackTheme>
-    </StackProvider>
+    <div className={"h-screen overflow-hidden"}>
+      <StackProvider app={stackClientApp}>
+        <StackTheme>{children}</StackTheme>
+      </StackProvider>
+    </div>
   );
 }
