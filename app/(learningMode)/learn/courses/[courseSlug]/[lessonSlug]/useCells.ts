@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@stackframe/stack";
-import { getUserEnergy, mistake } from "@/(learningMode)/actions/trophy";
+import { getUserEnergy, quizFailed } from "@/(learningMode)/actions/trophy";
 
 const useCells = () => {
   const [cells, setCells] = useState<number | null>(null);
@@ -24,7 +24,7 @@ const useCells = () => {
 
     setCells(cells - 1);
     console.log("Trophy mistake");
-    await mistake(user.id);
+    await quizFailed(user.id);
   };
 
   return { cells, decrease };

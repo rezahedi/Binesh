@@ -15,7 +15,8 @@ import {
 
 const STEP_PASSED = "step-passed";
 const LESSON_COMPLETED = "lesson-completed";
-const MISTAKE = "mistake";
+const MISTAKE = "quiz-failed";
+const SUCCESS = "quiz-passed";
 
 const POINTS_SYSTEM_KEY = "points";
 const LEADERBOARD_KEY = "weekly-champions";
@@ -193,23 +194,33 @@ export async function getUserEnergy(
   }
 }
 
-export async function mistake(userId: string) {
+export async function quizFailed(userId: string) {
   try {
     return await trophy.metrics.event(MISTAKE, {
       user: {
         id: userId,
       },
-      value: 10,
+      value: 1,
     });
-    // return await trophy.users.points(userId, ENERGY_SYSTEM_KEY, {
-    //   awards: -1,
-    // });
   } catch (error) {
     console.error(`Trophy metric error on ${MISTAKE}`, error);
     return null;
   }
 }
 
+export async function quizPassed(userId: string) {
+  try {
+    return await trophy.metrics.event(SUCCESS, {
+      user: {
+        id: userId,
+      },
+      value: 1,
+    });
+  } catch (error) {
+    console.error(`Trophy metric error on ${SUCCESS}`, error);
+    return null;
+  }
+}
 export async function getEnergySummary(
   userId: string
 ): Promise<UsersPointsEventSummaryResponseItem[] | null> {

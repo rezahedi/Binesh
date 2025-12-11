@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { stepPassed } from "@/(learningMode)/actions/trophy";
+import { quizPassed, stepPassed } from "@/(learningMode)/actions/trophy";
 import { useUser } from "@stackframe/stack";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
@@ -33,10 +33,14 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   };
 
   useEffect(() => {
-    if (quizResult === null) return;
+    if (!user || quizResult === null) return;
 
     if (quizResult === false) decrease();
-  }, [quizResult, decrease]);
+    if (quizResult === true) {
+      console.log("quizPassed");
+      quizPassed(user.id);
+    }
+  }, [quizResult]);
 
   return (
     <div
