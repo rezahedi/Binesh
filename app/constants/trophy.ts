@@ -1,5 +1,5 @@
 export const STEP_PASSED = "step-passed";
-export const LESSON_COMPLETED = "lesson-completed";
+export const LESSON_COMPLETED = "lessons-completed";
 export const MISTAKE = "quiz-failed";
 export const SUCCESS = "quiz-passed";
 
