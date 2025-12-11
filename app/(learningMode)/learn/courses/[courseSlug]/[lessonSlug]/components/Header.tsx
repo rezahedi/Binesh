@@ -21,7 +21,7 @@ export default function Header({ className }: { className?: string }) {
           />
         </div>
         <div>
-          <CellsButton className="flex items-center gap-0.5 p-2 px-3 rounded-full hover:bg-muted cursor-pointer font-semibold text-lg" />
+          <CellsButton />
         </div>
       </div>
     </header>

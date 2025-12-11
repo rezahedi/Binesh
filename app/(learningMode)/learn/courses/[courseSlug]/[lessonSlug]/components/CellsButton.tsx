@@ -15,6 +15,9 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 
+const MAIN_BUTTON_CLASSES =
+  "flex items-center gap-0.5 p-2 px-3 rounded-full hover:bg-muted cursor-pointer font-semibold text-lg";
+
 const CellsButton = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { cells, increase } = useProgress();
@@ -30,7 +33,7 @@ const CellsButton = ({ className }: { className?: string }) => {
 
   if (cells === null)
     return (
-      <div className={className}>
+      <div className={cn(MAIN_BUTTON_CLASSES, className)}>
         {" "}
         <BatteryIcon className="animate-pulse size-5 fill-muted/90 stroke-muted/90 -rotate-90" />
       </div>
@@ -46,7 +49,7 @@ const CellsButton = ({ className }: { className?: string }) => {
   return (
     <Popover open={cells === 0 || isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <button className={className}>
+        <button className={cn(MAIN_BUTTON_CLASSES, className)}>
           {cells}
           <BatteryIcon className="size-5 fill-destructive/90 stroke-destructive/90 -rotate-90" />
         </button>
