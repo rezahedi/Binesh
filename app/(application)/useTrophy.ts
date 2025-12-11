@@ -10,7 +10,7 @@ const useTrophy = () => {
   const user = useUser();
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || streak || points) return;
 
     (async () => {
       setIsLoading(true);
