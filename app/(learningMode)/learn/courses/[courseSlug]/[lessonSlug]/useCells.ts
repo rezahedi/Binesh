@@ -11,6 +11,8 @@ const useCells = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const user = useUser();
 
+  // TODO: Need to have user's points, to trigger cell increase based on user's points minimum
+
   useEffect(() => {
     if (!user) return;
 

@@ -20,6 +20,8 @@ const CellsButton = ({ className }: { className?: string }) => {
   const { cells, increase } = useProgress();
   const user = useUser();
 
+  // TODO: Need to have user's points, to trigger cell increase based on user's points minimum
+
   const handleRefill = async () => {
     if (!user || cells === CELLS_MAXIMUM) return;
 
