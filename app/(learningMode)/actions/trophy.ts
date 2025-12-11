@@ -15,6 +15,7 @@ import {
 
 const STEP_PASSED = "step-passed";
 const LESSON_COMPLETED = "lesson-completed";
+const MISTAKE = "mistake";
 
 const POINTS_SYSTEM_KEY = "points";
 const LEADERBOARD_KEY = "weekly-champions";
@@ -92,9 +93,7 @@ export async function getUserPoints(
   userId: string
 ): Promise<GetUserPointsResponse | null> {
   try {
-    return await trophy.users.points(userId, POINTS_SYSTEM_KEY, {
-      awards: 5,
-    });
+    return await trophy.users.points(userId, POINTS_SYSTEM_KEY);
   } catch (error) {
     console.error("Get user points error:", error);
     return null;
@@ -187,11 +186,26 @@ export async function getUserEnergy(
   userId: string
 ): Promise<GetUserPointsResponse | null> {
   try {
-    return await trophy.users.points(userId, ENERGY_SYSTEM_KEY, {
-      awards: 5,
-    });
+    return await trophy.users.points(userId, ENERGY_SYSTEM_KEY);
   } catch (error) {
     console.error("Get user energy error:", error);
+    return null;
+  }
+}
+
+export async function mistake(userId: string) {
+  try {
+    return await trophy.metrics.event(MISTAKE, {
+      user: {
+        id: userId,
+      },
+      value: 10,
+    });
+    // return await trophy.users.points(userId, ENERGY_SYSTEM_KEY, {
+    //   awards: -1,
+    // });
+  } catch (error) {
+    console.error(`Trophy metric error on ${MISTAKE}`, error);
     return null;
   }
 }
