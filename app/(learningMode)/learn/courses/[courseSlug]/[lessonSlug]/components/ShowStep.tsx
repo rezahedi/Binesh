@@ -1,7 +1,7 @@
 import { SectionType } from "@/lib/quizParser";
 import QuizRenderer from "./quizzes/QuizRenderer";
 import { useProgress } from "../ProgressContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ interface ShowStepProps extends React.ComponentProps<"div"> {
 }
 
 export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
-  const { nextStep, currentStep, finished } = useProgress();
+  const { decrease, nextStep, currentStep, finished } = useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
   const user = useUser();
 
@@ -31,6 +31,12 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
     stepPassed(user.id);
     nextStep();
   };
+
+  useEffect(() => {
+    if (quizResult === null) return;
+
+    if (quizResult === false) decrease();
+  }, [quizResult, decrease]);
 
   return (
     <div
