@@ -12,15 +12,17 @@ import {
   UserLeaderboardResponse,
   UsersPointsEventSummaryResponseItem,
 } from "@trophyso/node/api";
-
-const STEP_PASSED = "step-passed";
-const LESSON_COMPLETED = "lesson-completed";
-const MISTAKE = "quiz-failed";
-const SUCCESS = "quiz-passed";
-
-const POINTS_SYSTEM_KEY = "points";
-const LEADERBOARD_KEY = "weekly-champions";
-const ENERGY_SYSTEM_KEY = "cells";
+import {
+  STEP_PASSED,
+  LESSON_COMPLETED,
+  MISTAKE,
+  SUCCESS,
+  POINTS_SYSTEM_KEY,
+  LEADERBOARD_KEY,
+  ENERGY_SYSTEM_KEY,
+  POINTS_TO_CELLS,
+  POINTS_TO_CELLS_MINIMUM,
+} from "@/constants/trophy";
 
 const trophy = new TrophyApiClient({
   apiKey: process.env.TROPHY_API_KEY!,
