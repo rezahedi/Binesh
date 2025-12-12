@@ -14,15 +14,17 @@ const MAIN_BUTTON_CLASSES =
 
 const CellsButton = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { cells } = useProgress();
+  const { cells, isLoading } = useProgress();
 
-  if (cells === null)
+  if (isLoading)
     return (
       <div className={cn(MAIN_BUTTON_CLASSES, className)}>
         {" "}
         <BatteryIcon className="animate-pulse size-5 fill-muted/90 stroke-muted/90 -rotate-90" />
       </div>
     );
+
+  if (cells === null) return null;
 
   return (
     <Popover open={cells === 0 || isOpen} onOpenChange={setIsOpen}>
