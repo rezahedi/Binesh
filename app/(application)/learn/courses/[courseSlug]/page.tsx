@@ -14,17 +14,17 @@ export default function CoursePage() {
     `/api/courses/${courseSlug}`
   );
 
-  if (!courseDetail || isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
+
+  if (
+    !courseDetail ||
+    !courseDetail.id ||
+    !courseDetail.lessons ||
+    courseDetail.lessons.length === 0
+  )
+    return notFound();
 
   const { lessons, ...course } = courseDetail;
-
-  if (!course || !course.id) {
-    return notFound();
-  }
-
-  if (!lessons || lessons.length === 0) {
-    return notFound();
-  }
 
   return (
     <div className="flex gap-4 md:gap-10 flex-col md:flex-row">
