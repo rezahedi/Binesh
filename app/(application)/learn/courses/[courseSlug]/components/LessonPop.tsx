@@ -5,14 +5,19 @@ import { useSelectionSync } from "../SelectionSyncContext";
 import { useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useProgress } from "@/contexts/ProgressContext";
+import NeedCellsPop from "./NeedCellsPop";
 
 const LessonPop = () => {
   const { selection: lesson } = useSelectionSync();
+  const { cells, points } = useProgress();
   const popRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
   const router = useRouter();
 
-  if (!lesson) return null;
+  if (!lesson || cells === null || points === null) return null;
+
+  if (cells === 0) return <NeedCellsPop />;
 
   const handleStartClick = () => {
     router.push(`${pathname}/${lesson.slug}`);
@@ -33,7 +38,6 @@ const LessonPop = () => {
           Unit {lesson.unit} <span className="mx-2">·</span> Time{" "}
           {lesson.duration}m
         </p>
-
         {lesson.progress ? (
           <Button
             onClick={handleStartClick}
