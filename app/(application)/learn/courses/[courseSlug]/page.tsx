@@ -7,6 +7,7 @@ import LessonPop from "./components/LessonPop";
 import { SelectionSyncProvider } from "./SelectionSyncContext";
 import useFetch from "@/lib/swr/useFetch";
 import { CourseWithDetailProps } from "@/lib/types";
+import CoursePageLoadingSkeleton from "./CoursePageLoadingSkeleton";
 
 export default function CoursePage() {
   const { courseSlug } = useParams();
@@ -14,7 +15,7 @@ export default function CoursePage() {
     `/api/courses/${courseSlug}`
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <CoursePageLoadingSkeleton />;
 
   if (
     !courseDetail ||
