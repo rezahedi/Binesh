@@ -1,17 +1,11 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+"use client";
+
 import "@/globals.css";
 import { Header } from "@application/components";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackClientApp } from "@stack/client";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Home | Binesh",
-};
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

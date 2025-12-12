@@ -2,9 +2,14 @@
 
 import useCourses from "@/lib/swr/use-courses";
 import { CourseCard } from "@application/components";
+import { useUser } from "@stackframe/stack";
+import { useRouter } from "next/navigation";
 
 export default function ApplicationPage() {
+  const router = useRouter();
+  const user = useUser();
   const { courses, isLoading } = useCourses();
+  if (!user) return router.push("/");
 
   return (
     <div className="space-y-4 mb-20">
