@@ -22,11 +22,9 @@ const LandingZone = ({
               cx="0"
               cy="0"
               r="300"
-              className={cn(
-                "animate-pulse stroke-gray-300",
-                isActive && "stroke-yellow-300"
-              )}
+              className="animate-spin"
               strokeWidth="60"
+              stroke={isActive ? "url(#light-active)" : "url(#light)"}
             />
           )}
           <circle
@@ -42,6 +40,28 @@ const LandingZone = ({
             r="180"
           />
         </g>
+        <defs>
+          <radialGradient
+            id="light"
+            cx="0"
+            cy="-300"
+            r="600"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0%" stopColor="white" stopOpacity="1" />
+            <stop offset="30%" stopColor="#d1d5dc" stopOpacity="1" />
+          </radialGradient>
+          <radialGradient
+            id="light-active"
+            cx="0"
+            cy="-300"
+            r="600"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0%" stopColor="white" stopOpacity="1" />
+            <stop offset="30%" stopColor="#ffdf20" stopOpacity="1" />
+          </radialGradient>
+        </defs>
       </svg>
       <Image
         src={"/assets/alien-ship.svg"}
