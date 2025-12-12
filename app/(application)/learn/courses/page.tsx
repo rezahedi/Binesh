@@ -1,10 +1,16 @@
 "use client";
 
 import { CourseCard } from "@application/components";
-import useCourses from "@/lib/swr/use-courses";
+import { CourseWithCategoryProps } from "@/lib/types";
+import useFetch from "@/lib/swr/useFetch";
+import { notFound } from "next/navigation";
 
 export default function Page() {
-  const { courses, isLoading } = useCourses();
+  const { data: courses, isLoading } =
+    useFetch<CourseWithCategoryProps[]>(`/api/courses`);
+
+  // TODO: Show user a internet connection problem instead of notFound page
+  if (!isLoading && !courses) return notFound();
 
   return (
     <div className="mb-20">

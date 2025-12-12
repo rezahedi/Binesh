@@ -1,18 +1,24 @@
 "use client";
 
-import useCourses from "@/lib/swr/use-courses";
+import useFetch from "@/lib/swr/useFetch";
+import { CourseWithCategoryProps } from "@/lib/types";
 import { CourseCard } from "@application/components";
 import { useUser } from "@stackframe/stack";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 
 export default function ApplicationPage() {
   const router = useRouter();
   const user = useUser();
-  const { courses, isLoading } = useCourses();
+  const { data: courses, isLoading } =
+    useFetch<CourseWithCategoryProps[]>(`/api/courses`);
+
   if (!user) {
     router.push("/");
     return null;
   }
+
+  // TODO: Show user a internet connection problem instead of notFound page
+  if (!isLoading && !courses) return notFound();
 
   return (
     <div className="space-y-4 mb-20">
@@ -36,8 +42,6 @@ export default function ApplicationPage() {
             ))}
         </div>
       </div>
-      {/* <p>Signed in as {session.user && session.user.name}</p>
-    <a href="/api/auth/signout">Sign out by link</a> */}
     </div>
   );
 }
