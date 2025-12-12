@@ -1,6 +1,6 @@
 import { SectionType } from "@/lib/quizParser";
 import QuizRenderer from "./quizzes/QuizRenderer";
-import { useProgress } from "../ProgressContext";
+import { useProgress } from "@/contexts/ProgressContext";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 import { FlagIcon } from "lucide-react";

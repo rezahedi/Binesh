@@ -1,7 +1,7 @@
 "use client";
 
 import { GemIcon } from "lucide-react";
-import useTrophy from "../useTrophy";
+import useTrophy from "@/hooks/useTrophy";
 
 export default function PointsButton() {
   const { points, isLoading } = useTrophy();

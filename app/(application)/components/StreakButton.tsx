@@ -1,7 +1,7 @@
 "use client";
 
 import { GemIcon, ZapIcon } from "lucide-react";
-import useTrophy from "../useTrophy";
+import useTrophy from "@/hooks/useTrophy";
 import {
   Popover,
   PopoverContent,

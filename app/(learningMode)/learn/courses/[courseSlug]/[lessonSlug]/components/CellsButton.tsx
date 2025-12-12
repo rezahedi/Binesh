@@ -1,5 +1,5 @@
 import { GemIcon, BatteryIcon } from "lucide-react";
-import { useProgress } from "../ProgressContext";
+import { useProgress } from "@/contexts/ProgressContext";
 import { useUser } from "@stackframe/stack";
 import {
   CELLS_MAXIMUM,

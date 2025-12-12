@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgressProvider } from "./ProgressContext";
+import { ProgressProvider } from "@/contexts/ProgressContext";
 import Content from "./components/Content";
 import { useUser } from "@stackframe/stack";
 import { useRouter } from "next/navigation";

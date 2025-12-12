@@ -5,7 +5,7 @@ import {
   useContext,
   useState,
 } from "react";
-import useTrophy from "@/(application)/useTrophy";
+import useTrophy from "@/hooks/useTrophy";
 import { GetUserPointsResponse, StreakResponse } from "@trophyso/node/api";
 
 type ContextType = {

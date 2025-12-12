@@ -1,4 +1,4 @@
-import { useProgress } from "../ProgressContext";
+import { useProgress } from "@/contexts/ProgressContext";
 import { useState } from "react";
 import Finish from "./Finish";
 import StartLesson from "./StartLesson";

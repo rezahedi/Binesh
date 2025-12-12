@@ -1,5 +1,5 @@
 import ProgressBar from "./ProgressBar";
-import { useProgress } from "../ProgressContext";
+import { useProgress } from "@/contexts/ProgressContext";
 import { cn } from "@/utils/cn";
 import CancelLessonButton from "./CancelLessonButton";
 import CellsButton from "./CellsButton";
