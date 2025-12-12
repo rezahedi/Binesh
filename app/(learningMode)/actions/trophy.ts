@@ -259,3 +259,28 @@ export async function refillCells(userId: string) {
     return null;
   }
 }
+
+export async function getUserData(userId: string): Promise<{
+  streak: StreakResponse;
+  points: GetUserPointsResponse;
+  cells: GetUserPointsResponse;
+} | null> {
+  try {
+    const [streak, points, cells] = await Promise.all([
+      getStreak(userId),
+      getUserPoints(userId),
+      getUserEnergy(userId),
+    ]);
+
+    if (!streak || !points || !cells) return null;
+
+    return {
+      streak,
+      points,
+      cells,
+    };
+  } catch (error) {
+    console.error("Get user data error:", error);
+    return null;
+  }
+}

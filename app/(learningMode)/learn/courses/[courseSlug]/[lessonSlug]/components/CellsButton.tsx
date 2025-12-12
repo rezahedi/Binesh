@@ -20,7 +20,7 @@ const MAIN_BUTTON_CLASSES =
 
 const CellsButton = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { cells, increase } = useProgress();
+  const { cells, points, increaseCell } = useProgress();
   const user = useUser();
 
   // TODO: Need to have user's points, to trigger cell increase based on user's points minimum
@@ -28,16 +28,18 @@ const CellsButton = ({ className }: { className?: string }) => {
   const handleRefill = async () => {
     if (!user || cells === CELLS_MAXIMUM) return;
 
-    increase();
+    increaseCell();
   };
 
-  if (cells === null)
+  if (cells === null || points === null)
     return (
       <div className={cn(MAIN_BUTTON_CLASSES, className)}>
         {" "}
         <BatteryIcon className="animate-pulse size-5 fill-muted/90 stroke-muted/90 -rotate-90" />
       </div>
     );
+
+  const haveEnoughPoints = points.total >= POINTS_TO_UNLOCK_CELL;
 
   const message =
     cells === CELLS_MAXIMUM
@@ -86,7 +88,7 @@ const CellsButton = ({ className }: { className?: string }) => {
           variant={"secondary"}
           size={"sm"}
           className="w-full flex justify-between"
-          disabled={cells === CELLS_MAXIMUM}
+          disabled={cells === CELLS_MAXIMUM || !haveEnoughPoints}
           onClick={handleRefill}
         >
           <span>Recharge Cell</span>
@@ -95,6 +97,9 @@ const CellsButton = ({ className }: { className?: string }) => {
             {POINTS_TO_UNLOCK_CELL}
           </b>
         </Button>
+        {cells < CELLS_MAXIMUM && !haveEnoughPoints && (
+          <p className="text-sm">{`Don't have enough points to recharge!`}</p>
+        )}
       </PopoverContent>
     </Popover>
   );

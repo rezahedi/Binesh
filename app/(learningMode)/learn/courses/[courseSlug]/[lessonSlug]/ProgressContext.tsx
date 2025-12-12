@@ -5,12 +5,15 @@ import {
   useContext,
   useState,
 } from "react";
-import useCells from "./useCells";
+import useTrophy from "@/(application)/useTrophy";
+import { GetUserPointsResponse, StreakResponse } from "@trophyso/node/api";
 
 type ContextType = {
   cells: number | null;
-  decrease: () => void;
-  increase: () => void;
+  decreaseCell: () => void;
+  increaseCell: () => void;
+  streak: StreakResponse | null;
+  points: GetUserPointsResponse | null;
   isLoading: boolean;
   currentStep: number;
   nextStep: () => void;
@@ -25,7 +28,8 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [totalSteps, setTotalSteps] = useState<number | null>(null);
   const [finished, setFinishedState] = useState<boolean>(false);
-  const { cells, decrease, increase, isLoading } = useCells();
+  const { cells, decreaseCell, increaseCell, streak, points, isLoading } =
+    useTrophy();
 
   const nextStep = () => {
     if (totalSteps === null) return;
@@ -39,8 +43,10 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
     <ProgressContext.Provider
       value={{
         cells,
-        decrease,
-        increase,
+        decreaseCell,
+        increaseCell,
+        streak,
+        points,
         isLoading,
         currentStep,
         nextStep,

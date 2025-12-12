@@ -14,7 +14,8 @@ interface ShowStepProps extends React.ComponentProps<"div"> {
 }
 
 export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
-  const { cells, decrease, nextStep, currentStep, finished } = useProgress();
+  const { cells, decreaseCell, nextStep, currentStep, finished } =
+    useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
   const user = useUser();
 
@@ -36,7 +37,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   useEffect(() => {
     if (!user || quizResult === null) return;
 
-    if (quizResult === false) decrease();
+    if (quizResult === false) decreaseCell();
     if (quizResult === true) {
       console.log("quizPassed");
       quizPassed(user.id);
