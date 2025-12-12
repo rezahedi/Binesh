@@ -28,9 +28,6 @@
       "@admin/*": [
         "./app/(admin)/*"
       ],
-      "@website/*": [
-        "./app/(website)/*"
-      ],
       "@contents/*": [
         "./app/contents/*"
       ],

@@ -1,10 +1,12 @@
 import { SectionType } from "@/lib/quizParser";
 import QuizRenderer from "./quizzes/QuizRenderer";
-import { useProgress } from "../ProgressContext";
-import { useState } from "react";
+import { useProgress } from "@/contexts/ProgressContext";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { quizPassed, stepPassed } from "@/(learningMode)/actions/trophy";
+import { useUser } from "@stackframe/stack";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
   step: SectionType;
@@ -12,15 +14,37 @@ interface ShowStepProps extends React.ComponentProps<"div"> {
 }
 
 export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
-  const { nextStep, currentStep, finished } = useProgress();
+  const { cells, decreaseCell, nextStep, currentStep, finished } =
+    useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
+  const user = useUser();
 
   // TODO: Temporary solution, find a better way than passing step's `index` to check if this is the curr step
   const haveQuiz = Boolean(step.quiz);
   const isCurrent = index + 1 === currentStep;
   const isQuizFinished = quizResult;
+  const haveCells = cells !== null && cells > 0;
 
   const isNextReady = isCurrent && (!haveQuiz || (haveQuiz && isQuizFinished));
+
+  const handleNextStep = async () => {
+    if (!user) return;
+
+    stepPassed(user.id);
+    nextStep();
+  };
+
+  // TODO: Use a function that trigger with click event to call decreaseCell() server action
+  // Instead of useEffect()
+  useEffect(() => {
+    if (!user || quizResult === null) return;
+
+    if (quizResult === false) decreaseCell();
+    if (quizResult === true) {
+      console.log("quizPassed");
+      quizPassed(user.id);
+    }
+  }, [quizResult]);
 
   return (
     <div
@@ -35,7 +59,7 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
       {step.quiz && (
         <QuizRenderer
           quiz={{ ...step.quiz, id: step.id }}
-          isActive={isCurrent && !isQuizFinished}
+          isActive={isCurrent && !isQuizFinished && haveCells}
           quizResult={quizResult}
           onCheck={setQuizResult}
         />
@@ -57,9 +81,10 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
             )}
           </div>
           <Button
-            onClick={nextStep}
+            onClick={handleNextStep}
             variant={"primary"}
             className="font-semibold"
+            disabled={!haveCells}
           >
             Continue
           </Button>

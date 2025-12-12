@@ -1,6 +1,6 @@
 import ShowStep from "./ShowStep";
 import useSteps from "../useSteps";
-import { useProgress } from "../ProgressContext";
+import { useProgress } from "@/contexts/ProgressContext";
 import { useEffect, useRef } from "react";
 import Header from "./Header";
 import LoadingContent from "./LoadingContent";

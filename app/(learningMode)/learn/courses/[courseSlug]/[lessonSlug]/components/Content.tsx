@@ -1,20 +1,26 @@
-import { useProgress } from "../ProgressContext";
+import { useProgress } from "@/contexts/ProgressContext";
 import { useState } from "react";
 import Finish from "./Finish";
 import StartLesson from "./StartLesson";
 import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
 import { updateProgress } from "@/(learningMode)/actions/progress";
+import { lessonCompleted } from "@/(learningMode)/actions/trophy";
+import { useUser } from "@stackframe/stack";
 
 const Content = () => {
   const { finished } = useProgress();
   const [showFinish, setShowFinish] = useState<boolean>(false);
   const { courseSlug, lessonSlug } = useParams();
+  const user = useUser();
 
-  const handleFinish = async () => {
-    if (!courseSlug || !lessonSlug) return;
+  const handleFinish = () => {
+    if (!courseSlug || !lessonSlug || !user) return;
 
-    await updateProgress(String(courseSlug), String(lessonSlug));
+    // TODO: updateProgress() Async action called without await, causing fire-and-forget behavior.
+    // How to fix: await, loading state, catch error and try again
+    updateProgress(String(courseSlug), String(lessonSlug));
+    lessonCompleted(user.id);
     setShowFinish(true);
   };
 

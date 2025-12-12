@@ -1,8 +1,8 @@
-import { HeartIcon } from "lucide-react";
 import ProgressBar from "./ProgressBar";
-import { useProgress } from "../ProgressContext";
+import { useProgress } from "@/contexts/ProgressContext";
 import { cn } from "@/utils/cn";
 import CancelLessonButton from "./CancelLessonButton";
+import CellsButton from "./CellsButton";
 
 export default function Header({ className }: { className?: string }) {
   const { currentStep, totalSteps } = useProgress();
@@ -21,9 +21,7 @@ export default function Header({ className }: { className?: string }) {
           />
         </div>
         <div>
-          <button className="flex items-center gap-0.5 p-2 px-3 rounded-full hover:bg-muted cursor-pointer font-semibold text-lg">
-            3 <HeartIcon className="fill-destructive/90" stroke="0" />
-          </button>
+          <CellsButton />
         </div>
       </div>
     </header>

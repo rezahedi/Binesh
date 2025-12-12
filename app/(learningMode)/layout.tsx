@@ -1,28 +1,29 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@website/globals.css";
-import { cn } from "@/utils/cn";
+"use client";
+
+import "@/globals.css";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackClientApp } from "@stack/client";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Home | Binesh",
-};
+import { useEffect } from "react";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.body.style.height = "100vh";
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.height = "auto";
+    };
+  }, []);
+
   return (
-    <html lang="en">
-      <body className={cn(inter.className, "h-screen overflow-hidden")}>
-        <StackProvider app={stackClientApp}>
-          <StackTheme>{children}</StackTheme>
-        </StackProvider>
-      </body>
-    </html>
+    <div className={"h-screen overflow-hidden"}>
+      <StackProvider app={stackClientApp}>
+        <StackTheme>{children}</StackTheme>
+      </StackProvider>
+    </div>
   );
 }
