@@ -1,81 +1,31 @@
-import { CourseWithDetailProps, LessonWithProgressProps } from "@/lib/types";
-import { notFound } from "next/navigation";
+"use client";
+
+import { notFound, useParams } from "next/navigation";
 import { LessonCard } from "./components";
 import Image from "next/image";
 import LessonPop from "./components/LessonPop";
 import { SelectionSyncProvider } from "./SelectionSyncContext";
-import db from "@/db";
-import { and, asc, eq, getTableColumns } from "drizzle-orm";
-import {
-  categories,
-  courseProgress,
-  courses,
-  lessonProgress,
-  lessons as lessonsTable,
-} from "@/db/schema";
-import { stackServerApp } from "@stack/server";
+import useFetch from "@/lib/swr/useFetch";
+import { CourseWithDetailProps } from "@/lib/types";
+import CoursePageLoadingSkeleton from "./CoursePageLoadingSkeleton";
 
-export default async function page({
-  params,
-}: {
-  params: Promise<{ courseSlug: string }>;
-}) {
-  const { courseSlug } = await params;
+export default function CoursePage() {
+  const { courseSlug } = useParams();
+  const { data: courseDetail, isLoading } = useFetch<CourseWithDetailProps>(
+    `/api/courses/${courseSlug}`
+  );
 
-  const user = await stackServerApp.getUser();
-  if (!user) {
+  if (isLoading) return <CoursePageLoadingSkeleton />;
+
+  if (
+    !courseDetail ||
+    !courseDetail.id ||
+    !courseDetail.lessons ||
+    courseDetail.lessons.length === 0
+  )
     return notFound();
-  }
-
-  const response = await db
-    .select({
-      ...getTableColumns(courses),
-      category: getTableColumns(categories),
-      progress: getTableColumns(courseProgress),
-      lessons: getTableColumns(lessonsTable),
-      lessonProgress: getTableColumns(lessonProgress),
-    })
-    .from(courses)
-    .where(eq(courses.slug, courseSlug))
-    .leftJoin(categories, eq(courses.categoryID, categories.id))
-    .leftJoin(
-      courseProgress,
-      and(
-        eq(courseProgress.userID, user.id),
-        eq(courseProgress.courseID, courses.id)
-      )
-    )
-    .leftJoin(lessonsTable, eq(lessonsTable.courseID, courses.id))
-    .orderBy(asc(lessonsTable.unit), asc(lessonsTable.part))
-    .leftJoin(
-      lessonProgress,
-      and(
-        eq(lessonProgress.userID, user.id),
-        eq(lessonProgress.courseID, courses.id),
-        eq(lessonProgress.lessonID, lessonsTable.id)
-      )
-    );
-  const courseDetail: CourseWithDetailProps = {
-    ...response[0],
-    lessons: response
-      .filter((r) => r.lessons?.id)
-      .map(
-        (r): LessonWithProgressProps => ({
-          ...r.lessons!,
-          progress: r.lessonProgress,
-        })
-      ),
-  };
 
   const { lessons, ...course } = courseDetail;
-
-  if (!course || !course.id) {
-    return notFound();
-  }
-
-  if (!lessons || lessons.length === 0) {
-    return notFound();
-  }
 
   return (
     <div className="flex gap-4 md:gap-10 flex-col md:flex-row">
