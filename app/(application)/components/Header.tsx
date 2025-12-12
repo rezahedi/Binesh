@@ -54,7 +54,9 @@ export default function Header() {
             <UserButton />
           ) : (
             <>
-              <Link href={"/handler/sign-in"}>
+              <Link
+                href={`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-in`}
+              >
                 <button className="text-base p-2 px-6 rounded-full border border-primary text-primary cursor-pointer">
                   Sign in
                 </button>

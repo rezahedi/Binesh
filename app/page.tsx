@@ -15,13 +15,21 @@ export default async function WebsitePage() {
       </p>
       {!user && (
         <>
-          <Link href={"/handler/sign-in"}>Sign in</Link> -
-          <Link href={"/handler/sign-up"}>Sign up</Link>
+          <Link href={`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-in`}>
+            Sign in
+          </Link>{" "}
+          -
+          <Link href={`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-up`}>
+            Sign up
+          </Link>
         </>
       )}
       {user && (
         <div>
-          {user?.displayName} <Link href={"/handler/sign-out"}>Sign out</Link>
+          {user?.displayName}{" "}
+          <Link href={`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-out`}>
+            Sign out
+          </Link>
         </div>
       )}
     </div>
