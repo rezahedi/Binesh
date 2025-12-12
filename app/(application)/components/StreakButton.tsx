@@ -71,7 +71,7 @@ export default function StreakButton({ className }: { className?: string }) {
         <div className="flex justify-around gap-1.5 text-center text-sm text-border">
           {WEEK_DAYS.map((day, i) => (
             <div
-              key={day}
+              key={i}
               className={cn(
                 i < 2 &&
                   "[&_div]:border-destructive [&_svg]:fill-destructive [&_svg]:stroke-destructive text-foreground"
