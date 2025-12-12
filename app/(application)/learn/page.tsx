@@ -4,7 +4,7 @@ import useFetch from "@/lib/swr/useFetch";
 import { CourseWithCategoryProps } from "@/lib/types";
 import { CourseCard } from "@application/components";
 import { useUser } from "@stackframe/stack";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import CoursesCardLoadingSkeleton from "./components/CoursesCardLoadingSkeleton";
 
 export default function ApplicationPage() {
@@ -18,8 +18,8 @@ export default function ApplicationPage() {
     return null;
   }
 
-  // TODO: Show user a internet connection problem instead of notFound page
-  if (!isLoading && !courses) return notFound();
+  if (!isLoading && !courses)
+    return <p>Something went wrong, Please try again.</p>;
 
   return (
     <div className="space-y-4 mb-20">
