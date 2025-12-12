@@ -26,10 +26,11 @@ const useTrophy = () => {
       setIsLoading(true);
       const response = await getUserData(user.id);
       console.log("User Data:", response);
-      if (!response) return;
-      setCells(response.cells.total);
-      setStreak(response.streak);
-      setPoints(response.points);
+      if (response) {
+        setCells(response.cells.total);
+        setStreak(response.streak);
+        setPoints(response.points);
+      }
       setIsLoading(false);
     })();
   }, [user, streak, points]);

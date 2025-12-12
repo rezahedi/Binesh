@@ -8,7 +8,10 @@ import { useRouter } from "next/navigation";
 export default function Page() {
   const router = useRouter();
   const user = useUser();
-  if (!user) return router.push("/");
+  if (!user) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <ProgressProvider>

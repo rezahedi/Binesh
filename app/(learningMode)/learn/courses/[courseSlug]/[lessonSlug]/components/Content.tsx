@@ -17,6 +17,8 @@ const Content = () => {
   const handleFinish = () => {
     if (!courseSlug || !lessonSlug || !user) return;
 
+    // TODO: updateProgress() Async action called without await, causing fire-and-forget behavior.
+    // How to fix: await, loading state, catch error and try again
     updateProgress(String(courseSlug), String(lessonSlug));
     lessonCompleted(user.id);
     setShowFinish(true);

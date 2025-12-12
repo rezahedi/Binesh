@@ -34,6 +34,8 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
     nextStep();
   };
 
+  // TODO: Use a function that trigger with click event to call decreaseCell() server action
+  // Instead of useEffect()
   useEffect(() => {
     if (!user || quizResult === null) return;
 

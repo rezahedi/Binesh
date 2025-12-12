@@ -67,7 +67,7 @@ const CellsButton = ({ className }: { className?: string }) => {
           ))}
           {Array.from({ length: CELLS_MAXIMUM - cells }).map((_, i) => (
             <BatteryIcon
-              key={i}
+              key={i + cells}
               className={cn(
                 "size-5 fill-muted/90 stroke-muted/90 -rotate-90",
                 i === 0 && "animate-caret-blink"

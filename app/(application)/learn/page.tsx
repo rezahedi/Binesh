@@ -9,7 +9,10 @@ export default function ApplicationPage() {
   const router = useRouter();
   const user = useUser();
   const { courses, isLoading } = useCourses();
-  if (!user) return router.push("/");
+  if (!user) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <div className="space-y-4 mb-20">
