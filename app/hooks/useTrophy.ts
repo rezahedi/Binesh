@@ -42,7 +42,8 @@ const useTrophy = () => {
     setIsLoading(true);
     setCells(cells - 1);
     console.log("Trophy mistake");
-    await quizFailed(user.id);
+    const response = await quizFailed(user.id);
+    if (!response) setCells(cells + 1);
     setIsLoading(false);
   };
 
