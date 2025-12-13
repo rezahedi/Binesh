@@ -65,9 +65,9 @@ export const GET = async (
     ...response[0],
     lessons: response
       .filter((r) => r.lessons?.id)
-      .map((r, i) => ({
+      .map((r) => ({
         ...r.lessons,
-        progress: response[i].lessonProgress,
+        progress: r.lessonProgress,
       })),
     lessonProgress: undefined,
   });
