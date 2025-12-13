@@ -63,10 +63,12 @@ export const GET = async (
 
   return NextResponse.json({
     ...response[0],
-    lessons: response.map((r, i) => ({
-      ...r.lessons,
-      progress: response[i].lessonProgress,
-    })),
+    lessons: response
+      .filter((r) => r.lessons?.id)
+      .map((r, i) => ({
+        ...r.lessons,
+        progress: response[i].lessonProgress,
+      })),
     lessonProgress: undefined,
   });
 };
