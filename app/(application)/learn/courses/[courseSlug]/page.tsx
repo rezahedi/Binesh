@@ -61,7 +61,20 @@ export default function CoursePage() {
       </div>
 
       <div className="flex-6 flex flex-col mx-auto">
-        {lessons.length === 0 && <p>No lessons found.</p>}
+        {lessons.length === 0 && (
+          <div className="self-center text-center my-10">
+            <Image
+              src={"/assets/ship-outline.svg"}
+              width={300}
+              height={300}
+              alt="Outline ship"
+              className="opacity-40"
+            />
+            <p className="font-semibold text-xl pt-10 text-muted-foreground">
+              No lessons found.
+            </p>
+          </div>
+        )}
         {lessons.length !== 0 && (
           <SelectionSyncProvider>
             {lessons.map((lesson, index) => (
