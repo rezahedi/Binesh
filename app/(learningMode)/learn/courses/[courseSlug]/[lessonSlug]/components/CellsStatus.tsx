@@ -68,7 +68,7 @@ const CellsStatus = () => {
         >
           <span>Recharge Cell</span>
           <b className="flex gap-1 items-center">
-            <GemIcon className="size-4 fill-primary/90" stroke="0" />
+            <GemIcon className="size-4 fill-primary/90" stroke="none" />
             {POINTS_TO_UNLOCK_CELL}
           </b>
         </Button>

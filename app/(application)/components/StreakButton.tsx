@@ -64,7 +64,7 @@ export default function StreakButton({ className }: { className?: string }) {
           </div>
           <div className="flex flex-col items-end">
             <b className="font-bold text-5xl flex items-center gap-0.5">
-              <GemIcon className="size-10 fill-muted" stroke="0" />{" "}
+              <GemIcon className="size-10 fill-muted" stroke="none" />{" "}
               {points.total.toLocaleString()}
             </b>
             <b className="font-semibold text-lg">{points.name}</b>

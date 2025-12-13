@@ -10,7 +10,7 @@ export default function PointsButton() {
     return (
       <div className="flex gap-1 items-center font-semibold text-lg">
         {" "}
-        <GemIcon className="animate-pulse size-5 fill-muted/90" stroke="0" />
+        <GemIcon className="animate-pulse size-5 fill-muted/90" stroke="none" />
       </div>
     );
 
@@ -19,7 +19,7 @@ export default function PointsButton() {
   return (
     <button className="flex gap-1 items-center font-semibold text-lg">
       {points.total}
-      <GemIcon className="size-5 fill-primary/90" stroke="0" />
+      <GemIcon className="size-5 fill-primary/90" stroke="none" />
     </button>
   );
 }
