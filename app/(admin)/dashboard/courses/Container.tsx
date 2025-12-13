@@ -130,17 +130,19 @@ export default function Courses() {
                       <sub className="text-black/60">/{course.slug}</sub>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      <Link
-                        href={`./courses/?category=${course.category.slug}`}
-                      >
-                        {course.category.name}
-                      </Link>
+                      {course.category && (
+                        <Link
+                          href={`./courses/?category=${course.category.slug}`}
+                        >
+                          {course.category.name}
+                        </Link>
+                      )}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       {course.level}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {course.lessens}
+                      {course.lessonsCount}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline">
