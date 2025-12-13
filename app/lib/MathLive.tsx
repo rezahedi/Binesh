@@ -1,5 +1,6 @@
 import { useRef, HTMLAttributes } from "react";
 import "mathlive";
+import { MathfieldElement, MathfieldOptions } from "mathlive";
 
 export interface IMathFieldProps {
   value: string;
