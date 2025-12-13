@@ -13,7 +13,13 @@ const Img = ({
 
   return (
     <figure className="flex justify-center py-4">
-      <Image src={src} alt={alt || ""} title={title} width={300} height={300} />
+      <Image
+        src={String(src)}
+        alt={alt || ""}
+        title={title}
+        width={300}
+        height={300}
+      />
       {title && <figcaption>{title}</figcaption>}
     </figure>
   );
