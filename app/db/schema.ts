@@ -24,6 +24,8 @@ export const courses = pgTable("courses", {
   image: text("image").notNull(),
   level: integer("level").notNull(),
   lessonsCount: integer("lessons_count").notNull(),
+  estimatedDuration: integer("estimated_duration").notNull().default(0),
+  exercises: integer("exercises").notNull().default(0),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
   categoryID: uuid("category_id")
@@ -41,7 +43,7 @@ export const lessons = pgTable(
     slug: text("slug").notNull(),
     unit: integer("unit").notNull(),
     part: integer("part").notNull(),
-    duration: integer("duration").notNull(),
+    estimatedDuration: integer("estimated_duration").notNull(),
     createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),

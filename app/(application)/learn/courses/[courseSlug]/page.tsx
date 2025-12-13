@@ -17,13 +17,7 @@ export default function CoursePage() {
 
   if (isLoading) return <CoursePageLoadingSkeleton />;
 
-  if (
-    !courseDetail ||
-    !courseDetail.id ||
-    !courseDetail.lessons ||
-    courseDetail.lessons.length === 0
-  )
-    return notFound();
+  if (!courseDetail || !courseDetail.id) return notFound();
 
   const { lessons, ...course } = courseDetail;
 
@@ -52,28 +46,48 @@ export default function CoursePage() {
                 Lessons
               </p>
               <p>
-                <b className="font-semibold text-xl">45</b> Minutes
+                <b className="font-semibold text-xl">
+                  {course.estimatedDuration}
+                </b>{" "}
+                Minutes
               </p>
               <p>
-                <b className="font-semibold text-xl">437</b> Exercises
+                <b className="font-semibold text-xl">{course.exercises}</b>{" "}
+                Exercises
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <SelectionSyncProvider>
-        <div className="flex-6 flex flex-col mx-auto">
-          {lessons.map((lesson, index) => (
-            <LessonCard
-              key={lesson.id}
-              {...{ lesson, index }}
-              isCompleted={lesson.progress ? true : false}
+      <div className="flex-6 flex flex-col mx-auto">
+        {lessons.length === 0 && (
+          <div className="self-center text-center my-10">
+            <Image
+              src={"/assets/ship-outline.svg"}
+              width={300}
+              height={300}
+              alt="Outline ship"
+              className="opacity-40"
             />
-          ))}
-          <LessonPop />
-        </div>
-      </SelectionSyncProvider>
+            <p className="font-semibold text-xl pt-10 text-muted-foreground">
+              No lessons found.
+            </p>
+          </div>
+        )}
+        {lessons.length !== 0 && (
+          <SelectionSyncProvider>
+            {lessons.map((lesson, index) => (
+              <LessonCard
+                key={lesson.id}
+                {...{ lesson, index }}
+                isCompleted={lesson.progress ? true : false}
+              />
+            ))}
+            <LessonPop />
+          </SelectionSyncProvider>
+        )}
+      </div>
     </div>
   );
 }

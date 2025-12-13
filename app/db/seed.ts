@@ -43,7 +43,7 @@ async function main() {
               slug: lesson.slug,
               unit: lesson.unit,
               part: lesson.part,
-              duration: lesson.duration,
+              estimatedDuration: lesson.duration,
               courseID: courseID,
             });
             promises.push(res);

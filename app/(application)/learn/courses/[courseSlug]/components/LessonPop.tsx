@@ -36,7 +36,7 @@ const LessonPop = () => {
         <p>{lesson.description}</p>
         <p className="text-muted-foreground">
           Unit {lesson.unit} <span className="mx-2">·</span> Time{" "}
-          {lesson.duration}m
+          {lesson.estimatedDuration}m
         </p>
         {lesson.progress ? (
           <Button
