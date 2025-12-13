@@ -10,8 +10,9 @@ const CoursePageLoadingSkeleton = () => {
         <Skeleton className="h-10 w-8/12" />
         <Skeleton className="h-10 w-5/12" />
         <div className="flex gap-6 pt-8">
-          <Skeleton className="h-8 w-32" />
-          <Skeleton className="h-8 w-32" />
+          <Skeleton className="h-8 w-28" />
+          <Skeleton className="h-8 w-28" />
+          <Skeleton className="h-8 w-28" />
         </div>
       </div>
       <div className="flex-6 flex flex-col mx-auto">

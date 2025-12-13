@@ -46,7 +46,18 @@ export default function CoursePage() {
             <p className="my-3 md:my-6 text-card-foreground text-balance">
               {course.description}
             </p>
-            <b>{course.lessonsCount} Lessons</b>
+            <div className="flex gap-8">
+              <p>
+                <b className="font-semibold text-xl">{course.lessonsCount}</b>{" "}
+                Lessons
+              </p>
+              <p>
+                <b className="font-semibold text-xl">45</b> Minutes
+              </p>
+              <p>
+                <b className="font-semibold text-xl">437</b> Exercises
+              </p>
+            </div>
           </div>
         </div>
       </div>
