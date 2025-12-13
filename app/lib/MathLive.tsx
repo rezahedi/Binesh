@@ -1,20 +1,25 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useRef, HTMLAttributes } from "react";
 import "mathlive";
-import { MathfieldElement, MathfieldOptions } from "mathlive";
 
 export interface IMathFieldProps {
   value: string;
+  // @ts-expect-error
   options?: Partial<MathfieldOptions>;
   onChange?: (value: string) => void;
   style?: HTMLAttributes<HTMLDivElement>["style"];
 }
 
-MathfieldElement.locale = "en";
-MathfieldElement.decimalSeparator = ",";
-MathfieldElement.keypressSound = "none";
-MathfieldElement.plonkSound = "none";
+// @ts-expect-error
+Object.assign(MathfieldElement, {
+  locale: "en",
+  decimalSeparator: ",",
+  keypressSound: "none",
+  plonkSound: "none",
+});
 
 export default function MathField(props: IMathFieldProps) {
+  // @ts-expect-error
   const mathField = useRef<MathfieldElement>(null);
   const onInput = () => props.onChange?.(mathField.current?.getValue() || "");
   const { options, style } = props;
@@ -24,6 +29,7 @@ export default function MathField(props: IMathFieldProps) {
     fontSize: "1.5rem",
   };
 
+  // @ts-expect-error
   const init = (mf: MathfieldElement | null) => {
     if (mf) {
       mathField.current = mf;
@@ -31,6 +37,7 @@ export default function MathField(props: IMathFieldProps) {
   };
 
   return (
+    // @ts-expect-error
     <math-field
       ref={init}
       onInput={onInput}
