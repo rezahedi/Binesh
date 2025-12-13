@@ -1,6 +1,5 @@
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-import "dotenv/config";
 import assert from "node:assert";
 import * as schema from "@/db/schema";
 
