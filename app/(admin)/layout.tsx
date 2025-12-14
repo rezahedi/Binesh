@@ -1,17 +1,9 @@
-import type { Metadata } from "next";
+"use client";
+
 import "@/globals.css";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  ShoppingCart,
-  Users2,
-} from "lucide-react";
+import { Package2, PanelLeft, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,12 +25,9 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Navbar from "@admin/components/layout/Navbar";
 import { Toaster } from "sonner";
+import Links from "./components/layout/Links";
 
-export const metadata: Metadata = {
-  title: "Dashboard | Binesh",
-};
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
   params,
 }: Readonly<{
@@ -67,63 +56,8 @@ export default async function RootLayout({
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="md:max-w-xs">
-                <nav className="grid gap-6 text-lg font-medium">
-                  <Link
-                    href="#"
-                    className="flex h-10 shrink-0 items-center px-2.5 gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-                  >
-                    <Package2 className="size-5" />
-                    <span className="">Binesh</span>
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Home className="size-5" />
-                    Dashboard
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <ShoppingCart className="size-5" />
-                    Courses
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Package className="size-5" />
-                    Categories
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Package className="size-5" />
-                    Learning Paths
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <LineChart className="size-5" />
-                    Analytics
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Users2 className="size-5" />
-                    Users
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <LineChart className="size-5" />
-                    Settings
-                  </Link>
+                <nav className="text-lg font-medium h-full flex flex-col gap-4">
+                  <Links />
                 </nav>
               </SheetContent>
             </Sheet>
