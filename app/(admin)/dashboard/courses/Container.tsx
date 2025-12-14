@@ -7,8 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
 
-import { Badge } from "@admin/components/ui/badge";
-import { Button } from "@admin/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,14 +16,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@admin/components/ui/card";
+} from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@admin/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -31,7 +31,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@admin/components/ui/table";
+} from "@/components/ui/table";
 import PaginationBlock from "@admin/components/ui/PaginationBlock";
 import FilterDropdown from "@admin/components/ui/FilterDropdown";
 import dynamic from "next/dynamic";

@@ -7,7 +7,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@admin/components/ui/pagination";
+} from "@/components/ui/pagination";
 
 type PaginationBlockProps = {
   count: number;

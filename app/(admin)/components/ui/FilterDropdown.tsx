@@ -3,8 +3,8 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@admin/components/ui/dropdown-menu";
-import { Button } from "@admin/components/ui/button";
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { ListFilter } from "lucide-react";
 
 type FilterDropdownProps = {

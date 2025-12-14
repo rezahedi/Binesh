@@ -1,9 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogOverlay,
-} from "@admin/components/ui/dialog";
+import { Dialog, DialogContent, DialogOverlay } from "@/components/ui/dialog";
 
 export default function Modal({
   setShowModal,

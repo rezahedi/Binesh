@@ -12,8 +12,8 @@ import {
   ShoppingCart,
   Users2,
 } from "lucide-react";
-import { Input } from "@admin/components/ui/input";
-import { Button } from "@admin/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +21,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@admin/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -29,8 +29,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@admin/components/ui/breadcrumb";
-import { Sheet, SheetContent, SheetTrigger } from "@admin/components/ui/sheet";
+} from "@/components/ui/breadcrumb";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Navbar from "@admin/components/layout/Navbar";
 import { Toaster } from "sonner";
 
