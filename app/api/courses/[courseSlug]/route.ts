@@ -37,7 +37,7 @@ export const GET = async (
       lessonProgress: getTableColumns(lessonProgress),
     })
     .from(courses)
-    .where(eq(courses.slug, courseSlug))
+    .where(and(eq(courses.slug, courseSlug), eq(courses.status, "published")))
     .leftJoin(categories, eq(courses.categoryID, categories.id))
     .leftJoin(
       courseProgress,
@@ -46,7 +46,10 @@ export const GET = async (
         eq(courseProgress.courseID, courses.id)
       )
     )
-    .leftJoin(lessons, eq(lessons.courseID, courses.id))
+    .leftJoin(
+      lessons,
+      and(eq(lessons.courseID, courses.id), eq(lessons.status, "published"))
+    )
     .orderBy(asc(lessons.unit), asc(lessons.part))
     .leftJoin(
       lessonProgress,

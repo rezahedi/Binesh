@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { and, desc, eq, getTableColumns, like, or } from "drizzle-orm";
+import {
+  and,
+  desc,
+  eq,
+  getTableColumns,
+  like,
+  or,
+  SQLWrapper,
+} from "drizzle-orm";
 import db from "@/db";
 import { categories, courseProgress, courses } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
@@ -43,13 +51,14 @@ export const GET = async (request: NextRequest) => {
       )
     );
 
+  let searchConditions;
   if (search)
-    query.where(
-      or(
-        like(courses.name, `%${search}%`),
-        like(courses.description, `%${search}%`)
-      )
+    searchConditions = or(
+      like(courses.name, `%${search}%`),
+      like(courses.description, `%${search}%`)
     );
+
+  query.where(and(eq(courses.status, "published"), searchConditions));
 
   const rows = await query.execute();
 
