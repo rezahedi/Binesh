@@ -35,6 +35,7 @@ import {
 import PaginationBlock from "@admin/components/ui/PaginationBlock";
 import FilterDropdown from "@admin/components/ui/FilterDropdown";
 import dynamic from "next/dynamic";
+
 const AddEditModal = dynamic(
   () => import("@admin/dashboard/courses/AddEditModal")
 );
@@ -145,13 +146,8 @@ export default function Courses() {
                       {course.lessonsCount}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">
-                        Published
-                        {/* {
-                          ["Draft", "Reviewing", "Published", "Archived"][
-                            Math.floor(Math.random() * 3)
-                          ]
-                        } */}
+                      <Badge variant="outline" className="capitalize">
+                        {course.status}
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
