@@ -9,12 +9,14 @@ import {
   pgEnum,
 } from "drizzle-orm/pg-core";
 
-export const statusEnum = pgEnum("statusEnumType", [
+export const STATUS_VALUES = [
   "draft",
   "reviewing",
   "published",
   "archived",
-]);
+] as const;
+
+export const statusEnum = pgEnum("statusEnumType", STATUS_VALUES);
 
 export const categories = pgTable("categories", {
   id: uuid("id").defaultRandom().primaryKey(),
