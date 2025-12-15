@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import useCourses from "@/lib/swr/use-courses";
-import useCoursesCount from "@/lib/swr/use-courses-count";
 import Image from "next/image";
 import Link from "next/link";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
@@ -42,7 +41,7 @@ const AddEditModal = dynamic(
 
 export default function Courses() {
   const { courses, isValidating } = useCourses();
-  const { data: count } = useCoursesCount();
+  const count = 10; // FIXME: get rows total count from api
   const [showAddEditModal, setShowAddEditModal] = useState<boolean>(false);
 
   const handleAddCourse = () => {
