@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import {
   Home,
   Package,
@@ -42,9 +43,12 @@ const Links = () => {
         <Link
           key={link.name}
           href={link.href}
-          className={`flex gap-2 items-center p-2 rounded-lg transition-colors hover:bg-muted ${
-            pathname === link.href ? "bg-accent text-accent-foreground" : ""
-          } ${link.href === "" ? "cursor-not-allowed" : ""}`}
+          className={cn(
+            `flex gap-2 items-center p-2 rounded-lg transition-colors hover:bg-muted`,
+            pathname === link.href &&
+              "bg-accent text-accent-foreground hover:bg-accent/80",
+            link.href === "" && "cursor-not-allowed"
+          )}
         >
           <link.icon className="size-5 min-w-5" />
           <span className="lg:hidden lg:group-[.isOpen]:block">

@@ -1,19 +1,10 @@
 "use client";
 
 import "@/globals.css";
-import Image from "next/image";
 import Link from "next/link";
-import { Package2, PanelLeft, Search } from "lucide-react";
+import { PanelLeft, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -26,24 +17,29 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Navbar from "@admin/components/layout/Navbar";
 import { Toaster } from "sonner";
 import Links from "./components/layout/Links";
+import { UserButton, useUser } from "@stackframe/stack";
+import { useRouter } from "next/navigation";
 
 export default function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: unknown;
 }>) {
-  console.log(params);
+  const router = useRouter();
+  const user = useUser();
+  if (!user) {
+    router.push("/");
+    return null;
+  }
+
   // get data for breadcrumbs
 
   return (
     <>
-      {" "}
       <Toaster />
       <div
         id="sidebarNav"
-        className="group isOpen flex flex-row min-h-screen w-full bg-muted/40"
+        className="group isOpen flex flex-row min-h-screen w-full bg-muted/30"
       >
         <Navbar />
         <div className="flex-1 flex flex-col sm:gap-4 sm:py-4">
@@ -94,31 +90,7 @@ export default function RootLayout({
                 className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
               />
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="overflow-hidden rounded-full"
-                >
-                  <Image
-                    src="/placeholder-user.jpg"
-                    width={36}
-                    height={36}
-                    alt="Avatar"
-                    className="overflow-hidden"
-                  />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {user && <UserButton />}
           </header>
           <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
             {children}

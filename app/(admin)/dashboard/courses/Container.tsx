@@ -75,7 +75,7 @@ export default function Courses() {
           )}
         </div>
       </div>
-      <Card>
+      <Card className="bg-background">
         <CardHeader>
           <CardTitle>Courses</CardTitle>
           <CardDescription>
