@@ -34,6 +34,7 @@ import {
 import PaginationBlock from "@admin/components/ui/PaginationBlock";
 import FilterDropdown from "@admin/components/ui/FilterDropdown";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 const AddEditModal = dynamic(
   () => import("@admin/dashboard/courses/AddEditModal")
@@ -43,9 +44,14 @@ export default function Courses() {
   const { courses, isValidating } = useCourses();
   const count = 10; // FIXME: get rows total count from api
   const [showAddEditModal, setShowAddEditModal] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleAddCourse = () => {
     setShowAddEditModal(true);
+  };
+
+  const handleOpenLessons = (courseId: string) => {
+    router.push(`/dashboard/courses/${courseId}`);
   };
 
   return (
@@ -114,7 +120,10 @@ export default function Courses() {
               </TableHeader>
               <TableBody>
                 {courses?.map((course) => (
-                  <TableRow key={course.id}>
+                  <TableRow
+                    key={course.id}
+                    onClick={() => handleOpenLessons(course.id)}
+                  >
                     <TableCell className="hidden sm:table-cell">
                       <Image
                         alt="Product image"
