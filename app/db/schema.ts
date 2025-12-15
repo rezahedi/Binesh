@@ -18,6 +18,8 @@ export const STATUS_VALUES = [
 
 export const statusEnum = pgEnum("statusEnumType", STATUS_VALUES);
 
+export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"] as const;
+
 export const categories = pgTable("categories", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
