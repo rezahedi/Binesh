@@ -23,6 +23,8 @@ import {
 import useFetch from "@/lib/swr/useFetch";
 import { CategoryProps, CourseProps } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const { courseId } = useParams();
@@ -32,12 +34,31 @@ export default function Page() {
   const { data: categories } = useFetch<CategoryProps[]>(
     `/api/admin/categories`
   );
+  const [savingMsg, setSavingMsg] = useState<string | null>(null);
+  const router = useRouter();
 
-  const handleFormSave = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSavingMsg(null);
     const formData = new FormData(e.currentTarget);
+    formData.delete("image");
     const json = Object.fromEntries(formData.entries());
     console.log(json);
+    const response = await fetch(`/api/admin/courses/${courseId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(json),
+    });
+    if (!response.ok) {
+      setSavingMsg("Failed to save changes");
+    }
+    setSavingMsg("Changes saved successfully");
+  };
+
+  const handleCancel = () => {
+    router.push("./");
   };
 
   return (
@@ -116,19 +137,20 @@ export default function Page() {
               </div>
               <div>
                 <Label htmlFor="image">Image:</Label>
-                <Input
-                  id="image"
-                  name="image"
-                  type="file"
-                  defaultValue={data.image}
-                />
+                <Input id="image" name="image" type="file" />
                 {data.image}
               </div>
             </>
           )}
         </CardContent>
-        <CardFooter className="flex justify-end gap-4">
-          <Button variant={"outline"} size={"sm"}>
+        <CardFooter className="flex gap-4">
+          <p className="grow">{savingMsg}</p>
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            type="button"
+            onClick={handleCancel}
+          >
             Cancel
           </Button>
           <Button variant={"default"} size={"sm"} type="submit">

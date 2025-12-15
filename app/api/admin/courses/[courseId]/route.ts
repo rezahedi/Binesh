@@ -36,7 +36,9 @@ export const PATCH = withAdmin(
         .update(courses)
         .set(body)
         .where(eq(courses.id, courseId));
-      console.log("patch result", result);
+
+      if (result.rowCount === 0) return new Response(null, { status: 404 });
+
       return new Response(null, { status: 204 });
     } catch (error) {
       console.error(error);
