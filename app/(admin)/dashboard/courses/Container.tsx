@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import useCourses from "@/lib/swr/use-courses";
 import Image from "next/image";
 import Link from "next/link";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
@@ -35,13 +34,16 @@ import PaginationBlock from "@admin/components/ui/PaginationBlock";
 import FilterDropdown from "@admin/components/ui/FilterDropdown";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import useFetch from "@/lib/swr/useFetch";
+import { CourseWithCategoryProps } from "@/lib/types";
 
 const AddEditModal = dynamic(
   () => import("@admin/dashboard/courses/AddEditModal")
 );
 
 export default function Courses() {
-  const { courses, isValidating } = useCourses();
+  const { data: courses, isValidating } =
+    useFetch<CourseWithCategoryProps[]>(`/api/admin/courses`);
   const count = 10; // FIXME: get rows total count from api
   const [showAddEditModal, setShowAddEditModal] = useState<boolean>(false);
   const router = useRouter();
