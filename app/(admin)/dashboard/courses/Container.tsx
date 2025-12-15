@@ -42,7 +42,7 @@ const AddEditModal = dynamic(
 );
 
 export default function Courses() {
-  const { data: courses, isValidating } =
+  const { data: courses, isLoading } =
     useFetch<CourseWithCategoryProps[]>(`/api/admin/courses`);
   const count = 10; // FIXME: get rows total count from api
   const [showAddEditModal, setShowAddEditModal] = useState<boolean>(false);
@@ -52,7 +52,11 @@ export default function Courses() {
     setShowAddEditModal(true);
   };
 
-  const handleOpenLessons = (courseId: string) => {
+  const handleCourseClick = (courseId: string) => {
+    router.push(`/dashboard/courses/${courseId}/lessons`);
+  };
+
+  const handleEditClick = (courseId: string) => {
     router.push(`/dashboard/courses/${courseId}`);
   };
 
@@ -94,7 +98,7 @@ export default function Courses() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {isValidating ? (
+          {isLoading ? (
             <div>Loading...</div>
           ) : (
             <Table>
@@ -124,7 +128,7 @@ export default function Courses() {
                 {courses?.map((course) => (
                   <TableRow
                     key={course.id}
-                    onClick={() => handleOpenLessons(course.id)}
+                    onClick={() => handleCourseClick(course.id)}
                   >
                     <TableCell className="hidden sm:table-cell">
                       <Image
@@ -184,7 +188,11 @@ export default function Courses() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleEditClick(course.id)}
+                          >
+                            Edit
+                          </DropdownMenuItem>
                           <DropdownMenuItem>Delete</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
