@@ -6,7 +6,15 @@ import {
   integer,
   uniqueIndex,
   uuid,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+export const statusEnum = pgEnum("statusEnumType", [
+  "draft",
+  "reviewing",
+  "published",
+  "archived",
+]);
 
 export const categories = pgTable("categories", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -26,6 +34,7 @@ export const courses = pgTable("courses", {
   lessonsCount: integer("lessons_count").notNull(),
   estimatedDuration: integer("estimated_duration").notNull().default(0),
   exercises: integer("exercises").notNull().default(0),
+  status: statusEnum("status").notNull().default("draft"),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
   categoryID: uuid("category_id")
@@ -44,6 +53,7 @@ export const lessons = pgTable(
     unit: integer("unit").notNull(),
     part: integer("part").notNull(),
     estimatedDuration: integer("estimated_duration").notNull(),
+    status: statusEnum("status").notNull().default("draft"),
     createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),
