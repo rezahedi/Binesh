@@ -106,7 +106,7 @@ export default function Courses() {
                   </TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="hidden md:table-cell">
-                    Created at
+                    Updated at
                   </TableHead>
                   <TableHead>
                     <span className="sr-only">Actions</span>
@@ -151,7 +151,14 @@ export default function Courses() {
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {course.createdAt.toLocaleString()}
+                      {new Date(course.updatedAt).toLocaleDateString("en-US", {
+                        year: "2-digit",
+                        month: "short",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      })}
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
