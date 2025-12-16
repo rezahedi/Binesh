@@ -61,12 +61,17 @@ export default function useRouterStuff() {
     }
   };
 
+  const setSearchParams = (params: Record<string, string>) => {
+    queryParams({ set: params });
+  };
+
   return {
     pathname,
     router,
     searchParams,
     searchParamsObj,
     queryParams,
+    setSearchParams,
     getQueryString,
   };
 }
