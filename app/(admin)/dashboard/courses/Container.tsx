@@ -32,31 +32,29 @@ import {
 } from "@/components/ui/table";
 import PaginationBlock from "@admin/components/ui/PaginationBlock";
 import FilterDropdown from "@admin/components/ui/FilterDropdown";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import useFetch from "@/lib/swr/useFetch";
 import { CourseWithCategoryProps } from "@/lib/types";
-
-const AddEditModal = dynamic(
-  () => import("@admin/dashboard/courses/AddEditModal")
-);
 
 export default function Courses() {
   const { data: courses, isLoading } =
     useFetch<CourseWithCategoryProps[]>(`/api/admin/courses`);
   const count = 10; // FIXME: get rows total count from api
-  const [showAddEditModal, setShowAddEditModal] = useState<boolean>(false);
   const router = useRouter();
 
   const handleAddCourse = () => {
-    setShowAddEditModal(true);
+    router.push(`/dashboard/courses/new`);
   };
 
   const handleCourseClick = (courseId: string) => {
     router.push(`/dashboard/courses/${courseId}/lessons`);
   };
 
-  const handleEditClick = (courseId: string) => {
+  const handleEditClick = (
+    e: React.MouseEvent<HTMLElement>,
+    courseId: string
+  ) => {
+    e.stopPropagation();
     router.push(`/dashboard/courses/${courseId}`);
   };
 
@@ -79,12 +77,9 @@ export default function Courses() {
           <Button size="sm" className="h-8 gap-1" onClick={handleAddCourse}>
             <PlusCircle className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Course
+              Add New Course
             </span>
           </Button>
-          {showAddEditModal && (
-            <AddEditModal setShowModal={setShowAddEditModal} />
-          )}
         </div>
       </div>
       <Card className="bg-background">
@@ -189,7 +184,7 @@ export default function Courses() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
                           <DropdownMenuItem
-                            onClick={() => handleEditClick(course.id)}
+                            onClick={(e) => handleEditClick(e, course.id)}
                           >
                             Edit
                           </DropdownMenuItem>
