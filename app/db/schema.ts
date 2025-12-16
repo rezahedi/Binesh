@@ -35,7 +35,7 @@ export const courses = pgTable("courses", {
   slug: text("slug").notNull().unique(),
   image: text("image").notNull(),
   level: integer("level").notNull(),
-  lessonsCount: integer("lessons_count").notNull(),
+  lessonsCount: integer("lessons_count").notNull().default(0),
   estimatedDuration: integer("estimated_duration").notNull().default(0),
   exercises: integer("exercises").notNull().default(0),
   status: statusEnum("status").notNull().default("draft"),

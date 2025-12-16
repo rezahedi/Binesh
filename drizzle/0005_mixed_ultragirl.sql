@@ -1,0 +1,1 @@
+ALTER TABLE "courses" ALTER COLUMN "lessons_count" SET DEFAULT 0;
