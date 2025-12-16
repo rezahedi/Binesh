@@ -16,6 +16,8 @@ export const STATUS_VALUES = [
   "archived",
 ] as const;
 
+export type StatusType = (typeof STATUS_VALUES)[number];
+
 export const statusEnum = pgEnum("statusEnumType", STATUS_VALUES);
 
 export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"] as const;

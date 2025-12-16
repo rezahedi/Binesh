@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { count, desc, eq, getTableColumns, like, or } from "drizzle-orm";
+import { and, count, desc, eq, getTableColumns, like, or } from "drizzle-orm";
 import db from "@/db";
-import { courses, categories } from "@/db/schema";
+import { courses, categories, StatusType } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
 import { withAdmin } from "@/lib/auth";
 import { CourseProps } from "@/lib/types";
@@ -12,10 +12,14 @@ export const GET = withAdmin(async ({ req }: { req: Request }) => {
   const {
     search,
     sort = "createdAt",
+    category = "",
+    status,
     page = "1",
   } = searchParams as {
     search?: string;
     sort?: "createdAt" | "updatedAt";
+    category?: string;
+    status?: StatusType;
     page?: string;
   };
 
@@ -32,14 +36,18 @@ export const GET = withAdmin(async ({ req }: { req: Request }) => {
 
   const countQuery = db.select({ count: count() }).from(courses);
 
+  let searchConditions;
   if (search) {
-    const whereClause = or(
+    searchConditions = or(
       like(courses.name, `%${search}%`),
       like(courses.description, `%${search}%`)
     );
-    query.where(whereClause);
-    countQuery.where(whereClause);
   }
+
+  const statusFilter = status ? eq(courses.status, status) : undefined;
+
+  query.where(and(searchConditions, statusFilter));
+  countQuery.where(and(searchConditions, statusFilter));
 
   const rows = await query.execute();
   const countRows = await countQuery.execute();
