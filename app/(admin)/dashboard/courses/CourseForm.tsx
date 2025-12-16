@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { LEVEL_OPTIONS, STATUS_VALUES } from "@/db/schema";
 import useFetch from "@/lib/swr/useFetch";
 import { CategoryProps, CourseProps } from "@/lib/types";
+import { cn } from "@/utils/cn";
 import { useState } from "react";
 
 const CourseForm = ({ course }: { course?: CourseProps | null }) => {
@@ -18,6 +19,7 @@ const CourseForm = ({ course }: { course?: CourseProps | null }) => {
     `/api/admin/categories`
   );
   const [slug, setSlug] = useState<string>(course?.slug || "");
+  const [isSlugUnique, setIsSlugUnique] = useState<boolean | null>(null);
 
   const createSlug = (str: string) => {
     return str
@@ -29,6 +31,16 @@ const CourseForm = ({ course }: { course?: CourseProps | null }) => {
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (course) return;
     setSlug(createSlug(e.target.value));
+  };
+
+  const handleCheckSlug = async (slug: string) => {
+    setIsSlugUnique(null);
+    if (slug === "" || (course && course.slug === slug)) return;
+
+    const res = await fetch(`/api/admin/courses/slug/${slug}`).then((body) =>
+      body.text()
+    );
+    setIsSlugUnique(Boolean(Number(res)));
   };
 
   return (
@@ -51,8 +63,19 @@ const CourseForm = ({ course }: { course?: CourseProps | null }) => {
           required
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
+          onBlur={(e) => handleCheckSlug(e.target.value)}
           defaultValue={course?.slug}
         />
+        {isSlugUnique !== null && (
+          <i
+            className={cn(
+              "text-sm",
+              isSlugUnique ? "text-green-500" : "text-red-500"
+            )}
+          >
+            {isSlugUnique ? "The slug is unique" : "The slug is not unique"}
+          </i>
+        )}
       </div>
       <div>
         <Label htmlFor="description">Description *:</Label>
