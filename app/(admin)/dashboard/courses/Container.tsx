@@ -30,10 +30,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PaginationBlock from "@admin/components/ui/PaginationBlock";
-import FilterDropdown from "@admin/components/ui/FilterDropdown";
 import { useRouter } from "next/navigation";
 import useFetch from "@/lib/swr/useFetch";
 import { CourseWithCategoryProps } from "@/lib/types";
+import FilterCategories from "@admin/components/ui/FilterCategories";
+import FilterStatus from "@admin/components/ui/FilterStatus";
 
 export default function Courses() {
   const { data, isLoading } = useFetch<{
@@ -63,16 +64,8 @@ export default function Courses() {
     <div className="space-y-2">
       <div className="flex items-center">
         <div className="flex items-center gap-2">
-          <FilterDropdown
-            name="Filter by Category"
-            defaultOption="All categories"
-            options={["Mathematics", "Biology"]}
-          />
-          <FilterDropdown
-            name="Filter by Status"
-            defaultOption="All Status"
-            options={["Draft", "Reviewing", "Published", "Archived"]}
-          />
+          <FilterCategories />
+          <FilterStatus />
         </div>
         <div className="ml-auto">
           <Button size="sm" className="h-8 gap-1" onClick={handleAddCourse}>

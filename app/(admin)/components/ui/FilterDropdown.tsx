@@ -1,24 +1,40 @@
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ListFilter } from "lucide-react";
+import { useEffect, useState } from "react";
+import useRouterStuff from "@/hooks/use-router-stuff";
 
 type FilterDropdownProps = {
   name: string;
+  label: string;
   defaultOption: string;
-  options: string[];
+  options: { key: string; label: string }[];
 };
 
 export default function FilterDropdown({
   name,
+  label,
   defaultOption,
   options,
 }: FilterDropdownProps) {
-  // TODO: Get the current filter from the query string
+  const { searchParams, setSearchParams } = useRouterStuff();
+  const [position, setPosition] = useState<string>(
+    searchParams.get(label) || ""
+  );
+
+  useEffect(() => {
+    if (position === "" || position === searchParams.get(label)) return;
+
+    setSearchParams({ [label]: position });
+  }, [position, setSearchParams]);
 
   return (
     <DropdownMenu>
@@ -30,15 +46,16 @@ export default function FilterDropdown({
           </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuCheckboxItem checked>
-          {defaultOption}
-        </DropdownMenuCheckboxItem>
-        {options.map((option, index) => (
-          <DropdownMenuCheckboxItem key={index}>
-            {option}
-          </DropdownMenuCheckboxItem>
-        ))}
+      <DropdownMenuContent align="start" className="capitalize">
+        <DropdownMenuLabel>{defaultOption}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+          {options.map((option) => (
+            <DropdownMenuRadioItem key={option.key} value={option.key}>
+              {option.label}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );
