@@ -42,6 +42,7 @@ export default function Page() {
       return setSavingMsg("Failed to create new lesson");
     }
     setSavingMsg("New lesson created successfully");
+    router.push("./");
   };
 
   const handleCancel = () => {

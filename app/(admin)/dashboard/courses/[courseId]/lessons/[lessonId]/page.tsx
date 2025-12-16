@@ -48,6 +48,7 @@ export default function Page() {
       return setSavingMsg("Failed to save changes");
     }
     setSavingMsg("Changes saved successfully");
+    router.push("./");
   };
 
   const handleCancel = () => {

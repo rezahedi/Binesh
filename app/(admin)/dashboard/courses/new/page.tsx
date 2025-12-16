@@ -35,6 +35,7 @@ export default function Page() {
       return setSavingMsg("Failed to create new course");
     }
     setSavingMsg("New course created successfully");
+    router.push("./");
   };
 
   const handleCancel = () => {
