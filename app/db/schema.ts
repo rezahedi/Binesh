@@ -58,6 +58,7 @@ export const lessons = pgTable(
     slug: text("slug").notNull(),
     unit: integer("unit").notNull(),
     part: integer("part").notNull(),
+    exercises: integer("exercises").notNull().default(0),
     estimatedDuration: integer("estimated_duration").notNull(),
     status: statusEnum("status").notNull().default("draft"),
     createdAt: timestamp("created_at", { mode: "string" })
