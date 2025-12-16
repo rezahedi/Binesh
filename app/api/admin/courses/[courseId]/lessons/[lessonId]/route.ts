@@ -1,0 +1,48 @@
+import { LessonsProps } from "./../../../../../../lib/types";
+import db from "@/db";
+import { lessons } from "@/db/schema";
+import { withAdmin } from "@/lib/auth";
+import { eq } from "drizzle-orm";
+import { NextResponse } from "next/server";
+
+export const GET = withAdmin(async ({ params }) => {
+  const { lessonId } = await params;
+
+  try {
+    const rows = await db
+      .select()
+      .from(lessons)
+      .where(eq(lessons.id, lessonId));
+
+    if (!rows || rows.length === 0) {
+      return new Response(null, { status: 404 });
+    }
+
+    return NextResponse.json(rows[0]);
+  } catch (error) {
+    console.error(error);
+    return new Response(null, { status: 500 });
+  }
+});
+
+export const PATCH = withAdmin(
+  async ({ req, params }: { req: Request; params: Record<string, string> }) => {
+    const { lessonId } = await params;
+    const body: LessonsProps = await req.json();
+    console.log("Patch body", body);
+
+    try {
+      const result = await db
+        .update(lessons)
+        .set(body)
+        .where(eq(lessons.id, lessonId));
+
+      if (result.rowCount === 0) return new Response(null, { status: 404 });
+
+      return new Response(null, { status: 204 });
+    } catch (error) {
+      console.error(error);
+      return new Response(null, { status: 500 });
+    }
+  }
+);
