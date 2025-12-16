@@ -8,13 +8,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { ROWS_PER_PAGE } from "@/constants/dashboard";
 
 type PaginationBlockProps = {
   count: number;
 };
 
 export default function PaginationBlock({ count }: PaginationBlockProps) {
-  const ROWS_PER_PAGE = 10;
   const PAGINATION_ITEMS = 5;
   const EACHSIDE_ITEMS = Math.floor(PAGINATION_ITEMS / 2);
   const pages = Math.ceil(count / ROWS_PER_PAGE) || 1;

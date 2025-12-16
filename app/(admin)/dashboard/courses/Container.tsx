@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
@@ -37,9 +36,11 @@ import useFetch from "@/lib/swr/useFetch";
 import { CourseWithCategoryProps } from "@/lib/types";
 
 export default function Courses() {
-  const { data: courses, isLoading } =
-    useFetch<CourseWithCategoryProps[]>(`/api/admin/courses`);
-  const count = 10; // FIXME: get rows total count from api
+  const { data, isLoading } = useFetch<{
+    rows: CourseWithCategoryProps[];
+    count: number;
+  }>(`/api/admin/courses`);
+  const { rows: courses, count } = data || { rows: null, count: null };
   const router = useRouter();
 
   const handleAddCourse = () => {
@@ -87,40 +88,39 @@ export default function Courses() {
           <CardTitle>Courses</CardTitle>
           <CardDescription>
             Manage courses and view their lessons.
-            <span className="float-right text-xs text-muted-foreground">
-              Showing <b>1-10</b> of <b>{count}</b> products
-            </span>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            <Table>
-              <TableHeader>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="hidden w-[100px] sm:table-cell">
+                  <span className="sr-only">Image</span>
+                </TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead className="hidden md:table-cell">Category</TableHead>
+                <TableHead className="hidden md:table-cell">Level</TableHead>
+                <TableHead className="hidden md:table-cell">Lessons</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="hidden md:table-cell">
+                  Updated at
+                </TableHead>
+                <TableHead>
+                  <span className="sr-only">Actions</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading && (
                 <TableRow>
-                  <TableHead className="hidden w-[100px] sm:table-cell">
-                    <span className="sr-only">Image</span>
-                  </TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Category
-                  </TableHead>
-                  <TableHead className="hidden md:table-cell">Level</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Lessons
-                  </TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Updated at
-                  </TableHead>
-                  <TableHead>
-                    <span className="sr-only">Actions</span>
-                  </TableHead>
+                  <TableCell colSpan={8} className="text-center">
+                    Loading...
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {courses?.map((course) => (
+              )}
+              {!isLoading &&
+                courses &&
+                courses.map((course) => (
                   <TableRow
                     key={course.id}
                     onClick={() => handleCourseClick(course.id)}
@@ -194,13 +194,10 @@ export default function Courses() {
                     </TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
-            </Table>
-          )}
+            </TableBody>
+          </Table>
         </CardContent>
-        <CardFooter>
-          <PaginationBlock count={count} />
-        </CardFooter>
+        <CardFooter>{count && <PaginationBlock count={count} />}</CardFooter>
       </Card>
     </div>
   );
