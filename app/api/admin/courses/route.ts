@@ -34,20 +34,26 @@ export const GET = withAdmin(async ({ req }: { req: Request }) => {
     .orderBy(desc(courses[sort]))
     .leftJoin(categories, eq(courses.categoryID, categories.id));
 
-  const countQuery = db.select({ count: count() }).from(courses);
+  const countQuery = db
+    .select({ count: count() })
+    .from(courses)
+    .leftJoin(categories, eq(courses.categoryID, categories.id));
 
-  let searchConditions;
+  const clauses = [];
   if (search) {
-    searchConditions = or(
-      like(courses.name, `%${search}%`),
-      like(courses.description, `%${search}%`)
+    clauses.push(
+      or(
+        like(courses.name, `%${search}%`),
+        like(courses.description, `%${search}%`)
+      )
     );
   }
+  if (status) clauses.push(eq(courses.status, status));
 
-  const statusFilter = status ? eq(courses.status, status) : undefined;
+  if (category) clauses.push(eq(categories.slug, category));
 
-  query.where(and(searchConditions, statusFilter));
-  countQuery.where(and(searchConditions, statusFilter));
+  query.where(and(...clauses));
+  countQuery.where(and(...clauses));
 
   const rows = await query.execute();
   const countRows = await countQuery.execute();
