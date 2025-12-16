@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -13,7 +12,6 @@ import { useParams, useRouter } from "next/navigation";
 import useFetch from "@/lib/swr/useFetch";
 import { CourseProps, LessonsProps } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import FilterDropdown from "@/(admin)/components/ui/FilterDropdown";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
 import {
   Table,
@@ -31,7 +29,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import PaginationBlock from "@/(admin)/components/ui/PaginationBlock";
+import FilterStatus from "@admin/components/ui/FilterStatus";
 
 export default function Page() {
   const { courseId } = useParams();
@@ -39,7 +37,7 @@ export default function Page() {
     course: CourseProps;
     lessons: LessonsProps[];
   }>(`/api/admin/courses/${courseId}/lessons`);
-  const count = 10; // FIXME: get rows total count from api
+  const { course, lessons } = data || { course: null, lessons: [] };
   const router = useRouter();
 
   const handleEditClick = (lessonId: string) => {
@@ -54,16 +52,7 @@ export default function Page() {
     <div className="space-y-2">
       <div className="flex items-center">
         <div className="flex items-center gap-2">
-          <FilterDropdown
-            name="Filter by Category"
-            defaultOption="All categories"
-            options={["Mathematics", "Biology"]}
-          />
-          <FilterDropdown
-            name="Filter by Status"
-            defaultOption="All Status"
-            options={["Draft", "Reviewing", "Published", "Archived"]}
-          />
+          <FilterStatus />
         </div>
         <div className="ml-auto">
           <Button size="sm" className="h-8 gap-1" onClick={handleNewClick}>
@@ -76,38 +65,41 @@ export default function Page() {
       </div>
       <Card className="bg-background">
         <CardHeader>
-          <CardTitle>{data?.course.name}</CardTitle>
+          <CardTitle>{course?.name}</CardTitle>
           <CardDescription>
             manage selected course&apos;s lessons.
-            <span className="float-right text-xs text-muted-foreground">
-              Showing <b>1-10</b> of <b>{count}</b> products
-            </span>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            <Table>
-              <TableHeader>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead className="hidden md:table-cell">Unit</TableHead>
+                <TableHead className="hidden md:table-cell">Part</TableHead>
+                <TableHead className="hidden md:table-cell">
+                  Estimated Duration
+                </TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="hidden md:table-cell">
+                  Updated at
+                </TableHead>
+                <TableHead>
+                  <span className="sr-only">Actions</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading && (
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead className="hidden md:table-cell">Unit</TableHead>
-                  <TableHead className="hidden md:table-cell">Part</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Estimated Duration
-                  </TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Updated at
-                  </TableHead>
-                  <TableHead>
-                    <span className="sr-only">Actions</span>
-                  </TableHead>
+                  <TableCell colSpan={7} className="text-center">
+                    Loading...
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data?.lessons?.map((lesson) => (
+              )}
+              {!isLoading &&
+                lessons.length > 0 &&
+                lessons.map((lesson) => (
                   <TableRow
                     key={lesson.id}
                     onClick={() => handleEditClick(lesson.id)}
@@ -162,13 +154,16 @@ export default function Page() {
                     </TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
-            </Table>
-          )}
+              {!isLoading && lessons.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center">
+                    No lessons found.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </CardContent>
-        <CardFooter>
-          <PaginationBlock count={count} />
-        </CardFooter>
       </Card>
     </div>
   );

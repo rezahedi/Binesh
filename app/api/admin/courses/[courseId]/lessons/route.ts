@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, asc, eq, getTableColumns, like, or } from "drizzle-orm";
 import db from "@/db";
-import { lessons, courses, NewLessons } from "@/db/schema";
+import { lessons, courses, NewLessons, StatusType } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
 import { withAdmin } from "@/lib/auth";
 
@@ -9,15 +9,14 @@ export const GET = withAdmin(
   async ({ req, params }: { req: Request; params: Record<string, string> }) => {
     const { courseId } = await params;
     const searchParams = getSearchParams(req.url);
-    const ROWS_PER_PAGE = 10;
     const {
       search,
+      status,
       sort = "unit",
-      page = "1",
     } = searchParams as {
       search?: string;
+      status?: StatusType;
       sort?: "unit" | "part" | "name" | "createdAt" | "updatedAt";
-      page?: string;
     };
 
     try {
@@ -38,18 +37,19 @@ export const GET = withAdmin(
       const query = db
         .select(lessonsColumns)
         .from(lessons)
-        .offset((Number(page) - 1) * ROWS_PER_PAGE)
-        .limit(ROWS_PER_PAGE)
         .orderBy(asc(lessons[sort]));
 
-      let searchConditions;
+      const clauses = [];
       if (search)
-        searchConditions = or(
-          like(lessons.name, `%${search}%`),
-          like(lessons.description, `%${search}%`)
+        clauses.push(
+          or(
+            like(lessons.name, `%${search}%`),
+            like(lessons.description, `%${search}%`)
+          )
         );
+      if (status) clauses.push(eq(lessons.status, status));
 
-      query.where(and(eq(lessons.courseID, courseId), searchConditions));
+      query.where(and(eq(lessons.courseID, courseId), ...clauses));
 
       const lessonRows = await query.execute();
 
