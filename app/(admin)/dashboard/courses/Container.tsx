@@ -48,11 +48,7 @@ export default function Courses() {
     router.push(`./courses/new`);
   };
 
-  const handleEditClick = (
-    e: React.MouseEvent<HTMLElement>,
-    courseId: string
-  ) => {
-    e.stopPropagation();
+  const handleEditClick = (courseId: string) => {
     router.push(`./courses/${courseId}`);
   };
 
@@ -175,7 +171,7 @@ export default function Courses() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
                           <DropdownMenuItem
-                            onClick={(e) => handleEditClick(e, course.id)}
+                            onClick={() => handleEditClick(course.id)}
                           >
                             Edit
                           </DropdownMenuItem>
