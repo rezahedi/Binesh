@@ -30,6 +30,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import FilterStatus from "@admin/components/ui/FilterStatus";
+import Link from "next/link";
 
 export default function Page() {
   const { courseId } = useParams();
@@ -100,14 +101,16 @@ export default function Page() {
               {!isLoading &&
                 lessons.length > 0 &&
                 lessons.map((lesson) => (
-                  <TableRow
-                    key={lesson.id}
-                    onClick={() => handleEditClick(lesson.id)}
-                  >
+                  <TableRow key={lesson.id}>
                     <TableCell className="font-medium">
-                      {lesson.name}
-                      <br />
-                      <sub className="text-black/60">/{lesson.slug}</sub>
+                      <Link
+                        href={`./lessons/${lesson.id}`}
+                        className={"hover:underline hover:text-primary"}
+                      >
+                        {lesson.name}
+                        <br />
+                        <sub className="text-black/60">/{lesson.slug}</sub>
+                      </Link>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       {lesson.unit}
@@ -147,7 +150,11 @@ export default function Page() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleEditClick(lesson.id)}
+                          >
+                            Edit
+                          </DropdownMenuItem>
                           <DropdownMenuItem>Delete</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
