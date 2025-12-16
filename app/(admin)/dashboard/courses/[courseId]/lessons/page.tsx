@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import FilterStatus from "@admin/components/ui/FilterStatus";
 import Link from "next/link";
+import { mutate } from "swr";
 
 export default function Page() {
   const { courseId } = useParams();
@@ -47,6 +48,18 @@ export default function Page() {
 
   const handleNewClick = () => {
     router.push(`./lessons/new`);
+  };
+
+  const handleDeleteClick = async (lessonId: string) => {
+    const res = await fetch(
+      `/api/admin/courses/${courseId}/lessons/${lessonId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!res.ok) return console.log("Could'nt remove the lesson!");
+
+    mutate(`/api/admin/courses/${courseId}/lessons`);
   };
 
   return (
@@ -155,7 +168,11 @@ export default function Page() {
                           >
                             Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleDeleteClick(lesson.id)}
+                          >
+                            Delete
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

@@ -46,3 +46,19 @@ export const PATCH = withAdmin(
     }
   }
 );
+
+export const DELETE = withAdmin(async ({ params }) => {
+  const { lessonId } = await params;
+
+  try {
+    const result = await db.delete(lessons).where(eq(lessons.id, lessonId));
+
+    // If didn't delete anything
+    if (result.rowCount === 0) return new Response(null, { status: 404 });
+
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    console.error(error);
+    return new Response(null, { status: 500 });
+  }
+});
