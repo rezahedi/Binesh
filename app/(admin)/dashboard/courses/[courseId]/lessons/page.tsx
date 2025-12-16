@@ -46,6 +46,10 @@ export default function Page() {
     router.push(`./lessons/${lessonId}`);
   };
 
+  const handleNewClick = () => {
+    router.push(`./lessons/new`);
+  };
+
   return (
     <div className="space-y-2">
       <div className="flex items-center">
@@ -62,7 +66,7 @@ export default function Page() {
           />
         </div>
         <div className="ml-auto">
-          <Button size="sm" className="h-8 gap-1">
+          <Button size="sm" className="h-8 gap-1" onClick={handleNewClick}>
             <PlusCircle className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Add New Lesson

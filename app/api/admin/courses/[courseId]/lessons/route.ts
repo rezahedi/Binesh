@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, asc, eq, getTableColumns, like, or } from "drizzle-orm";
 import db from "@/db";
-import { lessons, courses } from "@/db/schema";
+import { lessons, courses, NewLessons } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
 import { withAdmin } from "@/lib/auth";
 
@@ -63,3 +63,19 @@ export const GET = withAdmin(
     }
   }
 );
+
+export const POST = withAdmin(async ({ req, params }) => {
+  const { courseId } = await params;
+  const body: NewLessons = await req.json();
+  console.log("Post body", body);
+
+  try {
+    const result = await db
+      .insert(lessons)
+      .values({ ...body, courseID: courseId });
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error(error);
+    return new Response(null, { status: 500 });
+  }
+});
