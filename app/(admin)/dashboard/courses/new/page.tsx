@@ -1,0 +1,74 @@
+"use client";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import CourseForm from "../CourseForm";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export default function Page() {
+  const [savingMsg, setSavingMsg] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleFormSave = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSavingMsg(null);
+    const formData = new FormData(e.currentTarget);
+    const json = Object.fromEntries(
+      formData.entries().filter(([_, v]) => v !== "")
+    );
+    console.log(json);
+    const response = await fetch(`/api/admin/courses`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(json),
+    });
+    if (!response.ok) {
+      return setSavingMsg("Failed to create new course");
+    }
+    setSavingMsg("New course created successfully");
+  };
+
+  const handleCancel = () => {
+    router.push("./");
+  };
+
+  return (
+    <Card className="bg-background">
+      <CardHeader>
+        <CardTitle>Edit Course</CardTitle>
+        <CardDescription>
+          Edit and update course details.
+          <span className="float-right text-xs text-muted-foreground"></span>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleFormSave} className="space-y-4">
+          <CourseForm />
+          <div className="flex gap-4">
+            <p className="grow">{savingMsg}</p>
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              type="button"
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
+            <Button variant={"default"} size={"sm"} type="submit">
+              Save
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
+  );
+}
