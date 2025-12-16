@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { useParams } from "next/navigation";
 import useFetch from "@/lib/swr/useFetch";
-import { LessonsProps } from "@/lib/types";
+import { CourseProps, LessonsProps } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,9 @@ import LessonForm from "../LessonForm";
 
 export default function Page() {
   const { courseId, lessonId } = useParams();
+  const { data: course } = useFetch<CourseProps>(
+    `/api/admin/courses/${courseId}`
+  );
   const { data, isLoading, error } = useFetch<LessonsProps>(
     `/api/admin/courses/${courseId}/lessons/${lessonId}`
   );
@@ -54,7 +57,7 @@ export default function Page() {
   return (
     <Card className="bg-background">
       <CardHeader>
-        <CardTitle>Lesson Title</CardTitle>
+        <CardTitle>{course?.name}</CardTitle>
         <CardDescription>
           Edit and update lesson details and content.
           <span className="float-right text-xs text-muted-foreground"></span>
