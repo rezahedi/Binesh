@@ -45,11 +45,7 @@ export default function Courses() {
   const router = useRouter();
 
   const handleAddCourse = () => {
-    router.push(`/dashboard/courses/new`);
-  };
-
-  const handleCourseClick = (courseId: string) => {
-    router.push(`/dashboard/courses/${courseId}/lessons`);
+    router.push(`./courses/new`);
   };
 
   const handleEditClick = (
@@ -57,7 +53,7 @@ export default function Courses() {
     courseId: string
   ) => {
     e.stopPropagation();
-    router.push(`/dashboard/courses/${courseId}`);
+    router.push(`./courses/${courseId}`);
   };
 
   return (
@@ -114,10 +110,7 @@ export default function Courses() {
               {!isLoading &&
                 courses &&
                 courses.map((course) => (
-                  <TableRow
-                    key={course.id}
-                    onClick={() => handleCourseClick(course.id)}
-                  >
+                  <TableRow key={course.id}>
                     <TableCell className="hidden sm:table-cell">
                       <Image
                         alt="Product image"
@@ -128,9 +121,14 @@ export default function Courses() {
                       />
                     </TableCell>
                     <TableCell className="font-medium">
-                      {course.name}
-                      <br />
-                      <sub className="text-black/60">/{course.slug}</sub>
+                      <Link
+                        href={`./courses/${course.id}/lessons`}
+                        className={"hover:underline hover:text-primary"}
+                      >
+                        {course.name}
+                        <br />
+                        <sub className="text-black/60">/{course.slug}</sub>
+                      </Link>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       {course.category && (
