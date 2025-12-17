@@ -122,28 +122,6 @@ const LessonForm = ({ lesson }: { lesson?: LessonsProps | null }) => {
           defaultValue={lesson?.unit}
         />
       </div>
-      <div>
-        <Label htmlFor="part">Part:</Label>
-        <Input
-          id="part"
-          name="part"
-          type="number"
-          min="0"
-          defaultValue={lesson?.part}
-        />
-      </div>
-      <div>
-        <Label htmlFor="estimatedDuration">
-          Estimated Duration (in minutes):
-        </Label>
-        <Input
-          id="estimatedDuration"
-          name="estimatedDuration"
-          type="number"
-          min="0"
-          defaultValue={lesson?.estimatedDuration}
-        />
-      </div>
     </>
   );
 };
