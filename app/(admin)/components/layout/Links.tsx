@@ -15,7 +15,7 @@ const LINKS = [
   { name: "Dashboard", href: `/dashboard`, icon: Home },
   { name: "Courses", href: `/dashboard/courses`, icon: Shapes },
   { name: "Categories", href: `/dashboard/categories`, icon: Package },
-  { name: "Learning Paths", href: `/dashboard/paths`, icon: Package },
+  { name: "Learning Paths", href: ``, icon: Package },
   { name: "Analytics", href: ``, icon: LineChart },
   { name: "Users", href: ``, icon: Users2 },
 ];
@@ -40,36 +40,68 @@ const Links = () => {
         <span className="sm:hidden sm:group-[.isOpen]:block">Binesh</span>
       </Link>
       {LINKS.map((link) => (
-        <Link
-          key={link.name}
-          href={link.href}
-          className={cn(
-            `flex gap-2 items-center p-2 rounded-lg transition-colors hover:bg-muted`,
-            pathname === link.href &&
-              "bg-accent text-accent-foreground hover:bg-accent/80",
-            link.href === "" && "cursor-not-allowed"
+        <>
+          {link.href !== "" ? (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={cn(
+                `flex gap-2 items-center p-2 rounded-lg transition-colors hover:bg-muted`,
+                pathname === link.href &&
+                  "bg-accent text-accent-foreground hover:bg-accent/80"
+              )}
+            >
+              <link.icon className="size-5 min-w-5" />
+              <span className="lg:hidden lg:group-[.isOpen]:block">
+                {link.name}
+              </span>
+            </Link>
+          ) : (
+            <div
+              key={link.name}
+              className={cn(
+                `flex gap-2 items-center p-2 text-muted-foreground`
+              )}
+            >
+              <link.icon className="size-5 min-w-5" />
+              <span className="lg:hidden lg:group-[.isOpen]:block">
+                {link.name}
+              </span>
+            </div>
           )}
-        >
-          <link.icon className="size-5 min-w-5" />
-          <span className="lg:hidden lg:group-[.isOpen]:block">
-            {link.name}
-          </span>
-        </Link>
+        </>
       ))}
       <div className="flex-1"></div>
       {FOOTER_LINKS.map((link) => (
-        <Link
-          key={link.name}
-          href={link.href}
-          className={`flex gap-2 items-center p-2 rounded-lg transition-colors hover:bg-muted ${
-            pathname === link.href ? "bg-accent text-accent-foreground" : ""
-          } ${link.href === "" ? "cursor-not-allowed" : ""}`}
-        >
-          <link.icon className="size-5 min-w-5" />
-          <span className="lg:hidden lg:group-[.isOpen]:block">
-            {link.name}
-          </span>
-        </Link>
+        <>
+          {link.href !== "" ? (
+            <Link
+              key={link.name}
+              href={link.href}
+              aria-disabled
+              className={`flex gap-2 items-center p-2 rounded-lg transition-colors hover:bg-muted ${
+                pathname === link.href ? "bg-accent text-accent-foreground" : ""
+              } ${link.href === "" ? "cursor-not-allowed" : ""}`}
+            >
+              <link.icon className="size-5 min-w-5" />
+              <span className="lg:hidden lg:group-[.isOpen]:block">
+                {link.name}
+              </span>
+            </Link>
+          ) : (
+            <div
+              key={link.name}
+              className={cn(
+                `flex gap-2 items-center p-2 text-muted-foreground`
+              )}
+            >
+              <link.icon className="size-5 min-w-5" />
+              <span className="lg:hidden lg:group-[.isOpen]:block">
+                {link.name}
+              </span>
+            </div>
+          )}
+        </>
       ))}
     </>
   );
