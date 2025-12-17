@@ -4,14 +4,8 @@ import useSWR from "swr";
 import { CourseWithCategoryProps } from "@/lib/types";
 
 export default function useCourses() {
-  const {
-    pathname,
-    router,
-    searchParams,
-    searchParamsObj,
-    queryParams,
-    getQueryString,
-  } = useRouterStuff();
+  const { pathname, router, searchParams, searchParamsObj, getQueryString } =
+    useRouterStuff();
   console.log(
     pathname,
     router,
