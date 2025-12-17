@@ -5,6 +5,7 @@ import { withAdmin } from "@/lib/auth";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { updateCourseStats } from "../route";
+import { parseLesson } from "@/lib/quizParser";
 
 export const GET = withAdmin(async ({ params }) => {
   const { lessonId } = await params;
@@ -33,9 +34,14 @@ export const PATCH = withAdmin(
     console.log("Patch body", body);
 
     try {
+      const { steps } = parseLesson(body.content);
+      const part = steps.length;
+      const exercises = steps.filter((s) => s.quiz !== null).length;
+      const estimatedDuration = part * 2 + exercises * 4;
+
       const result = await db
         .update(lessons)
-        .set(body)
+        .set({ ...body, part, exercises, estimatedDuration })
         .where(eq(lessons.id, lessonId));
 
       if (result.rowCount === 0) return new Response(null, { status: 404 });
