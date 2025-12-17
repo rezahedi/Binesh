@@ -10,7 +10,7 @@ import {
 import { useParams, useRouter } from "next/navigation";
 
 import useFetch from "@/lib/swr/useFetch";
-import { CourseProps, LessonsProps } from "@/lib/types";
+import { CourseProps, LessonProps } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
 import {
@@ -37,7 +37,7 @@ export default function Page() {
   const { courseId } = useParams();
   const { data, isLoading } = useFetch<{
     course: CourseProps;
-    lessons: LessonsProps[];
+    lessons: LessonProps[];
   }>(`/api/admin/courses/${courseId}/lessons`);
   const { course, lessons } = data || { course: null, lessons: [] };
   const router = useRouter();

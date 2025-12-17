@@ -1,4 +1,4 @@
-import { LessonsProps } from "@/lib/types";
+import { LessonProps } from "@/lib/types";
 import db from "@/db";
 import { lessons } from "@/db/schema";
 import { withAdmin } from "@/lib/auth";
@@ -30,7 +30,7 @@ export const GET = withAdmin(async ({ params }) => {
 export const PATCH = withAdmin(
   async ({ req, params }: { req: Request; params: Record<string, string> }) => {
     const { courseId, lessonId } = await params;
-    const body: LessonsProps = await req.json();
+    const body: LessonProps = await req.json();
     console.log("Patch body", body);
 
     try {

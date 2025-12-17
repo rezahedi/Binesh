@@ -10,10 +10,11 @@ import {
   sql,
 } from "drizzle-orm";
 import db from "@/db";
-import { lessons, courses, NewLessons, StatusType } from "@/db/schema";
+import { lessons, courses, StatusType } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
 import { withAdmin } from "@/lib/auth";
 import { parseLesson } from "@/lib/quizParser";
+import { NewLessonProps } from "@/lib/types";
 
 export const GET = withAdmin(
   async ({ req, params }: { req: Request; params: Record<string, string> }) => {
@@ -76,7 +77,7 @@ export const GET = withAdmin(
 
 export const POST = withAdmin(async ({ req, params }) => {
   const { courseId } = await params;
-  const body: NewLessons = await req.json();
+  const body: NewLessonProps = await req.json();
   console.log("Post body", body);
 
   try {

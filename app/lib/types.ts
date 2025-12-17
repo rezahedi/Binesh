@@ -6,15 +6,21 @@ import {
   CourseProgress,
   LessonProgress,
   NewCategories,
+  NewLessons,
+  NewLessonProgress,
+  NewCourseProgress,
 } from "@/db/schema";
 
 export type CourseProps = Courses;
 export type NewCourseProps = NewCourses;
-export type LessonsProps = Lessons;
+export type LessonProps = Lessons;
+export type NewLessonProps = NewLessons;
 export type LessonProgressProps = LessonProgress;
+export type NewLessonProgressProps = NewLessonProgress;
 export type CategoryProps = Categories;
 export type NewCategoryProps = NewCategories;
 export type CourseProgressProps = CourseProgress;
+export type NewCourseProgressProps = NewCourseProgress;
 
 export type LessonWithProgressProps = Lessons & {
   progress: LessonProgressProps | null;

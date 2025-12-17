@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { STATUS_VALUES } from "@/db/schema";
-import { LessonsProps } from "@/lib/types";
+import { LessonProps } from "@/lib/types";
 import { cn } from "@/utils/cn";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
-const LessonForm = ({ lesson }: { lesson?: LessonsProps | null }) => {
+const LessonForm = ({ lesson }: { lesson?: LessonProps | null }) => {
   const [slug, setSlug] = useState<string>(lesson?.slug || "");
   const [isSlugUnique, setIsSlugUnique] = useState<boolean | null>(null);
   const { courseId } = useParams();

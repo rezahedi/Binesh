@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { useParams } from "next/navigation";
 import useFetch from "@/lib/swr/useFetch";
-import { CourseProps, LessonsProps } from "@/lib/types";
+import { CourseProps, LessonProps } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ export default function Page() {
   const { data: course } = useFetch<CourseProps>(
     `/api/admin/courses/${courseId}`
   );
-  const { data, isLoading, error } = useFetch<LessonsProps>(
+  const { data, isLoading, error } = useFetch<LessonProps>(
     `/api/admin/courses/${courseId}/lessons/${lessonId}`
   );
   const [savingMsg, setSavingMsg] = useState<string | null>(null);

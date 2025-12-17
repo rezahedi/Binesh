@@ -4,7 +4,7 @@ import db from "@/db";
 import { courses, categories, StatusType } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
 import { withAdmin } from "@/lib/auth";
-import { CourseProps } from "@/lib/types";
+import { NewCourseProps } from "@/lib/types";
 import { ROWS_PER_PAGE } from "@/constants/dashboard";
 
 export const GET = withAdmin(async ({ req }: { req: Request }) => {
@@ -65,7 +65,7 @@ export const GET = withAdmin(async ({ req }: { req: Request }) => {
 });
 
 export const POST = withAdmin(async ({ req }: { req: Request }) => {
-  const body: CourseProps = await req.json();
+  const body: NewCourseProps = await req.json();
   console.log("insert body", body);
 
   try {
