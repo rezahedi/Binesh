@@ -33,6 +33,7 @@ const CourseForm = ({ course }: { course?: CourseProps | null }) => {
     setSlug(createSlug(e.target.value));
   };
 
+  // TODO: Make a unified reusable component and api endpoint to check course, lesson & cat slugs, Also handle fetch error responses too
   const handleCheckSlug = async (slug: string) => {
     setIsSlugUnique(null);
     if (slug === "" || (course && course.slug === slug)) return;
