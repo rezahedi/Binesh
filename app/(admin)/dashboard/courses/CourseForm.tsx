@@ -64,7 +64,6 @@ const CourseForm = ({ course }: { course?: CourseProps | null }) => {
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
           onBlur={(e) => handleCheckSlug(e.target.value)}
-          defaultValue={course?.slug}
         />
         {isSlugUnique !== null && (
           <i
