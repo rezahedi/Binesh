@@ -40,10 +40,9 @@ const Links = () => {
         <span className="sm:hidden sm:group-[.isOpen]:block">Binesh</span>
       </Link>
       {LINKS.map((link) => (
-        <>
+        <div key={link.name}>
           {link.href !== "" ? (
             <Link
-              key={link.name}
               href={link.href}
               className={cn(
                 `flex gap-2 items-center p-2 rounded-lg transition-colors hover:bg-muted`,
@@ -58,7 +57,6 @@ const Links = () => {
             </Link>
           ) : (
             <div
-              key={link.name}
               className={cn(
                 `flex gap-2 items-center p-2 text-muted-foreground`
               )}
@@ -69,14 +67,13 @@ const Links = () => {
               </span>
             </div>
           )}
-        </>
+        </div>
       ))}
       <div className="flex-1"></div>
       {FOOTER_LINKS.map((link) => (
-        <>
+        <div key={link.name}>
           {link.href !== "" ? (
             <Link
-              key={link.name}
               href={link.href}
               aria-disabled
               className={`flex gap-2 items-center p-2 rounded-lg transition-colors hover:bg-muted ${
@@ -90,7 +87,6 @@ const Links = () => {
             </Link>
           ) : (
             <div
-              key={link.name}
               className={cn(
                 `flex gap-2 items-center p-2 text-muted-foreground`
               )}
@@ -101,7 +97,7 @@ const Links = () => {
               </span>
             </div>
           )}
-        </>
+        </div>
       ))}
     </>
   );
