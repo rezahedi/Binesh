@@ -5,6 +5,7 @@ import {
   NewCourses,
   CourseProgress,
   LessonProgress,
+  NewCategories,
 } from "@/db/schema";
 
 export type CourseProps = Courses;
@@ -12,6 +13,7 @@ export type NewCourseProps = NewCourses;
 export type LessonsProps = Lessons;
 export type LessonProgressProps = LessonProgress;
 export type CategoryProps = Categories;
+export type NewCategoryProps = NewCategories;
 export type CourseProgressProps = CourseProgress;
 
 export type LessonWithProgressProps = Lessons & {
