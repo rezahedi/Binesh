@@ -28,6 +28,7 @@ import { CategoryProps } from "@/lib/types";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { mutate } from "swr";
 
 export default function Page() {
   const { data, isLoading } = useFetch<
@@ -48,6 +49,7 @@ export default function Page() {
       method: "DELETE",
     });
     if (!res.ok) return console.log("Couldn't remove the category!");
+    mutate(`/api/admin/categories`);
   };
 
   return (
