@@ -1,7 +1,7 @@
 import db from "@/db";
 import { courses } from "@/db/schema";
 import { withAdmin } from "@/lib/auth";
-import { CourseProps } from "@/lib/types";
+import { NewCourseProps } from "@/lib/types";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
@@ -28,13 +28,23 @@ export const GET = withAdmin(async ({ params }) => {
 export const PATCH = withAdmin(
   async ({ req, params }: { req: Request; params: Record<string, string> }) => {
     const { courseId } = await params;
-    const body: CourseProps = await req.json();
-    console.log("Patch body", body);
+    const body: NewCourseProps = await req.json();
 
     try {
+      const updateDTO: NewCourseProps = {
+        name: body.name,
+        slug: body.slug,
+        description: body.description,
+        image: "",
+        level: body.level,
+        status: body.status,
+        categoryID: body.categoryID,
+        updatedAt: new Date().toISOString(),
+      };
+
       const result = await db
         .update(courses)
-        .set(body)
+        .set(updateDTO)
         .where(eq(courses.id, courseId));
 
       if (result.rowCount === 0) return new Response(null, { status: 404 });

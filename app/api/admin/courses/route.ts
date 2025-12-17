@@ -66,10 +66,18 @@ export const GET = withAdmin(async ({ req }: { req: Request }) => {
 
 export const POST = withAdmin(async ({ req }: { req: Request }) => {
   const body: NewCourseProps = await req.json();
-  console.log("insert body", body);
 
   try {
-    const result = await db.insert(courses).values(body);
+    const insertDTO: NewCourseProps = {
+      name: body.name,
+      slug: body.slug,
+      description: body.description,
+      image: "",
+      level: body.level,
+      status: body.status,
+      categoryID: body.categoryID,
+    };
+    const result = await db.insert(courses).values(insertDTO);
     console.log("insert result", result);
     return new Response(null, { status: 204 });
   } catch (error) {

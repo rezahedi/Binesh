@@ -78,7 +78,6 @@ export const GET = withAdmin(
 export const POST = withAdmin(async ({ req, params }) => {
   const { courseId } = await params;
   const body: NewLessonProps = await req.json();
-  console.log("Post body", body);
 
   try {
     const { steps } = parseLesson(body.content);
@@ -86,13 +85,20 @@ export const POST = withAdmin(async ({ req, params }) => {
     const exercises = steps.filter((s) => s.quiz !== null).length;
     const estimatedDuration = part * 2 + exercises * 4;
 
-    const result = await db.insert(lessons).values({
-      ...body,
-      courseID: courseId,
+    const insertDTO: NewLessonProps = {
+      name: body.name,
+      slug: body.slug,
+      description: body.description,
+      content: body.content,
+      status: body.status,
+      unit: body.unit,
       part,
-      exercises,
       estimatedDuration,
-    });
+      exercises,
+      courseID: courseId,
+    };
+
+    const result = await db.insert(lessons).values(insertDTO);
 
     if (body.status === "published") await updateCourseStats(courseId);
 
