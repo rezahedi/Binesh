@@ -1,9 +1,10 @@
-import { LessonsProps } from "./../../../../../../lib/types";
+import { LessonsProps } from "@/lib/types";
 import db from "@/db";
 import { lessons } from "@/db/schema";
 import { withAdmin } from "@/lib/auth";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import { updateCourseStats } from "../route";
 
 export const GET = withAdmin(async ({ params }) => {
   const { lessonId } = await params;
@@ -27,7 +28,7 @@ export const GET = withAdmin(async ({ params }) => {
 
 export const PATCH = withAdmin(
   async ({ req, params }: { req: Request; params: Record<string, string> }) => {
-    const { lessonId } = await params;
+    const { courseId, lessonId } = await params;
     const body: LessonsProps = await req.json();
     console.log("Patch body", body);
 
@@ -39,6 +40,8 @@ export const PATCH = withAdmin(
 
       if (result.rowCount === 0) return new Response(null, { status: 404 });
 
+      await updateCourseStats(courseId);
+
       return new Response(null, { status: 204 });
     } catch (error) {
       console.error(error);
@@ -48,13 +51,15 @@ export const PATCH = withAdmin(
 );
 
 export const DELETE = withAdmin(async ({ params }) => {
-  const { lessonId } = await params;
+  const { courseId, lessonId } = await params;
 
   try {
     const result = await db.delete(lessons).where(eq(lessons.id, lessonId));
 
     // If didn't delete anything
     if (result.rowCount === 0) return new Response(null, { status: 404 });
+
+    await updateCourseStats(courseId);
 
     return new Response(null, { status: 204 });
   } catch (error) {

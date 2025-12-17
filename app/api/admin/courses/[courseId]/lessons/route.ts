@@ -1,9 +1,19 @@
 import { NextResponse } from "next/server";
-import { and, asc, eq, getTableColumns, like, or } from "drizzle-orm";
+import {
+  and,
+  asc,
+  count,
+  eq,
+  getTableColumns,
+  like,
+  or,
+  sql,
+} from "drizzle-orm";
 import db from "@/db";
 import { lessons, courses, NewLessons, StatusType } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
 import { withAdmin } from "@/lib/auth";
+import { parseLesson } from "@/lib/quizParser";
 
 export const GET = withAdmin(
   async ({ req, params }: { req: Request; params: Record<string, string> }) => {
@@ -70,12 +80,49 @@ export const POST = withAdmin(async ({ req, params }) => {
   console.log("Post body", body);
 
   try {
-    const result = await db
-      .insert(lessons)
-      .values({ ...body, courseID: courseId });
+    const { steps } = parseLesson(body.content);
+    const part = steps.length;
+    const exercises = steps.filter((s) => s.quiz !== null).length;
+    const estimatedDuration = part * 2 + exercises * 4;
+
+    const result = await db.insert(lessons).values({
+      ...body,
+      courseID: courseId,
+      part,
+      exercises,
+      estimatedDuration,
+    });
+
+    if (body.status === "published") await updateCourseStats(courseId);
+
     return NextResponse.json(result);
   } catch (error) {
     console.error(error);
     return new Response(null, { status: 500 });
   }
 });
+
+// TODO: It's not the best solution, refactor it later
+export const updateCourseStats = async (courseId: string) => {
+  const [aggregations] = await db
+    .select({
+      lessonsCount: count(),
+      part: sql<number>`COALESCE(SUM(${lessons.part}), 0)`,
+      exercises: sql<number>`COALESCE(SUM(${lessons.exercises}), 0)`,
+      estimatedDuration: sql<number>`COALESCE(SUM(${lessons.estimatedDuration}), 0)`,
+    })
+    .from(lessons)
+    .where(
+      and(eq(lessons.status, "published"), eq(lessons.courseID, courseId))
+    );
+
+  await db
+    .update(courses)
+    .set({
+      lessonsCount: aggregations.lessonsCount,
+      part: aggregations.part,
+      exercises: aggregations.exercises,
+      estimatedDuration: aggregations.estimatedDuration,
+    })
+    .where(eq(courses.id, courseId));
+};
