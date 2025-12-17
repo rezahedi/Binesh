@@ -90,10 +90,11 @@ export default function Page() {
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead className="hidden md:table-cell">Unit</TableHead>
-                <TableHead className="hidden md:table-cell">Part</TableHead>
+                <TableHead className="hidden md:table-cell">Parts</TableHead>
                 <TableHead className="hidden md:table-cell">
-                  Estimated Duration
+                  Exercises
                 </TableHead>
+                <TableHead className="hidden md:table-cell">Estimate</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead className="hidden md:table-cell">
                   Updated at
@@ -106,7 +107,7 @@ export default function Page() {
             <TableBody>
               {isLoading && (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center">
+                  <TableCell colSpan={8} className="text-center">
                     Loading...
                   </TableCell>
                 </TableRow>
@@ -132,7 +133,10 @@ export default function Page() {
                       {lesson.part}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {lesson.estimatedDuration}
+                      {lesson.exercises}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {lesson.estimatedDuration} min
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline" className="capitalize">
@@ -180,7 +184,7 @@ export default function Page() {
                 ))}
               {!isLoading && lessons.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center">
+                  <TableCell colSpan={8} className="text-center">
                     No lessons found.
                   </TableCell>
                 </TableRow>
