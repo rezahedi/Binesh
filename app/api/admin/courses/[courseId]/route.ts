@@ -48,7 +48,7 @@ export const PATCH = withAdmin(
 );
 
 export const DELETE = withAdmin(async ({ params }) => {
-  const { courseId } = params;
+  const { courseId } = await params;
 
   try {
     const result = await db.delete(courses).where(eq(courses.id, courseId));

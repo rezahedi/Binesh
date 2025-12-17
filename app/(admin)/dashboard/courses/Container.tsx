@@ -52,6 +52,13 @@ export default function Courses() {
     router.push(`./courses/${courseId}`);
   };
 
+  const handleDeleteClick = async (courseId: string) => {
+    const res = await fetch(`/api/admin/courses/${courseId}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) return console.log("Couldn't remove the course!");
+  };
+
   return (
     <div className="space-y-2">
       <div className="flex items-center">
@@ -175,7 +182,11 @@ export default function Courses() {
                           >
                             Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleDeleteClick(course.id)}
+                          >
+                            Delete
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

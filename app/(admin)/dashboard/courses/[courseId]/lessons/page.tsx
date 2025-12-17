@@ -57,7 +57,7 @@ export default function Page() {
         method: "DELETE",
       }
     );
-    if (!res.ok) return console.log("Could'nt remove the lesson!");
+    if (!res.ok) return console.log("Couldn't remove the lesson!");
 
     mutate(`/api/admin/courses/${courseId}/lessons`);
   };
