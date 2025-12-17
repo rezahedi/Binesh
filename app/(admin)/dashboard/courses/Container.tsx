@@ -35,6 +35,7 @@ import useFetch from "@/lib/swr/useFetch";
 import { CourseWithCategoryProps } from "@/lib/types";
 import FilterCategories from "@admin/components/ui/FilterCategories";
 import FilterStatus from "@admin/components/ui/FilterStatus";
+import { mutate } from "swr";
 
 export default function Courses() {
   const { data, isLoading } = useFetch<{
@@ -57,6 +58,11 @@ export default function Courses() {
       method: "DELETE",
     });
     if (!res.ok) return console.log("Couldn't remove the course!");
+    mutate(
+      (key) => typeof key === "string" && key.startsWith("/api/admin/courses"),
+      undefined,
+      { revalidate: true }
+    );
   };
 
   return (
