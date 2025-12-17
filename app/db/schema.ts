@@ -27,7 +27,7 @@ export const categories = pgTable("categories", {
   name: text("name").notNull(),
   description: text("description").notNull(),
   slug: text("slug").notNull().unique(),
-  image: text("image").notNull(),
+  image: text("image").notNull().default(""),
 });
 
 export const courses = pgTable("courses", {

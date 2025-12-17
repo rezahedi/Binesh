@@ -57,6 +57,13 @@
       "when": 1765929710253,
       "tag": "0007_volatile_titania",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1765996221331,
+      "tag": "0008_aberrant_scourge",
+      "breakpoints": true
     }
   ]
 }
