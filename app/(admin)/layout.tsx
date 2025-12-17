@@ -13,7 +13,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import Navbar from "@admin/components/layout/Navbar";
 import { Toaster } from "sonner";
 import Links from "./components/layout/Links";
@@ -34,6 +39,8 @@ export default function RootLayout({
 
   // get data for breadcrumbs
 
+  // FIXME: Sheet (sidebar drawer) stay open after any link click, it must be closed.
+
   return (
     <>
       <Toaster />
@@ -52,6 +59,7 @@ export default function RootLayout({
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="md:max-w-xs">
+                <SheetTitle className="sr-only">Sidebar Menu</SheetTitle>
                 <nav className="text-lg font-medium h-full flex flex-col gap-4">
                   <Links />
                 </nav>
