@@ -45,9 +45,9 @@ export default function Page() {
   return (
     <Card className="bg-background">
       <CardHeader>
-        <CardTitle>Edit Course</CardTitle>
+        <CardTitle>New Course</CardTitle>
         <CardDescription>
-          Edit and update course details.
+          Create new course details.
           <span className="float-right text-xs text-muted-foreground"></span>
         </CardDescription>
       </CardHeader>
