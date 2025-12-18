@@ -1,7 +1,7 @@
 import { ComponentQuizType } from "@/lib/quizParser";
 import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
-import { IQuizProp } from "./QuizRenderer";
+import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DynamicRenderer } from "@/components/Interactive/Renderer";

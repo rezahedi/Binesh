@@ -1,5 +1,5 @@
 import { SectionType } from "@/lib/quizParser";
-import QuizRenderer from "./quizzes/QuizRenderer";
+import QuizRenderer from "@/components/quizzes/QuizRenderer";
 import { useProgress } from "@/contexts/ProgressContext";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "@/lib/markdown";

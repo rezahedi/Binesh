@@ -1,5 +1,5 @@
 import { QuizKind, QuizType } from "@/lib/quizParser";
-import { ComponentQuiz, CheckListQuiz, FillInQuiz, RadioQuiz } from "./";
+import { ComponentQuiz, CheckListQuiz, FillInQuiz, RadioQuiz } from ".";
 
 export interface IQuizProp {
   quiz: QuizType & { id: string };

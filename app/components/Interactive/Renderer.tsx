@@ -1,4 +1,7 @@
-import { componentRegistry, RegistryComponentName } from ".";
+import {
+  componentRegistry,
+  RegistryComponentName,
+} from "@/components/Interactive";
 
 type ComponentRendererProps = {
   component: string;
