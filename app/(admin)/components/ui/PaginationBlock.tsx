@@ -7,21 +7,20 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@admin/components/ui/pagination";
+} from "@/components/ui/pagination";
+import { ROWS_PER_PAGE } from "@/constants/dashboard";
 
 type PaginationBlockProps = {
   count: number;
 };
 
 export default function PaginationBlock({ count }: PaginationBlockProps) {
-  const ROWS_PER_PAGE = 10;
   const PAGINATION_ITEMS = 5;
   const EACHSIDE_ITEMS = Math.floor(PAGINATION_ITEMS / 2);
   const pages = Math.ceil(count / ROWS_PER_PAGE) || 1;
 
-  // Get current page from query string and set it to 1 if it's not a number
   const { searchParams } = useRouterStuff();
-  let currentPage = Math.floor(Number(searchParams.get("page"))) || 1;
+  let currentPage = Number(searchParams.get("page")) || 1;
   if (currentPage < 1) currentPage = 1;
   if (currentPage > pages) currentPage = pages;
 
@@ -48,18 +47,25 @@ export default function PaginationBlock({ count }: PaginationBlockProps) {
     pageNumbers.push(i);
   }
 
+  const getSearchParamsPage = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", String(page));
+
+    return `?${params.toString()}`;
+  };
+
   return (
     <Pagination>
       <PaginationContent>
         {currentPage > 1 && (
           <PaginationItem>
-            <PaginationPrevious href={`?page=${currentPage - 1}`} />
+            <PaginationPrevious href={getSearchParamsPage(currentPage - 1)} />
           </PaginationItem>
         )}
         {start > 1 && (
           <>
             <PaginationItem>
-              <PaginationLink href="?page=1">1</PaginationLink>
+              <PaginationLink href={getSearchParamsPage(1)}>1</PaginationLink>
             </PaginationItem>
             {currentPage > EACHSIDE_ITEMS + 2 && (
               <PaginationItem>
@@ -71,7 +77,7 @@ export default function PaginationBlock({ count }: PaginationBlockProps) {
         {pageNumbers.map((page) => (
           <PaginationItem key={page}>
             <PaginationLink
-              href={`?page=${page}`}
+              href={getSearchParamsPage(page)}
               isActive={currentPage === page}
             >
               {page}
@@ -85,7 +91,7 @@ export default function PaginationBlock({ count }: PaginationBlockProps) {
         )}
         {currentPage < pages && (
           <PaginationItem>
-            <PaginationNext href={`?page=${currentPage + 1}`} />
+            <PaginationNext href={getSearchParamsPage(currentPage + 1)} />
           </PaginationItem>
         )}
       </PaginationContent>

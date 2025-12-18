@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { parseLesson } from "@/lib/quizParser";
 import { stackServerApp } from "@stack/server";
 import { getCourseBySlug, getLessonBySlug } from "@/(learningMode)/utils/db";
-import { LessonsProps } from "@/lib/types";
+import { LessonProps } from "@/lib/types";
 
 export const GET = async (
   _request: NextRequest,
@@ -20,7 +20,7 @@ export const GET = async (
   }
 
   let courseId: string;
-  let lesson: LessonsProps;
+  let lesson: LessonProps;
   try {
     const result = await getCourseBySlug(courseSlug);
     courseId = result.id;

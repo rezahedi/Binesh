@@ -6,14 +6,28 @@ import {
   integer,
   uniqueIndex,
   uuid,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+export const STATUS_VALUES = [
+  "draft",
+  "reviewing",
+  "published",
+  "archived",
+] as const;
+
+export type StatusType = (typeof STATUS_VALUES)[number];
+
+export const statusEnum = pgEnum("statusEnumType", STATUS_VALUES);
+
+export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"] as const;
 
 export const categories = pgTable("categories", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
   description: text("description").notNull(),
   slug: text("slug").notNull().unique(),
-  image: text("image").notNull(),
+  image: text("image").notNull().default(""),
 });
 
 export const courses = pgTable("courses", {
@@ -23,9 +37,11 @@ export const courses = pgTable("courses", {
   slug: text("slug").notNull().unique(),
   image: text("image").notNull(),
   level: integer("level").notNull(),
-  lessonsCount: integer("lessons_count").notNull(),
+  lessonsCount: integer("lessons_count").notNull().default(0),
+  part: integer("part").notNull().default(0),
   estimatedDuration: integer("estimated_duration").notNull().default(0),
   exercises: integer("exercises").notNull().default(0),
+  status: statusEnum("status").notNull().default("draft"),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
   categoryID: uuid("category_id")
@@ -43,7 +59,9 @@ export const lessons = pgTable(
     slug: text("slug").notNull(),
     unit: integer("unit").notNull(),
     part: integer("part").notNull(),
+    exercises: integer("exercises").notNull().default(0),
     estimatedDuration: integer("estimated_duration").notNull(),
+    status: statusEnum("status").notNull().default("draft"),
     createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),

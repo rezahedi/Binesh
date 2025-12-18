@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import useCourses from "@/lib/swr/use-courses";
-import useCoursesCount from "@/lib/swr/use-courses-count";
 import Image from "next/image";
 import Link from "next/link";
 import { MoreHorizontal, PlusCircle } from "lucide-react";
 
-import { Badge } from "@admin/components/ui/badge";
-import { Button } from "@admin/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,14 +13,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@admin/components/ui/card";
+} from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@admin/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -31,89 +28,97 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@admin/components/ui/table";
+} from "@/components/ui/table";
 import PaginationBlock from "@admin/components/ui/PaginationBlock";
-import FilterDropdown from "@admin/components/ui/FilterDropdown";
-import dynamic from "next/dynamic";
-const AddEditModal = dynamic(
-  () => import("@admin/dashboard/courses/AddEditModal")
-);
+import { useRouter } from "next/navigation";
+import useFetch from "@/lib/swr/useFetch";
+import { CourseWithCategoryProps } from "@/lib/types";
+import FilterCategories from "@admin/components/ui/FilterCategories";
+import FilterStatus from "@admin/components/ui/FilterStatus";
+import { mutate } from "swr";
 
 export default function Courses() {
-  const { courses, isValidating } = useCourses();
-  const { data: count } = useCoursesCount();
-  const [showAddEditModal, setShowAddEditModal] = useState<boolean>(false);
+  const { data, isLoading } = useFetch<{
+    rows: CourseWithCategoryProps[];
+    count: number;
+  }>(`/api/admin/courses`);
+  const { rows: courses, count } = data || { rows: null, count: null };
+  const router = useRouter();
 
   const handleAddCourse = () => {
-    setShowAddEditModal(true);
+    router.push(`./courses/new`);
+  };
+
+  const handleEditClick = (courseId: string) => {
+    router.push(`./courses/${courseId}`);
+  };
+
+  const handleDeleteClick = async (courseId: string) => {
+    const res = await fetch(`/api/admin/courses/${courseId}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) return console.log("Couldn't remove the course!");
+    mutate(
+      (key) => typeof key === "string" && key.startsWith("/api/admin/courses"),
+      undefined,
+      { revalidate: true }
+    );
   };
 
   return (
     <div className="space-y-2">
       <div className="flex items-center">
         <div className="flex items-center gap-2">
-          <FilterDropdown
-            name="Filter by Category"
-            defaultOption="All categories"
-            options={["Mathematics", "Biology"]}
-          />
-          <FilterDropdown
-            name="Filter by Status"
-            defaultOption="All Status"
-            options={["Draft", "Reviewing", "Published", "Archived"]}
-          />
+          <FilterCategories />
+          <FilterStatus />
         </div>
         <div className="ml-auto">
           <Button size="sm" className="h-8 gap-1" onClick={handleAddCourse}>
             <PlusCircle className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Course
+              Add New Course
             </span>
           </Button>
-          {showAddEditModal && (
-            <AddEditModal setShowModal={setShowAddEditModal} />
-          )}
         </div>
       </div>
-      <Card>
+      <Card className="bg-background">
         <CardHeader>
           <CardTitle>Courses</CardTitle>
           <CardDescription>
             Manage courses and view their lessons.
-            <span className="float-right text-xs text-muted-foreground">
-              Showing <b>1-10</b> of <b>{count}</b> products
-            </span>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {isValidating ? (
-            <div>Loading...</div>
-          ) : (
-            <Table>
-              <TableHeader>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="hidden w-[100px] sm:table-cell">
+                  <span className="sr-only">Image</span>
+                </TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead className="hidden md:table-cell">Category</TableHead>
+                <TableHead className="hidden md:table-cell">Level</TableHead>
+                <TableHead className="hidden md:table-cell">Lessons</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="hidden md:table-cell">
+                  Updated at
+                </TableHead>
+                <TableHead>
+                  <span className="sr-only">Actions</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading && (
                 <TableRow>
-                  <TableHead className="hidden w-[100px] sm:table-cell">
-                    <span className="sr-only">Image</span>
-                  </TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Category
-                  </TableHead>
-                  <TableHead className="hidden md:table-cell">Level</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Lessons
-                  </TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden md:table-cell">
-                    Created at
-                  </TableHead>
-                  <TableHead>
-                    <span className="sr-only">Actions</span>
-                  </TableHead>
+                  <TableCell colSpan={8} className="text-center">
+                    Loading...
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {courses?.map((course) => (
+              )}
+              {!isLoading &&
+                courses &&
+                courses.map((course) => (
                   <TableRow key={course.id}>
                     <TableCell className="hidden sm:table-cell">
                       <Image
@@ -125,9 +130,14 @@ export default function Courses() {
                       />
                     </TableCell>
                     <TableCell className="font-medium">
-                      {course.name}
-                      <br />
-                      <sub className="text-black/60">/{course.slug}</sub>
+                      <Link
+                        href={`./courses/${course.id}/lessons`}
+                        className={"hover:underline hover:text-primary"}
+                      >
+                        {course.name}
+                        <br />
+                        <sub className="text-black/60">/{course.slug}</sub>
+                      </Link>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       {course.category && (
@@ -145,17 +155,19 @@ export default function Courses() {
                       {course.lessonsCount}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">
-                        Published
-                        {/* {
-                          ["Draft", "Reviewing", "Published", "Archived"][
-                            Math.floor(Math.random() * 3)
-                          ]
-                        } */}
+                      <Badge variant="outline" className="capitalize">
+                        {course.status}
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {course.createdAt.toLocaleString()}
+                      {new Date(course.updatedAt).toLocaleDateString("en-US", {
+                        year: "2-digit",
+                        month: "short",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      })}
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
@@ -171,20 +183,25 @@ export default function Courses() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleEditClick(course.id)}
+                          >
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleDeleteClick(course.id)}
+                          >
+                            Delete
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
-            </Table>
-          )}
+            </TableBody>
+          </Table>
         </CardContent>
-        <CardFooter>
-          <PaginationBlock count={count} />
-        </CardFooter>
+        <CardFooter>{count && <PaginationBlock count={count} />}</CardFooter>
       </Card>
     </div>
   );

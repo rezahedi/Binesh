@@ -1,16 +1,16 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import Modal from "@admin/components/ui/Modal";
-import { Label } from "@admin/components/ui/label";
-import { Input } from "@admin/components/ui/input";
-import { Textarea } from "@admin/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   SelectValue,
   SelectTrigger,
   SelectItem,
   SelectContent,
   Select,
-} from "@admin/components/ui/select";
-import { Button } from "@admin/components/ui/button";
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { ImageIcon } from "lucide-react";
 import { CourseProps, NewCourseProps } from "@/lib/types";
 import { mutate } from "swr";

@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/utils/cn";
-import { Button } from "@admin/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandList,
   CommandInput,
   CommandItem,
-} from "@admin/components/ui/command";
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@admin/components/ui/popover";
+} from "@/components/ui/popover";
 import useCategories from "@/lib/swr/use-categories";
 
 export default function SelectCategory({

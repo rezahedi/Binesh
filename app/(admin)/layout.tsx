@@ -1,27 +1,10 @@
-import type { Metadata } from "next";
+"use client";
+
 import "@/globals.css";
-import Image from "next/image";
 import Link from "next/link";
-import {
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  ShoppingCart,
-  Users2,
-} from "lucide-react";
-import { Input } from "@admin/components/ui/input";
-import { Button } from "@admin/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@admin/components/ui/dropdown-menu";
+import { PanelLeft, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -29,32 +12,41 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@admin/components/ui/breadcrumb";
-import { Sheet, SheetContent, SheetTrigger } from "@admin/components/ui/sheet";
+} from "@/components/ui/breadcrumb";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import Navbar from "@admin/components/layout/Navbar";
 import { Toaster } from "sonner";
+import Links from "./components/layout/Links";
+import { UserButton, useUser } from "@stackframe/stack";
+import { useRouter } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Dashboard | Binesh",
-};
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: unknown;
 }>) {
-  console.log(params);
+  const router = useRouter();
+  const user = useUser();
+  if (!user) {
+    router.push("/");
+    return null;
+  }
+
   // get data for breadcrumbs
+
+  // FIXME: Sheet (sidebar drawer) stay open after any link click, it must be closed.
 
   return (
     <>
-      {" "}
       <Toaster />
       <div
         id="sidebarNav"
-        className="group isOpen flex flex-row min-h-screen w-full bg-muted/40"
+        className="group isOpen flex flex-row min-h-screen w-full bg-muted/30"
       >
         <Navbar />
         <div className="flex-1 flex flex-col sm:gap-4 sm:py-4">
@@ -67,63 +59,9 @@ export default async function RootLayout({
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="md:max-w-xs">
-                <nav className="grid gap-6 text-lg font-medium">
-                  <Link
-                    href="#"
-                    className="flex h-10 shrink-0 items-center px-2.5 gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-                  >
-                    <Package2 className="size-5" />
-                    <span className="">Binesh</span>
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Home className="size-5" />
-                    Dashboard
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <ShoppingCart className="size-5" />
-                    Courses
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Package className="size-5" />
-                    Categories
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Package className="size-5" />
-                    Learning Paths
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <LineChart className="size-5" />
-                    Analytics
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Users2 className="size-5" />
-                    Users
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <LineChart className="size-5" />
-                    Settings
-                  </Link>
+                <SheetTitle className="sr-only">Sidebar Menu</SheetTitle>
+                <nav className="text-lg font-medium h-full flex flex-col gap-4">
+                  <Links />
                 </nav>
               </SheetContent>
             </Sheet>
@@ -160,31 +98,7 @@ export default async function RootLayout({
                 className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
               />
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="overflow-hidden rounded-full"
-                >
-                  <Image
-                    src="/placeholder-user.jpg"
-                    width={36}
-                    height={36}
-                    alt="Avatar"
-                    className="overflow-hidden"
-                  />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {user && <UserButton />}
           </header>
           <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
             {children}
