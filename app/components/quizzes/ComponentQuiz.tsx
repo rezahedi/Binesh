@@ -4,7 +4,7 @@ import ReactMarkdown from "@/lib/markdown";
 import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DynamicRenderer } from "@/components/Interactive/Renderer";
+import { ComponentRenderer } from "@/components/Interactive/ComponentRenderer";
 
 const ComponentQuiz = ({
   quiz,
@@ -36,7 +36,7 @@ const ComponentQuiz = ({
       <div className="flex-10">
         <div className="my-4 p-6 px-8 rounded-xl bg-card">
           <ReactMarkdown>{quiz.content}</ReactMarkdown>
-          <DynamicRenderer
+          <ComponentRenderer
             component={quizBlock.componentName}
             props={{
               onAnswer: handleChange,

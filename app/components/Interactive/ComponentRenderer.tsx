@@ -8,7 +8,10 @@ type ComponentRendererProps = {
   props?: Record<string, unknown>;
 };
 
-export function DynamicRenderer({ component, props }: ComponentRendererProps) {
+export function ComponentRenderer({
+  component,
+  props,
+}: ComponentRendererProps) {
   const Component = componentRegistry[component as RegistryComponentName];
 
   if (!Component) return null;
