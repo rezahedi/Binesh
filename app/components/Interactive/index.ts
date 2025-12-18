@@ -1,7 +1,9 @@
-import Test from "./Test";
+import InteractiveQuizComponent from "./InteractiveQuizComponent";
+import InteractiveComponent from "./InteractiveComponent";
 
 export const componentRegistry = {
-  Test,
+  InteractiveQuizComponent,
+  InteractiveComponent,
 } as const;
 
 export type RegistryComponentName = keyof typeof componentRegistry;

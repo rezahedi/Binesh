@@ -27,7 +27,9 @@ export const parseSections = (section: string): SectionType[] => {
         id: generateRandomString() + String(index),
         title: title.trim(),
         content: content.trim(),
-        quiz: parseQuizBlock(quizSection.trim()),
+        quiz:
+          parseQuizBlock(quizSection.trim()) ||
+          parseQuizComponent(quizSection.trim()),
       };
     });
 };
@@ -45,9 +47,39 @@ export type QuizType = {
   quizBlock: QuizBlock;
 };
 
-export type QuizKind = "radio" | "checkList" | "fill";
-export type QuizBlock = RadioQuizType | CheckListQuizType | FillQuizType;
-const QUIZ_TYPES: QuizKind[] = ["radio", "checkList", "fill"];
+export const QUIZ_TYPES = ["radio", "checkList", "fill", "component"] as const;
+export type QuizKind = (typeof QUIZ_TYPES)[number];
+
+export type QuizBlock =
+  | RadioQuizType
+  | CheckListQuizType
+  | FillQuizType
+  | ComponentQuizType;
+
+export type ComponentQuizType = {
+  componentName: string;
+  answer: string;
+  afterContent: string;
+};
+
+const parseQuizComponent = (str: string): QuizType | null => {
+  const regex =
+    /([\s\S]*?)<component name="(\w+)" answer="(\w+)" \/>([\s\S]*)/m;
+  const match = str.match(regex);
+  if (!match) return null;
+
+  let [, content, componentName, answer, afterContent] = match;
+  content = content.trim();
+  componentName = componentName.trim();
+  answer = answer.trim();
+  afterContent = afterContent.trim();
+
+  return {
+    content,
+    type: "component",
+    quizBlock: { componentName, answer, afterContent },
+  };
+};
 
 const parseQuizBlock = (str: string): QuizType | null => {
   const regex = /([\s\S]*?)```quiz:(\w+)\s*([\s\S]*?)```/m;
@@ -128,4 +160,5 @@ const QUIZ_PARSERS: Record<QuizKind, (body: string) => QuizBlock | null> = {
   radio: parseRadioQuiz,
   checkList: parseCheckListQuiz,
   fill: parseFillQuiz,
+  component: () => null,
 };

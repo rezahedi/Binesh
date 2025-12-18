@@ -4,8 +4,8 @@ import Paragraph from "./Paragraph";
 import Markdown from "react-markdown";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import "katex/dist/katex.min.css";
 import rehypeRaw from "rehype-raw";
+// TODO: Sanitize if you are going to render users content (markdown) with rehype-sanitize
 
 const markdownComponents = {
   component: ComponentMapper,
