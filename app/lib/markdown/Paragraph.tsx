@@ -8,14 +8,13 @@ const Paragraph = ({
 }: ClassAttributes<HTMLParagraphElement> &
   BaseHTMLAttributes<HTMLParagraphElement> &
   ExtraProps) => {
-  const isOnlyImage =
-    node &&
-    node.children &&
-    node.children.length === 1 &&
+  const isOnlyImageOrComponent =
+    node?.children.length === 1 &&
     "tagName" in node.children[0] &&
-    node.children[0].tagName === "img";
+    (node.children[0].tagName === "img" ||
+      node.children[0].tagName === "component");
 
-  if (isOnlyImage) {
+  if (isOnlyImageOrComponent) {
     return <>{children}</>;
   }
 
