@@ -15,8 +15,12 @@ interface WithAdminHandler {
 
 export const withAdmin =
   (handler: WithAdminHandler) =>
-  async (req: Request, { params }: { params: Record<string, string> }) => {
+  async (
+    req: Request,
+    { params: initialParams }: { params: Promise<Record<string, string>> }
+  ) => {
     // TODO: Check if user is admin
+    const params = (await initialParams) || {};
 
     const searchParams = getSearchParams(req.url);
     return handler({ req, params, searchParams });
