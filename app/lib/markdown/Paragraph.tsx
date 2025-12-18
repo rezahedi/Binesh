@@ -9,7 +9,7 @@ const Paragraph = ({
   BaseHTMLAttributes<HTMLParagraphElement> &
   ExtraProps) => {
   const isOnlyImageOrComponent =
-    node?.children.length === 1 &&
+    node?.children?.length === 1 &&
     "tagName" in node.children[0] &&
     (node.children[0].tagName === "img" ||
       node.children[0].tagName === "component");
