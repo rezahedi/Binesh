@@ -1,4 +1,4 @@
-import { ComponentRenderer } from "@/components/Interactive/Renderer";
+import { ComponentRenderer } from "@/components/Interactive/ComponentRenderer";
 import type { Element } from "hast";
 
 export default function ComponentMapper({ node }: { node: Element }) {
