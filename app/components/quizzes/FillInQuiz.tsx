@@ -2,7 +2,7 @@ import { FillQuizType } from "@/lib/quizParser";
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
-import { IQuizProp } from "./QuizRenderer";
+import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 

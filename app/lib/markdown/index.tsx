@@ -1,11 +1,14 @@
+import ComponentMapper from "./ComponentMapper";
 import Img from "./Img";
 import Paragraph from "./Paragraph";
 import Markdown from "react-markdown";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import "katex/dist/katex.min.css";
+import rehypeRaw from "rehype-raw";
+// TODO: Sanitize if you are going to render users content (markdown) with rehype-sanitize
 
 const markdownComponents = {
+  component: ComponentMapper,
   img: Img,
   p: Paragraph,
 };
@@ -17,7 +20,7 @@ const ReactMarkdown = ({ children }: { children?: string | null }) => {
     <div className="content">
       <Markdown
         remarkPlugins={[remarkMath]}
-        rehypePlugins={[rehypeKatex]}
+        rehypePlugins={[rehypeKatex, rehypeRaw]}
         components={markdownComponents}
       >
         {children}

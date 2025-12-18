@@ -1,32 +1,42 @@
-import { RadioQuizType } from "@/lib/quizParser";
+import { CheckListQuizType } from "@/lib/quizParser";
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
-import { IQuizProp } from "./QuizRenderer";
+import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const RadioQuiz = ({
+const CheckListQuiz = ({
   quiz,
   isActive,
   quizResult: isCorrect,
   onCheck: setIsCorrect,
 }: IQuizProp) => {
-  const [userAnswer, setUserAnswer] = useState<number | null>(null);
-  const quizBlock = quiz.quizBlock as RadioQuizType;
-  // TODO: Keep track of options selected by user as answer but it's wrong and disable them.
+  const [userAnswer, setUserAnswer] = useState<number[]>([]);
+  const quizBlock = quiz.quizBlock as CheckListQuizType;
+
+  // TODO: Let the user know if the answer is partially correct
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isActive) return;
 
-    setIsCorrect(null);
-    setUserAnswer(Number(e.target.value));
+    const index = Number(e.target.value);
+    if (isCorrect === false) {
+      setIsCorrect(null);
+      return setUserAnswer([index]);
+    }
+
+    if (e.target.checked) setUserAnswer([...userAnswer, index]);
+    else setUserAnswer(userAnswer.filter((val) => val !== index));
   };
 
   const handleCheckAnswer = () => {
-    if (userAnswer === null) return;
+    if (userAnswer.length === 0) return;
 
-    setIsCorrect(userAnswer === quizBlock.answer);
+    if (userAnswer.length !== quizBlock.answer.length)
+      return setIsCorrect(false);
+
+    setIsCorrect(userAnswer.every((a) => quizBlock.answer.includes(a)));
   };
 
   return (
@@ -59,10 +69,10 @@ const RadioQuiz = ({
               >
                 <input
                   id={`${quiz.id}-${index}`}
-                  type="radio"
+                  type="checkbox"
                   name={quiz.id}
                   value={index}
-                  checked={userAnswer === index}
+                  checked={userAnswer.includes(index)}
                   onChange={handleChange}
                   readOnly={!isActive}
                   className="hidden"
@@ -86,7 +96,7 @@ const RadioQuiz = ({
           </div>
           <Button
             onClick={handleCheckAnswer}
-            disabled={userAnswer === null}
+            disabled={userAnswer.length === 0}
             className="font-semibold"
           >
             Check It
@@ -97,4 +107,4 @@ const RadioQuiz = ({
   );
 };
 
-export default RadioQuiz;
+export default CheckListQuiz;
