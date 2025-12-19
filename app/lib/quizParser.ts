@@ -17,6 +17,8 @@ export const parseLesson = (
 };
 
 export const parseSections = (section: string): SectionType[] => {
+  if (!section) return [];
+
   return section
     .split("\n# ")
     .filter((str) => str.trim())
