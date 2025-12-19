@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [new URL("https://ds055uzetaobb.cloudfront.net/**")],
+    remotePatterns: [new URL("https://res.cloudinary.com/dqw16fnae/**")],
   },
 };
 
