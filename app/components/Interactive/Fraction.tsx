@@ -10,7 +10,7 @@ import SquareFraction from "@/components/Interactive/Blocks/SquareFraction";
  * Example use in markdown: <component name="component name" prop1="xyz" prop2="123" />
  * Then this component could have props and use above values.
  */
-const InteractiveComponent = () => {
+const Fraction = () => {
   const [selected, setSelected] = useState<number>(0);
 
   return (
@@ -30,4 +30,4 @@ const InteractiveComponent = () => {
   );
 };
 
-export default InteractiveComponent;
+export default Fraction;
