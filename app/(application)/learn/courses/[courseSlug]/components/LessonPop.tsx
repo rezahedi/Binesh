@@ -35,8 +35,15 @@ const LessonPop = () => {
         {/* <h3 className="text-xl font-bold">{lesson.name}</h3> */}
         <p>{lesson.description}</p>
         <p className="text-muted-foreground">
-          Unit {lesson.unit} <span className="mx-2">·</span> Time{" "}
-          {lesson.estimatedDuration}m
+          Parts {lesson.part}
+          <span className="mx-2">·</span>
+          {lesson.exercises > 0 && (
+            <>
+              Exercises {lesson.exercises}
+              <span className="mx-2">·</span>
+            </>
+          )}
+          Time {lesson.estimatedDuration}m
         </p>
         {lesson.progress ? (
           <Button
