@@ -63,6 +63,8 @@ export type ComponentQuizType = {
 };
 
 const parseQuizComponent = (str: string): QuizType | null => {
+  if (!str) return null;
+
   const regex =
     /([\s\S]*?)<component name="(\w+)" answer="(\w+)" \/>([\s\S]*)/m;
   const match = str.match(regex);
@@ -82,6 +84,8 @@ const parseQuizComponent = (str: string): QuizType | null => {
 };
 
 const parseQuizBlock = (str: string): QuizType | null => {
+  if (!str) return null;
+
   const regex = /([\s\S]*?)```quiz:(\w+)\s*([\s\S]*?)```/m;
   const match = str.match(regex);
   if (!match) return null;
