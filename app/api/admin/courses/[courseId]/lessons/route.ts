@@ -23,11 +23,11 @@ export const GET = withAdmin(
     const {
       search,
       status,
-      sort = "unit",
+      sort = "sequence",
     } = searchParams as {
       search?: string;
       status?: StatusType;
-      sort?: "unit" | "part" | "name" | "createdAt" | "updatedAt";
+      sort?: "sequence" | "unit" | "part" | "name" | "createdAt" | "updatedAt";
     };
 
     try {
@@ -80,7 +80,7 @@ export const POST = withAdmin(async ({ req, params }) => {
   const body: NewLessonProps = await req.json();
 
   try {
-    const { steps } = parseLesson(body.content);
+    const { steps } = parseLesson(body.content || "");
     const part = steps.length;
     const exercises = steps.filter((s) => s.quiz !== null).length;
     const estimatedDuration = part * 2 + exercises * 4;
