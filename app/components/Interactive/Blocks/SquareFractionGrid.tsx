@@ -56,7 +56,7 @@ const SquareFractionGrid = ({
         {Array.from({ length: rows }, (_, y) => (
           <g key={y}>
             {Array.from({ length: columns }, (_, x) => (
-              <>
+              <g key={`c${columns * y + x}`}>
                 {pairPoints.points[columns * y + x][0] !== 0 && (
                   <rect
                     key={columns * y + x}
@@ -73,7 +73,7 @@ const SquareFractionGrid = ({
                     onClick={() => handleSelect(columns * y + x)}
                   />
                 )}
-              </>
+              </g>
             ))}
           </g>
         ))}
