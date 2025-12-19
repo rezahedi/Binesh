@@ -1,0 +1,1 @@
+ALTER TABLE "lessons" ADD COLUMN "sequence" integer DEFAULT 0 NOT NULL;
