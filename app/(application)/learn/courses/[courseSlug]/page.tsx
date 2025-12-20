@@ -62,7 +62,7 @@ export default function CoursePage() {
         </div>
       </div>
 
-      <div className="flex-6 flex flex-col mx-auto">
+      <div className="flex-6 flex flex-col mx-auto w-full">
         {lessons.length === 0 && (
           <div className="self-center text-center my-10">
             <Image
