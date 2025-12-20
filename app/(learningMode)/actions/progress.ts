@@ -1,9 +1,10 @@
 "use server";
 
 import db from "@/db";
-import { lessonProgress, courseProgress } from "@/db/schema";
+import { lessonProgress, courseProgress, lessons } from "@/db/schema";
+import { LessonProps } from "@/lib/types";
 import { stackServerApp } from "@stack/server";
-import { and, count, eq } from "drizzle-orm";
+import { and, asc, count, eq, getTableColumns, isNull } from "drizzle-orm";
 import { getCourseBySlug, getLessonBySlug } from "../utils/db";
 
 export async function updateProgress(courseSlug: string, lessonSlug: string) {
@@ -45,6 +46,26 @@ export async function updateProgress(courseSlug: string, lessonSlug: string) {
     (100 / lessonsCount) * lessonCompleted
   );
 
+  // If there is unfinished lessons, store next lessons in course progress
+  let nextLessons: LessonProps | null = null;
+  if (courseProgressPercentage < 100) {
+    // Get first lesson in order that is not finished
+    const rows = await db
+      .select(getTableColumns(lessons))
+      .from(lessons)
+      .orderBy(asc(lessons.sequence))
+      .leftJoin(
+        lessonProgress,
+        and(
+          eq(lessons.id, lessonProgress.lessonID),
+          eq(lessonProgress.userID, user.id)
+        )
+      )
+      .where(and(eq(lessons.courseID, courseId), isNull(lessonProgress.id)))
+      .limit(1);
+    if (rows.length === 1) nextLessons = rows[0];
+  }
+
   // update courseProgress
   await db
     .insert(courseProgress)
@@ -52,13 +73,15 @@ export async function updateProgress(courseSlug: string, lessonSlug: string) {
       userID: user.id,
       courseID: courseId,
       percentage: courseProgressPercentage,
-      resumeURL: "",
+      resumeURL: nextLessons ? nextLessons.slug : "",
+      nextLessonID: nextLessons ? nextLessons.id : null,
     })
     .onConflictDoUpdate({
       target: [courseProgress.userID, courseProgress.courseID],
       set: {
         percentage: courseProgressPercentage,
-        resumeURL: "",
+        resumeURL: nextLessons ? nextLessons.slug : "",
+        nextLessonID: nextLessons ? nextLessons.id : null,
       },
     });
 }

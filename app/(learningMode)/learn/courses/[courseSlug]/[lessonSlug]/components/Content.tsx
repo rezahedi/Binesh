@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { updateProgress } from "@/(learningMode)/actions/progress";
 import { lessonCompleted } from "@/(learningMode)/actions/trophy";
 import { useUser } from "@stackframe/stack";
+import { mutate } from "swr";
 
 const Content = () => {
   const { finished } = useProgress();
@@ -19,6 +20,7 @@ const Content = () => {
 
     // TODO: updateProgress() Async action called without await, causing fire-and-forget behavior.
     // How to fix: await, loading state, catch error and try again
+    mutate(`/api/courses/${courseSlug}`);
     updateProgress(String(courseSlug), String(lessonSlug));
     lessonCompleted(user.id);
     setShowFinish(true);
