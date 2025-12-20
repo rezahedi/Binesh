@@ -1,0 +1,1 @@
+ALTER TABLE "course_progress" ADD COLUMN "next_lesson_id" uuid;

@@ -88,6 +88,7 @@ export const courseProgress = pgTable(
       .references(() => courses.id, { onDelete: "cascade" }),
     percentage: integer("percentage").notNull(),
     resumeURL: text("resume_url").notNull(),
+    nextLessonID: uuid("next_lesson_id"),
     createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),
