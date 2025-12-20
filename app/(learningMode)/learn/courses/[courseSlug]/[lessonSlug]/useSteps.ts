@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 const useSteps = () => {
   const [steps, setSteps] = useState<SectionType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<number | null>(null);
   const { courseSlug, lessonSlug } = useParams();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const useSteps = () => {
       // TODO: Fetch all the parts
       const response = await fetch(`/api/courses/${courseSlug}/${lessonSlug}`);
       if (!response.ok) {
-        setError(true);
+        setError(response.status);
         setLoading(false);
         return;
       }
