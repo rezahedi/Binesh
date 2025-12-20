@@ -9,17 +9,17 @@ import React, {
   useState,
 } from "react";
 
+type SelectionProps = LessonWithProgressProps & { locked: boolean };
+
 type ContextType = {
-  selection: LessonWithProgressProps | null;
-  setSelection: Dispatch<SetStateAction<LessonWithProgressProps | null>>;
+  selection: SelectionProps | null;
+  setSelection: Dispatch<SetStateAction<SelectionProps | null>>;
 };
 
 const SelectionSyncContext = createContext<ContextType | undefined>(undefined);
 
 const SelectionSyncProvider = ({ children }: { children: React.ReactNode }) => {
-  const [selection, setSelection] = useState<LessonWithProgressProps | null>(
-    null
-  );
+  const [selection, setSelection] = useState<SelectionProps | null>(null);
 
   return (
     <SelectionSyncContext.Provider value={{ selection, setSelection }}>

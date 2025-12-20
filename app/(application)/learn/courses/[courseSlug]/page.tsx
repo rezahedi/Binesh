@@ -21,6 +21,8 @@ export default function CoursePage() {
 
   const { lessons, ...course } = courseDetail;
 
+  const nextLessonID = course.progress?.nextLessonID || lessons[0].id;
+
   return (
     <div className="flex gap-4 md:gap-10 flex-col md:flex-row">
       <div className="flex-5">
@@ -82,6 +84,7 @@ export default function CoursePage() {
                 key={lesson.id}
                 {...{ lesson, index }}
                 isCompleted={lesson.progress ? true : false}
+                locked={lesson.id !== nextLessonID}
               />
             ))}
             <LessonPop />

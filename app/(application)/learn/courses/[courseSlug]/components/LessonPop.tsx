@@ -58,6 +58,7 @@ const LessonPop = () => {
             onClick={handleStartClick}
             variant={"accent"}
             className="font-semibold w-10/12"
+            disabled={lesson.locked}
           >
             Start Lesson
           </Button>
