@@ -26,10 +26,12 @@ const LessonPop = () => {
 
   const handleReviewClick = () => {
     // TODO: Navigate to lesson learning mode but show 100% progressbar, all steps (lesson's parts & quizzes with answers) in whole.
+    router.push(`${pathname}/${lesson.slug}`);
   };
 
   const handleRetakeClick = () => {
     // TODO: Open lesson learning mode for user to retake the lesson again
+    router.push(`${pathname}/${lesson.slug}`);
   };
 
   return (
