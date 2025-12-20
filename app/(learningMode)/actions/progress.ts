@@ -85,26 +85,3 @@ export async function updateProgress(courseSlug: string, lessonSlug: string) {
       },
     });
 }
-
-export async function resetLessonProgress(
-  courseSlug: string,
-  lessonSlug: string
-) {
-  const user = await stackServerApp.getUser();
-  if (!user) {
-    throw new Error("Unauthorized");
-  }
-
-  const { id: courseId } = await getCourseBySlug(courseSlug);
-  const { id: lessonId } = await getLessonBySlug(courseId, lessonSlug);
-
-  await db
-    .delete(lessonProgress)
-    .where(
-      and(
-        eq(lessonProgress.userID, user.id),
-        eq(lessonProgress.courseID, courseId),
-        eq(lessonProgress.lessonID, lessonId)
-      )
-    );
-}
