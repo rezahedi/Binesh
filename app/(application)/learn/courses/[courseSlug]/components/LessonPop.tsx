@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useProgress } from "@/contexts/ProgressContext";
 import NeedCellsPop from "./NeedCellsPop";
+import { RotateCcwIcon } from "lucide-react";
 
 const LessonPop = () => {
   const { selection: lesson } = useSelectionSync();
@@ -23,6 +24,16 @@ const LessonPop = () => {
     router.push(`${pathname}/${lesson.slug}`);
   };
 
+  const handleReviewClick = () => {
+    // TODO: Navigate to lesson learning mode but show 100% progressbar, all steps (lesson's parts & quizzes with answers) in whole.
+    router.push(`${pathname}/${lesson.slug}`);
+  };
+
+  const handleRetakeClick = () => {
+    // TODO: Open lesson learning mode for user to retake the lesson again
+    router.push(`${pathname}/${lesson.slug}`);
+  };
+
   return (
     <div
       ref={popRef}
@@ -35,22 +46,40 @@ const LessonPop = () => {
         {/* <h3 className="text-xl font-bold">{lesson.name}</h3> */}
         <p>{lesson.description}</p>
         <p className="text-muted-foreground">
-          Unit {lesson.unit} <span className="mx-2">·</span> Time{" "}
-          {lesson.estimatedDuration}m
+          Parts {lesson.part}
+          <span className="mx-2">·</span>
+          {lesson.exercises > 0 && (
+            <>
+              Exercises {lesson.exercises}
+              <span className="mx-2">·</span>
+            </>
+          )}
+          Time {lesson.estimatedDuration}m
         </p>
         {lesson.progress ? (
-          <Button
-            onClick={handleStartClick}
-            variant={"outline"}
-            className="font-semibold w-10/12 bg-muted border-transparent shadow-foreground/40"
-          >
-            Review
-          </Button>
+          <div className="flex gap-4 w-10/12">
+            <Button
+              onClick={handleReviewClick}
+              variant={"outline"}
+              className="grow font-semibold bg-muted border-transparent shadow-foreground/40"
+            >
+              Review
+            </Button>
+            <Button
+              onClick={handleRetakeClick}
+              variant={"outline"}
+              size={"icon"}
+              className="bg-muted border-transparent shadow-foreground/40 size-12"
+            >
+              <RotateCcwIcon />
+            </Button>
+          </div>
         ) : (
           <Button
             onClick={handleStartClick}
             variant={"accent"}
             className="font-semibold w-10/12"
+            disabled={lesson.locked}
           >
             Start Lesson
           </Button>

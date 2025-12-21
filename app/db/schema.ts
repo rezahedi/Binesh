@@ -33,10 +33,10 @@ export const categories = pgTable("categories", {
 export const courses = pgTable("courses", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
-  description: text("description").notNull(),
+  description: text("description").notNull().default(""),
   slug: text("slug").notNull().unique(),
-  image: text("image").notNull(),
-  level: integer("level").notNull(),
+  image: text("image").notNull().default(""),
+  level: integer("level").notNull().default(0),
   lessonsCount: integer("lessons_count").notNull().default(0),
   part: integer("part").notNull().default(0),
   estimatedDuration: integer("estimated_duration").notNull().default(0),
@@ -54,13 +54,14 @@ export const lessons = pgTable(
   {
     id: uuid("id").defaultRandom().primaryKey(),
     name: text("name").notNull(),
-    description: text("description").notNull(),
-    content: text("content").notNull(),
+    description: text("description").notNull().default(""),
+    content: text("content").notNull().default(""),
     slug: text("slug").notNull(),
-    unit: integer("unit").notNull(),
-    part: integer("part").notNull(),
+    sequence: integer("sequence").notNull().default(0),
+    unit: integer("unit").notNull().default(1),
+    part: integer("part").notNull().default(0),
     exercises: integer("exercises").notNull().default(0),
-    estimatedDuration: integer("estimated_duration").notNull(),
+    estimatedDuration: integer("estimated_duration").notNull().default(0),
     status: statusEnum("status").notNull().default("draft"),
     createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
@@ -87,6 +88,7 @@ export const courseProgress = pgTable(
       .references(() => courses.id, { onDelete: "cascade" }),
     percentage: integer("percentage").notNull(),
     resumeURL: text("resume_url").notNull(),
+    nextLessonID: uuid("next_lesson_id"),
     createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),

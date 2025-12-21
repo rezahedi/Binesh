@@ -4,6 +4,9 @@ import { useProgress } from "@/contexts/ProgressContext";
 import { useEffect, useRef } from "react";
 import Header from "./Header";
 import LoadingContent from "./LoadingContent";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { LESSON_LOCK_STATUS_CODE } from "@/constants/learningMode";
 
 const StartLesson = () => {
   const { steps, loading, error } = useSteps();
@@ -34,7 +37,7 @@ const StartLesson = () => {
       <Header />
       <div ref={mainElement} className="flex-1 overflow-y-scroll">
         <div className="h-full max-w-2xl mx-auto px-4">
-          {error && <div className="font-semibold text-xl">{error}</div>}
+          <ShowError error={error} />
           {steps.length > 0 &&
             steps
               .slice(0, currentStep)
@@ -55,3 +58,38 @@ const StartLesson = () => {
 };
 
 export default StartLesson;
+
+const ShowError = ({ error }: { error: number | null }) => {
+  const router = useRouter();
+
+  if (!error) return null;
+
+  const handleRetry = () => {
+    // TODO: Should fetch steps again instead of reloading the whole page!
+    window.location.reload();
+  };
+
+  const handleGoBack = () => {
+    router.push("./");
+  };
+
+  return (
+    <div className="h-full flex flex-col gap-6 justify-center items-center text-center text-xl text-balance">
+      {error === LESSON_LOCK_STATUS_CODE ? (
+        <>
+          <p>This lesson is locked, Complete all previous lessons first.</p>
+          <Button variant={"primary"} onClick={handleGoBack}>
+            Go Back
+          </Button>
+        </>
+      ) : (
+        <>
+          <p>Something went wrong, Please try again.</p>
+          <Button variant={"primary"} onClick={handleRetry}>
+            Retry
+          </Button>
+        </>
+      )}
+    </div>
+  );
+};

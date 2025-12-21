@@ -75,7 +75,7 @@ export async function getStreak(
 ): Promise<StreakResponse | null> {
   try {
     return await trophy.users.streak(userId, {
-      historyPeriods: 14,
+      historyPeriods: 7,
     });
   } catch (error) {
     console.error("Get streak error:", error);

@@ -50,7 +50,7 @@ export const GET = async (
       lessons,
       and(eq(lessons.courseID, courses.id), eq(lessons.status, "published"))
     )
-    .orderBy(asc(lessons.unit), asc(lessons.part))
+    .orderBy(asc(lessons.sequence), asc(lessons.unit))
     .leftJoin(
       lessonProgress,
       and(

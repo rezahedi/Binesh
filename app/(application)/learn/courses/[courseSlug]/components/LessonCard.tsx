@@ -11,16 +11,18 @@ export default function LessonCard({
   lesson,
   index,
   isCompleted = false,
+  locked = false,
 }: {
   lesson: LessonWithProgressProps;
   index: number;
   isCompleted?: boolean;
+  locked?: boolean;
 }) {
   const { selection, setSelection } = useSelectionSync();
   const isSelected = selection && selection.id === lesson.id;
 
   const handleSelection = () => {
-    setSelection(lesson);
+    setSelection({ ...lesson, locked });
   };
 
   return (

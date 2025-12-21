@@ -1,0 +1,1 @@
+export const LESSON_LOCK_STATUS_CODE = 403;
