@@ -3,7 +3,7 @@ import { parseLesson } from "@/lib/quizParser";
 import { stackServerApp } from "@stack/server";
 import { getCourseBySlug, getLessonBySlug } from "@/(learningMode)/utils/db";
 import { LessonProps } from "@/lib/types";
-import { LESSON_LOCK_STATUS_CODE } from "@/constants/learningMode";
+// import { LESSON_LOCK_STATUS_CODE } from "@/constants/learningMode";
 
 export const GET = async (
   _request: NextRequest,
