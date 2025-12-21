@@ -29,7 +29,7 @@ const Content = () => {
   if (showFinish) return <Finish />;
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-dvh">
       <StartLesson />
       {finished && (
         <div className="sticky bottom-0 bg-background py-3">

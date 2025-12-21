@@ -20,7 +20,7 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className={"h-screen overflow-hidden"}>
+    <div className={"h-dvh overflow-hidden"}>
       <StackProvider app={stackClientApp}>
         <StackTheme>{children}</StackTheme>
       </StackProvider>

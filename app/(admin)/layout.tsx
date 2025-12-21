@@ -46,7 +46,7 @@ export default function RootLayout({
       <Toaster />
       <div
         id="sidebarNav"
-        className="group isOpen flex flex-row min-h-screen w-full bg-muted/30"
+        className="group isOpen flex flex-row min-h-dvh w-full bg-muted/30"
       >
         <Navbar />
         <div className="flex-1 flex flex-col sm:gap-4 sm:py-4">
