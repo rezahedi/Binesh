@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/utils/cn";
 import { useProgress } from "@/contexts/ProgressContext";
+import CurrentWeekStreak from "./CurrentWeekStreak";
 
 const MAIN_BUTTON_CLASSES =
   "flex items-center gap-0.5 p-2 px-3 rounded-full hover:bg-muted cursor-pointer font-semibold text-lg";
-const WEEK_DAYS = ["S", "M", "T", "W", "T", "F", "S"];
 
 export default function StreakButton({ className }: { className?: string }) {
   const { streak, points, isLoading } = useProgress();
@@ -26,10 +26,17 @@ export default function StreakButton({ className }: { className?: string }) {
 
   if (streak === null || points === null) return null;
 
+  const today = new Date().toLocaleDateString("en-CA");
+  const isTodayStreakCompleted = streak.streakHistory?.find(
+    (h) => h.periodStart === today && h.length > 0
+  );
+
   const message =
     streak.length === 0
       ? "Finish a lesson to start a streak"
-      : "Finish a lesson to extend your streak!";
+      : !isTodayStreakCompleted
+        ? "Finish a lesson to extend your streak!"
+        : "Great job! Keep going!";
 
   return (
     <Popover>
@@ -38,7 +45,13 @@ export default function StreakButton({ className }: { className?: string }) {
           {streak && (
             <>
               {streak.length}
-              <ZapIcon className="size-5 fill-destructive/90 stroke-destructive/90" />
+              <ZapIcon
+                className={cn(
+                  "size-5 fill-muted/90 stroke-muted/90",
+                  isTodayStreakCompleted &&
+                    "fill-destructive/90 stroke-destructive/90"
+                )}
+              />
             </>
           )}
         </button>
@@ -48,7 +61,13 @@ export default function StreakButton({ className }: { className?: string }) {
           <div className="flex flex-col">
             <b className="font-bold text-5xl flex items-center gap-0.5">
               {streak.length}{" "}
-              <ZapIcon className="size-10 fill-muted stroke-muted" />
+              <ZapIcon
+                className={cn(
+                  "size-10 fill-muted stroke-muted",
+                  isTodayStreakCompleted &&
+                    "fill-destructive stroke-destructive"
+                )}
+              />
             </b>
             <b className="font-semibold text-lg">days streak</b>
             {streak.started && (
@@ -70,26 +89,7 @@ export default function StreakButton({ className }: { className?: string }) {
             <b className="font-semibold text-lg">{points.name}</b>
           </div>
         </div>
-        <div className="flex justify-around gap-1.5 text-center text-sm text-border">
-          {WEEK_DAYS.map((day, i) => (
-            <div
-              key={i}
-              className={cn(
-                i < 2 &&
-                  "[&_div]:border-destructive [&_svg]:fill-destructive [&_svg]:stroke-destructive text-foreground"
-              )}
-            >
-              <div
-                className={
-                  "size-9 flex justify-center items-center border border-muted rounded-full mb-1"
-                }
-              >
-                <ZapIcon className="size-5 fill-muted/90 stroke-muted/90" />
-              </div>
-              {day}
-            </div>
-          ))}
-        </div>
+        <CurrentWeekStreak history={streak.streakHistory} />
         <p>{message}</p>
       </PopoverContent>
     </Popover>
