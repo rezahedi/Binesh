@@ -2,9 +2,13 @@
 
 import { GemIcon } from "lucide-react";
 import { useProgress } from "@/contexts/ProgressContext";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export default function PointsButton() {
   const { points, isLoading } = useProgress();
+  const { isMobile } = useMediaQuery();
+
+  if (isMobile) return null;
 
   if (isLoading)
     return (
