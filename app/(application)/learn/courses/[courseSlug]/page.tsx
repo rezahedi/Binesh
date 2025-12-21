@@ -21,7 +21,7 @@ export default function CoursePage() {
 
   const { lessons, ...course } = courseDetail;
 
-  const nextLessonID = course.progress?.nextLessonID || lessons[0].id;
+  const nextLessonID = course.progress?.nextLessonID || lessons[0].id || null;
 
   return (
     <div className="flex gap-4 md:gap-10 flex-col md:flex-row">

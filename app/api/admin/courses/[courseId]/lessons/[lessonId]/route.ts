@@ -33,7 +33,7 @@ export const PATCH = withAdmin(
     const body: NewLessonProps = await req.json();
 
     try {
-      const { steps } = parseLesson(body.content);
+      const { steps } = parseLesson(body.content || "");
       const part = steps.length;
       const exercises = steps.filter((s) => s.quiz !== null).length;
       const estimatedDuration = part * 2 + exercises * 4;
