@@ -7,7 +7,7 @@ const CoursePageLoadingSkeleton = () => {
     <div className="flex gap-4 md:gap-10 flex-col md:flex-row">
       <div className="flex-5 p-8 space-y-4">
         <Skeleton className="size-28 mb-8 float-right md:float-none" />
-        <Skeleton className="h-10 w-8/12" />
+        <Skeleton className="h-10 w-7/12" />
         <Skeleton className="h-10 w-5/12" />
         <div className="flex gap-6 pt-8">
           <Skeleton className="h-8 w-28" />
@@ -15,7 +15,7 @@ const CoursePageLoadingSkeleton = () => {
           <Skeleton className="h-8 w-28" />
         </div>
       </div>
-      <div className="flex-6 flex flex-col mx-auto">
+      <div className="flex-6 flex flex-col mx-8">
         {Array.from({ length: 8 }, (_, i) => (
           <div
             key={i}

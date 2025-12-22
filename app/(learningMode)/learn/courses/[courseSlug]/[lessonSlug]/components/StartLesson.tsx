@@ -33,7 +33,7 @@ const StartLesson = () => {
   if (loading) return <LoadingContent isActive={loading} />;
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-dvh">
       <Header />
       <div ref={mainElement} className="flex-1 overflow-y-scroll">
         <div className="h-full max-w-2xl mx-auto px-4">
