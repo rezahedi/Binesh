@@ -6,8 +6,10 @@ const WEEK_DAYS = ["S", "M", "T", "W", "T", "F", "S"];
 
 const CurrentWeekStreak = ({
   history,
+  isTodayStreakCompleted,
 }: {
   history?: StreakResponseStreakHistoryItem[];
+  isTodayStreakCompleted?: boolean;
 }) => {
   if (!history) return null;
 
@@ -30,7 +32,10 @@ const CurrentWeekStreak = ({
     return {
       day,
       date: date.toDateString(),
-      streak: historyItem?.length ?? 0,
+      streak:
+        dateKey === todayKey && !isTodayStreakCompleted
+          ? 0
+          : (historyItem?.length ?? 0),
       usedFreeze: historyItem?.usedFreeze ?? false,
       isToday: dateKey === todayKey,
     };
