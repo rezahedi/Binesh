@@ -24,12 +24,12 @@ export function useMediaQuery() {
   const [dimensions, setDimensions] = useState<{
     width: number;
     height: number;
-  } | null>(getDimensions());
+  } | null>(null);
 
   useEffect(() => {
     const checkDevice = () => {
       setDevice(getDevice());
-      setDimensions(getDimensions());
+      setDimensions(null);
     };
 
     // Initial detection
