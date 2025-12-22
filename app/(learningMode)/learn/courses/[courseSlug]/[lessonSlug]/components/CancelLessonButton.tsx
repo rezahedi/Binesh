@@ -41,7 +41,7 @@ const CancelLessonButton = (props: ICancelLessonButtonProps) => {
         </Button>
       </DialogTrigger>
       <DialogContent className="gap-8">
-        <DialogHeader className="items-center gap-4">
+        <DialogHeader className="items-center gap-4 text-balance">
           <DialogTitle className="text-xl">Are you sure?</DialogTitle>
           If you quit now, you will lose your progress and XP.
         </DialogHeader>
