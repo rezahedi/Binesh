@@ -22,7 +22,7 @@ const CellsButton = ({ className }: { className?: string }) => {
 
   return (
     <ResponsivePopover
-      title="Cells Charge"
+      title="Cell Charge"
       button={
         <button className={cn(MAIN_BUTTON_CLASSES, className)}>
           {cells}
@@ -30,7 +30,7 @@ const CellsButton = ({ className }: { className?: string }) => {
         </button>
       }
     >
-      <b className="font-semibold text-lg">Cells Charge</b>
+      <b className="font-semibold text-lg">Cell Charge</b>
       <CellsStatus />
     </ResponsivePopover>
   );
