@@ -29,7 +29,7 @@ export function useMediaQuery() {
   useEffect(() => {
     const checkDevice = () => {
       setDevice(getDevice());
-      setDimensions(null);
+      setDimensions(getDimensions());
     };
 
     // Initial detection
