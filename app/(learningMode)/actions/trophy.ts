@@ -78,8 +78,17 @@ export async function getStreak(
       historyPeriods: 7,
     });
   } catch (error) {
-    console.error("Get streak error:", error);
-    return null;
+    if (
+      error instanceof Error &&
+      "statusCode" in error &&
+      error.statusCode === 404
+    ) {
+      await identifyUser(userId);
+      return getStreak(userId);
+    } else {
+      console.error("Get streak error:", error);
+      return null;
+    }
   }
 }
 
@@ -267,8 +276,8 @@ export async function getUserData(userId: string): Promise<{
   cells: GetUserPointsResponse;
 } | null> {
   try {
-    const [streak, points, cells] = await Promise.all([
-      getStreak(userId),
+    const streak = await getStreak(userId);
+    const [points, cells] = await Promise.all([
       getUserPoints(userId),
       getUserEnergy(userId),
     ]);
