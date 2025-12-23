@@ -9,7 +9,7 @@ export default function PointsButton() {
   const { points, isLoading } = useProgress();
   const { isMobile } = useMediaQuery();
 
-  if (isLoading)
+  if (isLoading && points === null)
     return (
       <div
         className={cn(

@@ -12,7 +12,7 @@ const MAIN_BUTTON_CLASSES =
 export default function StreakButton({ className }: { className?: string }) {
   const { streak, points, isLoading } = useProgress();
 
-  if (isLoading)
+  if (isLoading && streak === null)
     return (
       <div className={cn(MAIN_BUTTON_CLASSES, className)}>
         {" "}

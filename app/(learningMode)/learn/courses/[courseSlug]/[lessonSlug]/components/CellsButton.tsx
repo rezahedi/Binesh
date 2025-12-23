@@ -10,7 +10,7 @@ const MAIN_BUTTON_CLASSES =
 const CellsButton = ({ className }: { className?: string }) => {
   const { cells, isLoading } = useProgress();
 
-  if (isLoading)
+  if (isLoading && cells === null)
     return (
       <div className={cn(MAIN_BUTTON_CLASSES, className)}>
         {" "}
