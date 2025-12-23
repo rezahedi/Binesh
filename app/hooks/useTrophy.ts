@@ -6,12 +6,14 @@ import {
   refillCells,
 } from "@/(learningMode)/actions/trophy";
 import { GetUserPointsResponse, StreakResponse } from "@trophyso/node/api";
+import useStats from "./useStats";
 
 const useTrophy = () => {
   const [cells, setCells] = useState<number | null>(null);
   const [streak, setStreak] = useState<StreakResponse | null>(null);
   const [points, setPoints] = useState<GetUserPointsResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const stats = useStats();
   const user = useUser();
 
   // TODO: Points may got changed, so there should be a way to sync points
@@ -55,7 +57,15 @@ const useTrophy = () => {
     setIsLoading(false);
   };
 
-  return { cells, decreaseCell, increaseCell, streak, points, isLoading };
+  return {
+    cells,
+    decreaseCell,
+    increaseCell,
+    streak,
+    points,
+    isLoading,
+    stats,
+  };
 };
 
 export default useTrophy;

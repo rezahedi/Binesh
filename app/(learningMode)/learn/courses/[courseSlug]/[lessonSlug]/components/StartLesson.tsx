@@ -10,15 +10,17 @@ import { LESSON_LOCK_STATUS_CODE } from "@/constants/learningMode";
 
 const StartLesson = () => {
   const { steps, loading, error } = useSteps();
-  const { currentStep, setTotalSteps } = useProgress();
+  const { currentStep, totalSteps, startLesson } = useProgress();
   const mainElement = useRef<HTMLDivElement>(null);
   const currentStepElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setTotalSteps(steps.length);
-  }, [steps, setTotalSteps]);
+    if (!steps.length && totalSteps) return;
 
-  // Smooth scroll down on next step
+    startLesson(steps.length);
+  }, [steps]);
+
+  // Smooth scroll down to next step
   useEffect(() => {
     if (!mainElement.current || !currentStepElement.current) return;
 

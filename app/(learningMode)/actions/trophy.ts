@@ -223,6 +223,7 @@ export async function quizPassed(userId: string) {
     return null;
   }
 }
+
 export async function getEnergySummary(
   userId: string
 ): Promise<UsersPointsEventSummaryResponseItem[] | null> {

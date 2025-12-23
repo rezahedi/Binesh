@@ -1,11 +1,10 @@
 import { SectionType } from "@/lib/quizParser";
 import QuizRenderer from "@/components/quizzes/QuizRenderer";
 import { useProgress } from "@/contexts/ProgressContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 import { FlagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { quizPassed, stepPassed } from "@/(learningMode)/actions/trophy";
 import { useUser } from "@stackframe/stack";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
@@ -14,7 +13,7 @@ interface ShowStepProps extends React.ComponentProps<"div"> {
 }
 
 export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
-  const { cells, decreaseCell, nextStep, currentStep, finished } =
+  const { cells, nextStep, currentStep, isFinished, quizAnswered } =
     useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
   const user = useUser();
@@ -30,21 +29,16 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   const handleNextStep = async () => {
     if (!user) return;
 
-    stepPassed(user.id);
     nextStep();
   };
 
-  // TODO: Use a function that trigger with click event to call decreaseCell() server action
-  // Instead of useEffect()
-  useEffect(() => {
-    if (!user || quizResult === null) return;
+  const handleResultCheck = (isCorrect: boolean | null) => {
+    setQuizResult(isCorrect);
 
-    if (quizResult === false) decreaseCell();
-    if (quizResult === true) {
-      console.log("quizPassed");
-      quizPassed(user.id);
-    }
-  }, [quizResult]);
+    if (!user || isCorrect === null) return;
+
+    quizAnswered(isCorrect);
+  };
 
   return (
     <div
@@ -61,10 +55,10 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
           quiz={{ ...step.quiz, id: step.id }}
           isActive={isCurrent && !isQuizFinished && haveCells}
           quizResult={quizResult}
-          onCheck={setQuizResult}
+          onCheck={handleResultCheck}
         />
       )}
-      {isNextReady && !finished && (
+      {isNextReady && !isFinished && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
           <div className="flex-1 flex gap-3 items-center">
             <Button
