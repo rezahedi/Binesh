@@ -11,7 +11,6 @@ export default function Header({ className }: { className?: string }) {
       ? Math.round(((currentStep - 1) / totalSteps) * 100)
       : 0
     : 100;
-  console.log(percentage, currentStep, totalSteps);
 
   return (
     <header className={cn("bg-background shadow-lg z-10 p-4", className)}>
