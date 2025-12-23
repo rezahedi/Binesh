@@ -25,7 +25,6 @@ const useTrophy = () => {
     (async () => {
       setIsLoading(true);
       const response = await getUserData(user.id);
-      console.log("User Data:", response);
       if (response) {
         setCells(response.cells.total);
         setStreak(response.streak);
@@ -41,7 +40,6 @@ const useTrophy = () => {
 
     setIsLoading(true);
     setCells(cells - 1);
-    console.log("Trophy mistake");
     const response = await quizFailed(user.id);
     if (!response) setCells(cells + 1);
     setIsLoading(false);
