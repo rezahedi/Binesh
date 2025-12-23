@@ -53,6 +53,7 @@ const useTrophy = () => {
     setIsLoading(true);
     setCells(cells + 1);
     const response = await refillCells(user.id);
+    // FIXME: Check why decrease twice
     if (!response) setCells(cells - 1);
     setIsLoading(false);
   };
