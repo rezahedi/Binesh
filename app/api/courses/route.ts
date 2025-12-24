@@ -43,14 +43,18 @@ export const GET = async (request: NextRequest) => {
       )
     );
 
-  let searchConditions;
+  const clauses = [];
+  clauses.push(eq(courses.status, "published"));
+
   if (search)
-    searchConditions = or(
-      like(courses.name, `%${search}%`),
-      like(courses.description, `%${search}%`)
+    clauses.push(
+      or(
+        like(courses.name, `%${search}%`),
+        like(courses.description, `%${search}%`)
+      )
     );
 
-  query.where(and(eq(courses.status, "published"), searchConditions));
+  query.where(and(...clauses));
 
   const rows = await query.execute();
 

@@ -6,8 +6,10 @@ const WEEK_DAYS = ["S", "M", "T", "W", "T", "F", "S"];
 
 const CurrentWeekStreak = ({
   history,
+  isTodayDone,
 }: {
   history?: StreakResponseStreakHistoryItem[];
+  isTodayDone?: boolean;
 }) => {
   if (!history) return null;
 
@@ -30,7 +32,8 @@ const CurrentWeekStreak = ({
     return {
       day,
       date: date.toDateString(),
-      streak: historyItem?.length ?? 0,
+      streak:
+        dateKey === todayKey && !isTodayDone ? 0 : (historyItem?.length ?? 0),
       usedFreeze: historyItem?.usedFreeze ?? false,
       isToday: dateKey === todayKey,
     };
@@ -47,7 +50,7 @@ const CurrentWeekStreak = ({
           <div
             className={cn(
               "size-9 flex justify-center items-center border border-muted rounded-full mb-1",
-              wday.isToday && "border-2",
+              wday.isToday && "border-3",
               wday.streak > 0 && "border-destructive",
               wday.usedFreeze && "border-accent"
             )}
@@ -60,7 +63,9 @@ const CurrentWeekStreak = ({
               )}
             />
           </div>
-          <span className={wday.isToday ? "font-bold" : ""}>{wday.day}</span>
+          <span className={wday.isToday ? "font-extrabold" : ""}>
+            {wday.day}
+          </span>
         </div>
       ))}
     </div>

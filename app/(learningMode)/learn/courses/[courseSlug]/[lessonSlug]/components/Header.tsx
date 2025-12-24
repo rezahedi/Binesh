@@ -5,13 +5,12 @@ import CancelLessonButton from "./CancelLessonButton";
 import CellsButton from "./CellsButton";
 
 export default function Header({ className }: { className?: string }) {
-  const { currentStep, totalSteps, finished } = useProgress();
-  const percentage = !finished
+  const { currentStep, totalSteps, isFinished } = useProgress();
+  const percentage = !isFinished
     ? totalSteps
       ? Math.round(((currentStep - 1) / totalSteps) * 100)
       : 0
     : 100;
-  console.log(percentage, currentStep, totalSteps);
 
   return (
     <header className={cn("bg-background shadow-lg z-10 p-4", className)}>

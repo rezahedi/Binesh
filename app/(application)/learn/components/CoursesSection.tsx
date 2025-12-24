@@ -1,0 +1,31 @@
+import useFetch from "@/lib/swr/useFetch";
+import { CourseWithCategoryProps } from "@/lib/types";
+import CoursesCardLoadingSkeleton from "./CoursesCardLoadingSkeleton";
+import { CourseCard } from "@/(application)/components";
+
+const CoursesSection = ({
+  title,
+  apiUrl,
+}: {
+  title: string;
+  apiUrl: string;
+}) => {
+  const { data: courses, isLoading } =
+    useFetch<CourseWithCategoryProps[]>(apiUrl);
+
+  if (!isLoading && !courses)
+    return <p>Something went wrong, Please try again.</p>;
+
+  return (
+    <div className="pb-8">
+      <h3 className="font-semibold text-2xl">{title}</h3>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+        {isLoading && <CoursesCardLoadingSkeleton count={4} />}
+        {courses &&
+          courses.map((course) => <CourseCard key={course.id} {...course} />)}
+      </div>
+    </div>
+  );
+};
+
+export default CoursesSection;

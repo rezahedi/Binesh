@@ -1,12 +1,13 @@
 import { SectionType } from "@/lib/quizParser";
 import QuizRenderer from "@/components/quizzes/QuizRenderer";
 import { useProgress } from "@/contexts/ProgressContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
-import { FlagIcon } from "lucide-react";
+import { FlagIcon, GemIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { quizPassed, stepPassed } from "@/(learningMode)/actions/trophy";
 import { useUser } from "@stackframe/stack";
+import { POINTS_TO_UNLOCK_CELL } from "@/constants/trophy";
+import { useRouter } from "next/navigation";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
   step: SectionType;
@@ -14,10 +15,18 @@ interface ShowStepProps extends React.ComponentProps<"div"> {
 }
 
 export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
-  const { cells, decreaseCell, nextStep, currentStep, finished } =
-    useProgress();
+  const {
+    cells,
+    points,
+    nextStep,
+    currentStep,
+    isFinished,
+    quizAnswered,
+    increaseCell,
+  } = useProgress();
   const [quizResult, setQuizResult] = useState<boolean | null>(null);
   const user = useUser();
+  const router = useRouter();
 
   // TODO: Temporary solution, find a better way than passing step's `index` to check if this is the curr step
   const haveQuiz = Boolean(step.quiz);
@@ -30,21 +39,20 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
   const handleNextStep = async () => {
     if (!user) return;
 
-    stepPassed(user.id);
     nextStep();
   };
 
-  // TODO: Use a function that trigger with click event to call decreaseCell() server action
-  // Instead of useEffect()
-  useEffect(() => {
-    if (!user || quizResult === null) return;
+  const handleResultCheck = (isCorrect: boolean | null) => {
+    setQuizResult(isCorrect);
 
-    if (quizResult === false) decreaseCell();
-    if (quizResult === true) {
-      console.log("quizPassed");
-      quizPassed(user.id);
-    }
-  }, [quizResult]);
+    if (!user || isCorrect === null) return;
+
+    quizAnswered(isCorrect);
+  };
+
+  const handleGoBack = () => {
+    router.push("./");
+  };
 
   return (
     <div
@@ -61,10 +69,10 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
           quiz={{ ...step.quiz, id: step.id }}
           isActive={isCurrent && !isQuizFinished && haveCells}
           quizResult={quizResult}
-          onCheck={setQuizResult}
+          onCheck={handleResultCheck}
         />
       )}
-      {isNextReady && !finished && (
+      {isNextReady && !isFinished && haveCells && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
           <div className="flex-1 flex gap-3 items-center">
             <Button
@@ -84,10 +92,29 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
             onClick={handleNextStep}
             variant={"primary"}
             className="font-semibold"
-            disabled={!haveCells}
           >
             Continue
           </Button>
+        </div>
+      )}
+      {isCurrent && !haveCells && (
+        <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
+          <div className="flex-1 flex gap-3 items-center text-balance">
+            You are out of cells
+          </div>
+          {points && points.total >= POINTS_TO_UNLOCK_CELL ? (
+            <Button variant={"secondary"} onClick={increaseCell}>
+              <span>Recharge Cell</span>
+              <b className="flex gap-1 items-center">
+                <GemIcon className="size-4 fill-primary/90" stroke="none" />
+                {POINTS_TO_UNLOCK_CELL}
+              </b>
+            </Button>
+          ) : (
+            <Button variant={"default"} onClick={handleGoBack}>
+              Go Back
+            </Button>
+          )}
         </div>
       )}
     </div>

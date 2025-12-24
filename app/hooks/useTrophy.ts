@@ -6,12 +6,14 @@ import {
   refillCells,
 } from "@/(learningMode)/actions/trophy";
 import { GetUserPointsResponse, StreakResponse } from "@trophyso/node/api";
+import useStats from "./useStats";
 
 const useTrophy = () => {
   const [cells, setCells] = useState<number | null>(null);
   const [streak, setStreak] = useState<StreakResponse | null>(null);
   const [points, setPoints] = useState<GetUserPointsResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const stats = useStats();
   const user = useUser();
 
   // TODO: Points may got changed, so there should be a way to sync points
@@ -25,7 +27,6 @@ const useTrophy = () => {
     (async () => {
       setIsLoading(true);
       const response = await getUserData(user.id);
-      console.log("User Data:", response);
       if (response) {
         setCells(response.cells.total);
         setStreak(response.streak);
@@ -41,7 +42,6 @@ const useTrophy = () => {
 
     setIsLoading(true);
     setCells(cells - 1);
-    console.log("Trophy mistake");
     const response = await quizFailed(user.id);
     if (!response) setCells(cells + 1);
     setIsLoading(false);
@@ -53,11 +53,20 @@ const useTrophy = () => {
     setIsLoading(true);
     setCells(cells + 1);
     const response = await refillCells(user.id);
+    // FIXME: Check why decrease twice
     if (!response) setCells(cells - 1);
     setIsLoading(false);
   };
 
-  return { cells, decreaseCell, increaseCell, streak, points, isLoading };
+  return {
+    cells,
+    decreaseCell,
+    increaseCell,
+    streak,
+    points,
+    isLoading,
+    stats,
+  };
 };
 
 export default useTrophy;

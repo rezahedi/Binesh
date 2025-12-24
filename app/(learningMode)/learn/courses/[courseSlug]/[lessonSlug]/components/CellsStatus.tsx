@@ -9,7 +9,7 @@ import { cn } from "@/utils/cn";
 import { BatteryIcon, GemIcon } from "lucide-react";
 
 const CellsStatus = () => {
-  const { cells, points, increaseCell } = useProgress();
+  const { cells, points, increaseCell, isLoading } = useProgress();
 
   if (cells === null || points === null) return null;
 
@@ -63,7 +63,7 @@ const CellsStatus = () => {
           variant={"secondary"}
           size={"sm"}
           className="w-full flex justify-between"
-          disabled={cells === CELLS_MAXIMUM}
+          disabled={cells === CELLS_MAXIMUM || isLoading}
           onClick={handleRefill}
         >
           <span>Recharge Cell</span>

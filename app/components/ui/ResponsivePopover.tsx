@@ -31,13 +31,13 @@ function ResponsivePopover({
         <SheetContent
           side={"bottom"}
           className={cn(
-            "rounded-t-2xl border bg-popover p-4 text-popover-foreground shadow-md outline-none",
-            "w-full flex flex-col gap-5 bg-background shadow-xl py-6 px-8",
+            "rounded-t-2xl border border-b-0 bg-popover text-popover-foreground shadow-md outline-none",
+            "w-full flex flex-col gap-5 bg-background shadow-xl p-6 pb-10",
             "[&>button:last-of-type]:hidden"
           )}
         >
           <SheetHeader className="h-8">
-            <SheetClose className="absolute top-4 right-6 cursor-pointer p-2 hover:bg-foreground/15 rounded-full">
+            <SheetClose className="absolute top-4 right-4 cursor-pointer p-2 hover:bg-foreground/15 rounded-full">
               <XIcon />
             </SheetClose>
           </SheetHeader>
@@ -50,7 +50,7 @@ function ResponsivePopover({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>{button}</PopoverTrigger>
-      <PopoverContent className="w-fit flex flex-col gap-5 bg-background shadow-xl py-6 px-8">
+      <PopoverContent className="w-fit flex flex-col gap-5 bg-background shadow-xl py-6 px-8 sm:max-w-sm">
         {children}
       </PopoverContent>
     </Popover>

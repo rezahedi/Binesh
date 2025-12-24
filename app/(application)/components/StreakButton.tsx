@@ -12,7 +12,7 @@ const MAIN_BUTTON_CLASSES =
 export default function StreakButton({ className }: { className?: string }) {
   const { streak, points, isLoading } = useProgress();
 
-  if (isLoading)
+  if (isLoading && streak === null)
     return (
       <div className={cn(MAIN_BUTTON_CLASSES, className)}>
         {" "}
@@ -22,10 +22,9 @@ export default function StreakButton({ className }: { className?: string }) {
 
   if (streak === null || points === null) return null;
 
+  // If the streak expires today, it means it's not completed yet. If it's tomorrow or later, it means it's completed.
   const today = new Date().toLocaleDateString("en-CA");
-  const isTodayStreakCompleted = streak.streakHistory?.find(
-    (h) => h.periodStart === today && h.length > 0
-  );
+  const isTodayStreakCompleted = streak.expires !== today;
 
   const message =
     streak.length === 0
@@ -85,7 +84,10 @@ export default function StreakButton({ className }: { className?: string }) {
           <b className="font-semibold text-lg">{points.name}</b>
         </div>
       </div>
-      <CurrentWeekStreak history={streak.streakHistory} />
+      <CurrentWeekStreak
+        history={streak.streakHistory}
+        isTodayDone={isTodayStreakCompleted}
+      />
       <p>{message}</p>
     </ResponsivePopover>
   );

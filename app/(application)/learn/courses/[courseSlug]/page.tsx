@@ -8,6 +8,7 @@ import { SelectionSyncProvider } from "./SelectionSyncContext";
 import useFetch from "@/lib/swr/useFetch";
 import { CourseWithDetailProps } from "@/lib/types";
 import CoursePageLoadingSkeleton from "./CoursePageLoadingSkeleton";
+import CourseCard from "./components/CourseCard";
 
 export default function CoursePage() {
   const { courseSlug } = useParams();
@@ -26,40 +27,7 @@ export default function CoursePage() {
   return (
     <div className="flex gap-4 md:gap-10 flex-col md:flex-row">
       <div className="flex-5">
-        <div className="sticky top-30">
-          <div className="p-8 border-[3px] border-b-[6px] border-muted rounded-3xl">
-            <Image
-              src={course.image}
-              alt={course.name}
-              width={96}
-              height={96}
-              loading="lazy"
-              className="float-right md:float-none"
-            />
-            <h1 className="md:my-6 text-2xl md:text-4xl font-bold text-balance">
-              {course.name}
-            </h1>
-            <p className="my-3 md:my-6 text-card-foreground text-balance">
-              {course.description}
-            </p>
-            <div className="flex gap-8">
-              <p>
-                <b className="font-semibold text-xl">{course.lessonsCount}</b>{" "}
-                Lessons
-              </p>
-              <p>
-                <b className="font-semibold text-xl">
-                  {course.estimatedDuration}
-                </b>{" "}
-                Minutes
-              </p>
-              <p>
-                <b className="font-semibold text-xl">{course.exercises}</b>{" "}
-                Exercises
-              </p>
-            </div>
-          </div>
-        </div>
+        <CourseCard course={course} />
       </div>
 
       <div className="flex-6 flex flex-col mx-auto w-full">
