@@ -141,9 +141,9 @@ export const usersMirror = pgTable("users_mirror", {
     .notNull()
     .primaryKey()
     .references(() => usersSync.id, { onDelete: "cascade" }),
-  name: text("name"),
-  email: text("email"),
-  image: text("image"),
+  name: text("name").notNull().default(""),
+  email: text("email").notNull().default(""),
+  image: text("image").notNull().default(""),
   role: roleEnum("role").notNull().default("user"),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
