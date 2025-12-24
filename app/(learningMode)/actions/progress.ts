@@ -36,7 +36,7 @@ export async function updateProgress(
   const lessonCountResult = await db
     .select({
       lessonCompleted: count(),
-      totalTimeSpent: sql<number>`sum(lessonProgress.timeSpent)`,
+      totalTimeSpent: sql<number>`sum(${lessonProgress.timeSpent})`,
     })
     .from(lessonProgress)
     .where(
