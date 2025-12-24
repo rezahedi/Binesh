@@ -138,7 +138,6 @@ export const lessonProgress = pgTable(
 
 export const usersMirror = pgTable("users_mirror", {
   id: text("user_id")
-    .notNull()
     .primaryKey()
     .references(() => usersSync.id, { onDelete: "cascade" }),
   name: text("name").notNull().default(""),
