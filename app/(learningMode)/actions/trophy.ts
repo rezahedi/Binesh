@@ -83,7 +83,9 @@ export async function getStreak(
       "statusCode" in error &&
       error.statusCode === 404
     ) {
-      await identifyUser(userId);
+      const res = await identifyUser(userId);
+      if (!res) return null;
+
       return getStreak(userId);
     } else {
       console.error("Get streak error:", error);
