@@ -22,9 +22,7 @@ const CoursesSection = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
         {isLoading && <CoursesCardLoadingSkeleton count={4} />}
         {courses &&
-          courses.map((course, index) => (
-            <CourseCard key={index} {...course} />
-          ))}
+          courses.map((course) => <CourseCard key={course.id} {...course} />)}
       </div>
     </div>
   );
