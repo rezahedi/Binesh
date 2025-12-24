@@ -86,6 +86,7 @@ export const courseProgress = pgTable(
     courseID: uuid("course_id")
       .notNull()
       .references(() => courses.id, { onDelete: "cascade" }),
+    timeSpent: integer("time_spent").notNull().default(0),
     percentage: integer("percentage").notNull(),
     resumeURL: text("resume_url").notNull(),
     nextLessonID: uuid("next_lesson_id"),
@@ -116,9 +117,9 @@ export const lessonProgress = pgTable(
       .notNull()
       .references(() => lessons.id, { onDelete: "cascade" }),
     score: integer("score").notNull().default(0),
-    timeSpent: integer("time_spent").notNull(),
-    resumeURL: text("resume_url").notNull(),
-    progressMap: text("progress_map").notNull(),
+    timeSpent: integer("time_spent").notNull().default(0),
+    resumeURL: text("resume_url").notNull().default(""),
+    progressMap: text("progress_map").notNull().default("{}"),
     createdAt: timestamp("created_at", { mode: "string" })
       .defaultNow()
       .notNull(),
