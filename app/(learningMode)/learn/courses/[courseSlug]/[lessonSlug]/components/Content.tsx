@@ -17,9 +17,9 @@ const Content = () => {
 
     // TODO: updateProgress() Async action called without await, causing fire-and-forget behavior.
     // How to fix: await, loading state, catch error and try again
-    updateProgress(String(courseSlug), String(lessonSlug));
-    mutate(`/api/courses/${courseSlug}`);
     lessonFinished();
+    updateProgress(stats.getTime(), String(courseSlug), String(lessonSlug));
+    mutate(`/api/courses/${courseSlug}`);
   };
 
   if (stats.endTime) return <Finish />;

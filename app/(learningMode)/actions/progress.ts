@@ -4,10 +4,15 @@ import db from "@/db";
 import { lessonProgress, courseProgress, lessons } from "@/db/schema";
 import { LessonProps } from "@/lib/types";
 import { stackServerApp } from "@stack/server";
-import { and, asc, count, eq, getTableColumns, isNull } from "drizzle-orm";
+import { and, asc, count, eq, getTableColumns, isNull, sql } from "drizzle-orm";
 import { getCourseBySlug, getLessonBySlug } from "../utils/db";
 
-export async function updateProgress(courseSlug: string, lessonSlug: string) {
+// TODO: `time` shouldn't passed here, as user could change it, Find a better way
+export async function updateProgress(
+  time: number, // in seconds
+  courseSlug: string,
+  lessonSlug: string
+) {
   const user = await stackServerApp.getUser();
   if (!user) {
     throw new Error("Unauthorized");
@@ -23,16 +28,16 @@ export async function updateProgress(courseSlug: string, lessonSlug: string) {
       userID: user.id,
       lessonID: lessonId,
       courseID: courseId,
-      resumeURL: "",
-      progressMap: "",
-      timeSpent: 0,
-      score: 0,
+      timeSpent: time,
     })
     .onConflictDoNothing();
 
   // get count of lessons records
   const lessonCountResult = await db
-    .select({ count: count() })
+    .select({
+      lessonCompleted: count(),
+      totalTimeSpent: sql<number>`sum(lessonProgress.timeSpent)`,
+    })
     .from(lessonProgress)
     .where(
       and(
@@ -40,7 +45,8 @@ export async function updateProgress(courseSlug: string, lessonSlug: string) {
         eq(lessonProgress.courseID, courseId)
       )
     );
-  const lessonCompleted = lessonCountResult[0].count;
+  const lessonCompleted = lessonCountResult[0].lessonCompleted;
+  const totalTimeSpent = lessonCountResult[0].totalTimeSpent;
 
   const courseProgressPercentage = Math.round(
     (100 / lessonsCount) * lessonCompleted
@@ -66,22 +72,23 @@ export async function updateProgress(courseSlug: string, lessonSlug: string) {
     if (rows.length === 1) nextLessons = rows[0];
   }
 
+  const courseProgressProperties = {
+    percentage: courseProgressPercentage,
+    resumeURL: nextLessons ? `${courseSlug}/${nextLessons.slug}` : "",
+    nextLessonID: nextLessons ? nextLessons.id : null,
+    timeSpent: totalTimeSpent,
+  };
+
   // update courseProgress
   await db
     .insert(courseProgress)
     .values({
       userID: user.id,
       courseID: courseId,
-      percentage: courseProgressPercentage,
-      resumeURL: nextLessons ? nextLessons.slug : "",
-      nextLessonID: nextLessons ? nextLessons.id : null,
+      ...courseProgressProperties,
     })
     .onConflictDoUpdate({
       target: [courseProgress.userID, courseProgress.courseID],
-      set: {
-        percentage: courseProgressPercentage,
-        resumeURL: nextLessons ? nextLessons.slug : "",
-        nextLessonID: nextLessons ? nextLessons.id : null,
-      },
+      set: courseProgressProperties,
     });
 }
