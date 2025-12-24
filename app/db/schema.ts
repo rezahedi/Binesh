@@ -154,9 +154,11 @@ export type Courses = typeof courses.$inferSelect;
 export type Lessons = typeof lessons.$inferSelect;
 export type CourseProgress = typeof courseProgress.$inferSelect;
 export type LessonProgress = typeof lessonProgress.$inferSelect;
+export type UsersMirror = typeof usersMirror.$inferSelect;
 
 export type NewCategories = typeof categories.$inferInsert;
 export type NewCourses = typeof courses.$inferInsert;
 export type NewLessons = typeof lessons.$inferInsert;
 export type NewCourseProgress = typeof courseProgress.$inferInsert;
 export type NewLessonProgress = typeof lessonProgress.$inferInsert;
+export type NewUsersMirror = typeof usersMirror.$inferInsert;
