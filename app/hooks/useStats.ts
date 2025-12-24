@@ -89,7 +89,11 @@ const useStats = (): IUseStats => {
   };
 
   const getTime = () => {
-    return Math.round((state.endTime - state.startTime) / 1000 / 60);
+    if (state.startTime === 0) return 0;
+
+    const now = new Date().getTime();
+
+    return Math.round(((state.endTime || now) - state.startTime) / 1000 / 60);
   };
 
   return {
