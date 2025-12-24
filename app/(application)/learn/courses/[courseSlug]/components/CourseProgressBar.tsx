@@ -1,4 +1,5 @@
 import ProgressBar from "@/(learningMode)/learn/courses/[courseSlug]/[lessonSlug]/components/ProgressBar";
+import { formatDuration } from "@/lib/time";
 
 const CourseProgressBar = ({
   total,
@@ -26,7 +27,7 @@ const CourseProgressBar = ({
             </>
           )}
         </div>
-        <div>In {time} mins</div>
+        <div>Spent {formatDuration(time)}</div>
       </div>
       <ProgressBar progress={completed} />
     </div>

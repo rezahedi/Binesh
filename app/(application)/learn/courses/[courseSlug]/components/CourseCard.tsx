@@ -42,7 +42,7 @@ const CourseCard = ({ course }: { course: CourseWithCategoryProps }) => {
         <CourseProgressBar
           total={course.lessonsCount}
           completed={course.progress?.percentage || 0}
-          time={0}
+          time={course.progress?.timeSpent || 0}
         />
       </div>
     </div>
