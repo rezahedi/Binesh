@@ -22,6 +22,9 @@ export const statusEnum = pgEnum("statusEnumType", STATUS_VALUES);
 
 export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"] as const;
 
+export const ROLES = ["admin", "user"] as const;
+export const roleEnum = pgEnum("roleEnumType", ROLES);
+
 export const categories = pgTable("categories", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
@@ -132,6 +135,19 @@ export const lessonProgress = pgTable(
     uniqueIndex().on(table.userID, table.courseID, table.lessonID),
   ]
 );
+
+export const usersMirror = pgTable("users_mirror", {
+  id: text("user_id")
+    .notNull()
+    .primaryKey()
+    .references(() => usersSync.id, { onDelete: "cascade" }),
+  name: text("name"),
+  email: text("email"),
+  image: text("image"),
+  role: roleEnum("role").notNull().default("user"),
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
+});
 
 export type Categories = typeof categories.$inferSelect;
 export type Courses = typeof courses.$inferSelect;
