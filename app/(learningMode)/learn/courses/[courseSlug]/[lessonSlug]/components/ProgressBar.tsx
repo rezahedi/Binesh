@@ -13,7 +13,7 @@ export default function ProgressBar({
   if (progress > 100) progress = 100;
   return (
     <div className={cn("group py-2 w-full", className)} title={title}>
-      <div className={`rounded-full p-0.5`}>
+      <div className="rounded-full">
         <div className="w-full bg-muted rounded-full h-3">
           <div
             className="bg-primary/60 h-full rounded-full transition-all duration-200"
