@@ -86,7 +86,7 @@ export default function StreakButton({ className }: { className?: string }) {
       </div>
       <CurrentWeekStreak
         history={streak.streakHistory}
-        isTodayStreakCompleted
+        isTodayDone={isTodayStreakCompleted}
       />
       <p>{message}</p>
     </ResponsivePopover>
