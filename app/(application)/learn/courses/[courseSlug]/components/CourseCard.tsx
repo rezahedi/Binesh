@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 
 const CourseCard = ({ course }: { course: CourseWithCategoryProps }) => {
   return (
-    <div className="sticky top-30">
+    <div className="sticky top-28">
       <div
         className={cn(
           "p-8 border-[3px] border-b-[6px] border-muted rounded-3xl",

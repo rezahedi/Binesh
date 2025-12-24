@@ -18,7 +18,7 @@ const Finish = () => {
   if (stats.failedQuizzes === 1) {
     msg = {
       title: "Lesson completed!",
-      description: "You made a mistake, You did great!",
+      description: "You made a mistake, you did great!",
     };
   }
   if (stats.failedQuizzes > 1) {
