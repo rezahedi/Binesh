@@ -78,19 +78,8 @@ export async function getStreak(
       historyPeriods: 7,
     });
   } catch (error) {
-    if (
-      error instanceof Error &&
-      "statusCode" in error &&
-      error.statusCode === 404
-    ) {
-      const res = await identifyUser(userId);
-      if (!res) return null;
-
-      return getStreak(userId);
-    } else {
-      console.error("Get streak error:", error);
-      return null;
-    }
+    console.error("Get streak error:", error);
+    return null;
   }
 }
 
