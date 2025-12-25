@@ -13,8 +13,8 @@ import {
   NewUsersMirror,
 } from "@/db/schema";
 
-// It's dump act of me to import db types here just to export them with a new name
-// TODO: Export them with the desire name from the original
+// It's a bad act of me to import db types here just to export them with a new name
+// TODO: Export them with the desired name from the original
 export type CourseProps = Courses;
 export type NewCourseProps = NewCourses;
 export type LessonProps = Lessons;
