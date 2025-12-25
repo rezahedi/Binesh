@@ -41,7 +41,7 @@ export const POST = async (request: NextRequest) => {
       id: user.id,
       name: user.display_name,
       email: user.primary_email,
-      image: user.profile_image_url,
+      image: user.profile_image_url || "",
     });
 
     // Trophy user identify
