@@ -1,3 +1,4 @@
+import { ADMIN_ROLE_LABEL, USER_ROLE_LABEL } from "@/constants/dashboard";
 import { usersSync } from "drizzle-orm/neon";
 import {
   pgTable,
@@ -21,6 +22,9 @@ export type StatusType = (typeof STATUS_VALUES)[number];
 export const statusEnum = pgEnum("statusEnumType", STATUS_VALUES);
 
 export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"] as const;
+
+export const ROLES = [ADMIN_ROLE_LABEL, USER_ROLE_LABEL] as const;
+export const roleEnum = pgEnum("roleEnumType", ROLES);
 
 export const categories = pgTable("categories", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -133,14 +137,28 @@ export const lessonProgress = pgTable(
   ]
 );
 
+export const usersMirror = pgTable("users_mirror", {
+  id: text("user_id")
+    .primaryKey()
+    .references(() => usersSync.id, { onDelete: "cascade" }),
+  name: text("name").notNull().default(""),
+  email: text("email").notNull().default(""),
+  image: text("image").notNull().default(""),
+  role: roleEnum("role").notNull().default(USER_ROLE_LABEL),
+  createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
+});
+
 export type Categories = typeof categories.$inferSelect;
 export type Courses = typeof courses.$inferSelect;
 export type Lessons = typeof lessons.$inferSelect;
 export type CourseProgress = typeof courseProgress.$inferSelect;
 export type LessonProgress = typeof lessonProgress.$inferSelect;
+export type UsersMirror = typeof usersMirror.$inferSelect;
 
 export type NewCategories = typeof categories.$inferInsert;
 export type NewCourses = typeof courses.$inferInsert;
 export type NewLessons = typeof lessons.$inferInsert;
 export type NewCourseProgress = typeof courseProgress.$inferInsert;
 export type NewLessonProgress = typeof lessonProgress.$inferInsert;
+export type NewUsersMirror = typeof usersMirror.$inferInsert;

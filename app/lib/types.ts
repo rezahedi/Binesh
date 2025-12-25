@@ -9,8 +9,12 @@ import {
   NewLessons,
   NewLessonProgress,
   NewCourseProgress,
+  UsersMirror,
+  NewUsersMirror,
 } from "@/db/schema";
 
+// It's a bad act of me to import db types here just to export them with a new name
+// TODO: Export them with the desired name from the original
 export type CourseProps = Courses;
 export type NewCourseProps = NewCourses;
 export type LessonProps = Lessons;
@@ -21,6 +25,8 @@ export type CategoryProps = Categories;
 export type NewCategoryProps = NewCategories;
 export type CourseProgressProps = CourseProgress;
 export type NewCourseProgressProps = NewCourseProgress;
+export type UsersMirrorProps = UsersMirror;
+export type NewUsersMirrorProps = NewUsersMirror;
 
 export type LessonWithProgressProps = Lessons & {
   progress: LessonProgressProps | null;
