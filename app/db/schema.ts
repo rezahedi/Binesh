@@ -1,3 +1,4 @@
+import { ADMIN_ROLE_LABEL, USER_ROLE_LABEL } from "@/constants/dashboard";
 import { usersSync } from "drizzle-orm/neon";
 import {
   pgTable,
@@ -22,7 +23,7 @@ export const statusEnum = pgEnum("statusEnumType", STATUS_VALUES);
 
 export const LEVEL_OPTIONS = ["Beginner", "Intermediate", "Advanced"] as const;
 
-export const ROLES = ["admin", "user"] as const;
+export const ROLES = [ADMIN_ROLE_LABEL, USER_ROLE_LABEL] as const;
 export const roleEnum = pgEnum("roleEnumType", ROLES);
 
 export const categories = pgTable("categories", {
@@ -143,7 +144,7 @@ export const usersMirror = pgTable("users_mirror", {
   name: text("name").notNull().default(""),
   email: text("email").notNull().default(""),
   image: text("image").notNull().default(""),
-  role: roleEnum("role").notNull().default("user"),
+  role: roleEnum("role").notNull().default(USER_ROLE_LABEL),
   createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
 });
