@@ -50,7 +50,7 @@ export const withAdmin =
 
     const isAdminUser = await isAdmin(user.id);
     if (!isAdminUser) {
-      return new Response("Unauthorized: Not an admin.", { status: 401 });
+      return new Response("Forbidden: Not an admin.", { status: 403 });
     }
 
     const searchParams = getSearchParams(req.url);
