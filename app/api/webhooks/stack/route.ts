@@ -34,7 +34,7 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json({ message: "Invalid payload" }, { status: 400 });
   }
 
-  const { type, data: user } = await request.json();
+  const { type, data: user } = JSON.parse(payload);
 
   if (type === "user.created") {
     await db.insert(usersMirror).values({
