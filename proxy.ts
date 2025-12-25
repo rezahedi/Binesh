@@ -11,7 +11,7 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (pathname.startsWith("/dashboard") || pathname.startsWith("/api/admin")) {
+  if (pathname.startsWith("/dashboard")) {
     const isAdminUser = await isAdmin(user.id);
     if (!isAdminUser) {
       return NextResponse.redirect(new URL("/", req.url));
@@ -22,5 +22,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/learn/:path*", "/dashboard/:path*", "/api/admin/:path*"],
+  matcher: ["/learn/:path*", "/dashboard/:path*"],
 };
