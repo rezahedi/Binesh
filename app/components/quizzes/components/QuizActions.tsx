@@ -1,0 +1,27 @@
+import { Button } from "@/components/ui/button";
+import { FlagIcon } from "lucide-react";
+
+const QuizActions = ({
+  disabled,
+  onCheck,
+  label = "Check",
+}: {
+  disabled: boolean;
+  onCheck: () => void;
+  label?: string;
+}) => {
+  return (
+    <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
+      <div className="flex-1">
+        <Button variant={"ghost"} className="text-muted-foreground" size={"sm"}>
+          <FlagIcon className="size-4" /> Report
+        </Button>
+      </div>
+      <Button onClick={onCheck} disabled={disabled} className="font-semibold">
+        {label}
+      </Button>
+    </div>
+  );
+};
+
+export default QuizActions;
