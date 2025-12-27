@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { QuizLayout, QuizActions } from "./components";
+import ReactMarkdown from "@/lib/markdown";
 
 const CheckListQuiz = ({
   quiz,
@@ -42,8 +43,10 @@ const CheckListQuiz = ({
       <QuizLayout content={quiz.content}>
         <div
           className={cn(
-            `grid gap-3 mt-4`,
-            quizBlock.options.length < 4 ? `grid-cols-1` : `grid-cols-2`
+            `grid gap-3 mt-4 [&_figure]:p-0 has-[.katex]:text-2xl`,
+            quizBlock.options.length < 4
+              ? `grid-cols-2 [&_img]:h-36`
+              : `grid-cols-2`
           )}
         >
           {quizBlock.options.map((option, index) => (
@@ -73,7 +76,7 @@ const CheckListQuiz = ({
                 readOnly={!isActive}
                 className="hidden"
               />
-              {option}
+              <ReactMarkdown>{option}</ReactMarkdown>
             </label>
           ))}
         </div>
