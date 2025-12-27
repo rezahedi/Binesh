@@ -63,11 +63,6 @@ const PickAndFillQuiz = ({
               <input
                 className={cn(
                   `w-fit min-w-20 m-1 rounded-xl p-2 px-3 cursor-pointer leading-8 text-center font-medium border-2 border-border hover:border-quiz-select-300 hover:bg-quiz-select-50 field-sizing-content`,
-                  isCorrect !== null
-                    ? isCorrect === true
-                      ? `border-quiz-success-300 bg-quiz-success-50 text-quiz-success-700`
-                      : `border-quiz-error-300 bg-quiz-error-50 text-quiz-error-700`
-                    : ``,
                   !isActive && `pointer-events-none`
                 )}
                 id={quiz.id}
@@ -95,6 +90,7 @@ const PickAndFillQuiz = ({
             </Button>
           ))}
         </div>
+        {isCorrect !== null && <p>{!isCorrect ? "😩 Incorrect" : ""}</p>}
       </QuizLayout>
       {isActive && !isCorrect && (
         <QuizActions disabled={isSomeBlanksEmpty} onCheck={handleCheckAnswer} />
