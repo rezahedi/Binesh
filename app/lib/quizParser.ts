@@ -49,13 +49,20 @@ export type QuizType = {
   quizBlock: QuizBlock;
 };
 
-export const QUIZ_TYPES = ["radio", "checkList", "fill", "component"] as const;
+export const QUIZ_TYPES = [
+  "radio",
+  "checkList",
+  "fill",
+  "pickAndFill",
+  "component",
+] as const;
 export type QuizKind = (typeof QUIZ_TYPES)[number];
 
 export type QuizBlock =
   | RadioQuizType
   | CheckListQuizType
   | FillQuizType
+  | PickAndFillQuizType
   | ComponentQuizType;
 
 export type ComponentQuizType = {
@@ -162,9 +169,45 @@ const parseFillQuiz = (quiz: string): FillQuizType | null => {
   };
 };
 
+/*
+```quiz:pickAndFill:[is|are|going|been|gonna|were]
+Winters is [cold] and summer [is] not!
+```
+ */
+export type PickAndFillQuizType = {
+  answers: string[];
+  content: string;
+  options: string[];
+};
+const parsePickAndFillQuiz = (quiz: string): PickAndFillQuizType | null => {
+  // Check quiz format and it should include the :[options with | separator] and the content including at least one bracket with a word in between.
+  const formatRegex = /:\[([^\]]+)\]\r?\n([\s\S]*\[[^\]]+\][\s\S]*)/m;
+  const match = quiz.match(formatRegex);
+  console.log("pick", match, quiz);
+  if (!match) return null;
+
+  const [, optionsValue, content] = match;
+
+  // Split option string with | separator
+  const options = optionsValue.split(/\s*\|\s*/);
+
+  // Extract bracket and answers
+  const bracketRegex = /\[([^\]]+)\]/g;
+  const answersMatches = content.matchAll(bracketRegex);
+
+  const answers = [...answersMatches.map((match) => match[1])];
+
+  return {
+    answers,
+    content: content.trim().replaceAll(bracketRegex, "[ ]"),
+    options,
+  };
+};
+
 const QUIZ_PARSERS: Record<QuizKind, (body: string) => QuizBlock | null> = {
   radio: parseRadioQuiz,
   checkList: parseCheckListQuiz,
   fill: parseFillQuiz,
+  pickAndFill: parsePickAndFillQuiz,
   component: () => null,
 };

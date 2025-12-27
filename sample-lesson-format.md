@@ -76,3 +76,15 @@ Which one is the correct output of the `print(10 * 10)` code snippet?
 - [ ] 1000
 - [ ] 10000
 ```
+
+# Quiz 6
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+
+---
+
+Fill in spaces by picking words from the lest.
+
+```quiz:pickAndFill:[will|can|should|must|might|could]
+You [should] finish your homework today, and you [can] ask the teacher if you need help.
+```
