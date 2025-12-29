@@ -7,37 +7,47 @@ parts: 5
 tags: ["Python", "Programming", "Beginners"]
 ---
 
-# Part 1
+# Markdown format including Math or medias like images, SVGs or videos
 
-**Lorem ipsum dolor sit amet**, consectetur adipisicing elit. Obcaecati quidem corporis nostrum nemo error voluptate repellendus ratione, quasi doloremque illum? Corrupti expedita magni modi porro omnis id, fuga consequatur facere? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+All base Markdown format including **bold**, _italic_, [links](#), or math formula $E = mc^2$.
 
-Veniam, fuga quae explicabo voluptas a excepturi, quibusdam dicta ratione dignissimos hic iure amet nulla soluta architecto minus natus. Cum, eaque officia!
+Math could be a block like the following:
 
-![Scale Photo Sample](/Screenshot-2024-06-10-095546.png)
-
-# Part 2
-
-Lorem ipsum dolor sit amet consectetur $E = mc^2$ adipisicing elit. Dolores temporibus qui beatae repellat quo quis **libero quisquam dicta**. Rem eum nam et praesentium nemo numquam eos porro blanditiis veritatis qui.
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
 ```math
 x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
 ```
 
-![Scale Photo Sample](/_temp/Molecules-nHpvAL.png)
+Media like images, SVGs and also videos
+
+![Photo Sample](/_temp/Molecules-nHpvAL.png)
+
+# Fill in typing
+
+Fill-in quiz can have only one fill-in blank slot, here is the format of fill-in quiz:
 
 ---
 
 What is the output of $4 / 2$?
 
-```quiz:fill:number:2
+```quiz:fill:<input type string or number>:<answer>
 4 / 2 = [ ]
 ```
 
-# Part 3
+# Fill in typing example for string type
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa saepe quod veritatis obcaecati atque, tempora iusto? Ipsum tempore nesciunt, quisquam rem iure itaque, velit harum quos commodi exercitationem, [atque iusto](#)! Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae, ea consectetur quisquam vel architecto ex iure tempora itaque quasi nihil accusamus saepe, _repellendus delectus iusto obcaecati dolor harum_. Harum.
+This is an example for a string fill in.
 
-$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+---
+
+```quiz:fill:string:is
+Winters [ ] coming!
+```
+
+# Check List Quiz
+
+Check list quiz is for questions with multiple selection answers.
 
 ---
 
@@ -50,21 +60,9 @@ Which of the following is a programming language?
 - [x] Python
 ```
 
-# Part 4
+# Radio Quiz
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae tempora officia repudiandae perspiciatis dolores natus ab harum aliquid nemo reprehenderit deserunt at maxime inventore ipsa quo, quis iusto culpa delectus.
-
-![Scale Photo Sample](/Screenshot-2024-06-10-095546.png)
-
----
-
-```quiz:fill:string:gonna
-Winters here [ ] be really cold sometimes, so make sure you bring warm clothes!
-```
-
-# Part 5
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati quidem corporis nostrum nemo error voluptate repellendus ratione, quasi doloremque illum? Corrupti expedita magni modi porro omnis id, fuga consequatur facere? Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, fuga quae explicabo voluptas a excepturi, quibusdam dicta ratione dignissimos hic iure amet nulla soluta architecto minus natus. Cum, eaque officia!
+Radio quiz is almost the same as Check List Quiz but with only one option selection as correct answer.
 
 ---
 
@@ -77,13 +75,13 @@ Which one is the correct output of the `print(10 * 10)` code snippet?
 - [ ] 10000
 ```
 
-# Quiz 6
+# Pick And Fill Quiz
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+This quiz type is look like fill in but have differences. User can't type to fill the blanks and also question could have multiple blanks. There are multiple options to pick from and fill the blanks.
 
 ---
 
-Fill in spaces by picking words from the lest.
+Fill in spaces by picking words from the list.
 
 ```quiz:pickAndFill:[will|can|should|must|might|could]
 You [should] finish your homework today, and you [can] ask the teacher if you need help.
