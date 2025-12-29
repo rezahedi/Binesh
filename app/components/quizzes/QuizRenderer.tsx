@@ -5,6 +5,7 @@ import {
   FillInQuiz,
   RadioQuiz,
   PickAndFillQuiz,
+  PlacementQuiz,
 } from ".";
 
 export interface IQuizProp {
@@ -20,6 +21,7 @@ const quizComponentMap: Record<QuizKind, React.FC<IQuizProp>> = {
   checkList: CheckListQuiz,
   fill: FillInQuiz,
   pickAndFill: PickAndFillQuiz,
+  placement: PlacementQuiz,
 };
 
 const QuizRenderer = (prop: IQuizProp) => {

@@ -86,3 +86,18 @@ Fill in spaces by picking words from the list.
 ```quiz:pickAndFill:[will|can|should|must|might|could]
 You [should] finish your homework today, and you [can] ask the teacher if you need help.
 ```
+
+# Placement Quiz
+
+The following quiz style is placement, drag options and drop in dropping zones, works best for labeling, classification or ordering. It have two main part, options could be words, or images. Second part is dropping zones, could have two or more but not more than count of options.
+
+---
+
+Put each one in its place.
+
+```quiz:placement:1x2:[A|B|C|D]
+- [B] Test 1
+- [D] Test 2
+- [A] Test 3
+- [C] Test 4
+```

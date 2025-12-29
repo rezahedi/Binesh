@@ -54,6 +54,7 @@ export const QUIZ_TYPES = [
   "checkList",
   "fill",
   "pickAndFill",
+  "placement",
   "component",
 ] as const;
 export type QuizKind = (typeof QUIZ_TYPES)[number];
@@ -63,6 +64,7 @@ export type QuizBlock =
   | CheckListQuizType
   | FillQuizType
   | PickAndFillQuizType
+  | PlacementQuizType
   | ComponentQuizType;
 
 export type ComponentQuizType = {
@@ -113,40 +115,44 @@ const parseQuizBlock = (str: string): QuizType | null => {
   return { content, type: quizType as QuizKind, quizBlock };
 };
 
-const OPTION_REGEX = /- \[(x| )\] (.+)/g;
+const OPTION_REGEX = /- \[([a-zA-Z])\] (.+)/g;
 
 const parseListOptions = (quiz: string) => {
   const options: string[] = [];
-  const checked: number[] = [];
+  const marks: string[] = [];
 
   let match;
-  let index = 0;
   while ((match = OPTION_REGEX.exec(quiz)) !== null) {
     const [, mark, text] = match;
     options.push(text.trim());
-    if (mark === "x") checked.push(index);
-    index++;
+    marks.push(mark);
   }
 
-  return { options, checked };
+  return { options, marks };
+};
+
+const marksToIndexes = (marks: string[], char: string = "x") => {
+  return marks.map((v, i) => (v === char ? i : -1)).filter((v) => v !== -1);
 };
 
 export type RadioQuizType = { options: string[]; answer: number };
 
 const parseRadioQuiz = (quiz: string): RadioQuizType | null => {
-  const { options, checked } = parseListOptions(quiz);
-  if (checked.length !== 1) return null; // must be exactly one correct
+  const { options, marks } = parseListOptions(quiz);
+  const answer = marksToIndexes(marks);
+  if (answer.length !== 1) return null; // must be exactly one correct
 
-  return { options, answer: checked[0] };
+  return { options, answer: answer[0] };
 };
 
 export type CheckListQuizType = { options: string[]; answer: number[] };
 
 const parseCheckListQuiz = (quiz: string): CheckListQuizType | null => {
-  const { options, checked } = parseListOptions(quiz);
-  if (checked.length === 0) return null;
+  const { options, marks } = parseListOptions(quiz);
+  const answer = marksToIndexes(marks);
+  if (answer.length === 0) return null;
 
-  return { options, answer: checked };
+  return { options, answer };
 };
 
 export type FillQuizType = {
@@ -204,10 +210,47 @@ const parsePickAndFillQuiz = (quiz: string): PickAndFillQuizType | null => {
   };
 };
 
+/*
+```quiz:placement:1x2:[A|B|C|D]
+- [B] Test 1
+- [D] Test 2
+- [A] Test 3
+- [C] Test 4
+```
+ */
+export type PlacementQuizType = {
+  answers: string[];
+  aspectRatio: string;
+  zones: string[];
+  options: string[];
+};
+const parsePlacementQuiz = (quiz: string): PlacementQuizType | null => {
+  // Check quiz format and it should include the :<aspect ration format ex: 1x2> and the content is a list.
+  const formatRegex = /:(\dx\d):\[([^\]]+)\]\r?\n([\s\S]*)/m;
+  const match = quiz.match(formatRegex);
+  console.log("pick", match, quiz);
+  if (!match) return null;
+
+  const [, aspectRatio, dropZones, content] = match;
+
+  const { options, marks } = parseListOptions(content);
+
+  // Split option string with | separator
+  const zones = dropZones.split(/\s*\|\s*/);
+
+  return {
+    answers: marks,
+    aspectRatio,
+    zones,
+    options,
+  };
+};
+
 const QUIZ_PARSERS: Record<QuizKind, (body: string) => QuizBlock | null> = {
   radio: parseRadioQuiz,
   checkList: parseCheckListQuiz,
   fill: parseFillQuiz,
   pickAndFill: parsePickAndFillQuiz,
+  placement: parsePlacementQuiz,
   component: () => null,
 };
