@@ -72,7 +72,7 @@ const SentenceBuilderQuiz = ({
             </Button>
           ))}
         </div>
-        {isCorrect !== null && <p>{!isCorrect ? "😩 Incorrect" : ""}</p>}
+        {isCorrect !== null && isCorrect === false && <p>😩 Incorrect</p>}
       </QuizLayout>
       {isActive && !isCorrect && (
         <QuizActions
