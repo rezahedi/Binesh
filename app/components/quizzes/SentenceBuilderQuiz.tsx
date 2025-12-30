@@ -20,20 +20,25 @@ const SentenceBuilderQuiz = ({
   const handleCheckAnswer = () => {
     if (!isSentenceCompleted) return;
 
+    // quizBlock.options have the correct order.
     setIsCorrect(userAnswer.every((v, i) => quizBlock.options[i] === v));
   };
 
-  const handleOptionClick = (word: string) => {
+  const handleOptionClick = (index: number) => {
     if (!isActive) return;
 
-    setOptions((prev) => prev.filter((v) => v != word));
+    const word = options[index];
+
+    setOptions((prev) => prev.filter((_, i) => i != index));
     setUserAnswer((prev) => [...prev, word]);
   };
 
-  const handlePartClick = (word: string) => {
+  const handlePartClick = (index: number) => {
     if (!isActive) return;
 
-    setUserAnswer((prev) => prev.filter((v) => v != word));
+    const word = userAnswer[index];
+
+    setUserAnswer((prev) => prev.filter((_, i) => i != index));
     setOptions((prev) => [...prev, word]);
   };
 
@@ -47,7 +52,7 @@ const SentenceBuilderQuiz = ({
                 variant={"outline"}
                 tabIndex={0}
                 className="border rounded-xl mx-1 my-2"
-                onClick={() => handlePartClick(part)}
+                onClick={() => handlePartClick(index)}
               >
                 {part}{" "}
               </Button>
@@ -61,7 +66,7 @@ const SentenceBuilderQuiz = ({
               variant={"outline"}
               tabIndex={0}
               className="border rounded-xl"
-              onClick={() => handleOptionClick(option)}
+              onClick={() => handleOptionClick(index)}
             >
               {option}
             </Button>
