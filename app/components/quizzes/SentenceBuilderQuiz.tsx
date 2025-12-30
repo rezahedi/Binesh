@@ -89,10 +89,12 @@ export default SentenceBuilderQuiz;
 const shuffle = (array: string[]) => {
   if (array.length <= 1) return array;
 
-  const shuffled = [...array];
+  let shuffled: string[];
   let similarity = 1;
 
   do {
+    shuffled = [...array];
+
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
