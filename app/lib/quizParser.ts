@@ -115,7 +115,7 @@ const parseQuizBlock = (str: string): QuizType | null => {
   return { content, type: quizType as QuizKind, quizBlock };
 };
 
-const OPTION_REGEX = /- \[([a-zA-Z])\] (.+)/g;
+const OPTION_REGEX = /- \[([a-zA-Z\s])\] (.+)/g;
 
 const parseListOptions = (quiz: string) => {
   const options: string[] = [];
