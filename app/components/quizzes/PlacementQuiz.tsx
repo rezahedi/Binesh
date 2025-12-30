@@ -68,34 +68,50 @@ const PlacementQuiz = ({
   return (
     <>
       <QuizLayout content={quiz.content}>
-        <div className="flex gap-2 sm:gap-4 w-full justify-evenly">
+        <div
+          className={cn(
+            "flex gap-2 sm:gap-4 w-full justify-evenly",
+            !isActive && "pointer-events-none"
+          )}
+        >
           {quizBlock.zones.map((zone, index) => (
             <span
               key={index}
               className={cn(
                 "flex-1 border border-dashed rounded-xl flex justify-center items-center aspect-3/4",
-                userAnswer[index].value && "border-2 border-solid"
+                userAnswer[index].value && "border-transparent"
               )}
               onClick={() => handleZoneClick(index)}
             >
-              {userAnswer[index].value
-                ? quizBlock.options.find(
-                    (o) => o.zone === userAnswer[index].value
-                  )!.content
-                : zone}
+              {userAnswer[index].value ? (
+                <Button
+                  variant={"outline"}
+                  className="w-full h-full rounded-xl p-0"
+                >
+                  {
+                    quizBlock.options.find(
+                      (o) => o.zone === userAnswer[index].value
+                    )!.content
+                  }
+                </Button>
+              ) : (
+                <span className="text-8xl font-bold text-muted">{zone}</span>
+              )}
             </span>
           ))}
         </div>
         <div className="flex gap-2 sm:gap-4 w-full justify-evenly mt-10">
           {Array.from({ length: quizBlock.options.length }, (_, index) => (
-            <div key={index} className="flex-1 aspect-3/4">
+            <div
+              key={index}
+              className="flex-1 aspect-3/4 bg-muted/50 rounded-xl"
+            >
               {options[index].zone && (
                 <Button
                   variant={"outline"}
                   className={cn(
                     "w-full flex justify-center items-center aspect-3/4",
-                    "border rounded-xl p-0 **:text-wrap text-center",
-                    !isActive && "pointer-events-none"
+                    "border rounded-xl p-0 **:text-wrap text-center"
                   )}
                   onClick={() => handleOptionClick(options[index].zone)}
                 >
