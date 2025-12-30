@@ -87,11 +87,20 @@ const SentenceBuilderQuiz = ({
 export default SentenceBuilderQuiz;
 
 const shuffle = (array: string[]) => {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  // TODO: Compare shuffled array with the original if 80% the same order then shuffle again. Use recursive method to get the shuffled array.
-  return shuffledArray;
+  if (array.length <= 1) return array;
+
+  const shuffled = [...array];
+  let similarity = 1;
+
+  do {
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    similarity =
+      shuffled.filter((v, i) => v === array[i]).length / array.length;
+  } while (similarity > 0.3);
+
+  return shuffled;
 };
