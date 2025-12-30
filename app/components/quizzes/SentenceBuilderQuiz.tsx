@@ -40,25 +40,27 @@ const SentenceBuilderQuiz = ({
   return (
     <>
       <QuizLayout content={quiz.content}>
-        {userAnswer.map((part, index) => (
-          <span
-            key={index}
-            className="leading-12"
-            onClick={() => handlePartClick(part)}
-          >
-            {part}{" "}
-          </span>
-        ))}
+        <div className={cn(!isActive && `pointer-events-none`)}>
+          {userAnswer.map((part, index) => (
+            <span key={index} className="inline-block border-b pb-2 h-fit">
+              <Button
+                variant={"outline"}
+                tabIndex={0}
+                className="border rounded-xl mx-1 my-2"
+                onClick={() => handlePartClick(part)}
+              >
+                {part}{" "}
+              </Button>
+            </span>
+          ))}
+        </div>
         <div className="pt-10 flex gap-6 justify-center flex-wrap">
           {options.map((option, index) => (
             <Button
               key={index}
               variant={"outline"}
               tabIndex={0}
-              className={cn(
-                "border rounded-xl",
-                !isActive && `pointer-events-none`
-              )}
+              className="border rounded-xl"
               onClick={() => handleOptionClick(option)}
             >
               {option}
@@ -85,5 +87,6 @@ const shuffle = (array: string[]) => {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
   }
+  // TODO: Compare shuffled array with the original if 80% the same order then shuffle again. Use recursive method to get the shuffled array.
   return shuffledArray;
 };
