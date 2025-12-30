@@ -219,10 +219,9 @@ const parsePickAndFillQuiz = (quiz: string): PickAndFillQuizType | null => {
 ```
  */
 export type PlacementQuizType = {
-  answers: string[];
   aspectRatio: string;
   zones: string[];
-  options: string[];
+  options: { zone: string; content: string }[];
 };
 const parsePlacementQuiz = (quiz: string): PlacementQuizType | null => {
   // Check quiz format and it should include the :<aspect ration format ex: 1x2> and the content is a list.
@@ -239,10 +238,12 @@ const parsePlacementQuiz = (quiz: string): PlacementQuizType | null => {
   const zones = dropZones.split(/\s*\|\s*/);
 
   return {
-    answers: marks,
     aspectRatio,
     zones,
-    options,
+    options: options.map((option, index) => ({
+      zone: marks[index],
+      content: option,
+    })),
   };
 };
 

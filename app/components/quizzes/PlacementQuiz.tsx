@@ -1,7 +1,7 @@
 import { PlacementQuizType } from "@/lib/quizParser";
 import { IQuizProp } from "./QuizRenderer";
 import { QuizActions, QuizLayout } from "./components";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
 import { useMemo, useState } from "react";
@@ -14,9 +14,11 @@ const PlacementQuiz = ({
 }: IQuizProp) => {
   const quizBlock = quiz.quizBlock as PlacementQuizType;
   const [userAnswer, setUserAnswer] = useState<{ value: string }[]>(
-    quizBlock.answers.map(() => ({ value: "" }))
+    quizBlock.options.map(() => ({ value: "" }))
   );
-  const [options, setOptions] = useState<string[]>(quizBlock.options);
+  const [options, setOptions] = useState<typeof quizBlock.options>(
+    quizBlock.options
+  );
 
   const emptyBlankIndex = useMemo(
     () => userAnswer.findIndex((b) => b.value === ""),
@@ -27,31 +29,40 @@ const PlacementQuiz = ({
   const handleCheckAnswer = () => {
     if (isSomeBlanksEmpty) return;
 
-    console.log(userAnswer, quizBlock.answers);
-    setIsCorrect(userAnswer.every((v, i) => quizBlock.answers[i] === v.value));
+    console.log(userAnswer, quizBlock.zones);
+    setIsCorrect(userAnswer.every((v, i) => quizBlock.zones[i] === v.value));
   };
 
-  const handleOptionClick = (word: string) => {
+  const handleOptionClick = (zone: string) => {
     if (!isActive || !isSomeBlanksEmpty) return;
 
-    setOptions((prev) => prev.filter((v) => v != word));
+    setOptions((prev) =>
+      prev.map((v) => (v.zone != zone ? v : { zone: "", content: "" }))
+    );
     setUserAnswer((prev) => {
       const next = [...prev];
-      next[emptyBlankIndex] = { value: word };
+      next[emptyBlankIndex] = { value: zone };
       return next;
     });
   };
 
   const handleZoneClick = (blankIndex: number) => {
-    const word = userAnswer[blankIndex].value;
-    if (!isActive || !word) return;
+    const option = quizBlock.options.find(
+      (o) => o.zone === userAnswer[blankIndex].value
+    );
+    if (!isActive || !option) return;
 
     setUserAnswer((prev) => {
       const next = [...prev];
       next[blankIndex] = { value: "" };
       return next;
     });
-    setOptions((prev) => [...prev, word]);
+    setOptions((prev) => {
+      const emptySlotIndex = prev.findIndex((v) => v.zone === "");
+      const next = [...prev];
+      next[emptySlotIndex] = option;
+      return next;
+    });
   };
 
   return (
@@ -67,14 +78,18 @@ const PlacementQuiz = ({
               )}
               onClick={() => handleZoneClick(index)}
             >
-              {userAnswer[index].value ? userAnswer[index].value : zone}
+              {userAnswer[index].value
+                ? quizBlock.options.find(
+                    (o) => o.zone === userAnswer[index].value
+                  )!.content
+                : zone}
             </span>
           ))}
         </div>
         <div className="flex gap-2 sm:gap-4 w-full justify-evenly mt-10">
-          {Array.from({ length: quizBlock.answers.length }, (_, index) => (
+          {Array.from({ length: quizBlock.options.length }, (_, index) => (
             <div key={index} className="flex-1 aspect-3/4">
-              {options[index] && (
+              {options[index].zone && (
                 <Button
                   variant={"outline"}
                   className={cn(
@@ -82,9 +97,9 @@ const PlacementQuiz = ({
                     "border rounded-xl p-0 **:text-wrap text-center",
                     !isActive && "pointer-events-none"
                   )}
-                  onClick={() => handleOptionClick(options[index])}
+                  onClick={() => handleOptionClick(options[index].zone)}
                 >
-                  <ReactMarkdown>{options[index]}</ReactMarkdown>
+                  <ReactMarkdown>{options[index].content}</ReactMarkdown>
                 </Button>
               )}
             </div>
