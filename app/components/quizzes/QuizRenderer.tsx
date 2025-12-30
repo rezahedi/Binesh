@@ -6,6 +6,7 @@ import {
   RadioQuiz,
   PickAndFillQuiz,
   PlacementQuiz,
+  SentenceBuilderQuiz,
 } from ".";
 
 export interface IQuizProp {
@@ -22,6 +23,7 @@ const quizComponentMap: Record<QuizKind, React.FC<IQuizProp>> = {
   fill: FillInQuiz,
   pickAndFill: PickAndFillQuiz,
   placement: PlacementQuiz,
+  sentenceBuilder: SentenceBuilderQuiz,
 };
 
 const QuizRenderer = (prop: IQuizProp) => {

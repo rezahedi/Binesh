@@ -101,3 +101,15 @@ Put each one in its place.
 - [A] Test 3
 - [C] Test 4
 ```
+
+# Sentence Builder Quiz
+
+Sentence Builder quiz is more a ordering quiz, there are options and options should pick in a specific order.
+
+---
+
+Create a perfect sentence.
+
+```quiz:sentenceBuilder
+This|is|a short | sentence.
+```

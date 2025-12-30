@@ -55,6 +55,7 @@ export const QUIZ_TYPES = [
   "fill",
   "pickAndFill",
   "placement",
+  "sentenceBuilder",
   "component",
 ] as const;
 export type QuizKind = (typeof QUIZ_TYPES)[number];
@@ -65,6 +66,7 @@ export type QuizBlock =
   | FillQuizType
   | PickAndFillQuizType
   | PlacementQuizType
+  | SentenceBuilderQuizType
   | ComponentQuizType;
 
 export type ComponentQuizType = {
@@ -247,11 +249,31 @@ const parsePlacementQuiz = (quiz: string): PlacementQuizType | null => {
   };
 };
 
+/*
+```quiz:sentenceBuilder
+This|is|a short | sentence.
+```
+ */
+export type SentenceBuilderQuizType = {
+  options: string[];
+};
+const parseSentenceBuilderQuiz = (
+  quiz: string
+): SentenceBuilderQuizType | null => {
+  // Split string into options using | separator
+  const options = quiz.split(/\s*\|\s*/);
+
+  return {
+    options,
+  };
+};
+
 const QUIZ_PARSERS: Record<QuizKind, (body: string) => QuizBlock | null> = {
   radio: parseRadioQuiz,
   checkList: parseCheckListQuiz,
   fill: parseFillQuiz,
   pickAndFill: parsePickAndFillQuiz,
   placement: parsePlacementQuiz,
+  sentenceBuilder: parseSentenceBuilderQuiz,
   component: () => null,
 };

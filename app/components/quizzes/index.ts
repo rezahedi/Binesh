@@ -4,6 +4,7 @@ import FillInQuiz from "@/components/quizzes/FillInQuiz";
 import RadioQuiz from "@/components/quizzes/RadioQuiz";
 import PickAndFillQuiz from "@/components/quizzes/PickAndFillQuiz";
 import PlacementQuiz from "@/components/quizzes/PlacementQuiz";
+import SentenceBuilderQuiz from "@/components/quizzes/SentenceBuilderQuiz";
 
 export {
   ComponentQuiz,
@@ -12,4 +13,5 @@ export {
   RadioQuiz,
   PickAndFillQuiz,
   PlacementQuiz,
+  SentenceBuilderQuiz,
 };
