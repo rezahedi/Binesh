@@ -11,7 +11,7 @@ const QuizLayout = ({
   return (
     <>
       <div className="flex-10">
-        <div className="my-4 p-6 px-8 rounded-xl bg-card space-y-4">
+        <div className="my-4 p-6 sm:p-8 rounded-xl bg-card space-y-4">
           <ReactMarkdown>{content}</ReactMarkdown>
           {children}
         </div>
