@@ -5,6 +5,8 @@ import { Button } from "../ui/button";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 
+type Option = { index: number; value: string };
+
 const SentenceBuilderQuiz = ({
   quiz,
   isActive,
@@ -12,12 +14,8 @@ const SentenceBuilderQuiz = ({
   onCheck: setIsCorrect,
 }: IQuizProp) => {
   const quizBlock = quiz.quizBlock as SentenceBuilderQuizType;
-  const [userAnswer, setUserAnswer] = useState<
-    { index: number; value: string }[]
-  >([]);
-  const [options, setOptions] = useState<{ index: number; value: string }[]>(
-    shuffle(quizBlock.options)
-  );
+  const [userAnswer, setUserAnswer] = useState<Option[]>([]);
+  const [options, setOptions] = useState<Option[]>(shuffle(quizBlock.options));
 
   const isSentenceCompleted = userAnswer.length === quizBlock.options.length;
 
@@ -123,10 +121,10 @@ const SentenceBuilderQuiz = ({
 
 export default SentenceBuilderQuiz;
 
-const shuffle = (array: string[]) => {
+const shuffle = (array: string[]): Option[] => {
   if (array.length <= 1) return array.map((v, i) => ({ index: i, value: v }));
 
-  let shuffled: { index: number; value: string }[];
+  let shuffled: Option[];
   let similarity = 1;
 
   do {
