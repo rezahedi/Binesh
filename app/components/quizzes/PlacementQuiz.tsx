@@ -88,11 +88,13 @@ const PlacementQuiz = ({
                   variant={"outline"}
                   className="w-full h-full rounded-xl p-0"
                 >
-                  {
-                    quizBlock.options.find(
-                      (o) => o.zone === userAnswer[index].value
-                    )!.content
-                  }
+                  <ReactMarkdown>
+                    {
+                      quizBlock.options.find(
+                        (o) => o.zone === userAnswer[index].value
+                      )!.content
+                    }
+                  </ReactMarkdown>
                 </Button>
               ) : (
                 <span className="text-8xl font-bold text-muted">{zone}</span>
