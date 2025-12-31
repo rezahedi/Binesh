@@ -229,7 +229,6 @@ const parsePlacementQuiz = (quiz: string): PlacementQuizType | null => {
   // Check quiz format and it should include the :<aspect ration format ex: 1x2> and the content is a list.
   const formatRegex = /:(\dx\d):\[([^\]]+)\]\r?\n([\s\S]*)/m;
   const match = quiz.match(formatRegex);
-  console.log("pick", match, quiz);
   if (!match) return null;
 
   const [, aspectRatio, dropZones, content] = match;
@@ -240,7 +239,7 @@ const parsePlacementQuiz = (quiz: string): PlacementQuizType | null => {
   const zones = dropZones.split(/\s*\|\s*/);
 
   return {
-    aspectRatio,
+    aspectRatio: aspectRatio.replace("x", "/"),
     zones,
     options: options.map((option, index) => ({
       zone: marks[index],
