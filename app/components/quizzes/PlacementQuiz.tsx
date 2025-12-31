@@ -78,9 +78,10 @@ const PlacementQuiz = ({
             <span
               key={index}
               className={cn(
-                "flex-1 border border-dashed rounded-xl flex justify-center items-center aspect-3/4",
+                "flex-1 border border-dashed rounded-xl flex justify-center items-center",
                 userAnswer[index].value && "border-transparent"
               )}
+              style={{ aspectRatio: quizBlock.aspectRatio }}
               onClick={() => handleZoneClick(index)}
             >
               {userAnswer[index].value ? (
@@ -97,7 +98,9 @@ const PlacementQuiz = ({
                   </ReactMarkdown>
                 </Button>
               ) : (
-                <span className="text-8xl font-bold text-muted">{zone}</span>
+                <span className="text-4xl sm:text-8xl font-bold text-muted">
+                  {zone}
+                </span>
               )}
             </span>
           ))}
@@ -106,13 +109,14 @@ const PlacementQuiz = ({
           {Array.from({ length: quizBlock.options.length }, (_, index) => (
             <div
               key={index}
-              className="flex-1 aspect-3/4 bg-muted/50 rounded-xl"
+              className="flex-1 bg-muted/50 rounded-xl"
+              style={{ aspectRatio: quizBlock.aspectRatio }}
             >
               {options[index].zone && (
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-full flex justify-center items-center aspect-3/4",
+                    "w-full h-full flex justify-center items-center",
                     "border rounded-xl p-0 **:text-wrap text-center"
                   )}
                   onClick={() => handleOptionClick(options[index].zone)}
