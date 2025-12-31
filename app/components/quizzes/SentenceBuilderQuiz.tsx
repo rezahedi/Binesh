@@ -12,8 +12,12 @@ const SentenceBuilderQuiz = ({
   onCheck: setIsCorrect,
 }: IQuizProp) => {
   const quizBlock = quiz.quizBlock as SentenceBuilderQuizType;
-  const [userAnswer, setUserAnswer] = useState<string[]>([]);
-  const [options, setOptions] = useState<string[]>(shuffle(quizBlock.options));
+  const [userAnswer, setUserAnswer] = useState<
+    { index: number; value: string }[]
+  >([]);
+  const [options, setOptions] = useState<{ index: number; value: string }[]>(
+    shuffle(quizBlock.options)
+  );
 
   const isSentenceCompleted = userAnswer.length === quizBlock.options.length;
 
@@ -21,56 +25,89 @@ const SentenceBuilderQuiz = ({
     if (!isSentenceCompleted) return;
 
     // quizBlock.options have the correct order.
-    setIsCorrect(userAnswer.every((v, i) => quizBlock.options[i] === v));
+    setIsCorrect(userAnswer.every((v, i) => quizBlock.options[i] === v.value));
   };
 
   const handleOptionClick = (index: number) => {
     if (!isActive) return;
 
-    const word = options[index];
+    const word = options.find((v) => v.index === index);
+    if (!word) return;
 
-    setOptions((prev) => prev.filter((_, i) => i != index));
+    setOptions((prev) =>
+      prev.map((p) => ({
+        index: p.index,
+        value: p.index === index ? "" : p.value,
+      }))
+    );
     setUserAnswer((prev) => [...prev, word]);
   };
 
   const handlePartClick = (index: number) => {
     if (!isActive) return;
 
-    const word = userAnswer[index];
+    const word = userAnswer.find((v) => v.index === index);
+    if (!word) return;
 
-    setUserAnswer((prev) => prev.filter((_, i) => i != index));
-    setOptions((prev) => [...prev, word]);
+    setUserAnswer((prev) => prev.filter((v) => v.index != index));
+    setOptions((prev) => prev.map((p) => (p.index === index ? word : p)));
   };
 
   return (
     <>
       <QuizLayout content={quiz.content}>
-        <div className={cn(!isActive && `pointer-events-none`)}>
-          {userAnswer.map((part, index) => (
-            <span key={index} className="inline-block border-b pb-2 h-fit">
+        <div className="grid auto-rows-fr gap-6">
+          <div
+            className={cn(
+              "relative h-full",
+              !isActive && `pointer-events-none`
+            )}
+          >
+            <div className="absolute -z-10 top-0 left-0 w-full h-full overflow-hidden **:border-b **:h-[53px] **:mb-[9px] sm:**:h-14 sm:**:mb-3.5">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <div className="flex gap-x-2 gap-y-4 sm:gap-y-6 flex-wrap">
+              {userAnswer.map((part) => (
+                <Button
+                  key={part.index}
+                  variant={"outline"}
+                  tabIndex={0}
+                  className="border rounded-xl"
+                  onClick={() => handlePartClick(part.index)}
+                >
+                  {part.value}{" "}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <div className="flex gap-x-2 gap-y-4 sm:gap-y-6 flex-wrap justify-center sm:gap-x-4">
+            {options.map((option) => (
               <Button
+                key={option.index}
                 variant={"outline"}
                 tabIndex={0}
-                className="border rounded-xl mx-1 my-2"
-                onClick={() => handlePartClick(index)}
+                className={cn(
+                  "border rounded-xl mb-2",
+                  option.value === "" &&
+                    "border-muted/50 shadow-muted/50 bg-muted/50"
+                )}
+                disabled={option.value === ""}
+                onClick={() => handleOptionClick(option.index)}
               >
-                {part}{" "}
+                {option.value === "" ? (
+                  <span className="invisible">
+                    {userAnswer.find((v) => v.index === option.index)?.value}
+                  </span>
+                ) : (
+                  option.value
+                )}
               </Button>
-            </span>
-          ))}
-        </div>
-        <div className="pt-10 flex gap-6 justify-center flex-wrap">
-          {options.map((option, index) => (
-            <Button
-              key={index}
-              variant={"outline"}
-              tabIndex={0}
-              className="border rounded-xl"
-              onClick={() => handleOptionClick(index)}
-            >
-              {option}
-            </Button>
-          ))}
+            ))}
+          </div>
         </div>
         {isCorrect !== null && isCorrect === false && <p>😩 Incorrect</p>}
       </QuizLayout>
@@ -87,21 +124,20 @@ const SentenceBuilderQuiz = ({
 export default SentenceBuilderQuiz;
 
 const shuffle = (array: string[]) => {
-  if (array.length <= 1) return array;
+  if (array.length <= 1) return array.map((v, i) => ({ index: i, value: v }));
 
-  let shuffled: string[];
+  let shuffled: { index: number; value: string }[];
   let similarity = 1;
 
   do {
-    shuffled = [...array];
+    shuffled = array.map((v, i) => ({ index: i, value: v }));
 
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    similarity =
-      shuffled.filter((v, i) => v === array[i]).length / array.length;
+    similarity = shuffled.filter((v, i) => v.index === i).length / array.length;
   } while (similarity > 0.3);
 
   return shuffled;
