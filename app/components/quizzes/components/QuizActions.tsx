@@ -4,11 +4,9 @@ import { FlagIcon } from "lucide-react";
 const QuizActions = ({
   disabled,
   onCheck,
-  label = "Check",
 }: {
   disabled: boolean;
   onCheck: () => void;
-  label?: string;
 }) => {
   return (
     <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
@@ -18,7 +16,7 @@ const QuizActions = ({
         </Button>
       </div>
       <Button onClick={onCheck} disabled={disabled} className="font-semibold">
-        {label}
+        Check
       </Button>
     </div>
   );
