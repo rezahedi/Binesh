@@ -75,9 +75,9 @@ const PickAndFillQuiz = ({
           </span>
         ))}
         <div className="pt-10 flex gap-6 justify-center flex-wrap">
-          {options.map((option, index) => (
+          {options.map((option) => (
             <Button
-              key={index}
+              key={option}
               variant={"outline"}
               tabIndex={0}
               className={cn(
