@@ -70,7 +70,7 @@ Which one is the correct output of the `print(10 * 10)` code snippet?
 
 ```quiz:radio
 - [x] 100
-- [ ] 1000
+- [ ] 10
 - [ ] 1000
 - [ ] 10000
 ```
@@ -89,7 +89,7 @@ You [should] finish your homework today, and you [can] ask the teacher if you ne
 
 # Placement Quiz
 
-The following quiz style is placement, drag options and drop in dropping zones, works best for labeling, classification or ordering. It have two main part, options could be words, or images. Second part is dropping zones, could have two or more but not more than count of options.
+The following quiz style is placement, drag options and drop in dropping zones, works best for labeling, classification or ordering. It has two main parts, options could be words, or images. Second part is dropping zones, could have two or more but not more than count of options.
 
 ---
 
@@ -104,7 +104,7 @@ Put each one in its place.
 
 # Sentence Builder Quiz
 
-Sentence Builder quiz is more a ordering quiz, there are options and options should pick in a specific order.
+Sentence Builder quiz is more of an ordering quiz, where options should be picked in a specific order.
 
 ---
 
