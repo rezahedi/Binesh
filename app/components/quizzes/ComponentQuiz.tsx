@@ -2,9 +2,8 @@ import { ComponentQuizType } from "@/lib/quizParser";
 import { useState } from "react";
 import ReactMarkdown from "@/lib/markdown";
 import { IQuizProp } from "@/components/quizzes/QuizRenderer";
-import { FlagIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { ComponentRenderer } from "@/components/Interactive/ComponentRenderer";
+import { QuizLayout, QuizActions } from "./components";
 
 const ComponentQuiz = ({
   quiz,
@@ -33,41 +32,24 @@ const ComponentQuiz = ({
 
   return (
     <>
-      <div className="flex-10">
-        <div className="my-4 p-6 px-8 rounded-xl bg-card">
-          <ReactMarkdown>{quiz.content}</ReactMarkdown>
-          <ComponentRenderer
-            component={quizBlock.componentName}
-            props={{
-              onAnswer: handleChange,
-              isActive,
-            }}
-          />
-          {isCorrect !== null && (
-            <p>{isCorrect ? "🎉 Correct" : "😩 Incorrect"}</p>
-          )}
-          <ReactMarkdown>{quizBlock.afterContent}</ReactMarkdown>
-        </div>
-      </div>
+      <QuizLayout content={quiz.content}>
+        <ComponentRenderer
+          component={quizBlock.componentName}
+          props={{
+            onAnswer: handleChange,
+            isActive,
+          }}
+        />
+        {isCorrect !== null && (
+          <p>{isCorrect ? "🎉 Correct" : "😩 Incorrect"}</p>
+        )}
+        <ReactMarkdown>{quizBlock.afterContent}</ReactMarkdown>
+      </QuizLayout>
       {isActive && !isCorrect && (
-        <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
-          <div className="flex-1">
-            <Button
-              variant={"ghost"}
-              className="text-muted-foreground"
-              size={"sm"}
-            >
-              <FlagIcon className="size-4" /> Report
-            </Button>
-          </div>
-          <Button
-            onClick={handleCheckAnswer}
-            disabled={userAnswer === null}
-            className="font-semibold"
-          >
-            Check It
-          </Button>
-        </div>
+        <QuizActions
+          disabled={userAnswer === null}
+          onCheck={handleCheckAnswer}
+        />
       )}
     </>
   );

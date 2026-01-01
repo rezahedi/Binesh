@@ -1,5 +1,13 @@
 import { QuizKind, QuizType } from "@/lib/quizParser";
-import { ComponentQuiz, CheckListQuiz, FillInQuiz, RadioQuiz } from ".";
+import {
+  ComponentQuiz,
+  CheckListQuiz,
+  FillInQuiz,
+  RadioQuiz,
+  PickAndFillQuiz,
+  PlacementQuiz,
+  SentenceBuilderQuiz,
+} from ".";
 
 export interface IQuizProp {
   quiz: QuizType & { id: string };
@@ -13,6 +21,9 @@ const quizComponentMap: Record<QuizKind, React.FC<IQuizProp>> = {
   radio: RadioQuiz,
   checkList: CheckListQuiz,
   fill: FillInQuiz,
+  pickAndFill: PickAndFillQuiz,
+  placement: PlacementQuiz,
+  sentenceBuilder: SentenceBuilderQuiz,
 };
 
 const QuizRenderer = (prop: IQuizProp) => {
