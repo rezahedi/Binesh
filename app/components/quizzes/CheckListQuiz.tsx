@@ -45,7 +45,7 @@ const CheckListQuiz = ({
           className={cn(
             `grid gap-3 mt-4 [&_figure]:p-0 has-[.katex]:text-2xl`,
             quizBlock.options.length < 4
-              ? `grid-cols-2 [&_img]:h-36`
+              ? `grid-cols-1 [&_img]:h-36`
               : `grid-cols-2`
           )}
         >
