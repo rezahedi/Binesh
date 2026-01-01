@@ -104,7 +104,7 @@ Put each one in its place.
 
 # Sentence Builder Quiz
 
-Sentence Builder quiz is more a ordering quiz, there are options and options should pick in a specific order.
+Sentence Builder quiz is more of an ordering quiz, where options should be picked in a specific order.
 
 ---
 
