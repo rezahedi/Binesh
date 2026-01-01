@@ -89,7 +89,7 @@ You [should] finish your homework today, and you [can] ask the teacher if you ne
 
 # Placement Quiz
 
-The following quiz style is placement, drag options and drop in dropping zones, works best for labeling, classification or ordering. It have two main part, options could be words, or images. Second part is dropping zones, could have two or more but not more than count of options.
+The following quiz style is placement, drag options and drop in dropping zones, works best for labeling, classification or ordering. It has two main parts, options could be words, or images. Second part is dropping zones, could have two or more but not more than count of options.
 
 ---
 
