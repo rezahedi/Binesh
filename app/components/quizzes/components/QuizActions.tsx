@@ -11,7 +11,12 @@ const QuizActions = ({
   return (
     <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
       <div className="flex-1">
-        <Button variant={"ghost"} className="text-muted-foreground" size={"sm"}>
+        <Button
+          variant={"ghost"}
+          className="text-muted-foreground"
+          size={"sm"}
+          disabled
+        >
           <FlagIcon className="size-4" /> Report
         </Button>
       </div>
