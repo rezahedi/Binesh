@@ -1,10 +1,4 @@
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from "react";
+import { createContext, useContext, useState } from "react";
 import useTrophy from "@/hooks/useTrophy";
 import { GetUserPointsResponse, StreakResponse } from "@trophyso/node/api";
 import { IUseStats } from "@/hooks/useStats";
