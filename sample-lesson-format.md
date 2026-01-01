@@ -70,7 +70,7 @@ Which one is the correct output of the `print(10 * 10)` code snippet?
 
 ```quiz:radio
 - [x] 100
-- [ ] 1000
+- [ ] 10
 - [ ] 1000
 - [ ] 10000
 ```
