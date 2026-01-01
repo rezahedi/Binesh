@@ -203,7 +203,7 @@ const parsePickAndFillQuiz = (quiz: string): PickAndFillQuizType | null => {
   const bracketRegex = /\[([^\]]+)\]/g;
   const answersMatches = content.matchAll(bracketRegex);
 
-  const answers = [...answersMatches.map((match) => match[1])];
+  const answers = [...answersMatches].map((match) => match[1]);
 
   return {
     answers,
