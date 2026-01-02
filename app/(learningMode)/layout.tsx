@@ -12,7 +12,7 @@ export default function RootLayout({
 }>) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    document.body.style.height = "100vh";
+    document.body.style.height = "100dvh";
     return () => {
       document.body.style.overflow = "auto";
       document.body.style.height = "auto";
