@@ -11,16 +11,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   useEffect(() => {
+    const handler = () => {
+      document.body.style.height = `${window.visualViewport?.height ?? window.innerHeight}px`;
+    };
+
+    handler();
+    window.visualViewport?.addEventListener("resize", handler);
     document.body.style.overflow = "hidden";
-    document.body.style.height = "100dvh";
     return () => {
+      window.visualViewport?.removeEventListener("resize", handler);
       document.body.style.overflow = "auto";
       document.body.style.height = "auto";
     };
   }, []);
 
   return (
-    <div className={"h-dvh overflow-hidden"}>
+    <div className={"h-full overflow-hidden"}>
       <StackProvider app={stackClientApp}>
         <StackTheme>{children}</StackTheme>
       </StackProvider>
