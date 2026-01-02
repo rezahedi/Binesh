@@ -5,11 +5,6 @@ import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackClientApp } from "@stack/client";
 import { useEffect } from "react";
 
-export const viewport = {
-  maximumScale: 1, // Disable auto-zoom on mobile Safari
-  interactiveWidget: "resizes-content" as const,
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
