@@ -29,7 +29,7 @@ const Finish = () => {
   }
 
   return (
-    <div className="flex flex-col h-dvh max-w-2xl mx-auto px-4">
+    <div className="flex flex-col h-full max-w-2xl mx-auto px-4">
       <div className="flex-1 flex flex-col justify-center items-center text-center">
         <Image
           src={"/assets/alien-ship.svg"}

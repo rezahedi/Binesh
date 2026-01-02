@@ -25,7 +25,7 @@ const Content = () => {
   if (stats.endTime) return <Finish />;
 
   return (
-    <div className="flex flex-col h-dvh">
+    <div className="flex flex-col h-full">
       <StartLesson />
       {isFinished && (
         <div className="sticky bottom-0 bg-background py-3">
