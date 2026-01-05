@@ -13,9 +13,13 @@ import {
   Users2Icon,
 } from "lucide-react";
 import { FeatureCard } from "./FeatureCard";
+import { redirect } from "next/navigation";
 
 export default async function WebsitePage() {
   const user = await stackServerApp.getUser();
+  if (user) {
+    return redirect("/learn");
+  }
 
   const STATS = [
     { title: "Open Source", value: "Free Forever" },
