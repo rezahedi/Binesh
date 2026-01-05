@@ -86,7 +86,10 @@ const SloganBuilder = () => {
                 key={part.index}
                 variant={"outline"}
                 tabIndex={0}
-                className="border rounded-xl"
+                className={cn(
+                  "border rounded-xl",
+                  part.index === 0 && "bg-secondary-light"
+                )}
                 onClick={() => handlePartClick(part.index)}
               >
                 {part.value}
@@ -102,6 +105,7 @@ const SloganBuilder = () => {
               tabIndex={0}
               className={cn(
                 "border rounded-xl mb-2",
+                option.index === 0 && "bg-secondary-light",
                 option.value === "" &&
                   "border-muted/50 shadow-muted/50 bg-muted/50"
               )}
