@@ -4,9 +4,69 @@ import Link from "next/link";
 import { buttonVariants } from "./components/ui/button";
 import SloganBuilder from "./SloganBuilder";
 import { cn } from "./utils/cn";
+import {
+  BookOpenIcon,
+  CodeIcon,
+  Gamepad2Icon,
+  LightbulbIcon,
+  PencilIcon,
+  Users2Icon,
+} from "lucide-react";
+import { FeatureCard } from "./FeatureCard";
 
 export default async function WebsitePage() {
   const user = await stackServerApp.getUser();
+
+  const STATS = [
+    { title: "Open Source", value: "Free Forever" },
+    { title: "Markdown", value: "Easy to Write" },
+    { title: "Interactive", value: "Quiz & Exercises" },
+    { title: "Gamified", value: "Keep Learners Engaged" },
+  ];
+  const FEATURES = [
+    {
+      color: "from-yellow-400 to-orange-400",
+      icon: PencilIcon,
+      title: "Bite-sized Learning Platform",
+      description:
+        "Create bite-sized lessons that are easy to understand mixed with engaging content and interactive quizzes.",
+    },
+    {
+      color: "from-blue-400 to-cyan-400",
+      icon: CodeIcon,
+      title: "Markdown-Based Format",
+      description:
+        "Standardized, AI-friendly content format that's easy to naturally write and edit, and reuse across any subject.",
+    },
+    {
+      color: "from-purple-400 to-pink-400",
+      icon: Gamepad2Icon,
+      title: "Built-in Gamification",
+      description:
+        "Motivate learners with points, streaks, and achievements. Keep them coming back for more.",
+    },
+    {
+      color: "from-green-400 to-emerald-400",
+      icon: BookOpenIcon,
+      title: "Interactive Components",
+      description:
+        "Embed quizzes, exercises, and interactive elements directly in your lessons to reinforce learning.",
+    },
+    {
+      color: "from-red-400 to-rose-400",
+      icon: Users2Icon,
+      title: "Open Source & Free",
+      description:
+        "Built by the community, for the community. Join us and help shape the future of learning.",
+    },
+    {
+      color: "from-indigo-400 to-violet-400",
+      icon: LightbulbIcon,
+      title: "Learn Through Practice",
+      description:
+        "Focus on deep understanding through hands-on practice, not memorization.",
+    },
+  ];
 
   return (
     <>
@@ -67,39 +127,48 @@ export default async function WebsitePage() {
           </div>
         </div>
       </header>
-      <section className="text-center">
+      <section className="text-center my-10">
         <SloganBuilder />
       </section>
-      <div>
-        <h1>Website</h1>
-        <p>
-          <Link href={"/learn"}>Start Learning</Link>
-        </p>
-        <p>
-          <Link href={"/dashboard"}>Admin Dashboard</Link>
-        </p>
-        {!user && (
-          <>
-            <Link href={`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-in`}>
-              Sign in
-            </Link>{" "}
-            -
-            <Link href={`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-up`}>
-              Sign up
-            </Link>
-          </>
-        )}
-        {user && (
-          <div>
-            {user?.displayName}{" "}
-            <Link
-              href={`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-out`}
-            >
-              Sign out
-            </Link>
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {STATS.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-gray-900 mb-2">{stat.title}</div>
+                <p className="text-gray-600">{stat.value}</p>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+        <div id="features"></div>
+      </section>
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-gray-900 mb-4 font-semibold text-3xl">
+              Why Choose Binesh
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto text-balance">
+              A platform designed for anyone who wants to create engaging
+              content and learn effectively
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {FEATURES.map((feature, index) => (
+              <FeatureCard
+                key={index}
+                color={feature.color}
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
+                delay={index * 0.1}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
