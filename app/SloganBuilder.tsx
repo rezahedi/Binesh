@@ -61,7 +61,7 @@ const SloganBuilder = () => {
       );
 
     return () => {
-      timeouts.every((t) => clearTimeout(t));
+      timeouts.forEach((t) => clearTimeout(t));
     };
   }, [isCorrect]);
 
