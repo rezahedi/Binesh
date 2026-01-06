@@ -39,19 +39,30 @@ const SloganBuilder = () => {
   useEffect(() => {
     if (isCorrect !== true) return;
 
+    const timeouts: NodeJS.Timeout[] = [];
+
     userAnswer.forEach((_, i) => {
-      setTimeout(() => {
-        setUserAnswer((prev) =>
-          prev.map((p, index) => (index === i ? { ...p, animate: true } : p))
-        );
-      }, i * TIMER_PER_PART);
+      timeouts.push(
+        setTimeout(() => {
+          setUserAnswer((prev) =>
+            prev.map((p, index) => (index === i ? { ...p, animate: true } : p))
+          );
+        }, i * TIMER_PER_PART)
+      );
     });
 
     if (router)
-      setTimeout(
-        () => router.push("/handler/sign-in"),
-        TIMER_PER_PART * SLOGAN.length
+      timeouts.push(
+        setTimeout(
+          () =>
+            router.push(`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-in`),
+          TIMER_PER_PART * SLOGAN.length
+        )
       );
+
+    return () => {
+      timeouts.every((t) => clearTimeout(t));
+    };
   }, [isCorrect]);
 
   const handleCheckAnswer = () => {
