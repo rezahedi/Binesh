@@ -75,8 +75,8 @@ export default async function WebsitePage() {
   return (
     <>
       <header className="sticky top-0 bg-background w-full shadow-lg z-10">
-        <div className="container max-w-7xl px-2 py-4 mx-auto flex gap-3 items-center">
-          <h1 className="hidden sm:block">
+        <div className="container max-w-7xl px-4 py-4 mx-auto flex gap-3 items-center justify-between">
+          <h1>
             <Link
               href={`${process.env.NEXT_PUBLIC_APP_BASE}`}
               className="flex gap-2 items-center hover:text-primary"
@@ -87,10 +87,10 @@ export default async function WebsitePage() {
                 height={50}
                 alt="Binesh Logo"
               />
-              <div className="text-3xl font-bold hidden sm:block">BINESH</div>
+              <div className="text-3xl font-bold">BINESH</div>
             </Link>
           </h1>
-          <nav className="grow">
+          <nav className="grow hidden sm:block">
             <ul className="flex gap-1 justify-center text-lg">
               <li>
                 <Link
@@ -173,6 +173,47 @@ export default async function WebsitePage() {
           </div>
         </div>
       </section>
+      <footer className="bg-foreground text-background">
+        <div className="max-w-7xl mx-auto px-4 py-20 flex flex-col sm:flex-row gap-8 items-center sm:items-end justify-between">
+          <div>
+            <h1>
+              <Link
+                href={`${process.env.NEXT_PUBLIC_APP_BASE}`}
+                className="flex gap-4 items-center"
+              >
+                <Image
+                  src="/assets/binesh-logo.svg"
+                  width={76}
+                  height={76}
+                  alt="Binesh Logo"
+                />
+                <div className="flex flex-col gap-1">
+                  <h2 className="text-4xl font-bold">BINESH</h2>
+                  <p className="font-light">Learn through practice.</p>
+                </div>
+              </Link>
+            </h1>
+            <p className="mt-10">
+              &copy; 2025 Binesh. Open source and build with mix of hand coding
+              and AI.
+            </p>
+          </div>
+          <nav>
+            <ul className="flex gap-4 [&_a]:hover:underline">
+              <li>
+                <Link target="_blank" href="https://github.com/rezahedi/binesh">
+                  Github
+                </Link>
+              </li>
+              <li>
+                <Link target="_blank" href="https://rezahedi.dev">
+                  Portfolio
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </footer>
     </>
   );
 }
