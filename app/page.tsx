@@ -198,6 +198,29 @@ export default async function WebsitePage() {
         description="Finish every day smarter with engaging lessons, competitive features, and daily encouragement."
         reverse
       />
+      <section className="py-30 px-6">
+        <div className="max-w-7xl mx-auto text-center">
+          <h3 className="font-semibold text-4xl sm:text-5xl text-balance mb-4 sm:mb-18">
+            Learn through practice
+          </h3>
+          <p className="my-14 text-balance text-lg text-muted-foreground mx-auto max-w-5xl">
+            Binesh (meaning &quot;Insight&quot; in Persian) is an open-source
+            platform that makes content creation effortless and learning
+            engaging for everyone. Anyone can create bite-sized lessons with
+            interactive components using simple Markdown. Share knowledge, learn
+            from others, and grow together.
+          </p>
+          <Link
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "text-lg py-4 px-14 border-muted-foreground shadow-muted-foreground"
+            )}
+            href="/handler/sign-in"
+          >
+            Get Started
+          </Link>
+        </div>
+      </section>
       <footer className="bg-foreground text-background">
         <div className="max-w-7xl mx-auto px-4 py-20 flex flex-col sm:flex-row gap-8 items-center sm:items-end justify-between">
           <div>
