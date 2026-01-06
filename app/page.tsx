@@ -151,7 +151,7 @@ export default async function WebsitePage() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-gray-900 mb-4 font-semibold text-4xl sm:text-5xl">
+            <h2 className="text-gray-900 mb-4 font-md-serif text-4xl sm:text-5xl">
               How It Works
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-balance">
@@ -201,7 +201,7 @@ export default async function WebsitePage() {
       />
       <section id="about" className="pt-20 px-6 bg-[#f8f7f0]">
         <div className="max-w-7xl mx-auto text-center">
-          <h3 className="font-semibold text-4xl sm:text-5xl text-balance mb-4 sm:mb-14">
+          <h3 className="font-md-serif text-4xl sm:text-5xl text-balance mb-4 sm:mb-14">
             Learn through practice
           </h3>
           <p className="my-10 text-balance text-lg text-foreground/80 mx-auto max-w-5xl">

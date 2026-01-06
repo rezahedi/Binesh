@@ -97,7 +97,7 @@ const SloganBuilder = () => {
 
   return (
     <div className="sm:max-w-3xl mx-4 sm:mx-auto">
-      <h2 className="font-semibold text-4xl sm:text-5xl my-8 leading-tight">
+      <h2 className="font-md-serif text-4xl sm:text-5xl my-8 leading-tight">
         Learning Start Here
       </h2>
       <div
