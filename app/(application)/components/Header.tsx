@@ -23,7 +23,7 @@ export default function Header() {
               height={50}
               alt="Binesh Logo"
             />
-            <div className="text-3xl font-bold hidden sm:block">BINESH</div>
+            <div className="text-3xl font-bold hidden sm:block">Binesh</div>
           </Link>
         </h1>
         <NavBar className="grow" />
