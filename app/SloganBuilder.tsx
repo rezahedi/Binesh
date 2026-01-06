@@ -71,7 +71,12 @@ const SloganBuilder = () => {
       <h2 className="font-semibold text-4xl sm:text-5xl my-8 leading-tight">
         Learning Start Here
       </h2>
-      <div className="grid auto-rows-fr gap-6 mb-4">
+      <div
+        className={cn(
+          "grid auto-rows-fr gap-6 mb-4",
+          isCorrect === true && "pointer-events-none"
+        )}
+      >
         <div className="relative h-full">
           <div className="absolute -z-10 top-0 left-0 w-full h-full overflow-hidden **:border-b **:h-[53px] **:mb-[9px] sm:**:h-14 sm:**:mb-3.5">
             <div></div>
