@@ -46,6 +46,23 @@
   --color-quiz-select-700: var(--color-blue-700);
 }
 
+@layer utilities {
+  .animate-bounce-once {
+    animation: bounce-once 200ms ease-out 1 forwards;
+  }
+
+  @keyframes bounce-once {
+    0%, 100% {
+      transform: none;
+      animation-timing-function: ease-out;
+    }
+    50% {
+      transform: translateY(-20%);
+      animation-timing-function: ease-in;
+    }
+  }
+}
+
 :root {
   --radius: 0.625rem;
   --background: #ffffff;

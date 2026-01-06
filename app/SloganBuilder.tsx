@@ -42,11 +42,16 @@ const SloganBuilder = () => {
 
     userAnswer.forEach((_, i) => {
       timeouts.push(
-        setTimeout(() => {
-          setUserAnswer((prev) =>
-            prev.map((p, index) => (index === i ? { ...p, animate: true } : p))
-          );
-        }, i * TIMER_PER_PART)
+        setTimeout(
+          () => {
+            setUserAnswer((prev) =>
+              prev.map((p, index) =>
+                index === i ? { ...p, animate: true } : p
+              )
+            );
+          },
+          i * (TIMER_PER_PART / 3)
+        )
       );
     });
 
@@ -114,16 +119,16 @@ const SloganBuilder = () => {
             <div></div>
           </div>
           <div className="flex gap-x-2 gap-y-4 sm:gap-y-6 flex-wrap">
-            {userAnswer.map((part, i) => (
+            {userAnswer.map((part) => (
               <Button
                 key={part.index}
                 variant={"outline"}
                 tabIndex={0}
                 className={cn(
-                  "border rounded-xl",
+                  "rounded-xl",
                   part.index === 0 && "bg-secondary-light",
                   part.animate &&
-                    "border shadow-none translate-y-1 transition-all"
+                    "animate-bounce-once border-primary-light text-primary-dark shadow-primary"
                 )}
                 onClick={() => handlePartClick(part.index)}
               >
@@ -139,7 +144,7 @@ const SloganBuilder = () => {
               variant={"outline"}
               tabIndex={0}
               className={cn(
-                "border rounded-xl mb-2",
+                "rounded-xl mb-2",
                 option.index === 0 && "bg-secondary-light",
                 option.value === "" &&
                   "border-muted/50 shadow-muted/50 bg-muted/50"
