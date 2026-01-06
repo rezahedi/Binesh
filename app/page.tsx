@@ -146,13 +146,13 @@ export default async function WebsitePage() {
             ))}
           </div>
         </div>
-        <div id="features"></div>
+        <div id="how-it-works"></div>
       </section>
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-gray-900 mb-4 font-semibold text-3xl">
-              Why Choose Binesh
+            <h2 className="text-gray-900 mb-4 font-semibold text-4xl sm:text-5xl">
+              How It Works
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-balance">
               A platform designed for anyone who wants to create engaging
@@ -173,22 +173,23 @@ export default async function WebsitePage() {
             ))}
           </div>
         </div>
+        <div id="features"></div>
       </section>
       <HeroFeatureCard
         className="bg-[#f0f8f7]"
-        image="/assets/app-screen-01.png"
+        image="/assets/app-screen-05.png"
         title={
           <>
             More effective,
             <br /> more fun
           </>
         }
-        description="Brilliant's interactive approach helps you master concepts in less
+        description="Binesh's interactive approach helps you master concepts in less
             time, with more purpose and joy."
       />
       <HeroFeatureCard
-        className="bg-[#f8f7f0]"
-        image="/assets/app-screen-01.png"
+        className="bg-[#f7f2ff]"
+        image="/assets/app-screen-06.png"
         title={
           <>
             Stay
@@ -198,12 +199,12 @@ export default async function WebsitePage() {
         description="Finish every day smarter with engaging lessons, competitive features, and daily encouragement."
         reverse
       />
-      <section className="py-30 px-6">
+      <section id="about" className="pt-20 px-6 bg-[#f8f7f0]">
         <div className="max-w-7xl mx-auto text-center">
-          <h3 className="font-semibold text-4xl sm:text-5xl text-balance mb-4 sm:mb-18">
+          <h3 className="font-semibold text-4xl sm:text-5xl text-balance mb-4 sm:mb-14">
             Learn through practice
           </h3>
-          <p className="my-14 text-balance text-lg text-muted-foreground mx-auto max-w-5xl">
+          <p className="my-10 text-balance text-lg text-foreground/80 mx-auto max-w-5xl">
             Binesh (meaning &quot;Insight&quot; in Persian) is an open-source
             platform that makes content creation effortless and learning
             engaging for everyone. Anyone can create bite-sized lessons with
@@ -219,6 +220,15 @@ export default async function WebsitePage() {
           >
             Get Started
           </Link>
+          <div className="mt-14 rounded-2xl rounded-b-none sm:rounded-4xl sm:rounded-b-none overflow-hidden max-w-4xl mx-auto">
+            <video
+              src="/assets/quiz_720.mp4"
+              autoPlay
+              loop
+              muted
+              className="w-full -mb-10 sm:-mb-26"
+            />
+          </div>
         </div>
       </section>
       <footer className="bg-foreground text-background">

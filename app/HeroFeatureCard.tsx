@@ -38,7 +38,9 @@ const HeroFeatureCard = ({
           <h3 className="font-semibold text-4xl sm:text-5xl text-balance mb-4 sm:mb-18">
             {title}
           </h3>
-          <p className="text-balance text-lg">{description}</p>
+          <p className="text-balance text-lg text-foreground/80">
+            {description}
+          </p>
         </div>
       </div>
     </section>
