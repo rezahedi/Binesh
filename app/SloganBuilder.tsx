@@ -18,7 +18,9 @@ const SLOGAN = [
   "science.",
 ];
 
-type Option = { index: number; value: string };
+const TIMER_PER_PART = 100;
+
+type Option = { index: number; value: string; animate: boolean };
 
 const SloganBuilder = () => {
   const [userAnswer, setUserAnswer] = useState<Option[]>([]);
@@ -29,13 +31,28 @@ const SloganBuilder = () => {
   const isSentenceCompleted = userAnswer.length === SLOGAN.length;
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (options.length === 0) setOptions(shuffle(SLOGAN));
+    if (options.length === 0)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setOptions(shuffle(SLOGAN).map((v) => ({ ...v, animate: false })));
   }, []);
 
   useEffect(() => {
-    if (isCorrect && router) router.push("/handler/sign-in");
-  }, [isCorrect, router]);
+    if (isCorrect !== true) return;
+
+    userAnswer.forEach((_, i) => {
+      setTimeout(() => {
+        setUserAnswer((prev) =>
+          prev.map((p, index) => (index === i ? { ...p, animate: true } : p))
+        );
+      }, i * TIMER_PER_PART);
+    });
+
+    if (router)
+      setTimeout(
+        () => router.push("/handler/sign-in"),
+        TIMER_PER_PART * SLOGAN.length
+      );
+  }, [isCorrect]);
 
   const handleCheckAnswer = () => {
     if (!isSentenceCompleted) return;
@@ -51,6 +68,7 @@ const SloganBuilder = () => {
       prev.map((p) => ({
         index: p.index,
         value: p.index === index ? "" : p.value,
+        animate: false,
       }))
     );
     setUserAnswer((prev) => [...prev, word]);
@@ -86,14 +104,16 @@ const SloganBuilder = () => {
             <div></div>
           </div>
           <div className="flex gap-x-2 gap-y-4 sm:gap-y-6 flex-wrap">
-            {userAnswer.map((part) => (
+            {userAnswer.map((part, i) => (
               <Button
                 key={part.index}
                 variant={"outline"}
                 tabIndex={0}
                 className={cn(
                   "border rounded-xl",
-                  part.index === 0 && "bg-secondary-light"
+                  part.index === 0 && "bg-secondary-light",
+                  part.animate &&
+                    "border shadow-none translate-y-1 transition-all"
                 )}
                 onClick={() => handlePartClick(part.index)}
               >
