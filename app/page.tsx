@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { FeatureCard } from "./FeatureCard";
 import { redirect } from "next/navigation";
+import HeroFeatureCard from "./HeroFeatureCard";
 
 export default async function WebsitePage() {
   const user = await stackServerApp.getUser();
@@ -173,6 +174,30 @@ export default async function WebsitePage() {
           </div>
         </div>
       </section>
+      <HeroFeatureCard
+        className="bg-[#f0f8f7]"
+        image="/assets/app-screen-01.png"
+        title={
+          <>
+            More effective,
+            <br /> more fun
+          </>
+        }
+        description="Brilliant's interactive approach helps you master concepts in less
+            time, with more purpose and joy."
+      />
+      <HeroFeatureCard
+        className="bg-[#f8f7f0]"
+        image="/assets/app-screen-01.png"
+        title={
+          <>
+            Stay
+            <br /> motivated
+          </>
+        }
+        description="Finish every day smarter with engaging lessons, competitive features, and daily encouragement."
+        reverse
+      />
       <footer className="bg-foreground text-background">
         <div className="max-w-7xl mx-auto px-4 py-20 flex flex-col sm:flex-row gap-8 items-center sm:items-end justify-between">
           <div>
