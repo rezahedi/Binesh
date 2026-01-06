@@ -69,7 +69,7 @@ const SloganBuilder = () => {
   return (
     <div className="sm:max-w-3xl mx-4 sm:mx-auto">
       <h2 className="font-semibold text-4xl sm:text-5xl my-8 leading-tight">
-        Learn by practice
+        Learning Start Here
       </h2>
       <div className="grid auto-rows-fr gap-6 mb-4">
         <div className="relative h-full">
@@ -139,7 +139,7 @@ const SloganBuilder = () => {
           variant={"primary"}
           disabled={!isSentenceCompleted}
           onClick={handleCheckAnswer}
-          className="text-lg py-4 px-10"
+          className="text-lg py-4 px-14"
         >
           {isSentenceCompleted
             ? "Check Answer and start"
