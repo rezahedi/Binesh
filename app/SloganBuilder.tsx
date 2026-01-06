@@ -7,15 +7,14 @@ import { useRouter } from "next/navigation";
 import { shuffle } from "./components/quizzes/SentenceBuilderQuiz";
 
 const SLOGAN = [
-  "Interactive problem",
-  "solving",
-  "that",
-  "is effective",
-  "and fun.",
-  "Excel",
-  "in math",
-  "and computer",
-  "science.",
+  "Transform",
+  "curiosity",
+  "into",
+  "deep",
+  "understanding",
+  "through",
+  "interaction",
+  "platform.",
 ];
 
 const TIMER_PER_PART = 100;
