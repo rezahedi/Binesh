@@ -121,7 +121,7 @@ const SentenceBuilderQuiz = ({
 
 export default SentenceBuilderQuiz;
 
-const shuffle = (array: string[]): Option[] => {
+export const shuffle = (array: string[]): Option[] => {
   if (array.length <= 1) return array.map((v, i) => ({ index: i, value: v }));
 
   let shuffled: Option[];
