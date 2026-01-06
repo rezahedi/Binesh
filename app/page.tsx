@@ -88,7 +88,7 @@ export default async function WebsitePage() {
                 height={50}
                 alt="Binesh Logo"
               />
-              <div className="text-3xl font-bold">BINESH</div>
+              <div className="text-3xl font-bold">Binesh</div>
             </Link>
           </h1>
           <nav className="grow hidden sm:block">
@@ -246,7 +246,7 @@ export default async function WebsitePage() {
                   alt="Binesh Logo"
                 />
                 <div className="flex flex-col gap-1">
-                  <h2 className="text-4xl font-bold">BINESH</h2>
+                  <h2 className="text-4xl font-bold">Binesh</h2>
                   <p className="font-light">Learn through practice.</p>
                 </div>
               </Link>
