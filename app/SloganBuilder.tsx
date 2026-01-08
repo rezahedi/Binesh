@@ -13,7 +13,6 @@ const SLOGAN = [
   "deep",
   "understanding",
   "through",
-  "Binesh",
   "interactive",
   "platform.",
 ];
@@ -26,6 +25,7 @@ const SloganBuilder = () => {
   const [userAnswer, setUserAnswer] = useState<Option[]>([]);
   const [options, setOptions] = useState<Option[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [hint, setHint] = useState<string | null>(null);
   const { showSignup } = useAuthModal();
 
   const isSentenceCompleted = userAnswer.length === SLOGAN.length;
@@ -56,12 +56,7 @@ const SloganBuilder = () => {
       );
     });
 
-    timeouts.push(
-      setTimeout(() => {
-        showSignup();
-        setIsCorrect(null);
-      }, TIMER_PER_PART * SLOGAN.length)
-    );
+    timeouts.push(setTimeout(showSignup, TIMER_PER_PART * SLOGAN.length));
 
     return () => {
       timeouts.forEach((t) => clearTimeout(t));
@@ -71,8 +66,22 @@ const SloganBuilder = () => {
   const handleCheckAnswer = () => {
     if (!isSentenceCompleted) return;
 
-    setUserAnswer((prev) => prev.map((p) => ({ ...p, animate: false })));
+    if (isCorrect === true) return showSignup();
+
     setIsCorrect(userAnswer.every((v, i) => SLOGAN[i] === v.value));
+
+    // Show a hint once on first mistake
+    if (hint !== "") setHint("");
+    if (hint === null) {
+      const mismatchIndex = userAnswer.findIndex(
+        (v, i) => SLOGAN[i] !== v.value
+      );
+      setHint(
+        mismatchIndex > 0
+          ? `Not quite yet, Put ${SLOGAN[mismatchIndex]} after ${SLOGAN[mismatchIndex - 1]}`
+          : `No way, Start with the colored one.`
+      );
+    }
   };
 
   const handleOptionClick = (index: number) => {
@@ -171,7 +180,9 @@ const SloganBuilder = () => {
           {isCorrect !== null ? (
             <>
               {isCorrect === false
-                ? "You can do better, try again."
+                ? hint
+                  ? hint
+                  : "You can do better, try again."
                 : "Perfect"}
             </>
           ) : (
@@ -185,7 +196,9 @@ const SloganBuilder = () => {
           className="text-lg py-4 px-14"
         >
           {isSentenceCompleted
-            ? "Check the Answer"
+            ? isCorrect
+              ? "Sign up Now"
+              : "Check the Answer"
             : "Solve the quiz to start!"}
         </Button>
       </div>
