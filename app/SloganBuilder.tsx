@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "./components/ui/button";
 import { cn } from "./utils/cn";
-import { useRouter } from "next/navigation";
 import { shuffle } from "./components/quizzes/SentenceBuilderQuiz";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 const SLOGAN = [
   "Transform",
@@ -13,7 +13,7 @@ const SLOGAN = [
   "deep",
   "understanding",
   "through",
-  "interaction",
+  "interactive",
   "platform.",
 ];
 
@@ -25,7 +25,8 @@ const SloganBuilder = () => {
   const [userAnswer, setUserAnswer] = useState<Option[]>([]);
   const [options, setOptions] = useState<Option[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const router = useRouter();
+  const [hint, setHint] = useState<string | null>(null);
+  const { showSignup } = useAuthModal();
 
   const isSentenceCompleted = userAnswer.length === SLOGAN.length;
 
@@ -55,14 +56,7 @@ const SloganBuilder = () => {
       );
     });
 
-    if (router)
-      timeouts.push(
-        setTimeout(
-          () =>
-            router.push(`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-in`),
-          TIMER_PER_PART * SLOGAN.length
-        )
-      );
+    timeouts.push(setTimeout(showSignup, TIMER_PER_PART * SLOGAN.length));
 
     return () => {
       timeouts.forEach((t) => clearTimeout(t));
@@ -72,7 +66,22 @@ const SloganBuilder = () => {
   const handleCheckAnswer = () => {
     if (!isSentenceCompleted) return;
 
+    if (isCorrect === true) return showSignup();
+
     setIsCorrect(userAnswer.every((v, i) => SLOGAN[i] === v.value));
+
+    // Show a hint once on first mistake
+    if (hint !== "") setHint("");
+    if (hint === null) {
+      const mismatchIndex = userAnswer.findIndex(
+        (v, i) => SLOGAN[i] !== v.value
+      );
+      setHint(
+        mismatchIndex > 0
+          ? `Not quite yet, Put ${SLOGAN[mismatchIndex]} after ${SLOGAN[mismatchIndex - 1]}`
+          : `No way, Start with the colored one.`
+      );
+    }
   };
 
   const handleOptionClick = (index: number) => {
@@ -101,9 +110,12 @@ const SloganBuilder = () => {
 
   return (
     <div className="sm:max-w-3xl mx-4 sm:mx-auto">
-      <h2 className="font-md-serif text-4xl sm:text-5xl my-8 leading-tight">
+      <h2 className="font-md-serif text-4xl sm:text-5xl mt-8 mb-1 leading-tight">
         Learning Start Here
       </h2>
+      <p className="mb-8 text-balance">
+        Put the words in the correct order to form a perfect sentence.
+      </p>
       <div
         className={cn(
           "grid auto-rows-fr gap-6 mb-4",
@@ -125,7 +137,7 @@ const SloganBuilder = () => {
                 variant={"outline"}
                 tabIndex={0}
                 className={cn(
-                  "rounded-xl",
+                  "rounded-xl max-sm:px-4",
                   part.index === 0 && "bg-secondary-light",
                   part.animate &&
                     "animate-bounce-once border-primary-light text-primary-dark shadow-primary"
@@ -144,7 +156,7 @@ const SloganBuilder = () => {
               variant={"outline"}
               tabIndex={0}
               className={cn(
-                "rounded-xl mb-2",
+                "rounded-xl max-sm:px-4 mb-2",
                 option.index === 0 && "bg-secondary-light",
                 option.value === "" &&
                   "border-muted/50 shadow-muted/50 bg-muted/50"
@@ -168,8 +180,10 @@ const SloganBuilder = () => {
           {isCorrect !== null ? (
             <>
               {isCorrect === false
-                ? "You can do better, try again."
-                : "Perfect, Redirecting to learning mode."}
+                ? hint
+                  ? hint
+                  : "You can do better, try again."
+                : "Perfect"}
             </>
           ) : (
             <>&nbsp;</>
@@ -182,8 +196,10 @@ const SloganBuilder = () => {
           className="text-lg py-4 px-14"
         >
           {isSentenceCompleted
-            ? "Check Answer and start"
-            : "Solve quiz to start!"}
+            ? isCorrect
+              ? "Sign up Now"
+              : "Check the Answer"
+            : "Solve the quiz to start!"}
         </Button>
       </div>
     </div>

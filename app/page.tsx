@@ -1,9 +1,7 @@
 import { stackServerApp } from "@stack/server";
 import Image from "next/image";
 import Link from "next/link";
-import { buttonVariants } from "./components/ui/button";
 import SloganBuilder from "./SloganBuilder";
-import { cn } from "./utils/cn";
 import {
   BookOpenIcon,
   CodeIcon,
@@ -15,6 +13,8 @@ import {
 import { FeatureCard } from "./FeatureCard";
 import { redirect } from "next/navigation";
 import HeroFeatureCard from "./HeroFeatureCard";
+import { AuthModal, SigninButton, SignupButton } from "@/auth";
+import { AuthModalProvider } from "@/contexts/AuthModalContext";
 
 export default async function WebsitePage() {
   const user = await stackServerApp.getUser();
@@ -74,7 +74,8 @@ export default async function WebsitePage() {
   ];
 
   return (
-    <>
+    <AuthModalProvider>
+      <AuthModal />
       <header className="sticky top-0 bg-background w-full shadow-lg z-10">
         <div className="container max-w-7xl px-4 py-4 mx-auto flex gap-3 items-center justify-between">
           <h1>
@@ -120,15 +121,11 @@ export default async function WebsitePage() {
             </ul>
           </nav>
           <div className="flex gap-2 items-center">
-            <Link
-              href={`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-in`}
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "border-muted-foreground shadow-none active:translate-0"
-              )}
-            >
-              Sign in
-            </Link>
+            <SigninButton
+              title="Sign in"
+              variant="outline"
+              className="border-muted-foreground shadow-none active:translate-0"
+            />
           </div>
         </div>
       </header>
@@ -211,15 +208,11 @@ export default async function WebsitePage() {
             interactive components using simple Markdown. Share knowledge, learn
             from others, and grow together.
           </p>
-          <Link
-            className={cn(
-              buttonVariants({ variant: "outline" }),
-              "text-lg py-4 px-14 border-muted-foreground shadow-muted-foreground"
-            )}
-            href="/handler/sign-in"
-          >
-            Get Started
-          </Link>
+          <SignupButton
+            title="Get Started"
+            variant="outline"
+            className="text-lg py-4 px-14 border-muted-foreground shadow-muted-foreground"
+          />
           <div className="mt-14 rounded-2xl rounded-b-none sm:rounded-4xl sm:rounded-b-none overflow-hidden max-w-4xl mx-auto">
             <video
               src="/assets/quiz_720.mp4"
@@ -272,6 +265,6 @@ export default async function WebsitePage() {
           </nav>
         </div>
       </footer>
-    </>
+    </AuthModalProvider>
   );
 }
