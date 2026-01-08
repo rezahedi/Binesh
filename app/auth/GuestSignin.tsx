@@ -21,7 +21,7 @@ const GuestSignin = () => {
     <Button
       variant="outline"
       size={"sm"}
-      className="rounded-sm px-5 block mx-auto"
+      className="rounded-md px-5 block mx-auto"
       onClick={handleTestSignin}
     >
       John Doe

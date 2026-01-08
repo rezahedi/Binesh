@@ -1,0 +1,60 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useStackApp } from "@stackframe/stack";
+import Link from "next/link";
+import { useState } from "react";
+
+const CredentialSignIn = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const app = useStackApp();
+
+  const onSubmit = async () => {
+    if (!password) {
+      setError("Please enter your password");
+      return;
+    }
+    const result = await app.signInWithCredential({ email, password });
+    if (result.status === "error") {
+      setError(result.error.message);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit();
+      }}
+    >
+      <p className="text-destructive text-sm">{error}</p>
+      <Input
+        type="email"
+        placeholder="email@example.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <Input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="mt-4"
+      />
+      <Link href={"/handler/forgot-password"} className="text-sm underline">
+        Forgot password?
+      </Link>
+      <Button
+        variant="default"
+        className="rounded-md flex gap-2 w-full mb-4 bg-black text-white hover:bg-black/80 mt-4"
+        size={"sm"}
+        type="submit"
+      >
+        Sign In
+      </Button>
+    </form>
+  );
+};
+
+export default CredentialSignIn;

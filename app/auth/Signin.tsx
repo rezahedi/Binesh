@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { useAuthModal } from "@/contexts/AuthModalContext";
-import { CredentialSignIn } from "@stackframe/stack";
 import GuestSignin from "./GuestSignin";
 import OAuthButtonGroup from "./OAuthButtonGroup";
+import CredentialSignIn from "./CredentialSignIn";
 
 export default function Signin() {
   const { showSignup } = useAuthModal();

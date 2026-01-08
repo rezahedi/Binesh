@@ -21,7 +21,7 @@ const OAuthButtonGroup = ({ type }: OAuthButtonGroupProps) => {
     <>
       <Button
         variant="default"
-        className="rounded-sm flex gap-2 w-full mb-4 bg-black text-white hover:bg-black/80"
+        className="rounded-md flex gap-2 w-full mb-4 bg-black text-white hover:bg-black/80"
         size={"sm"}
         onClick={handleSigninWithGithub}
       >
@@ -30,7 +30,7 @@ const OAuthButtonGroup = ({ type }: OAuthButtonGroupProps) => {
       </Button>
       <Button
         variant="outline"
-        className="rounded-sm flex gap-2 w-full mb-4"
+        className="rounded-md flex gap-2 w-full mb-4"
         size={"sm"}
         onClick={handleSigninWithGoogle}
       >
