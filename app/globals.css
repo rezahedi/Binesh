@@ -35,15 +35,15 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-quiz-success-50: var(--color-green-50);
-  --color-quiz-success-300: var(--color-green-300);
-  --color-quiz-success-700: var(--color-green-700);
-  --color-quiz-error-50: var(--color-red-50);
-  --color-quiz-error-300: var(--color-red-300);
-  --color-quiz-error-700: var(--color-red-700);
-  --color-quiz-select-50: var(--color-blue-50);
-  --color-quiz-select-300: var(--color-blue-300);
-  --color-quiz-select-700: var(--color-blue-700);
+  --color-quiz-success-light: var(--quiz-success-light);
+  --color-quiz-success: var(--quiz-success);
+  --color-quiz-success-dark: var(--quiz-success-dark);
+  --color-quiz-error-light: var(--quiz-error-light);
+  --color-quiz-error: var(--quiz-error);
+  --color-quiz-error-dark: var(--quiz-error-dark);
+  --color-quiz-select-light: var(--quiz-select-light);
+  --color-quiz-select: var(--quiz-select);
+  --color-quiz-select-dark: var(--quiz-select-dark);
 }
 
 @layer utilities {
@@ -89,6 +89,15 @@
   --border: #afafaf;
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);
+  --quiz-success-light: var(--color-green-50);
+  --quiz-success: var(--color-green-300);
+  --quiz-success-dark: var(--color-green-700);
+  --quiz-error-light: var(--color-red-50);
+  --quiz-error: var(--color-red-300);
+  --quiz-error-dark: var(--color-red-700);
+  --quiz-select-light: var(--color-blue-50);
+  --quiz-select: var(--color-blue-300);
+  --quiz-select-dark: var(--color-blue-700);
 }
 
 .dark {
@@ -116,6 +125,15 @@
   --border: #425f6b;
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.551 0.027 264.364);
+  --quiz-success-light: var(--color-green-950);
+  --quiz-success: var(--color-green-800);
+  --quiz-success-dark: var(--color-green-200);
+  --quiz-error-light: var(--color-red-950);
+  --quiz-error: var(--color-red-800);
+  --quiz-error-dark: var(--color-red-200);
+  --quiz-select-light: var(--color-blue-950);
+  --quiz-select: var(--color-blue-800);
+  --quiz-select-dark: var(--color-blue-200);
 }
 
 @layer base {
