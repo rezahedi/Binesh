@@ -3,7 +3,7 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
 import SigninButton from "./SigninButton";
-import SignupButton from "./SigninButton";
+import SignupButton from "./SignupButton";
 import GuestSignin from "./GuestSignin";
 import CredentialSignIn from "./CredentialSignIn";
 import CredentialSignUp from "./CredentialSignUp";

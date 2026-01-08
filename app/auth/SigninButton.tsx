@@ -7,7 +7,7 @@ interface ISignupButtonProps extends ButtonProps {
   title: string;
 }
 
-const SignupButton = ({ title, ...buttonProps }: ISignupButtonProps) => {
+const SigninButton = ({ title, ...buttonProps }: ISignupButtonProps) => {
   const { showSignin } = useAuthModal();
 
   return (
@@ -17,4 +17,4 @@ const SignupButton = ({ title, ...buttonProps }: ISignupButtonProps) => {
   );
 };
 
-export default SignupButton;
+export default SigninButton;
