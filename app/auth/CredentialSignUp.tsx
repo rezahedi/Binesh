@@ -17,6 +17,10 @@ const CredentialSignUp = () => {
       setError("Please enter your password");
       return;
     }
+    if (password !== repeatPassword) {
+      setError("Passwords do not match");
+      return;
+    }
     const result = await app.signUpWithCredential({ email, password });
     if (result.status === "error") {
       setError(result.error.message);
