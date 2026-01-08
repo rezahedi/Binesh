@@ -32,7 +32,7 @@ function ResponsivePopover({
           side={"bottom"}
           className={cn(
             "rounded-t-2xl border border-b-0 bg-popover text-popover-foreground shadow-md outline-none",
-            "w-full flex flex-col gap-5 bg-background shadow-xl p-6 pb-10",
+            "w-full flex flex-col gap-5 bg-background shadow-xl p-6 pb-14",
             "[&>button:last-of-type]:hidden"
           )}
         >

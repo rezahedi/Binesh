@@ -5,8 +5,8 @@ import {
   POINTS_TO_UNLOCK_CELL,
 } from "@/constants/trophy";
 import { useProgress } from "@/contexts/ProgressContext";
-import { cn } from "@/utils/cn";
-import { BatteryIcon, GemIcon } from "lucide-react";
+import { GemIcon } from "lucide-react";
+import Cell from "./Cell";
 
 const CellsStatus = () => {
   const { cells, points, increaseCell, isLoading } = useProgress();
@@ -34,25 +34,16 @@ const CellsStatus = () => {
     <>
       <div className="flex gap-3 justify-around">
         {Array.from({ length: cells }).map((_, i) => (
-          <BatteryIcon
-            key={i}
-            className="size-5 fill-secondary/90 stroke-secondary/90 -rotate-90"
-          />
+          <Cell key={i} charged />
         ))}
         {Array.from({ length: CELLS_MAXIMUM - cells }).map((_, i) => (
-          <BatteryIcon
-            key={i + cells}
-            className={cn(
-              "size-5 fill-muted/90 stroke-muted/90 -rotate-90",
-              i === 0 && "animate-caret-blink"
-            )}
-          />
+          <Cell key={i + cells} charging={i === 0} />
         ))}
       </div>
       {cells < CELLS_MAXIMUM && (
         <i className="text-sm text-muted-foreground">
           Next recharge on every{" "}
-          <span className="text-destructive">
+          <span className="text-destructive-light">
             {NEXT_CELL_RECHARGE_HOURS} hours
           </span>
         </i>
