@@ -9,6 +9,7 @@ const GuestSignin = () => {
   const router = useRouter();
 
   const handleTestSignin = async () => {
+    // FIXME: This is BAD practice exposing a test user's credential!
     const result = await stackApp.signInWithCredential({
       email: "john.doe@example.com",
       password: "z7EM3RRtQ9z3fvL",
