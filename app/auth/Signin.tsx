@@ -2,22 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { useAuthModal } from "@/contexts/AuthModalContext";
-import {
-  CredentialSignIn,
-  OAuthButtonGroup,
-  useStackApp,
-} from "@stackframe/stack";
+import { CredentialSignIn } from "@stackframe/stack";
+import GuestSignin from "./GuestSignin";
+import OAuthButtonGroup from "./OAuthButtonGroup";
 
 export default function Signin() {
-  const stackApp = useStackApp();
   const { showSignup } = useAuthModal();
-
-  const handleTestSignin = async () => {
-    await stackApp.signInWithCredential({
-      email: "john.doe@example.com",
-      password: "z7EM3RRtQ9z3fvL",
-    });
-  };
 
   return (
     <>
@@ -30,16 +20,11 @@ export default function Signin() {
           </Button>
         </p>
       </div>
-      <OAuthButtonGroup type={"sign-in"} />
+      <OAuthButtonGroup type="Sign in" />
       <div className="text-center my-4">or</div>
       <CredentialSignIn />
       <div className="text-center my-4">or sign in as a guest</div>
-      <button
-        className="rounded-sm border text-sm py-2 px-5 cursor-pointer block mx-auto"
-        onClick={handleTestSignin}
-      >
-        John Doe
-      </button>
+      <GuestSignin />
     </>
   );
 }
