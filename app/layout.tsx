@@ -29,7 +29,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, mdSerifDisplay.variable, "dark")}>
+      <body className={cn(inter.className, mdSerifDisplay.variable)}>
         <StackProvider app={stackServerApp}>
           <StackTheme>{children}</StackTheme>
         </StackProvider>
