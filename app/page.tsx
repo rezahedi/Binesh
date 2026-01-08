@@ -13,9 +13,7 @@ import {
 import { FeatureCard } from "./FeatureCard";
 import { redirect } from "next/navigation";
 import HeroFeatureCard from "./HeroFeatureCard";
-import SigninButton from "./SigninButton";
-import SignupButton from "./SignupButton";
-import AuthModal from "./AuthModal";
+import { AuthModal, SigninButton, SignupButton } from "@/auth";
 import { AuthModalProvider } from "@/contexts/AuthModalContext";
 
 export default async function WebsitePage() {

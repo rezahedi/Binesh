@@ -6,9 +6,8 @@ import {
   DialogOverlay,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Signin from "@/auth/Signin";
-import Signup from "@/auth/Signup";
-import { useAuthModal } from "./contexts/AuthModalContext";
+import { Signin, Signup } from "@/auth";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 import { DialogDescription } from "@radix-ui/react-dialog";
 
 export default function AuthModal() {
