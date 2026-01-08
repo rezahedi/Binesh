@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "./components/ui/button";
 import { cn } from "./utils/cn";
-import { useRouter } from "next/navigation";
 import { shuffle } from "./components/quizzes/SentenceBuilderQuiz";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 const SLOGAN = [
   "Transform",
@@ -25,7 +25,7 @@ const SloganBuilder = () => {
   const [userAnswer, setUserAnswer] = useState<Option[]>([]);
   const [options, setOptions] = useState<Option[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const router = useRouter();
+  const { showSignup } = useAuthModal();
 
   const isSentenceCompleted = userAnswer.length === SLOGAN.length;
 
@@ -55,14 +55,12 @@ const SloganBuilder = () => {
       );
     });
 
-    if (router)
-      timeouts.push(
-        setTimeout(
-          () =>
-            router.push(`${process.env.NEXT_PUBLIC_AUTH_HANDLER_BASE}/sign-in`),
-          TIMER_PER_PART * SLOGAN.length
-        )
-      );
+    timeouts.push(
+      setTimeout(() => {
+        showSignup();
+        setIsCorrect(null);
+      }, TIMER_PER_PART * SLOGAN.length)
+    );
 
     return () => {
       timeouts.forEach((t) => clearTimeout(t));
@@ -72,6 +70,7 @@ const SloganBuilder = () => {
   const handleCheckAnswer = () => {
     if (!isSentenceCompleted) return;
 
+    setUserAnswer((prev) => prev.map((p) => ({ ...p, animate: false })));
     setIsCorrect(userAnswer.every((v, i) => SLOGAN[i] === v.value));
   };
 
@@ -169,7 +168,7 @@ const SloganBuilder = () => {
             <>
               {isCorrect === false
                 ? "You can do better, try again."
-                : "Perfect, Redirecting to learning mode."}
+                : "Perfect"}
             </>
           ) : (
             <>&nbsp;</>
