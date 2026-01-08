@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useStackApp } from "@stackframe/stack";
-import GithubIcon from "./GithubIcon";
-import GoogleIcon from "./GoogleIcon";
+import GithubIcon from "@/auth/GithubIcon";
+import GoogleIcon from "@/auth/GoogleIcon";
 
 interface OAuthButtonGroupProps {
   type: "Sign in" | "Sign up";
