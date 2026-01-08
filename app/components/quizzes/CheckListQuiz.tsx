@@ -46,7 +46,8 @@ const CheckListQuiz = ({
             `grid gap-3 mt-4 [&_figure]:p-0 has-[.katex]:text-2xl`,
             quizBlock.options.length < 4
               ? `grid-cols-1 [&_img]:h-36`
-              : `grid-cols-2`
+              : `grid-cols-2`,
+            !isActive && `pointer-events-none`
           )}
         >
           {quizBlock.options.map((option, index) => (
@@ -62,8 +63,7 @@ const CheckListQuiz = ({
                   ? isCorrect === true
                     ? `has-checked:border-quiz-success has-checked:bg-quiz-success-light has-checked:text-quiz-success-dark relative after:hidden has-checked:after:block after:content-['✔'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-quiz-success`
                     : `has-checked:border-quiz-error has-checked:bg-quiz-error-light has-checked:text-quiz-error-dark relative after:hidden has-checked:after:block after:content-['✘'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-quiz-error`
-                  : ``,
-                !isActive && `pointer-events-none`
+                  : ``
               )}
             >
               <input
