@@ -8,9 +8,10 @@ interface IAppContext {
   authPage: AuthPage;
   showSignin: () => void;
   showSignup: () => void;
+  showForgotPassword: () => void;
 }
 
-type AuthPage = "signin" | "signup";
+type AuthPage = "signin" | "signup" | "forgotPassword";
 
 const AuthModalContext = createContext<IAppContext | null>(null);
 
@@ -32,6 +33,11 @@ export const AuthModalProvider = ({
     setShowModal(true);
   };
 
+  const showForgotPassword = () => {
+    setAuthPage("forgotPassword");
+    setShowModal(true);
+  };
+
   return (
     <AuthModalContext.Provider
       value={{
@@ -40,6 +46,7 @@ export const AuthModalProvider = ({
         authPage,
         showSignin,
         showSignup,
+        showForgotPassword,
       }}
     >
       {children}

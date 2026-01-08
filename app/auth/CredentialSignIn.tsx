@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 import { useStackApp } from "@stackframe/stack";
-import Link from "next/link";
 import { useState } from "react";
 
 const CredentialSignIn = () => {
@@ -9,6 +9,7 @@ const CredentialSignIn = () => {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const app = useStackApp();
+  const { showForgotPassword } = useAuthModal();
 
   const onSubmit = async () => {
     if (!password) {
@@ -42,9 +43,13 @@ const CredentialSignIn = () => {
         onChange={(e) => setPassword(e.target.value)}
         className="mt-4"
       />
-      <Link href={"/handler/forgot-password"} className="text-sm underline">
+      <Button
+        variant="link"
+        onClick={showForgotPassword}
+        className="text-sm p-0"
+      >
         Forgot password?
-      </Link>
+      </Button>
       <Button
         variant="default"
         className="rounded-md flex gap-2 w-full mb-4 bg-black text-white hover:bg-black/80 mt-4"

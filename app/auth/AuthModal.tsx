@@ -6,7 +6,7 @@ import {
   DialogOverlay,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Signin, Signup } from "@/auth";
+import { Signin, Signup, ForgotPassword } from "@/auth";
 import { useAuthModal } from "@/contexts/AuthModalContext";
 import { DialogDescription } from "@radix-ui/react-dialog";
 
@@ -24,6 +24,7 @@ export default function AuthModal() {
         <div className="my-custom-login-container m-6">
           {authPage === "signin" && <Signin />}
           {authPage === "signup" && <Signup />}
+          {authPage === "forgotPassword" && <ForgotPassword />}
         </div>
       </DialogContent>
     </Dialog>
