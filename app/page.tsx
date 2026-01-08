@@ -23,10 +23,10 @@ export default async function WebsitePage() {
   }
 
   const STATS = [
-    { title: "Open Source", value: "Free Forever" },
-    { title: "Markdown", value: "Easy to Write" },
     { title: "Interactive", value: "Quiz & Exercises" },
     { title: "Gamified", value: "Keep Learners Engaged" },
+    { title: "Markdown", value: "Human & AI Friendly" },
+    { title: "Open Source", value: "Free Forever" },
   ];
   const FEATURES = [
     {
@@ -132,26 +132,26 @@ export default async function WebsitePage() {
       <section className="text-center my-10">
         <SloganBuilder />
       </section>
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-foreground/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {STATS.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-gray-900 mb-2">{stat.title}</div>
-                <p className="text-gray-600">{stat.value}</p>
+                <b className="font-semibold text-lg">{stat.title}</b>
+                <p className="text-foreground/80 mt-2">{stat.value}</p>
               </div>
             ))}
           </div>
         </div>
         <div id="how-it-works"></div>
       </section>
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-gray-900 mb-4 font-md-serif text-4xl sm:text-5xl">
+            <h2 className="mb-4 font-md-serif text-4xl sm:text-5xl">
               How It Works
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-balance">
+            <p className="max-w-2xl mx-auto text-foreground/80 sm:text-lg text-balance">
               A platform designed for anyone who wants to create engaging
               content and learn effectively
             </p>
@@ -173,7 +173,7 @@ export default async function WebsitePage() {
         <div id="features"></div>
       </section>
       <HeroFeatureCard
-        className="bg-[#f0f8f7]"
+        className="bg-[#f0f8f7] dark:bg-foreground/5"
         image="/assets/app-screen-05.png"
         title={
           <>
@@ -185,7 +185,7 @@ export default async function WebsitePage() {
             time, with more purpose and joy."
       />
       <HeroFeatureCard
-        className="bg-[#f7f2ff]"
+        className="bg-[#f7f2ff] dark:bg-background"
         image="/assets/app-screen-06.png"
         title={
           <>
@@ -196,12 +196,15 @@ export default async function WebsitePage() {
         description="Finish every day smarter with engaging lessons, competitive features, and daily encouragement."
         reverse
       />
-      <section id="about" className="pt-20 px-6 bg-[#f8f7f0]">
+      <section
+        id="about"
+        className="pt-20 px-6 bg-[#f8f7f0] dark:bg-foreground/5"
+      >
         <div className="max-w-7xl mx-auto text-center">
           <h3 className="font-md-serif text-4xl sm:text-5xl text-balance mb-4 sm:mb-14">
             Learn through practice
           </h3>
-          <p className="my-10 text-balance text-lg text-foreground/80 mx-auto max-w-5xl">
+          <p className="my-10 text-balance sm:text-lg text-foreground/80 mx-auto max-w-5xl">
             Binesh (meaning &quot;Insight&quot; in Persian) is an open-source
             platform that makes content creation effortless and learning
             engaging for everyone. Anyone can create bite-sized lessons with
@@ -210,8 +213,8 @@ export default async function WebsitePage() {
           </p>
           <SignupButton
             title="Get Started"
-            variant="outline"
-            className="text-lg py-4 px-14 border-muted-foreground shadow-muted-foreground"
+            variant="primary"
+            className="text-lg py-4 px-14"
           />
           <div className="mt-14 rounded-2xl rounded-b-none sm:rounded-4xl sm:rounded-b-none overflow-hidden max-w-4xl mx-auto">
             <video
@@ -224,8 +227,8 @@ export default async function WebsitePage() {
           </div>
         </div>
       </section>
-      <footer className="bg-foreground text-background">
-        <div className="max-w-7xl mx-auto px-4 py-20 flex flex-col sm:flex-row gap-8 items-center sm:items-end justify-between">
+      <footer className="not-dark:bg-foreground not-dark:text-background">
+        <div className="max-w-7xl mx-auto px-4 py-28 flex flex-col sm:flex-row gap-8 items-center sm:items-end justify-between">
           <div>
             <h1>
               <Link
@@ -244,7 +247,7 @@ export default async function WebsitePage() {
                 </div>
               </Link>
             </h1>
-            <p className="mt-10">
+            <p className="mt-16">
               &copy; 2025 Binesh. Open source and build with mix of hand coding
               and AI.
             </p>

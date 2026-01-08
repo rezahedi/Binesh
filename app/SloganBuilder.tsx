@@ -113,7 +113,7 @@ const SloganBuilder = () => {
       <h2 className="font-md-serif text-4xl sm:text-5xl mt-8 mb-1 leading-tight">
         Learning Start Here
       </h2>
-      <p className="mb-8 text-balance">
+      <p className="mb-8 text-foreground/80 sm:text-lg text-balance">
         Put the words in the correct order to form a perfect sentence.
       </p>
       <div
@@ -138,9 +138,10 @@ const SloganBuilder = () => {
                 tabIndex={0}
                 className={cn(
                   "rounded-xl max-sm:px-4",
-                  part.index === 0 && "bg-secondary-light",
+                  part.index === 0 &&
+                    "not-dark:bg-secondary-light dark:text-secondary-dark dark:border-secondary-dark dark:shadow-secondary-dark",
                   part.animate &&
-                    "animate-bounce-once border-primary-light text-primary-dark shadow-primary"
+                    "not-dark:bg-background animate-bounce-once border-primary-light text-primary-dark dark:text-primary-light shadow-primary dark:border-primary dark:shadow-primary"
                 )}
                 onClick={() => handlePartClick(part.index)}
               >
@@ -157,7 +158,9 @@ const SloganBuilder = () => {
               tabIndex={0}
               className={cn(
                 "rounded-xl max-sm:px-4 mb-2",
-                option.index === 0 && "bg-secondary-light",
+                option.index === 0 &&
+                  option.value !== "" &&
+                  "not-dark:bg-secondary-light dark:border-secondary-dark dark:shadow-secondary-dark dark:text-secondary-dark",
                 option.value === "" &&
                   "border-muted/50 shadow-muted/50 bg-muted/50"
               )}

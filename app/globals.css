@@ -66,9 +66,9 @@
 :root {
   --radius: 0.625rem;
   --background: #ffffff;
-  --foreground: #3d3d3d;
-  --card: #e5e5e54d;
-  --card-foreground: #3d3d3d;
+  --foreground: #131f24;
+  --card: #fafafa;
+  --card-foreground: var(--foreground);
   --primary: var(--color-green-600);
   --primary-dark: var(--color-green-800);
   --primary-light: var(--color-green-500);
@@ -93,9 +93,9 @@
 
 .dark {
   --background: #131f24;
-  --foreground: #c2c2c2;
-  --card: #1d2f364d;
-  --card-foreground: #c2c2c2;
+  --foreground: #dfdfdf;
+  --card: #18262c;
+  --card-foreground: var(--foreground);
   --primary: var(--color-green-600);
   --primary-dark: var(--color-green-800);
   --primary-light: var(--color-green-500);

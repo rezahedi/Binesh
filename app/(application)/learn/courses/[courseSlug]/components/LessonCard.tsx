@@ -37,7 +37,7 @@ export default function LessonCard({
             className={cn(
               "text-base font-semibold w-44 text-balance text-left group-hover:text-primary",
               !isCompleted &&
-                "text-foreground/40 group-hover:text-foreground/70",
+                "text-foreground/40 group-hover:text-foreground/80",
               isSelected && "text-primary"
             )}
           >
