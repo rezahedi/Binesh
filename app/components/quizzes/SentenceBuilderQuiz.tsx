@@ -61,7 +61,7 @@ const SentenceBuilderQuiz = ({
               !isActive && `pointer-events-none`
             )}
           >
-            <div className="absolute -z-10 top-0 left-0 w-full h-full overflow-hidden **:border-b **:h-[53px] **:mb-[9px] sm:**:h-14 sm:**:mb-3.5">
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden **:border-b **:h-[53px] **:mb-[9px] sm:**:h-14 sm:**:mb-3.5 pointer-events-none">
               <div></div>
               <div></div>
               <div></div>
