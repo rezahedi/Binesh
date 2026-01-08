@@ -124,7 +124,7 @@ const SloganBuilder = () => {
                 variant={"outline"}
                 tabIndex={0}
                 className={cn(
-                  "rounded-xl",
+                  "rounded-xl max-sm:px-4",
                   part.index === 0 && "bg-secondary-light",
                   part.animate &&
                     "animate-bounce-once border-primary-light text-primary-dark shadow-primary"
@@ -143,7 +143,7 @@ const SloganBuilder = () => {
               variant={"outline"}
               tabIndex={0}
               className={cn(
-                "rounded-xl mb-2",
+                "rounded-xl max-sm:px-4 mb-2",
                 option.index === 0 && "bg-secondary-light",
                 option.value === "" &&
                   "border-muted/50 shadow-muted/50 bg-muted/50"
