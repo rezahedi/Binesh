@@ -19,9 +19,9 @@ export default function CourseCard(props: CourseWithCategoryProps) {
   return (
     <Link
       href={`${process.env.NEXT_PUBLIC_APP_BASE}/courses/${slug}`}
-      className="p-6 bg-card border border-gray-200 rounded-xl
-        shadow-[2px_2px_0_rgba(0,0,0,0.1)]
-        hover:shadow-[4px_4px_0_rgba(0,0,0,0.1)] hover:border-black
+      className="p-6 bg-card border-2 border-transparent rounded-xl
+        shadow-sm
+        hover:shadow-md hover:border-muted-foreground
         transition-all duration-300
         flex flex-col gap-2"
     >

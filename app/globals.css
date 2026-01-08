@@ -78,7 +78,7 @@
   --secondary-light: var(--color-yellow-200);
   --secondary-foreground: var(--foreground);
   --muted: #e5e5e5;
-  --muted-foreground: #afafaf;
+  --muted-foreground: #a5a5a5;
   --accent: #456dff;
   --accent-dark: #2049e0;
   --accent-light: #6587ff;
@@ -105,7 +105,7 @@
   --secondary-light: var(--color-yellow-200);
   --secondary-foreground: var(--background);
   --muted: #1d2f36;
-  --muted-foreground: #425f6b;
+  --muted-foreground: #496774;
   --accent: #456dff;
   --accent-dark: #2049e0;
   --accent-light: #6587ff;
