@@ -13,7 +13,8 @@ const SLOGAN = [
   "deep",
   "understanding",
   "through",
-  "interaction",
+  "Binesh",
+  "interactive",
   "platform.",
 ];
 
@@ -100,9 +101,12 @@ const SloganBuilder = () => {
 
   return (
     <div className="sm:max-w-3xl mx-4 sm:mx-auto">
-      <h2 className="font-md-serif text-4xl sm:text-5xl my-8 leading-tight">
+      <h2 className="font-md-serif text-4xl sm:text-5xl mt-8 mb-1 leading-tight">
         Learning Start Here
       </h2>
+      <p className="mb-8 text-balance">
+        Put the words in the correct order to form a perfect sentence.
+      </p>
       <div
         className={cn(
           "grid auto-rows-fr gap-6 mb-4",
@@ -181,8 +185,8 @@ const SloganBuilder = () => {
           className="text-lg py-4 px-14"
         >
           {isSentenceCompleted
-            ? "Check Answer and start"
-            : "Solve quiz to start!"}
+            ? "Check the Answer"
+            : "Solve the quiz to start!"}
         </Button>
       </div>
     </div>
