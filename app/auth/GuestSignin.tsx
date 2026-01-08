@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { useStackApp } from "@stackframe/stack";
 import { useRouter } from "next/navigation";
