@@ -74,7 +74,7 @@ const SentenceBuilderQuiz = ({
                   key={part.index}
                   variant={"outline"}
                   tabIndex={0}
-                  className="border rounded-xl"
+                  className="border rounded-xl max-sm:px-4"
                   onClick={() => handlePartClick(part.index)}
                 >
                   {part.value}{" "}
@@ -89,7 +89,7 @@ const SentenceBuilderQuiz = ({
                 variant={"outline"}
                 tabIndex={0}
                 className={cn(
-                  "border rounded-xl mb-2",
+                  "border rounded-xl mb-2 max-sm:px-4",
                   option.value === "" &&
                     "border-muted/50 shadow-muted/50 bg-muted/50"
                 )}
