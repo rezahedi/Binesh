@@ -15,6 +15,7 @@ import { redirect } from "next/navigation";
 import HeroFeatureCard from "./HeroFeatureCard";
 import { AuthModal, SigninButton, SignupButton } from "@/auth";
 import { AuthModalProvider } from "@/contexts/AuthModalContext";
+import ThemeSwitchButton from "./ThemeSwitchButton";
 
 export default async function WebsitePage() {
   const user = await stackServerApp.getUser();
@@ -126,6 +127,7 @@ export default async function WebsitePage() {
               variant="outline"
               className="border-muted-foreground shadow-none active:translate-0"
             />
+            <ThemeSwitchButton />
           </div>
         </div>
       </header>
