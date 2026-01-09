@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PointsButton from "./PointsButton";
 import NavBar from "./NavBar";
+import ThemeSwitchButton from "@/ThemeSwitchButton";
 
 export default function Header() {
   if (!process.env.NEXT_PUBLIC_APP_BASE)
@@ -31,6 +32,7 @@ export default function Header() {
           <PointsButton />
           <StreakButton />
           <UserButton />
+          <ThemeSwitchButton />
         </div>
       </div>
     </header>
