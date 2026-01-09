@@ -125,15 +125,15 @@
   --border: #425f6b;
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.551 0.027 264.364);
-  --quiz-success-light: var(--color-green-950);
-  --quiz-success: var(--color-green-800);
-  --quiz-success-dark: var(--color-green-200);
-  --quiz-error-light: var(--color-red-950);
-  --quiz-error: var(--color-red-800);
-  --quiz-error-dark: var(--color-red-200);
-  --quiz-select-light: var(--color-blue-950);
-  --quiz-select: var(--color-blue-800);
-  --quiz-select-dark: var(--color-blue-200);
+  --quiz-success-light: var(--color-green-100);
+  --quiz-success: var(--color-green-700);
+  --quiz-success-dark: var(--color-green-800);
+  --quiz-error-light: var(--color-red-100);
+  --quiz-error: var(--color-red-700);
+  --quiz-error-dark: var(--color-red-800);
+  --quiz-select-light: var(--color-blue-100);
+  --quiz-select: var(--color-blue-700);
+  --quiz-select-dark: var(--color-blue-800);
 }
 
 @layer base {

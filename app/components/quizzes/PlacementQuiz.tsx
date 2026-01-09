@@ -36,6 +36,8 @@ const PlacementQuiz = ({
   const handleOptionClick = (zone: string) => {
     if (!isActive || !isSomeBlanksEmpty) return;
 
+    setIsCorrect(null);
+
     setOptions((prev) =>
       prev.map((v) => (v.zone != zone ? v : { zone: "", content: "" }))
     );
@@ -51,6 +53,8 @@ const PlacementQuiz = ({
       (o) => o.zone === userAnswer[blankIndex].value
     );
     if (!isActive || !option) return;
+
+    setIsCorrect(null);
 
     setUserAnswer((prev) => {
       const next = [...prev];
@@ -87,7 +91,14 @@ const PlacementQuiz = ({
               {userAnswer[index].value ? (
                 <Button
                   variant={"outline"}
-                  className="w-full h-full rounded-xl p-0"
+                  className={cn(
+                    "w-full h-full rounded-xl p-0",
+                    isCorrect !== null
+                      ? isCorrect === true
+                        ? `border-quiz-success-dark shadow-quiz-success-dark bg-quiz-success-light text-quiz-success-dark`
+                        : `border-quiz-error-dark shadow-quiz-error-dark bg-quiz-error-light text-quiz-error-dark`
+                      : ``
+                  )}
                 >
                   <ReactMarkdown>
                     {
@@ -127,7 +138,6 @@ const PlacementQuiz = ({
             </div>
           ))}
         </div>
-        {isCorrect !== null && <p>{!isCorrect ? "😩 Incorrect" : ""}</p>}
       </QuizLayout>
       {isActive && !isCorrect && (
         <QuizActions disabled={isSomeBlanksEmpty} onCheck={handleCheckAnswer} />

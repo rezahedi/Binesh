@@ -122,7 +122,7 @@ export default async function WebsitePage() {
           </nav>
           <div className="flex gap-2 items-center">
             <SigninButton
-              title="Sign in"
+              title="Sign In"
               variant="outline"
               className="border-muted-foreground shadow-none active:translate-0"
             />

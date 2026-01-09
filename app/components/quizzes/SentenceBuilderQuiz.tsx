@@ -29,6 +29,8 @@ const SentenceBuilderQuiz = ({
   const handleOptionClick = (index: number) => {
     if (!isActive) return;
 
+    setIsCorrect(null);
+
     const word = options.find((v) => v.index === index);
     if (!word) return;
 
@@ -43,6 +45,8 @@ const SentenceBuilderQuiz = ({
 
   const handlePartClick = (index: number) => {
     if (!isActive) return;
+
+    setIsCorrect(null);
 
     const word = userAnswer.find((v) => v.index === index);
     if (!word) return;
@@ -74,7 +78,14 @@ const SentenceBuilderQuiz = ({
                   key={part.index}
                   variant={"outline"}
                   tabIndex={0}
-                  className="border rounded-xl max-sm:px-4"
+                  className={cn(
+                    "border rounded-xl max-sm:px-4",
+                    isCorrect !== null
+                      ? isCorrect === true
+                        ? `border-quiz-success-dark shadow-quiz-success-dark bg-quiz-success-light text-quiz-success-dark`
+                        : `border-quiz-error-dark shadow-quiz-error-dark bg-quiz-error-light text-quiz-error-dark`
+                      : ``
+                  )}
                   onClick={() => handlePartClick(part.index)}
                 >
                   {part.value}{" "}
@@ -107,7 +118,6 @@ const SentenceBuilderQuiz = ({
             ))}
           </div>
         </div>
-        {isCorrect !== null && isCorrect === false && <p>😩 Incorrect</p>}
       </QuizLayout>
       {isActive && !isCorrect && (
         <QuizActions

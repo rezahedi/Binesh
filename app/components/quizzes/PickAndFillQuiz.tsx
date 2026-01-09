@@ -33,6 +33,8 @@ const PickAndFillQuiz = ({
   const handleOptionClick = (word: string) => {
     if (!isActive || !isSomeBlanksEmpty) return;
 
+    setIsCorrect(null);
+
     setOptions((prev) => prev.filter((v) => v != word));
     setUserAnswer((prev) => {
       const next = [...prev];
@@ -44,6 +46,8 @@ const PickAndFillQuiz = ({
   const handleBlankClick = (blankIndex: number) => {
     const word = userAnswer[blankIndex].value;
     if (!isActive || !word) return;
+
+    setIsCorrect(null);
 
     setUserAnswer((prev) => {
       const next = [...prev];
@@ -63,6 +67,11 @@ const PickAndFillQuiz = ({
               <input
                 className={cn(
                   `w-fit min-w-20 m-1 rounded-xl p-2 px-3 cursor-pointer leading-8 text-center font-medium border-2 border-border hover:border-quiz-select-300 hover:bg-quiz-select-50 field-sizing-content`,
+                  isCorrect !== null
+                    ? isCorrect === true
+                      ? `border-quiz-success bg-quiz-success-light text-quiz-success-dark`
+                      : `border-quiz-error bg-quiz-error-light text-quiz-error-dark`
+                    : ``,
                   !isActive && `pointer-events-none`
                 )}
                 id={quiz.id}
@@ -90,7 +99,6 @@ const PickAndFillQuiz = ({
             </Button>
           ))}
         </div>
-        {isCorrect !== null && <p>{!isCorrect ? "😩 Incorrect" : ""}</p>}
       </QuizLayout>
       {isActive && !isCorrect && (
         <QuizActions disabled={isSomeBlanksEmpty} onCheck={handleCheckAnswer} />

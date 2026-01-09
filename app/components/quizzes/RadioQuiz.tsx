@@ -4,6 +4,7 @@ import { cn } from "@/utils/cn";
 import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { QuizLayout, QuizActions } from "./components";
 import ReactMarkdown from "@/lib/markdown";
+import { getAnswerFeedbackClasses } from "./utils";
 
 const RadioQuiz = ({
   quiz,
@@ -49,11 +50,7 @@ const RadioQuiz = ({
                 `rounded-xl p-4 px-6 cursor-pointer text-center font-medium border-2 border-border`,
                 `hover:border-quiz-select hover:bg-quiz-select-light`,
                 `has-checked:border-quiz-select-dark has-checked:bg-quiz-select-light has-checked:text-quiz-select-dark transition-all duration-100`,
-                isCorrect !== null
-                  ? isCorrect === true
-                    ? `has-checked:border-quiz-success has-checked:bg-quiz-success-light has-checked:text-quiz-success-dark relative after:hidden has-checked:after:block after:content-['✔'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-quiz-success`
-                    : `has-checked:border-quiz-error has-checked:bg-quiz-error-light has-checked:text-quiz-error-dark relative after:hidden has-checked:after:block after:content-['✘'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-quiz-error`
-                  : ``
+                getAnswerFeedbackClasses(isCorrect)
               )}
             >
               <input
