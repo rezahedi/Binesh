@@ -66,7 +66,7 @@ const PickAndFillQuiz = ({
             {index < contentParts.length - 1 && (
               <input
                 className={cn(
-                  `w-fit min-w-20 m-1 rounded-xl p-2 px-3 cursor-pointer leading-8 text-center font-medium border-2 border-border hover:border-quiz-select-300 hover:bg-quiz-select-50 field-sizing-content`,
+                  `w-fit min-w-20 m-1 rounded-xl p-2 px-3 cursor-pointer leading-8 text-center font-medium border-2 border-border hover:border-quiz-select hover:bg-quiz-select-light field-sizing-content`,
                   isCorrect !== null
                     ? isCorrect === true
                       ? `border-quiz-success bg-quiz-success-light text-quiz-success-dark`
