@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { cn } from "./utils/cn";
 import { ReactNode } from "react";
@@ -38,7 +36,7 @@ const HeroFeatureCard = ({
           <h3 className="font-md-serif text-4xl sm:text-5xl text-balance mb-4 sm:mb-18">
             {title}
           </h3>
-          <p className="text-balance text-lg text-foreground/80">
+          <p className="text-balance sm:text-lg text-foreground/80">
             {description}
           </p>
         </div>

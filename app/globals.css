@@ -35,15 +35,15 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-quiz-success-50: var(--color-green-50);
-  --color-quiz-success-300: var(--color-green-300);
-  --color-quiz-success-700: var(--color-green-700);
-  --color-quiz-error-50: var(--color-red-50);
-  --color-quiz-error-300: var(--color-red-300);
-  --color-quiz-error-700: var(--color-red-700);
-  --color-quiz-select-50: var(--color-blue-50);
-  --color-quiz-select-300: var(--color-blue-300);
-  --color-quiz-select-700: var(--color-blue-700);
+  --color-quiz-success-light: var(--quiz-success-light);
+  --color-quiz-success: var(--quiz-success);
+  --color-quiz-success-dark: var(--quiz-success-dark);
+  --color-quiz-error-light: var(--quiz-error-light);
+  --color-quiz-error: var(--quiz-error);
+  --color-quiz-error-dark: var(--quiz-error-dark);
+  --color-quiz-select-light: var(--quiz-select-light);
+  --color-quiz-select: var(--quiz-select);
+  --color-quiz-select-dark: var(--quiz-select-dark);
 }
 
 @layer utilities {
@@ -66,9 +66,9 @@
 :root {
   --radius: 0.625rem;
   --background: #ffffff;
-  --foreground: #3d3d3d;
-  --card: #e5e5e54d;
-  --card-foreground: #3d3d3d;
+  --foreground: #131f24;
+  --card: #fafafa;
+  --card-foreground: var(--foreground);
   --primary: var(--color-green-600);
   --primary-dark: var(--color-green-800);
   --primary-light: var(--color-green-500);
@@ -78,7 +78,7 @@
   --secondary-light: var(--color-yellow-200);
   --secondary-foreground: var(--foreground);
   --muted: #e5e5e5;
-  --muted-foreground: #afafaf;
+  --muted-foreground: #a5a5a5;
   --accent: #456dff;
   --accent-dark: #2049e0;
   --accent-light: #6587ff;
@@ -89,13 +89,22 @@
   --border: #afafaf;
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);
+  --quiz-success-light: var(--color-green-50);
+  --quiz-success: var(--color-green-300);
+  --quiz-success-dark: var(--color-green-700);
+  --quiz-error-light: var(--color-red-50);
+  --quiz-error: var(--color-red-300);
+  --quiz-error-dark: var(--color-red-700);
+  --quiz-select-light: var(--color-blue-50);
+  --quiz-select: var(--color-blue-300);
+  --quiz-select-dark: var(--color-blue-700);
 }
 
 .dark {
   --background: #131f24;
-  --foreground: #c2c2c2;
-  --card: #1d2f364d;
-  --card-foreground: #c2c2c2;
+  --foreground: #dfdfdf;
+  --card: #18262c;
+  --card-foreground: var(--foreground);
   --primary: var(--color-green-600);
   --primary-dark: var(--color-green-800);
   --primary-light: var(--color-green-500);
@@ -105,7 +114,7 @@
   --secondary-light: var(--color-yellow-200);
   --secondary-foreground: var(--background);
   --muted: #1d2f36;
-  --muted-foreground: #425f6b;
+  --muted-foreground: #496774;
   --accent: #456dff;
   --accent-dark: #2049e0;
   --accent-light: #6587ff;
@@ -116,6 +125,15 @@
   --border: #425f6b;
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.551 0.027 264.364);
+  --quiz-success-light: var(--color-green-100);
+  --quiz-success: var(--color-green-700);
+  --quiz-success-dark: var(--color-green-800);
+  --quiz-error-light: var(--color-red-100);
+  --quiz-error: var(--color-red-700);
+  --quiz-error-dark: var(--color-red-800);
+  --quiz-select-light: var(--color-blue-100);
+  --quiz-select: var(--color-blue-700);
+  --quiz-select-dark: var(--color-blue-800);
 }
 
 @layer base {

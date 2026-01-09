@@ -74,7 +74,7 @@ export default function ForgotPassword() {
             />
             <Button
               variant="default"
-              className="rounded-md flex gap-2 w-full mb-4 bg-black text-white hover:bg-black/80 mt-4"
+              className="rounded-md flex gap-2 w-full mb-4 mt-4"
               size={"sm"}
               type="submit"
             >

@@ -4,6 +4,7 @@ import "@/globals.css";
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import { stackServerApp } from "@stack/server";
 import { cn } from "./utils/cn";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 const mdSerifDisplay = DM_Serif_Display({
@@ -27,9 +28,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = (await cookies()).get("theme")?.value === "dark" ? "dark" : "";
+
   return (
     <html lang="en">
-      <body className={cn(inter.className, mdSerifDisplay.variable)}>
+      <body className={cn(inter.className, mdSerifDisplay.variable, theme)}>
         <StackProvider app={stackServerApp}>
           <StackTheme>{children}</StackTheme>
         </StackProvider>

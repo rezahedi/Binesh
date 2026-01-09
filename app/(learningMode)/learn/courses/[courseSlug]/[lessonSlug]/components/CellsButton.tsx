@@ -1,8 +1,8 @@
-import { BatteryIcon } from "lucide-react";
 import { useProgress } from "@/contexts/ProgressContext";
 import { cn } from "@/utils/cn";
 import CellsStatus from "./CellsStatus";
 import ResponsivePopover from "@/components/ui/ResponsivePopover";
+import Cell from "./Cell";
 
 const MAIN_BUTTON_CLASSES =
   "flex items-center gap-0.5 p-2 px-3 rounded-full hover:bg-muted cursor-pointer font-semibold text-lg";
@@ -14,7 +14,7 @@ const CellsButton = ({ className }: { className?: string }) => {
     return (
       <div className={cn(MAIN_BUTTON_CLASSES, className)}>
         {" "}
-        <BatteryIcon className="animate-pulse size-5 fill-muted/90 stroke-muted/90 -rotate-90" />
+        <Cell charging />
       </div>
     );
 
@@ -26,7 +26,7 @@ const CellsButton = ({ className }: { className?: string }) => {
       button={
         <button className={cn(MAIN_BUTTON_CLASSES, className)}>
           {cells}
-          <BatteryIcon className="size-5 fill-secondary/90 stroke-secondary/90 -rotate-90" />
+          <Cell charged />
         </button>
       }
     >

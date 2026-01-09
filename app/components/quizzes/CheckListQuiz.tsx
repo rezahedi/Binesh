@@ -4,6 +4,7 @@ import { cn } from "@/utils/cn";
 import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { QuizLayout, QuizActions } from "./components";
 import ReactMarkdown from "@/lib/markdown";
+import { getAnswerFeedbackClasses } from "./utils";
 
 const CheckListQuiz = ({
   quiz,
@@ -46,7 +47,8 @@ const CheckListQuiz = ({
             `grid gap-3 mt-4 [&_figure]:p-0 has-[.katex]:text-2xl`,
             quizBlock.options.length < 4
               ? `grid-cols-1 [&_img]:h-36`
-              : `grid-cols-2`
+              : `grid-cols-2`,
+            !isActive && `pointer-events-none`
           )}
         >
           {quizBlock.options.map((option, index) => (
@@ -56,14 +58,9 @@ const CheckListQuiz = ({
               tabIndex={0}
               className={cn(
                 `rounded-xl p-4 px-6 cursor-pointer text-center font-medium border-2 border-border`,
-                `hover:border-quiz-select-300 hover:bg-quiz-select-50`,
-                `has-checked:border-quiz-select-700 has-checked:bg-quiz-select-50 has-checked:text-quiz-select-700`,
-                isCorrect !== null
-                  ? isCorrect === true
-                    ? `has-checked:border-quiz-success-300 has-checked:bg-quiz-success-50 has-checked:text-quiz-success-700 relative after:hidden has-checked:after:block after:content-['✔'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-quiz-success-300`
-                    : `has-checked:border-quiz-error-300 has-checked:bg-quiz-error-50 has-checked:text-quiz-error-700 relative after:hidden has-checked:after:block after:content-['✘'] after:absolute after:-top-2 after:-right-2 after:px-2 after:py-0.5 after:rounded-lg after:bg-quiz-error-300`
-                  : ``,
-                !isActive && `pointer-events-none`
+                `hover:border-quiz-select hover:bg-quiz-select-light`,
+                `has-checked:border-quiz-select-dark has-checked:bg-quiz-select-light has-checked:text-quiz-select-dark transition-all duration-100`,
+                getAnswerFeedbackClasses(isCorrect)
               )}
             >
               <input

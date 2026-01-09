@@ -20,8 +20,8 @@ const OAuthButtonGroup = ({ type }: OAuthButtonGroupProps) => {
   return (
     <>
       <Button
-        variant="default"
-        className="rounded-md flex gap-2 w-full mb-4 bg-black text-white hover:bg-black/80"
+        variant="outline"
+        className="rounded-md flex gap-2 w-full mb-4"
         size={"sm"}
         onClick={handleSigninWithGithub}
       >

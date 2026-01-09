@@ -39,13 +39,13 @@ const FillInQuiz = ({
         {pre}
         <input
           className={cn(
-            `rounded-xl p-2 px-3 text-center font-medium border-2 border-border hover:border-quiz-select-300 hover:bg-quiz-select-50 field-sizing-content max-w-2xs`,
+            `rounded-xl p-2 px-3 text-center font-medium border-2 border-border hover:border-quiz-select hover:bg-quiz-select-light field-sizing-content max-w-2xs transition-all duration-100`,
             quizBlock.inputType == "number" &&
               `[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`,
             isCorrect !== null
               ? isCorrect === true
-                ? `border-quiz-success-300 bg-quiz-success-50 text-quiz-success-700`
-                : `border-quiz-error-300 bg-quiz-error-50 text-quiz-error-700`
+                ? `border-quiz-success bg-quiz-success-light text-quiz-success-dark`
+                : `border-quiz-error bg-quiz-error-light text-quiz-error-dark`
               : ``,
             !isActive && `pointer-events-none`
           )}
@@ -61,9 +61,6 @@ const FillInQuiz = ({
           readOnly={!isActive}
         />
         {suf}
-        {isCorrect !== null && (
-          <p>{isCorrect ? "🎉 Correct" : "😩 Incorrect"}</p>
-        )}
       </QuizLayout>
       {isActive && !isCorrect && (
         <QuizActions
