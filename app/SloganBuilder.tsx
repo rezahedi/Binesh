@@ -17,7 +17,7 @@ const SLOGAN = [
   "platform.",
 ];
 
-const TIMER_PER_PART = 100;
+const ANIMATE_DELAY_PER_PART = 40;
 
 type Option = { index: number; value: string };
 
