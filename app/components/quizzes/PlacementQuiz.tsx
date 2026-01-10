@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/utils/cn";
 import ReactMarkdown from "@/lib/markdown";
 import { useMemo, useState } from "react";
+import { ANIMATE_DELAY_PER_PART } from "@/constants/learningMode";
 
 const PlacementQuiz = ({
   quiz,
@@ -95,10 +96,15 @@ const PlacementQuiz = ({
                     "w-full h-full rounded-xl p-0",
                     isCorrect !== null
                       ? isCorrect === true
-                        ? `border-quiz-success-dark shadow-quiz-success-dark bg-quiz-success-light text-quiz-success-dark`
+                        ? `border-quiz-success-dark shadow-quiz-success-dark bg-quiz-success-light text-quiz-success-dark animate-bounce-once`
                         : `border-quiz-error-dark shadow-quiz-error-dark bg-quiz-error-light text-quiz-error-dark`
                       : ``
                   )}
+                  {...(isCorrect && {
+                    style: {
+                      animationDelay: `${ANIMATE_DELAY_PER_PART * index}ms`,
+                    },
+                  })}
                 >
                   <ReactMarkdown>
                     {

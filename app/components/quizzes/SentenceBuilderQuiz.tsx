@@ -4,6 +4,7 @@ import { QuizActions, QuizLayout } from "./components";
 import { Button } from "../ui/button";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
+import { ANIMATE_DELAY_PER_PART } from "@/constants/learningMode";
 
 type Option = { index: number; value: string };
 
@@ -73,7 +74,7 @@ const SentenceBuilderQuiz = ({
               <div></div>
             </div>
             <div className="flex gap-x-2 gap-y-4 sm:gap-y-6 flex-wrap">
-              {userAnswer.map((part) => (
+              {userAnswer.map((part, i) => (
                 <Button
                   key={part.index}
                   variant={"outline"}
@@ -82,10 +83,15 @@ const SentenceBuilderQuiz = ({
                     "border rounded-xl max-sm:px-4",
                     isCorrect !== null
                       ? isCorrect === true
-                        ? `border-quiz-success-dark shadow-quiz-success-dark bg-quiz-success-light text-quiz-success-dark`
+                        ? `border-quiz-success-dark shadow-quiz-success-dark bg-quiz-success-light text-quiz-success-dark animate-bounce-once`
                         : `border-quiz-error-dark shadow-quiz-error-dark bg-quiz-error-light text-quiz-error-dark`
                       : ``
                   )}
+                  {...(isCorrect && {
+                    style: {
+                      animationDelay: `${ANIMATE_DELAY_PER_PART * i}ms`,
+                    },
+                  })}
                   onClick={() => handlePartClick(part.index)}
                 >
                   {part.value}{" "}

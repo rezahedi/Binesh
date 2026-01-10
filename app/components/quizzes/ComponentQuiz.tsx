@@ -40,9 +40,7 @@ const ComponentQuiz = ({
             isActive,
           }}
         />
-        {isCorrect !== null && (
-          <p>{isCorrect ? "🎉 Correct" : "😩 Incorrect"}</p>
-        )}
+        {isCorrect === false && <p>😩 Incorrect</p>}
         <ReactMarkdown>{quizBlock.afterContent}</ReactMarkdown>
       </QuizLayout>
       {isActive && !isCorrect && (

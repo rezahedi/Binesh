@@ -57,7 +57,7 @@
       animation-timing-function: ease-out;
     }
     50% {
-      transform: translateY(-20%);
+      transform: translateY(-15px);
       animation-timing-function: ease-in;
     }
   }
