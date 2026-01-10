@@ -19,7 +19,7 @@ const SLOGAN = [
 
 const TIMER_PER_PART = 100;
 
-type Option = { index: number; value: string; animate: boolean };
+type Option = { index: number; value: string };
 
 const SloganBuilder = () => {
   const [userAnswer, setUserAnswer] = useState<Option[]>([]);
@@ -33,33 +33,19 @@ const SloganBuilder = () => {
   useEffect(() => {
     if (options.length === 0)
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setOptions(shuffle(SLOGAN).map((v) => ({ ...v, animate: false })));
+      setOptions(shuffle(SLOGAN));
   }, []);
 
   useEffect(() => {
     if (isCorrect !== true) return;
 
-    const timeouts: NodeJS.Timeout[] = [];
-
-    userAnswer.forEach((_, i) => {
-      timeouts.push(
-        setTimeout(
-          () => {
-            setUserAnswer((prev) =>
-              prev.map((p, index) =>
-                index === i ? { ...p, animate: true } : p
-              )
-            );
-          },
-          i * (TIMER_PER_PART / 3)
-        )
-      );
-    });
-
-    timeouts.push(setTimeout(showSignup, TIMER_PER_PART * SLOGAN.length));
+    const timer = setTimeout(
+      showSignup,
+      ANIMATE_DELAY_PER_PART * SLOGAN.length * 2
+    );
 
     return () => {
-      timeouts.forEach((t) => clearTimeout(t));
+      clearTimeout(timer);
     };
   }, [isCorrect]);
 
@@ -92,7 +78,6 @@ const SloganBuilder = () => {
       prev.map((p) => ({
         index: p.index,
         value: p.index === index ? "" : p.value,
-        animate: false,
       }))
     );
     setUserAnswer((prev) => [...prev, word]);
@@ -131,7 +116,7 @@ const SloganBuilder = () => {
             <div></div>
           </div>
           <div className="flex gap-x-2 gap-y-4 sm:gap-y-6 flex-wrap">
-            {userAnswer.map((part) => (
+            {userAnswer.map((part, i) => (
               <Button
                 key={part.index}
                 variant={"outline"}
@@ -140,9 +125,12 @@ const SloganBuilder = () => {
                   "rounded-xl max-sm:px-4",
                   part.index === 0 &&
                     "not-dark:bg-secondary-light dark:text-secondary-dark dark:border-secondary-dark dark:shadow-secondary-dark",
-                  part.animate &&
-                    "not-dark:bg-background animate-bounce-once border-primary-light text-primary-dark dark:text-primary-light shadow-primary dark:border-primary dark:shadow-primary"
+                  isCorrect &&
+                    "not-dark:bg-background border-primary-light text-primary-dark dark:text-primary-light shadow-primary dark:border-primary dark:shadow-primary animate-bounce-once"
                 )}
+                {...(isCorrect && {
+                  style: { animationDelay: `${ANIMATE_DELAY_PER_PART * i}ms` },
+                })}
                 onClick={() => handlePartClick(part.index)}
               >
                 {part.value}
