@@ -54,7 +54,10 @@ const SloganBuilder = () => {
 
     if (isCorrect === true) return showSignup();
 
-    setIsCorrect(userAnswer.every((v, i) => SLOGAN[i] === v.value));
+    const checkResult = userAnswer.every((v, i) => SLOGAN[i] === v.value);
+    setIsCorrect(checkResult);
+
+    if (checkResult) return;
 
     // Show a hint once on first mistake
     if (hint !== "") setHint("");
