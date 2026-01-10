@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "./components/ui/button";
-import { cn } from "./utils/cn";
-import { shuffle } from "./components/quizzes/SentenceBuilderQuiz";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/utils/cn";
+import { shuffle } from "@/components/quizzes/SentenceBuilderQuiz";
 import { useAuthModal } from "@/contexts/AuthModalContext";
+import { ANIMATE_DELAY_PER_PART } from "@/constants/learningMode";
 
 const SLOGAN = [
   "Transform",
@@ -16,8 +17,6 @@ const SLOGAN = [
   "interactive",
   "platform.",
 ];
-
-const ANIMATE_DELAY_PER_PART = 40;
 
 type Option = { index: number; value: string };
 
