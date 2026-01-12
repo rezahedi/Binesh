@@ -15,3 +15,5 @@ In short, Binesh aims to:
 - Empower teachers with a simple, flexible content creation platform
 - Make high-quality learning accessible to anyone
 - Establish a clean, standardized Markdown format for educational content that works for both humans and AI
+
+<img width="1708" height="650" alt="Screenshot 2026-01-09 131252" src="https://github.com/user-attachments/assets/efc1cd84-8c0d-4625-bd50-42ed2d9e2b39" />
