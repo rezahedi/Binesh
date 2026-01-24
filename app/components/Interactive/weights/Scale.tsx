@@ -1,36 +1,43 @@
-import Fulcrum from "./Fulcrum";
+import Lever from "./Lever";
 import Rod from "./Rod";
 import Weights from "./Weights";
 
-const FULCRUM_HEIGHT = 60;
+const LEVER_HEIGHT = 60;
 
 const Scale = ({
   x = 0,
   y = 0,
   width,
   angle = 0,
-  rodLength = 5,
-  masses = [
-    [10, -3],
-    [20, 3],
-  ],
+  rodLength,
+  masses,
+  fulcrum,
 }: {
   x?: number;
   y?: number;
   width: number;
-  angle: number;
+  angle?: number;
   rodLength: number;
-  masses?: number[][];
+  masses: number[][];
+  fulcrum: number;
 }) => {
+  const axisWidth = width / (rodLength - 1);
+
   return (
-    <g transform={`translate(${x}, ${y + FULCRUM_HEIGHT})`}>
-      <Rod angle={angle} width={width} rodLength={rodLength} />
-      <Fulcrum x={width / 2} height={FULCRUM_HEIGHT} />
-      <Weights
-        masses={masses}
+    <g transform={`translate(${x}, ${y + LEVER_HEIGHT})`}>
+      <Rod
         angle={angle}
         width={width}
         rodLength={rodLength}
+        fulcrum={fulcrum}
+        axisWidth={axisWidth}
+      />
+      <Lever fulcrum={fulcrum} axisWidth={axisWidth} height={LEVER_HEIGHT} />
+      <Weights
+        masses={masses}
+        angle={angle}
+        fulcrum={fulcrum}
+        axisWidth={axisWidth}
       />
     </g>
   );

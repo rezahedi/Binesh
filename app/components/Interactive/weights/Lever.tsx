@@ -1,6 +1,14 @@
-const Fulcrum = ({ x, height }: { x: number; height: number }) => {
+const Lever = ({
+  fulcrum,
+  axisWidth,
+  height,
+}: {
+  fulcrum: number;
+  axisWidth: number;
+  height: number;
+}) => {
   return (
-    <g transform={`translate(${x}, ${-height + 5})`}>
+    <g transform={`translate(${fulcrum * axisWidth}, ${-height + 5})`}>
       <line
         fill="rgba(0%,0%,0%,0)"
         stroke="rgba(0%,0%,0%,1)"
@@ -26,4 +34,4 @@ const Fulcrum = ({ x, height }: { x: number; height: number }) => {
   );
 };
 
-export default Fulcrum;
+export default Lever;

@@ -3,24 +3,23 @@ import Weight from "./Weight";
 const Weights = ({
   masses,
   angle = 0,
-  width,
-  rodLength,
+  fulcrum,
+  axisWidth,
 }: {
   masses: number[][];
   angle?: number;
-  width: number;
-  rodLength: number;
+  fulcrum: number;
+  axisWidth: number;
 }) => {
-  const axisMargin = width / (rodLength - 1);
-  const centerX = width / 2;
+  const centerX = axisWidth * fulcrum;
   const centerY = 5;
 
   return (
     <>
       {masses.map(([weight, position], index) => {
         const radius = (angle * Math.PI) / 180;
-        const x = centerX + position * axisMargin * Math.cos(radius);
-        const y = centerY + position * axisMargin * Math.sin(radius);
+        const x = centerX + position * axisWidth * Math.cos(radius);
+        const y = centerY + position * axisWidth * Math.sin(radius);
         return (
           <Weight
             key={index}

@@ -2,13 +2,16 @@ const Rod = ({
   angle,
   width,
   rodLength,
+  fulcrum,
+  axisWidth,
 }: {
   angle: number;
   width: number;
   rodLength: number;
+  fulcrum: number;
+  axisWidth: number;
 }) => {
-  const axisMargin = width / (rodLength - 1);
-  const centerX = width / 2;
+  const centerX = axisWidth * fulcrum;
 
   return (
     <g
@@ -31,7 +34,7 @@ const Rod = ({
       />
       {/* Labels */}
       {Array.from({ length: rodLength }, (_, index) => (
-        <g key={index} transform={`translate(${index * axisMargin}, 0)`}>
+        <g key={index} transform={`translate(${index * axisWidth}, 0)`}>
           <rect
             fill="rgba(0%,0%,0%,1)"
             stroke="rgba(0%,0%,0%,0)"
