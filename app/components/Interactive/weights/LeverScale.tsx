@@ -14,7 +14,7 @@ const LeverScale = ({
   rodLength?: number;
 }) => {
   return (
-    <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`}>
+    <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="bg-white rounded-xl">
       <Scale
         x={WIDTH * 0.1}
         width={WIDTH * 0.8}
