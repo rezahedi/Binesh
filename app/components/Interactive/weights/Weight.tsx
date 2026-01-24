@@ -1,4 +1,4 @@
-const ROPE_HEIGHT = 40;
+const ROPE_LENGTH = 40;
 
 const Weight = ({
   weight,
@@ -25,9 +25,9 @@ const Weight = ({
         x1="0"
         y1="0"
         x2="0"
-        y2={ROPE_HEIGHT}
+        y2={ROPE_LENGTH}
       ></line>
-      <g transform={`translate(0, ${ROPE_HEIGHT}), scale(${scale})`}>
+      <g transform={`translate(0, ${ROPE_LENGTH}), scale(${scale})`}>
         <polygon
           fill={color}
           stroke="rgba(84.31%,65.1%,7.45%,1)"

@@ -8,7 +8,7 @@ const Lever = ({
   height: number;
 }) => {
   return (
-    <g transform={`translate(${fulcrum * axisWidth}, ${-height + 5})`}>
+    <g transform={`translate(${fulcrum * axisWidth}, ${-height})`}>
       <line
         fill="rgba(0%,0%,0%,0)"
         stroke="rgba(0%,0%,0%,1)"

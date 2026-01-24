@@ -1,3 +1,6 @@
+const ROD_HEIGHT = 10;
+const LABELS_WIDTH = 6;
+
 const Rod = ({
   angle,
   width,
@@ -15,7 +18,7 @@ const Rod = ({
 
   return (
     <g
-      transform={`rotate(${angle}, ${centerX}, 5)`}
+      transform={`rotate(${angle}, ${centerX}, 0)`}
       className="transition-all duration-500"
     >
       {/* Bar */}
@@ -26,29 +29,28 @@ const Rod = ({
         strokeLinecap="butt"
         strokeLinejoin="miter"
         x="0"
-        y="0"
+        y={-ROD_HEIGHT / 2}
         width={width}
-        height="10"
+        height={ROD_HEIGHT}
         rx="2"
         ry="2"
       />
       {/* Labels */}
       {Array.from({ length: rodLength }, (_, index) => (
-        <g key={index} transform={`translate(${index * axisWidth}, 0)`}>
-          <rect
-            fill="rgba(0%,0%,0%,1)"
-            stroke="rgba(0%,0%,0%,0)"
-            strokeWidth="2"
-            strokeLinecap="butt"
-            strokeLinejoin="miter"
-            x="-3"
-            y="0"
-            width="6"
-            height="10"
-            rx="2"
-            ry="2"
-          />
-        </g>
+        <rect
+          key={index}
+          fill="rgba(0%,0%,0%,1)"
+          stroke="rgba(0%,0%,0%,0)"
+          strokeWidth="2"
+          strokeLinecap="butt"
+          strokeLinejoin="miter"
+          x={index * axisWidth - LABELS_WIDTH / 2}
+          y={-ROD_HEIGHT / 2}
+          width={LABELS_WIDTH}
+          height={ROD_HEIGHT}
+          rx="2"
+          ry="2"
+        />
       ))}
     </g>
   );

@@ -12,7 +12,7 @@ const Weights = ({
   axisWidth: number;
 }) => {
   const centerX = axisWidth * fulcrum;
-  const centerY = 5;
+  const centerY = 0;
 
   return (
     <>
