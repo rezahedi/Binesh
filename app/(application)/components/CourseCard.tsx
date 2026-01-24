@@ -1,4 +1,5 @@
 import { CourseWithCategoryProps } from "@/lib/types";
+import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,15 +16,19 @@ export default function CourseCard(props: CourseWithCategoryProps) {
     // ...rest
     progress,
   } = props;
+  const disabled = props.lessonsCount === 0;
 
   return (
     <Link
       href={`${process.env.NEXT_PUBLIC_APP_BASE}/courses/${slug}`}
-      className="p-6 bg-card border-2 border-transparent rounded-xl
-        shadow-sm
-        hover:shadow-md hover:border-muted-foreground
-        transition-all duration-300
-        flex flex-col gap-2"
+      className={cn(
+        "p-6 bg-card border-2 border-transparent rounded-xl",
+        "shadow-sm",
+        "hover:shadow-md hover:border-muted-foreground",
+        "transition-all duration-300",
+        "flex flex-col gap-2",
+        disabled && "opacity-50 pointer-events-none"
+      )}
     >
       <Image
         src={image}
@@ -31,10 +36,15 @@ export default function CourseCard(props: CourseWithCategoryProps) {
         width={96}
         height={96}
         loading="lazy"
-        className="pb-1"
+        className={cn("pb-1", disabled && "grayscale")}
       />
       {category && (
-        <p className="uppercase text-xs font-medium text-orange-600">
+        <p
+          className={cn(
+            "uppercase text-xs font-medium text-orange-600",
+            disabled && "text-foreground"
+          )}
+        >
           {category.name}
           {String(level) != "" && ` . LEVEL ${level}`}
         </p>
