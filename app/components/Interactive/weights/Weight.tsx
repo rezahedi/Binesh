@@ -11,7 +11,7 @@ const Weight = ({
   y: number;
   color: string;
 }) => {
-  const scale = 1 + weight / 100;
+  const scale = 1 + Math.abs(weight) / 100;
   return (
     <g transform={`translate(${x}, ${y})`} className="transition duration-500">
       <line
@@ -27,7 +27,10 @@ const Weight = ({
         x2="0"
         y2={ROPE_LENGTH}
       ></line>
-      <g transform={`translate(0, ${ROPE_LENGTH}), scale(${scale})`}>
+      <g
+        transform={`translate(0, ${ROPE_LENGTH}), scale(${scale})`}
+        className="transition duration-500"
+      >
         <polygon
           fill={color}
           stroke="rgba(84.31%,65.1%,7.45%,1)"
@@ -46,7 +49,7 @@ const Weight = ({
           fontWeight="500"
           fill="black"
         >
-          {weight}
+          {weight <= 0 ? "?" : weight}
         </text>
       </g>
     </g>
