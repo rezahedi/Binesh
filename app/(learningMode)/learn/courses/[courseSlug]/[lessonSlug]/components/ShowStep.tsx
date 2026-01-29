@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@stackframe/stack";
 import { POINTS_TO_UNLOCK_CELL } from "@/constants/trophy";
 import { useRouter } from "next/navigation";
-import { QuizProvider } from "@/contexts/QuizContext";
 
 interface ShowStepProps extends React.ComponentProps<"div"> {
   step: SectionType;
@@ -65,16 +64,14 @@ export default function ShowStep({ step, index, ...restProps }: ShowStepProps) {
           <ReactMarkdown>{step.content}</ReactMarkdown>
         </div>
       )}
-      <QuizProvider>
-        {step.quiz && (
-          <QuizRenderer
-            quiz={{ ...step.quiz, id: step.id }}
-            isActive={isCurrent && !isQuizFinished && haveCells}
-            quizResult={quizResult}
-            onCheck={handleResultCheck}
-          />
-        )}
-      </QuizProvider>
+      {step.quiz && (
+        <QuizRenderer
+          quiz={{ ...step.quiz, id: step.id }}
+          isActive={isCurrent && !isQuizFinished && haveCells}
+          quizResult={quizResult}
+          onCheck={handleResultCheck}
+        />
+      )}
       {isNextReady && !isFinished && haveCells && (
         <div className="flex gap-2 items-center sticky bottom-0 bg-background py-3">
           <div className="flex-1 flex gap-3 items-center">
