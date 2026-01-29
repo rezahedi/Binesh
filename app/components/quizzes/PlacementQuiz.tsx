@@ -30,7 +30,6 @@ const PlacementQuiz = ({
   const handleCheckAnswer = () => {
     if (isSomeBlanksEmpty) return;
 
-    console.log(userAnswer, quizBlock.zones);
     setIsCorrect(userAnswer.every((v, i) => quizBlock.zones[i] === v.value));
   };
 
