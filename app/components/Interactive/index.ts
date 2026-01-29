@@ -7,6 +7,7 @@ import FractionHalf03 from "./FractionHalf03";
 import FractionHalf04 from "./FractionHalf04";
 import FractionSplit01 from "./FractionSplit01";
 import FractionSplit02 from "./FractionSplit02";
+import L from "./weights/L";
 
 export const componentRegistry = {
   InteractiveQuizComponent,
@@ -18,6 +19,7 @@ export const componentRegistry = {
   FractionHalf04,
   FractionSplit01,
   FractionSplit02,
+  L,
 } as const;
 
 export type RegistryComponentName = keyof typeof componentRegistry;

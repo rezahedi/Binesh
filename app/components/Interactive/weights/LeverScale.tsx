@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Scale from "./Scale";
 
 const WIDTH = 540;
 const HEIGHT = 250;
+const MAX_ANGLE = 20;
 
 const LeverScale = ({
   masses = [
@@ -11,25 +12,27 @@ const LeverScale = ({
   ],
   rodLength = 3,
   fulcrum = 1,
+  showResult = false,
 }: {
   masses?: number[][];
   rodLength?: number;
   fulcrum?: number;
+  showResult?: boolean;
 }) => {
-  const [angle, setAngle] = useState<number>(0);
+  let angle = 0;
 
-  const handleShowResult = () => {
-    // find torque and set angle accordingly
-    const torque =
+  if (showResult) {
+    const weightDiff =
       Math.abs(masses[1][0] * masses[1][1]) -
       Math.abs(masses[0][0] * masses[0][1]);
 
-    setAngle(torque > 20 ? 20 : torque < -20 ? -20 : torque);
-  };
-
-  const handleReset = () => {
-    setAngle(0);
-  };
+    angle =
+      weightDiff > MAX_ANGLE
+        ? MAX_ANGLE
+        : weightDiff < -MAX_ANGLE
+          ? -MAX_ANGLE
+          : weightDiff;
+  }
 
   return (
     <div>
@@ -44,8 +47,6 @@ const LeverScale = ({
           fulcrum={fulcrum}
         />
       </svg>
-      <button onClick={handleShowResult}>Show Result</button>
-      <button onClick={handleReset}>Reset</button>
     </div>
   );
 };
