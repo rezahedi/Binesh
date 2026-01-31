@@ -19,7 +19,7 @@ export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
   const userAnswer = userAnswers[0] === undefined ? null : userAnswers[0];
 
   const setUserAnswer = (value: string | null) => {
-    setUserAnswers(value !== null ? [value] : []);
+    setUserAnswers(value ? [value] : []);
   };
 
   const setUserAnswerByIndex = (index: number, value: string) => {

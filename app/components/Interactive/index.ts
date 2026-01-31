@@ -9,6 +9,12 @@ import FractionSplit01 from "./FractionSplit01";
 import FractionSplit02 from "./FractionSplit02";
 import L from "./weights/L";
 
+export type InteractiveComponentProps = {
+  onChange?: (answer: string) => void;
+  isActive?: boolean;
+  props?: string;
+};
+
 export const componentRegistry = {
   InteractiveQuizComponent,
   InteractiveComponent,

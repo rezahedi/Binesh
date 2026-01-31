@@ -1,3 +1,4 @@
+import { InteractiveComponentProps } from ".";
 import SquareFractionGrid from "./Blocks/SquareFractionGrid";
 
 /**
@@ -9,12 +10,13 @@ import SquareFractionGrid from "./Blocks/SquareFractionGrid";
  * Then this component could have props and use above values.
  */
 const FractionHalf03 = ({
-  onAnswer,
+  onChange,
   isActive = true,
-}: {
-  onAnswer?: (answer: unknown) => void | null;
-  isActive?: boolean;
-}) => {
+}: InteractiveComponentProps) => {
+  const handleChange = (num: number) => {
+    if (onChange) onChange(String(num));
+  };
+
   return (
     <SquareFractionGrid
       pairPoints={{
@@ -31,7 +33,7 @@ const FractionHalf03 = ({
           [1, 1],
         ],
       }}
-      onChange={onAnswer}
+      onChange={handleChange}
       isActive={isActive}
     />
   );

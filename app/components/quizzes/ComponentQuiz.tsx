@@ -1,9 +1,8 @@
 import { ComponentQuizType } from "@/lib/quizParser";
-import { useState } from "react";
-import ReactMarkdown from "@/lib/markdown";
 import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { ComponentRenderer } from "@/components/Interactive/ComponentRenderer";
 import { QuizLayout, QuizActions } from "./components";
+import { useQuiz } from "@/contexts/QuizContext";
 
 const ComponentQuiz = ({
   quiz,
@@ -11,37 +10,39 @@ const ComponentQuiz = ({
   quizResult: isCorrect,
   onCheck: setIsCorrect,
 }: IQuizProp) => {
-  const [userAnswer, setUserAnswer] = useState<unknown | null>(null);
+  // const [userAnswer, setUserAnswer] = useState<unknown | null>(null);
+  const { userAnswer, setUserAnswer } = useQuiz();
+
   const quizBlock = quiz.quizBlock as ComponentQuizType;
 
   // TODO: Should find a way to make answer check generic as different component quiz types need different check answer as user's input could be in variety of value types
   // But now it's only string!
 
-  const handleChange = (e: unknown) => {
+  const handleChange = (str: string) => {
     if (!isActive) return;
 
     setIsCorrect(null);
-    setUserAnswer(e);
+    setUserAnswer(str);
   };
 
   const handleCheckAnswer = () => {
     if (userAnswer === null) return;
 
-    setIsCorrect(String(userAnswer) === quizBlock.answer);
+    setIsCorrect(userAnswer === quizBlock.answer);
   };
 
   return (
     <>
-      <QuizLayout content={quiz.content}>
+      <QuizLayout>
         <ComponentRenderer
           component={quizBlock.componentName}
           props={{
-            onAnswer: handleChange,
+            onChange: handleChange,
             isActive,
+            props: quizBlock.props,
           }}
         />
         {isCorrect === false && <p>😩 Incorrect</p>}
-        <ReactMarkdown>{quizBlock.afterContent}</ReactMarkdown>
       </QuizLayout>
       {isActive && !isCorrect && (
         <QuizActions

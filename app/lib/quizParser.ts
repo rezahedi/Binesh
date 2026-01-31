@@ -72,27 +72,43 @@ export type QuizBlock =
 export type ComponentQuizType = {
   componentName: string;
   answer: string;
-  afterContent: string;
+  props: string;
 };
 
 const parseQuizComponent = (str: string): QuizType | null => {
   if (!str) return null;
 
-  const regex =
-    /([\s\S]*?)<component name="(\w+)" answer="(\w+)" \/>([\s\S]*)/m;
-  const match = str.match(regex);
+  const componentRegex = /[\s\S]*?<component(\b[^>]*)\/>[\s\S]*/m;
+  const propsRegex = /([\w-]+)\s*=\s*'([^']*)'/gm;
+
+  const match = str.match(componentRegex);
   if (!match) return null;
 
-  let [, content, componentName, answer, afterContent] = match;
+  let [content, propsString] = match;
   content = content.trim();
-  componentName = componentName.trim();
-  answer = answer.trim();
-  afterContent = afterContent.trim();
+  propsString = propsString.trim();
+
+  const propsMatches = propsString.matchAll(propsRegex);
+
+  const parsedProps: Record<string, string> = {};
+  [...propsMatches].forEach((match) => {
+    const [_, name, value] = match;
+    parsedProps[name] = value;
+  });
+
+  const componentName = parsedProps?.name;
+  const answer = parsedProps?.answer;
+  const props = parsedProps?.props;
+  if (!componentName || !answer) return null;
 
   return {
     content,
     type: "component",
-    quizBlock: { componentName, answer, afterContent },
+    quizBlock: {
+      componentName,
+      answer,
+      props,
+    },
   };
 };
 

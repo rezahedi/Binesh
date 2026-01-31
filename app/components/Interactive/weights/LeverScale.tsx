@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Scale from "./Scale";
 
 const WIDTH = 540;
@@ -35,19 +34,17 @@ const LeverScale = ({
   }
 
   return (
-    <div>
-      <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="bg-white rounded-xl">
-        <Scale
-          x={WIDTH * 0.1}
-          y={30}
-          width={WIDTH * 0.8}
-          angle={angle}
-          rodLength={rodLength}
-          masses={masses}
-          fulcrum={fulcrum}
-        />
-      </svg>
-    </div>
+    <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="bg-white rounded-xl">
+      <Scale
+        x={WIDTH * 0.1}
+        y={30}
+        width={WIDTH * 0.8}
+        angle={angle}
+        rodLength={rodLength}
+        masses={masses}
+        fulcrum={fulcrum}
+      />
+    </svg>
   );
 };
 
