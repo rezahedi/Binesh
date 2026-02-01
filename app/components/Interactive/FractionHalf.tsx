@@ -9,9 +9,10 @@ import SquareFractionGrid from "./Blocks/SquareFractionGrid";
  * Example use in markdown: <component name="component name" prop1="xyz" prop2="123" />
  * Then this component could have props and use above values.
  */
-const FractionSplit02 = ({
+const FractionHalf = ({
   onChange,
   isActive = true,
+  props,
 }: InteractiveComponentProps) => {
   const handleChange = (num: number) => {
     if (onChange) onChange(String(num));
@@ -19,22 +20,11 @@ const FractionSplit02 = ({
 
   return (
     <SquareFractionGrid
-      pairPoints={{
-        coordinate: [2, 3],
-        points: [
-          [1, 1],
-          [1, 2],
-          [1, 1],
-
-          [1, 1],
-          [0, 0],
-          [1, 1],
-        ],
-      }}
+      {...(props && JSON.parse(props))}
       onChange={handleChange}
       isActive={isActive}
     />
   );
 };
 
-export default FractionSplit02;
+export default FractionHalf;
