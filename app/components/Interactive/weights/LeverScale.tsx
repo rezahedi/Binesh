@@ -4,6 +4,13 @@ const WIDTH = 540;
 const HEIGHT = 250;
 const MAX_ANGLE = 20;
 
+export type LeverScaleProps = {
+  masses?: number[][];
+  rodLength?: number;
+  fulcrum?: number;
+  showResult?: boolean;
+};
+
 const LeverScale = ({
   masses = [
     [1, -1],
@@ -12,12 +19,7 @@ const LeverScale = ({
   rodLength = 3,
   fulcrum = 1,
   showResult = false,
-}: {
-  masses?: number[][];
-  rodLength?: number;
-  fulcrum?: number;
-  showResult?: boolean;
-}) => {
+}: LeverScaleProps) => {
   let angle = 0;
 
   if (showResult) {
