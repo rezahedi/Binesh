@@ -2,10 +2,12 @@ const Lever = ({
   fulcrum,
   axisWidth,
   height,
+  isActive = false,
 }: {
   fulcrum: number;
   axisWidth: number;
   height: number;
+  isActive?: boolean;
 }) => {
   return (
     <g transform={`translate(${fulcrum * axisWidth}, ${-height})`}>

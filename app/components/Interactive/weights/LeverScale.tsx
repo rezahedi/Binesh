@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import Scale from "./Scale";
 
 const WIDTH = 540;
@@ -5,21 +6,17 @@ const HEIGHT = 250;
 const MAX_ANGLE = 20;
 
 export type LeverScaleProps = {
-  masses?: number[][];
-  rodLength?: number;
-  fulcrum?: number;
-  showResult?: boolean;
+  masses: [number, number][];
+  draggableWeightIndex?: number;
+  rodLength: number;
+  fulcrum: number;
+  showResult: boolean;
+  isActive: boolean;
 };
 
-const LeverScale = ({
-  masses = [
-    [1, -1],
-    [1, 1],
-  ],
-  rodLength = 3,
-  fulcrum = 1,
-  showResult = false,
-}: LeverScaleProps) => {
+const LeverScale = (props: LeverScaleProps) => {
+  const { masses, showResult, isActive } = props;
+
   let angle = 0;
 
   if (showResult) {
@@ -36,15 +33,16 @@ const LeverScale = ({
   }
 
   return (
-    <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="bg-white rounded-xl">
+    <svg
+      viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+      className={cn("bg-white rounded-xl", !isActive && "pointer-events-none")}
+    >
       <Scale
         x={WIDTH * 0.1}
         y={30}
         width={WIDTH * 0.8}
         angle={angle}
-        rodLength={rodLength}
-        masses={masses}
-        fulcrum={fulcrum}
+        {...props}
       />
     </svg>
   );

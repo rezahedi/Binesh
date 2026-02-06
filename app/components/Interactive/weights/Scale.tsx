@@ -4,6 +4,18 @@ import Weights from "./Weights";
 
 const LEVER_HEIGHT = 60;
 
+type ScaleProps = {
+  x?: number;
+  y?: number;
+  width: number;
+  angle?: number;
+  rodLength: number;
+  masses: number[][];
+  fulcrum: number;
+  draggableWeightIndex?: number;
+  isActive?: boolean;
+};
+
 const Scale = ({
   x = 0,
   y = 0,
@@ -12,15 +24,9 @@ const Scale = ({
   rodLength,
   masses,
   fulcrum,
-}: {
-  x?: number;
-  y?: number;
-  width: number;
-  angle?: number;
-  rodLength: number;
-  masses: number[][];
-  fulcrum: number;
-}) => {
+  draggableWeightIndex,
+  isActive = false,
+}: ScaleProps) => {
   const axisWidth = width / (rodLength - 1);
 
   return (
@@ -32,12 +38,19 @@ const Scale = ({
         fulcrum={fulcrum}
         axisWidth={axisWidth}
       />
-      <Lever fulcrum={fulcrum} axisWidth={axisWidth} height={LEVER_HEIGHT} />
+      <Lever
+        fulcrum={fulcrum}
+        axisWidth={axisWidth}
+        height={LEVER_HEIGHT}
+        isActive={isActive}
+      />
       <Weights
         masses={masses}
         angle={angle}
         fulcrum={fulcrum}
         axisWidth={axisWidth}
+        draggableWeightIndex={draggableWeightIndex}
+        isActive={isActive}
       />
     </g>
   );

@@ -5,15 +5,19 @@ const Weights = ({
   angle = 0,
   fulcrum,
   axisWidth,
+  draggableWeightIndex,
+  isActive = false,
 }: {
   masses: number[][];
   angle?: number;
   fulcrum: number;
   axisWidth: number;
+  draggableWeightIndex?: number;
+  isActive?: boolean;
 }) => {
   const centerX = axisWidth * fulcrum;
   const centerY = 0;
-
+  console.log("isActive", isActive, draggableWeightIndex);
   return (
     <>
       {masses.map(([weight, position], index) => {
@@ -27,6 +31,10 @@ const Weights = ({
             x={x}
             y={y}
             color={index % 2 === 0 ? "skyblue" : "lightgreen"}
+            isDraggable={
+              isActive && draggableWeightIndex === index ? true : false
+            }
+            snapSize={axisWidth}
           />
         );
       })}

@@ -1,5 +1,6 @@
+import { useQuiz } from "@/contexts/QuizContext";
 import { cn } from "@/utils/cn";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ROPE_LENGTH = 40;
 
@@ -18,13 +19,16 @@ const Weight = ({
   y,
   color,
   isDraggable = false,
+  snapSize = 1,
 }: {
   weight: number;
   x: number;
   y: number;
   color: string;
   isDraggable?: boolean;
+  snapSize?: number;
 }) => {
+  console.log("weight", weight, isDraggable);
   const scale = 1 + Math.abs(weight) / 100;
   const [translate, setTranslate] = useState<{
     x: number;
@@ -33,8 +37,19 @@ const Weight = ({
     x,
     y,
   });
-  const [drag, setDrag] = useState<boolean>(false);
+  const [dragging, setDragging] = useState<boolean>(false);
   const dragXOffset = useRef<number>(0);
+  const { userAnswer, setUserAnswer } = useQuiz();
+
+  useEffect(() => {
+    setTranslate({
+      x,
+      y,
+    });
+  }, [x, y]);
+
+  const snap = (v: number) =>
+    snapSize > 1 ? Math.round(v / snapSize) * snapSize : v;
 
   const handleDragStart = (e: React.PointerEvent<SVGGElement>) => {
     if (!isDraggable) return;
@@ -48,38 +63,46 @@ const Weight = ({
     dragXOffset.current = point.x - translate.x;
 
     e.currentTarget.setPointerCapture(e.pointerId);
-    setDrag(true);
+    setDragging(true);
   };
 
   const handleDragMove = (e: React.PointerEvent<SVGGElement>) => {
     if (!isDraggable) return;
 
     const svgElement = (e.currentTarget as SVGGraphicsElement).ownerSVGElement;
-    if (!drag || !svgElement) return;
+    if (!dragging || !svgElement) return;
 
     const point = getSvgPoint(svgElement, e.clientX, e.clientY);
     if (!point) return;
 
+    const newX = snap(point.x - dragXOffset.current);
     setTranslate((prev) => ({
       ...prev,
-      x: point.x - dragXOffset.current,
+      x: newX,
     }));
+    const dragDirection = point.x - dragXOffset.current - newX > 0 ? 1 : -1;
+    if (translate.x !== newX) {
+      console.log("dir", dragDirection);
+      const n = userAnswer ? Number(userAnswer) : -2;
+      console.log("userAnswer", n, "setUserAnswer", String(n - dragDirection));
+      setUserAnswer(String(n - dragDirection));
+    }
   };
 
   const handleDragEnd = (e: React.PointerEvent<SVGGElement>) => {
     if (!isDraggable) return;
 
     if (e) e.currentTarget.releasePointerCapture(e.pointerId);
-    setDrag(false);
+    setDragging(false);
   };
 
   return (
     <g
       transform={`translate(${translate.x}, ${translate.y})`}
       className={cn(
-        "group select-none touch-none",
+        "group select-none touch-none transition duration-500",
         isDraggable &&
-          (drag ? "cursor-grabbing" : "transition duration-500 cursor-grab")
+          (dragging ? "cursor-grabbing duration-100" : "cursor-grab")
       )}
       onPointerDown={handleDragStart}
       onPointerMove={handleDragMove}
@@ -107,7 +130,7 @@ const Weight = ({
           cy="0"
           className={cn(
             "stroke-secondary animate-zoom-pulse group-hover:animate-none drop-shadow-[0_0_10px_rgba(0,0,0,1)]",
-            drag && "scale-95"
+            dragging && "scale-95"
           )}
         ></circle>
       )}
