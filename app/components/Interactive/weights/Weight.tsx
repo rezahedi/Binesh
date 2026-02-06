@@ -1,17 +1,9 @@
 import { useQuiz } from "@/contexts/QuizContext";
+import { getSvgPoint } from "@/lib/SVG";
 import { cn } from "@/utils/cn";
 import { useEffect, useRef, useState } from "react";
 
 const ROPE_LENGTH = 40;
-
-function getSvgPoint(svg: SVGSVGElement, clientX: number, clientY: number) {
-  if (!svg) return;
-
-  const pt = svg.createSVGPoint();
-  pt.x = clientX;
-  pt.y = clientY;
-  return pt.matrixTransform(svg.getScreenCTM()?.inverse());
-}
 
 const Weight = ({
   weight,
