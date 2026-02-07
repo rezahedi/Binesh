@@ -13,17 +13,17 @@ const L = ({
 
   const { userAnswer, revealResult } = useQuiz();
 
-  const draggableWeightIndex: number | undefined =
-    props.draggableWeightIndex !== undefined && userAnswer !== ""
-      ? Number(userAnswer)
-      : props.draggableWeightIndex;
-
   return (
     <div>
       <LeverScale
         {...props}
-        masses={replaceUndefined(masses, Number(userAnswer))}
-        draggableWeightIndex={draggableWeightIndex}
+        masses={replaceUndefined(
+          masses,
+          Number(userAnswer),
+          props.draggableWeightIndex !== undefined
+            ? props.draggableWeightIndex
+            : null
+        )}
         showResult={revealResult !== null ? true : false}
         isActive={isActive}
       />
@@ -33,11 +33,15 @@ const L = ({
 
 const replaceUndefined = (
   masses: [number, number][],
-  weight: number | null
+  value: number | null,
+  index: number | null
 ): [number, number][] => {
-  if (weight === null) return masses;
+  if (value === null) return masses;
 
-  return masses.map((m) => [m[0] === -1 ? weight : m[0], m[1]]);
+  if (index === null)
+    return masses.map((m) => [m[0] === -1 ? value : m[0], m[1]]);
+
+  return masses.map((m, i) => [m[0], i === index ? value : m[1]]);
 };
 
 export default L;

@@ -17,7 +17,7 @@ const Weights = ({
 }) => {
   const centerX = axisWidth * fulcrum;
   const centerY = 0;
-  console.log("isActive", isActive, draggableWeightIndex);
+
   return (
     <>
       {masses.map(([weight, position], index) => {
@@ -28,6 +28,7 @@ const Weights = ({
           <Weight
             key={index}
             weight={weight}
+            position={position}
             x={x}
             y={y}
             color={index % 2 === 0 ? "skyblue" : "lightgreen"}

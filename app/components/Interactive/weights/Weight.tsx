@@ -1,12 +1,13 @@
 import { useQuiz } from "@/contexts/QuizContext";
 import { getSvgPoint } from "@/lib/SVG";
 import { cn } from "@/utils/cn";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const ROPE_LENGTH = 40;
 
 const Weight = ({
   weight,
+  position,
   x,
   y,
   color,
@@ -14,31 +15,17 @@ const Weight = ({
   snapSize = 1,
 }: {
   weight: number;
+  position: number;
   x: number;
   y: number;
   color: string;
   isDraggable?: boolean;
   snapSize?: number;
 }) => {
-  console.log("weight", weight, isDraggable);
   const scale = 1 + Math.abs(weight) / 100;
-  const [translate, setTranslate] = useState<{
-    x: number;
-    y: number;
-  }>({
-    x,
-    y,
-  });
   const [dragging, setDragging] = useState<boolean>(false);
   const dragXOffset = useRef<number>(0);
   const { userAnswer, setUserAnswer } = useQuiz();
-
-  useEffect(() => {
-    setTranslate({
-      x,
-      y,
-    });
-  }, [x, y]);
 
   const snap = (v: number) =>
     snapSize > 1 ? Math.round(v / snapSize) * snapSize : v;
@@ -52,7 +39,7 @@ const Weight = ({
     const point = getSvgPoint(svg, e.clientX, e.clientY);
     if (!point) return;
 
-    dragXOffset.current = point.x - translate.x;
+    dragXOffset.current = point.x - x;
 
     e.currentTarget.setPointerCapture(e.pointerId);
     setDragging(true);
@@ -68,16 +55,11 @@ const Weight = ({
     if (!point) return;
 
     const newX = snap(point.x - dragXOffset.current);
-    setTranslate((prev) => ({
-      ...prev,
-      x: newX,
-    }));
-    const dragDirection = point.x - dragXOffset.current - newX > 0 ? 1 : -1;
-    if (translate.x !== newX) {
-      console.log("dir", dragDirection);
-      const n = userAnswer ? Number(userAnswer) : -2;
-      console.log("userAnswer", n, "setUserAnswer", String(n - dragDirection));
-      setUserAnswer(String(n - dragDirection));
+    if (x !== newX) {
+      const dragDirection = newX > x ? -1 : 1;
+      const prevPos = userAnswer === null ? position : Number(userAnswer);
+      if (prevPos - dragDirection <= 0 && prevPos - dragDirection >= -3)
+        setUserAnswer(String(prevPos - dragDirection));
     }
   };
 
@@ -90,7 +72,7 @@ const Weight = ({
 
   return (
     <g
-      transform={`translate(${translate.x}, ${translate.y})`}
+      transform={`translate(${x}, ${y})`}
       className={cn(
         "group select-none touch-none transition duration-500",
         isDraggable &&
