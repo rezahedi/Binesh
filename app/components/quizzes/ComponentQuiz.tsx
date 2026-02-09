@@ -11,7 +11,7 @@ const ComponentQuiz = ({
   onCheck: setIsCorrect,
 }: IQuizProp) => {
   // const [userAnswer, setUserAnswer] = useState<unknown | null>(null);
-  const { userAnswer, setUserAnswer } = useQuiz();
+  const { userAnswer, setUserAnswer, setRevealResult } = useQuiz();
 
   const quizBlock = quiz.quizBlock as ComponentQuizType;
 
@@ -22,6 +22,7 @@ const ComponentQuiz = ({
     if (!isActive) return;
 
     setIsCorrect(null);
+    setRevealResult(null);
     setUserAnswer(str);
   };
 
@@ -29,6 +30,7 @@ const ComponentQuiz = ({
     if (userAnswer === null) return;
 
     setIsCorrect(userAnswer === quizBlock.answer);
+    setRevealResult(true);
   };
 
   return (
