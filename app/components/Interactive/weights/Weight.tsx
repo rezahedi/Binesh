@@ -8,6 +8,7 @@ const ROPE_LENGTH = 40;
 const Weight = ({
   weight,
   position,
+  range,
   x,
   y,
   color,
@@ -16,6 +17,7 @@ const Weight = ({
 }: {
   weight: number;
   position: number;
+  range: number;
   x: number;
   y: number;
   color: string;
@@ -58,8 +60,18 @@ const Weight = ({
     if (x !== newX) {
       const dragDirection = newX > x ? -1 : 1;
       const prevPos = userAnswer === null ? position : Number(userAnswer);
-      if (prevPos - dragDirection <= 0 && prevPos - dragDirection >= -3)
-        setUserAnswer(String(prevPos - dragDirection));
+      if (
+        position > 0 &&
+        prevPos - dragDirection > 0 &&
+        prevPos - dragDirection <= range
+      )
+        return setUserAnswer(String(prevPos - dragDirection));
+      if (
+        position < 0 &&
+        prevPos - dragDirection < 0 &&
+        prevPos - dragDirection >= range
+      )
+        return setUserAnswer(String(prevPos - dragDirection));
     }
   };
 

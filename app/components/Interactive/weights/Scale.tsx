@@ -48,6 +48,7 @@ const Scale = ({
         masses={masses}
         angle={angle}
         fulcrum={fulcrum}
+        rodLength={rodLength}
         axisWidth={axisWidth}
         draggableWeightIndex={draggableWeightIndex}
         isActive={isActive}

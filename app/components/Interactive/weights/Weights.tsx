@@ -4,6 +4,7 @@ const Weights = ({
   masses,
   angle = 0,
   fulcrum,
+  rodLength,
   axisWidth,
   draggableWeightIndex,
   isActive = false,
@@ -11,6 +12,7 @@ const Weights = ({
   masses: number[][];
   angle?: number;
   fulcrum: number;
+  rodLength: number;
   axisWidth: number;
   draggableWeightIndex?: number;
   isActive?: boolean;
@@ -29,6 +31,7 @@ const Weights = ({
             key={index}
             weight={weight}
             position={position}
+            range={position > 0 ? rodLength - fulcrum - 1 : -fulcrum}
             x={x}
             y={y}
             color={index % 2 === 0 ? "skyblue" : "lightgreen"}

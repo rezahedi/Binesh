@@ -19,7 +19,7 @@ const L = ({
         {...props}
         masses={replaceUndefined(
           masses,
-          Number(userAnswer),
+          userAnswer ? Number(userAnswer) : null,
           props.draggableWeightIndex !== undefined
             ? props.draggableWeightIndex
             : null
