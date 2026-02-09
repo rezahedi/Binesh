@@ -1,17 +1,18 @@
-import { useState } from "react";
 import { InteractiveComponentProps } from "..";
 import LeverScale, { LeverScaleProps } from "./LeverScale";
 import { useQuiz } from "@/contexts/QuizContext";
 
 const L = ({
-  onChange,
   isActive = true,
   props: propsString,
 }: InteractiveComponentProps) => {
   const props: LeverScaleProps = propsString ? JSON.parse(propsString) : {};
-  const [masses, setMasses] = useState(props.masses || []);
-
+  const { masses, draggableWeightIndex } = props;
   const { userAnswer, revealResult } = useQuiz();
+
+  if (!props.masses || !props.fulcrum || !props.rodLength) {
+    return <p>Error: Missing props</p>;
+  }
 
   return (
     <div>
@@ -20,9 +21,7 @@ const L = ({
         masses={replaceUndefined(
           masses,
           userAnswer ? Number(userAnswer) : null,
-          props.draggableWeightIndex !== undefined
-            ? props.draggableWeightIndex
-            : null
+          draggableWeightIndex !== undefined ? draggableWeightIndex : null
         )}
         showResult={revealResult !== null ? true : false}
         isActive={isActive}

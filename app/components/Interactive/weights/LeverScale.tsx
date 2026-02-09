@@ -43,6 +43,7 @@ const LeverScale = (props: LeverScaleProps) => {
         width={WIDTH * 0.8}
         angle={angle}
         {...props}
+        isActive={showResult ? false : isActive}
       />
     </svg>
   );

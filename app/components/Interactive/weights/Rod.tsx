@@ -1,19 +1,16 @@
+import { LeverScaleProps } from "./LeverScale";
+
 const ROD_HEIGHT = 10;
 const LABELS_WIDTH = 6;
 
-const Rod = ({
-  angle,
-  width,
-  rodLength,
-  fulcrum,
-  axisWidth,
-}: {
+type RodProps = {
   angle: number;
   width: number;
-  rodLength: number;
-  fulcrum: number;
   axisWidth: number;
-}) => {
+} & LeverScaleProps;
+
+const Rod = (props: RodProps) => {
+  const { angle, width, axisWidth, rodLength, fulcrum } = props;
   const centerX = axisWidth * fulcrum;
 
   return (

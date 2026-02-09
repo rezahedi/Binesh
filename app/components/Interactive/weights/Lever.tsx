@@ -1,14 +1,13 @@
-const Lever = ({
-  fulcrum,
-  axisWidth,
-  height,
-  isActive = false,
-}: {
-  fulcrum: number;
+import { LeverScaleProps } from "./LeverScale";
+
+type LeverProps = {
   axisWidth: number;
   height: number;
-  isActive?: boolean;
-}) => {
+} & LeverScaleProps;
+
+const Lever = (props: LeverProps) => {
+  const { axisWidth, height, fulcrum } = props;
+
   return (
     <g transform={`translate(${fulcrum * axisWidth}, ${-height})`}>
       <line

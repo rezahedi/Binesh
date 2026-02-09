@@ -1,4 +1,5 @@
 import Lever from "./Lever";
+import { LeverScaleProps } from "./LeverScale";
 import Rod from "./Rod";
 import Weights from "./Weights";
 
@@ -9,50 +10,22 @@ type ScaleProps = {
   y?: number;
   width: number;
   angle?: number;
-  rodLength: number;
-  masses: number[][];
-  fulcrum: number;
-  draggableWeightIndex?: number;
-  isActive?: boolean;
-};
+} & LeverScaleProps;
 
-const Scale = ({
-  x = 0,
-  y = 0,
-  width,
-  angle = 0,
-  rodLength,
-  masses,
-  fulcrum,
-  draggableWeightIndex,
-  isActive = false,
-}: ScaleProps) => {
-  const axisWidth = width / (rodLength - 1);
+const Scale = (props: ScaleProps) => {
+  const { x = 0, y = 0, width, angle = 0, ...leverScaleProps } = props;
+  const axisWidth = width / (leverScaleProps.rodLength - 1);
 
   return (
     <g transform={`translate(${x}, ${y + LEVER_HEIGHT})`}>
       <Rod
         angle={angle}
         width={width}
-        rodLength={rodLength}
-        fulcrum={fulcrum}
         axisWidth={axisWidth}
+        {...leverScaleProps}
       />
-      <Lever
-        fulcrum={fulcrum}
-        axisWidth={axisWidth}
-        height={LEVER_HEIGHT}
-        isActive={isActive}
-      />
-      <Weights
-        masses={masses}
-        angle={angle}
-        fulcrum={fulcrum}
-        rodLength={rodLength}
-        axisWidth={axisWidth}
-        draggableWeightIndex={draggableWeightIndex}
-        isActive={isActive}
-      />
+      <Lever axisWidth={axisWidth} height={LEVER_HEIGHT} {...leverScaleProps} />
+      <Weights angle={angle} axisWidth={axisWidth} {...leverScaleProps} />
     </g>
   );
 };

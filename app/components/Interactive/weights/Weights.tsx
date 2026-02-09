@@ -1,22 +1,15 @@
+import { LeverScaleProps } from "./LeverScale";
 import Weight from "./Weight";
 
-const Weights = ({
-  masses,
-  angle = 0,
-  fulcrum,
-  rodLength,
-  axisWidth,
-  draggableWeightIndex,
-  isActive = false,
-}: {
-  masses: number[][];
+type WeightsProps = {
   angle?: number;
-  fulcrum: number;
-  rodLength: number;
   axisWidth: number;
-  draggableWeightIndex?: number;
-  isActive?: boolean;
-}) => {
+} & LeverScaleProps;
+
+const Weights = (props: WeightsProps) => {
+  const { angle = 0, axisWidth, ...leverScaleProps } = props;
+  const { masses, fulcrum, rodLength, isActive, draggableWeightIndex } =
+    leverScaleProps;
   const centerX = axisWidth * fulcrum;
   const centerY = 0;
 
@@ -26,6 +19,8 @@ const Weights = ({
         const radius = (angle * Math.PI) / 180;
         const x = centerX + position * axisWidth * Math.cos(radius);
         const y = centerY + position * axisWidth * Math.sin(radius);
+        const isDraggable =
+          isActive && draggableWeightIndex === index ? true : false;
         return (
           <Weight
             key={index}
@@ -35,9 +30,7 @@ const Weights = ({
             x={x}
             y={y}
             color={index % 2 === 0 ? "skyblue" : "lightgreen"}
-            isDraggable={
-              isActive && draggableWeightIndex === index ? true : false
-            }
+            isDraggable={isDraggable}
             snapSize={axisWidth}
           />
         );
