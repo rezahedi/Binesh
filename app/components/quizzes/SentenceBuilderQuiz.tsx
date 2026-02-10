@@ -56,6 +56,13 @@ const SentenceBuilderQuiz = ({
     setOptions((prev) => prev.map((p) => (p.index === index ? word : p)));
   };
 
+  const handleResetAnswer = () => {
+    setIsCorrect(null);
+
+    setOptions(shuffle(quizBlock.options));
+    setUserAnswer([]);
+  };
+
   return (
     <>
       <QuizLayout content={quiz.content}>
@@ -129,6 +136,7 @@ const SentenceBuilderQuiz = ({
         <QuizActions
           disabled={!isSentenceCompleted}
           onCheck={handleCheckAnswer}
+          onReset={isSentenceCompleted ? handleResetAnswer : undefined}
         />
       )}
     </>

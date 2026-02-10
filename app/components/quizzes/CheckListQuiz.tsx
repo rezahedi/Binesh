@@ -51,6 +51,12 @@ const CheckListQuiz = ({
     setRevealResult(result);
   };
 
+  const handleResetAnswer = () => {
+    setUserAnswers([]);
+    setRevealResult(null);
+    setIsCorrect(null);
+  };
+
   return (
     <>
       <QuizLayout content={quiz.content}>
@@ -94,6 +100,7 @@ const CheckListQuiz = ({
         <QuizActions
           disabled={userAnswers.length === 0}
           onCheck={handleCheckAnswer}
+          onReset={userAnswers.length ? handleResetAnswer : undefined}
         />
       )}
     </>

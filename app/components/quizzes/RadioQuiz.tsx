@@ -37,6 +37,12 @@ const RadioQuiz = ({
     setRevealResult(result);
   };
 
+  const handleResetAnswer = () => {
+    setUserAnswer(null);
+    setRevealResult(null);
+    setIsCorrect(null);
+  };
+
   return (
     <>
       <QuizLayout content={quiz.content}>
@@ -80,6 +86,7 @@ const RadioQuiz = ({
         <QuizActions
           disabled={userAnswer === null}
           onCheck={handleCheckAnswer}
+          onReset={userAnswer ? handleResetAnswer : undefined}
         />
       )}
     </>
