@@ -55,7 +55,8 @@
   }
 
   @keyframes bounce-once {
-    0%, 100% {
+    0%,
+    100% {
       transform: none;
       animation-timing-function: ease-out;
     }
