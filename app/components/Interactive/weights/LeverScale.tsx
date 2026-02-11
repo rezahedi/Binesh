@@ -21,7 +21,7 @@ const LeverScale = ({
   props: propsString,
 }: InteractiveComponentProps) => {
   const props: LeverScaleProps = propsString ? JSON.parse(propsString) : {};
-  const { draggableWeightIndex = null } = props;
+  const { fulcrum, rodLength, draggableWeightIndex = null } = props;
   const { userAnswer, revealResult } = useQuiz();
 
   const masses = (() => {
@@ -45,6 +45,16 @@ const LeverScale = ({
     if (weightDiff < -MAX_ANGLE) return -MAX_ANGLE;
     return weightDiff;
   })();
+
+  if (!masses || !fulcrum || !rodLength) {
+    return (
+      <div className="border border-destructive px-8 py-4 text-destructive">
+        <p>Component: LeverScale</p>
+        <p>Error: Missing props</p>
+        <p>Expected Props: masses, fulcrum, rodLength</p>
+      </div>
+    );
+  }
 
   return (
     <svg
