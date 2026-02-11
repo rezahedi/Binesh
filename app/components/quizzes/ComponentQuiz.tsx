@@ -42,7 +42,7 @@ const ComponentQuiz = ({
 
   return (
     <>
-      <QuizLayout>
+      <QuizLayout content={quiz.content}>
         <ComponentRenderer
           component={quizBlock.componentName}
           props={{

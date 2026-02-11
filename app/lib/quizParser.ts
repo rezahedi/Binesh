@@ -78,13 +78,13 @@ export type ComponentQuizType = {
 const parseQuizComponent = (str: string): QuizType | null => {
   if (!str) return null;
 
-  const componentRegex = /[\s\S]*?<component(\b[^>]*)\/>[\s\S]*/m;
+  const componentRegex = /([\s\S]*?)<component(\b[^>]*)\/>[\s\S]*/m;
   const propsRegex = /([\w-]+)\s*=\s*'([^']*)'/gm;
 
   const match = str.match(componentRegex);
   if (!match) return null;
 
-  let [content, propsString] = match;
+  let [, content, propsString] = match;
   content = content.trim();
   propsString = propsString.trim();
 
