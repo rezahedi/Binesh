@@ -5,12 +5,6 @@ import FractionHalf from "@/components/Interactive/FractionHalf";
 import FractionSplit from "@/components/Interactive/FractionSplit";
 import LeverScale from "@/components/Interactive/weights/LeverScale";
 
-export type InteractiveComponentProps = {
-  onChange?: (answer: string) => void;
-  isActive?: boolean;
-  props?: string;
-};
-
 export const componentRegistry = {
   InteractiveQuizComponent,
   InteractiveComponent,
