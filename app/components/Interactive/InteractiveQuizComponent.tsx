@@ -1,6 +1,5 @@
-import { useState } from "react";
 import SquareFraction from "@/components/Interactive/Blocks/SquareFraction";
-import { InteractiveComponentProps } from ".";
+import { InteractiveComponentProps } from "./types";
 
 /**
  * Accept a callback function to trigger whenever user interact with the component, select/deselect, type and etc.

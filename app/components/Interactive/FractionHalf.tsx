@@ -1,4 +1,4 @@
-import { InteractiveComponentProps } from ".";
+import { InteractiveComponentProps } from "./types";
 import SquareFractionGrid from "./Blocks/SquareFractionGrid";
 
 /**
