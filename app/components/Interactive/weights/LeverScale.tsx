@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
 import Scale from "./Scale";
-import { InteractiveComponentProps } from "..";
+import { InteractiveComponentProps } from "@/components/Interactive";
 import { useQuiz } from "@/contexts/QuizContext";
 
 const WIDTH = 540;

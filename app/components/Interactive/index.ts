@@ -1,9 +1,9 @@
 import InteractiveQuizComponent from "@/components/Interactive/InteractiveQuizComponent";
 import InteractiveComponent from "@/components/Interactive/InteractiveComponent";
-import Fraction from "./Fraction";
-import FractionHalf from "./FractionHalf";
-import FractionSplit from "./FractionSplit";
-import LeverScale from "./weights/LeverScale";
+import Fraction from "@/components/Interactive/Fraction";
+import FractionHalf from "@/components/Interactive/FractionHalf";
+import FractionSplit from "@/components/Interactive/FractionSplit";
+import LeverScale from "@/components/Interactive/weights/LeverScale";
 
 export type InteractiveComponentProps = {
   onChange?: (answer: string) => void;
