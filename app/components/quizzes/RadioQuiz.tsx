@@ -15,10 +15,6 @@ const RadioQuiz = ({
   const { userAnswer, setUserAnswer, setRevealResult } = useQuiz();
   const quizBlock = quiz.quizBlock as RadioQuizType;
 
-  // TODO: Switch from storing indexes in quiz.quizBlock to storing actual answers values by changing quiz markdown format and parser logic
-  // Them remove this mapping
-  const quizAnswer = quizBlock.options[quizBlock.answer];
-
   // TODO: Keep track of options selected by user as answer but it's wrong and disable them.
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +28,7 @@ const RadioQuiz = ({
   const handleCheckAnswer = () => {
     if (userAnswer === null) return;
 
-    const result = userAnswer === quizAnswer;
+    const result = userAnswer === quizBlock.answer;
     setIsCorrect(result);
     setRevealResult(true);
   };

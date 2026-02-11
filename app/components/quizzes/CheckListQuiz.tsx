@@ -15,12 +15,6 @@ const CheckListQuiz = ({
   const { userAnswers, setUserAnswers, setRevealResult } = useQuiz();
   const quizBlock = quiz.quizBlock as CheckListQuizType;
 
-  // TODO: Switch from storing indexes in quiz.quizBlock to storing actual answers values by changing quiz markdown format and parser logic
-  // Them remove this mapping
-  const quizAnswers = quizBlock.options.filter((_, index) =>
-    quizBlock.answer.includes(index)
-  );
-
   // TODO: Let the user know if the answer is partially correct
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,13 +34,13 @@ const CheckListQuiz = ({
   const handleCheckAnswer = () => {
     if (userAnswers.length === 0) return;
 
-    if (userAnswers.length !== quizAnswers.length) {
+    if (userAnswers.length !== quizBlock.answers.length) {
       setIsCorrect(false);
       setRevealResult(false);
       return;
     }
 
-    const result = userAnswers.every((a) => quizAnswers.includes(a));
+    const result = userAnswers.every((a) => quizBlock.answers.includes(a));
     setIsCorrect(result);
     setRevealResult(true);
   };
