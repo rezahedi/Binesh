@@ -1,5 +1,7 @@
 import { cn } from "@/utils/cn";
 import Scale from "./Scale";
+import { InteractiveComponentProps } from "..";
+import { useQuiz } from "@/contexts/QuizContext";
 
 const WIDTH = 540;
 const HEIGHT = 250;
@@ -14,23 +16,35 @@ export type LeverScaleProps = {
   isActive: boolean;
 };
 
-const LeverScale = (props: LeverScaleProps) => {
-  const { masses, showResult, isActive } = props;
+const LeverScale = ({
+  isActive = true,
+  props: propsString,
+}: InteractiveComponentProps) => {
+  const props: LeverScaleProps = propsString ? JSON.parse(propsString) : {};
+  const { draggableWeightIndex = null } = props;
+  const { userAnswer, revealResult } = useQuiz();
 
-  let angle = 0;
+  const masses = (() => {
+    if (!userAnswer) return props.masses;
 
-  if (showResult) {
+    return replaceUndefined(
+      props.masses,
+      Number(userAnswer),
+      draggableWeightIndex
+    );
+  })();
+
+  const angle = (() => {
+    if (!revealResult) return 0;
+
     const weightDiff =
       Math.abs(masses[1][0] * masses[1][1]) -
       Math.abs(masses[0][0] * masses[0][1]);
 
-    angle =
-      weightDiff > MAX_ANGLE
-        ? MAX_ANGLE
-        : weightDiff < -MAX_ANGLE
-          ? -MAX_ANGLE
-          : weightDiff;
-  }
+    if (weightDiff > MAX_ANGLE) return MAX_ANGLE;
+    if (weightDiff < -MAX_ANGLE) return -MAX_ANGLE;
+    return weightDiff;
+  })();
 
   return (
     <svg
@@ -43,10 +57,24 @@ const LeverScale = (props: LeverScaleProps) => {
         width={WIDTH * 0.8}
         angle={angle}
         {...props}
-        isActive={showResult ? false : isActive}
+        isActive={revealResult ? false : isActive}
+        masses={masses}
       />
     </svg>
   );
 };
 
 export default LeverScale;
+
+const replaceUndefined = (
+  masses: [number, number][],
+  value: number | null,
+  index: number | null
+): [number, number][] => {
+  if (value === null) return masses;
+
+  if (index === null)
+    return masses.map((m) => [m[0] === -1 ? value : m[0], m[1]]);
+
+  return masses.map((m, i) => [m[0], i === index ? value : m[1]]);
+};

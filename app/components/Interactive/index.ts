@@ -3,7 +3,7 @@ import InteractiveComponent from "@/components/Interactive/InteractiveComponent"
 import Fraction from "./Fraction";
 import FractionHalf from "./FractionHalf";
 import FractionSplit from "./FractionSplit";
-import L from "./weights/L";
+import LeverScale from "./weights/LeverScale";
 
 export type InteractiveComponentProps = {
   onChange?: (answer: string) => void;
@@ -17,7 +17,7 @@ export const componentRegistry = {
   Fraction,
   FractionHalf,
   FractionSplit,
-  L,
+  LeverScale,
 } as const;
 
 export type RegistryComponentName = keyof typeof componentRegistry;
