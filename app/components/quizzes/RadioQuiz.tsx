@@ -25,7 +25,7 @@ const RadioQuiz = ({
     if (!isActive) return;
 
     setIsCorrect(null);
-    setRevealResult(null);
+    setRevealResult(false);
     setUserAnswer(e.target.value);
   };
 
@@ -34,12 +34,12 @@ const RadioQuiz = ({
 
     const result = userAnswer === quizAnswer;
     setIsCorrect(result);
-    setRevealResult(result);
+    setRevealResult(true);
   };
 
   const handleResetAnswer = () => {
     setUserAnswer(null);
-    setRevealResult(null);
+    setRevealResult(false);
     setIsCorrect(null);
   };
 

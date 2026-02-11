@@ -23,7 +23,7 @@ const ComponentQuiz = ({
     if (!isActive) return;
 
     setIsCorrect(null);
-    setRevealResult(null);
+    setRevealResult(false);
     setUserAnswer(str);
   };
 
@@ -36,7 +36,7 @@ const ComponentQuiz = ({
 
   const handleResetAnswer = () => {
     setUserAnswer(null);
-    setRevealResult(null);
+    setRevealResult(false);
     setIsCorrect(null);
   };
 

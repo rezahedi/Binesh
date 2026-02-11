@@ -6,15 +6,15 @@ type ContextType = {
   userAnswers: string[];
   setUserAnswers: (answer: string[]) => void;
   setUserAnswerByIndex: (index: number, value: string) => void;
-  revealResult: boolean | null;
-  setRevealResult: (result: boolean | null) => void;
+  revealResult: boolean;
+  setRevealResult: (result: boolean) => void;
 };
 
 export const QuizContext = createContext<ContextType | undefined>(undefined);
 
 export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
   const [userAnswers, setUserAnswers] = useState<string[]>([]);
-  const [revealResult, setRevealResult] = useState<boolean | null>(null);
+  const [revealResult, setRevealResult] = useState<boolean>(false);
 
   const userAnswer = userAnswers[0] === undefined ? null : userAnswers[0];
 

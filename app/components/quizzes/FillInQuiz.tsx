@@ -18,7 +18,7 @@ const FillInQuiz = ({
     if (!isActive) return;
 
     setIsCorrect(null);
-    setRevealResult(null);
+    setRevealResult(false);
     setUserAnswer(e.target.value);
   };
 
@@ -32,7 +32,7 @@ const FillInQuiz = ({
     else result = userAnswer === quizBlock.answer;
 
     setIsCorrect(result);
-    setRevealResult(result);
+    setRevealResult(true);
   };
 
   return (

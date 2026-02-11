@@ -29,7 +29,7 @@ const CheckListQuiz = ({
     const inputValue = e.target.value;
     if (isCorrect === false) {
       setIsCorrect(null);
-      setRevealResult(null);
+      setRevealResult(false);
       return setUserAnswers([inputValue]);
     }
 
@@ -42,18 +42,18 @@ const CheckListQuiz = ({
 
     if (userAnswers.length !== quizAnswers.length) {
       setIsCorrect(false);
-      setRevealResult(null);
+      setRevealResult(false);
       return;
     }
 
     const result = userAnswers.every((a) => quizAnswers.includes(a));
     setIsCorrect(result);
-    setRevealResult(result);
+    setRevealResult(true);
   };
 
   const handleResetAnswer = () => {
     setUserAnswers([]);
-    setRevealResult(null);
+    setRevealResult(false);
     setIsCorrect(null);
   };
 
