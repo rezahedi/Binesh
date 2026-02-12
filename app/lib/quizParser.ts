@@ -72,7 +72,7 @@ export type QuizBlock =
 export type ComponentQuizType = {
   componentName: string;
   answer: string;
-  props: string;
+  props: Record<string, unknown>;
 };
 
 const parseQuizComponent = (str: string): QuizType | null => {
@@ -98,7 +98,12 @@ const parseQuizComponent = (str: string): QuizType | null => {
 
   const componentName = parsedProps?.name;
   const answer = parsedProps?.answer;
-  const props = parsedProps?.props;
+  let props = {};
+  try {
+    props = JSON.parse(parsedProps?.props || "{}");
+  } catch (_) {
+    return null;
+  }
   if (!componentName || !answer) return null;
 
   return {

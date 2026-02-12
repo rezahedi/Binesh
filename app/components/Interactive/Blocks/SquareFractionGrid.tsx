@@ -5,12 +5,15 @@ const SQUARE_WIDTH = 100;
 const PADDING = 11;
 const SPACE_WIDTH = SQUARE_WIDTH - 2 * PADDING;
 
+export type SquareFractionGridProps = {
+  pairPoints: { coordinate: [number, number]; points: [number, number][] };
+};
+
 const SquareFractionGrid = ({
   pairPoints,
   onChange,
   isActive = true,
-}: {
-  pairPoints: { coordinate: [number, number]; points: [number, number][] };
+}: SquareFractionGridProps & {
   onChange?: (value: number) => void;
   isActive?: boolean;
 }) => {

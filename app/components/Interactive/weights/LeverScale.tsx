@@ -18,9 +18,8 @@ export type LeverScaleProps = {
 
 const LeverScale = ({
   isActive = true,
-  props: propsString,
-}: InteractiveComponentProps) => {
-  const props: LeverScaleProps = propsString ? JSON.parse(propsString) : {};
+  props,
+}: InteractiveComponentProps & { props: LeverScaleProps }) => {
   const { fulcrum, rodLength, draggableWeightIndex = null } = props;
   const { userAnswer, revealResult } = useQuiz();
 

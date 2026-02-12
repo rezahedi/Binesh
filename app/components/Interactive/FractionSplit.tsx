@@ -1,5 +1,7 @@
-import { InteractiveComponentProps } from "./types";
-import SquareFractionGrid from "./Blocks/SquareFractionGrid";
+import { InteractiveComponentProps } from "@/components/Interactive/types";
+import SquareFractionGrid, {
+  SquareFractionGridProps,
+} from "./Blocks/SquareFractionGrid";
 
 /**
  * Interactive Components are self-contained standalone components that are for user's to play with inputs and see the output result
@@ -13,14 +15,14 @@ const FractionSplit = ({
   onChange,
   isActive = true,
   props,
-}: InteractiveComponentProps) => {
+}: InteractiveComponentProps & { props: SquareFractionGridProps }) => {
   const handleChange = (num: number) => {
     if (onChange) onChange(String(num));
   };
 
   return (
     <SquareFractionGrid
-      {...(props && JSON.parse(props))}
+      {...props}
       onChange={handleChange}
       isActive={isActive}
     />
