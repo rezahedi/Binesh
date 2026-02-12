@@ -5,8 +5,11 @@ export function getSvgPoint(
 ): DOMPoint | null {
   if (!svg) return null;
 
+  const CTM = svg.getScreenCTM();
+  if (!CTM) return null;
+
   const pt = svg.createSVGPoint();
   pt.x = clientX;
   pt.y = clientY;
-  return pt.matrixTransform(svg.getScreenCTM()?.inverse());
+  return pt.matrixTransform(CTM.inverse());
 }
