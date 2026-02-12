@@ -23,7 +23,7 @@ const LeverScale = ({
   const { fulcrum, rodLength, draggableWeightIndex = null } = props;
   const { userAnswer, revealResult } = useQuiz();
 
-  if (!props.masses || !fulcrum || !rodLength) {
+  if (!props.masses || !fulcrum || !rodLength || rodLength <= 2) {
     return (
       <div className="border border-destructive px-8 py-4 text-destructive">
         <p>Component: LeverScale</p>
