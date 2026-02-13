@@ -72,27 +72,48 @@ export type QuizBlock =
 export type ComponentQuizType = {
   componentName: string;
   answer: string;
-  afterContent: string;
+  props: Record<string, unknown>;
 };
 
 const parseQuizComponent = (str: string): QuizType | null => {
   if (!str) return null;
 
-  const regex =
-    /([\s\S]*?)<component name="(\w+)" answer="(\w+)" \/>([\s\S]*)/m;
-  const match = str.match(regex);
+  const componentRegex = /([\s\S]*?)<component(\b[^>]*)\/>[\s\S]*/m;
+  const propsRegex = /([\w-]+)\s*=\s*'([^']*)'/gm;
+
+  const match = str.match(componentRegex);
   if (!match) return null;
 
-  let [, content, componentName, answer, afterContent] = match;
+  let [, content, propsString] = match;
   content = content.trim();
-  componentName = componentName.trim();
-  answer = answer.trim();
-  afterContent = afterContent.trim();
+  propsString = propsString.trim();
+
+  const propsMatches = propsString.matchAll(propsRegex);
+
+  const parsedProps: Record<string, string> = {};
+  [...propsMatches].forEach((match) => {
+    const [_, name, value] = match;
+    parsedProps[name] = value;
+  });
+
+  const componentName = parsedProps?.name;
+  const answer = parsedProps?.answer;
+  let props = {};
+  try {
+    props = JSON.parse(parsedProps?.props || "{}");
+  } catch (_) {
+    props = {};
+  }
+  if (!componentName || !answer) return null;
 
   return {
     content,
     type: "component",
-    quizBlock: { componentName, answer, afterContent },
+    quizBlock: {
+      componentName,
+      answer,
+      props,
+    },
   };
 };
 
@@ -126,6 +147,10 @@ const parseListOptions = (quiz: string) => {
   let match;
   while ((match = OPTION_REGEX.exec(quiz)) !== null) {
     const [, mark, text] = match;
+
+    // Remove duplicates
+    if (options.includes(text)) continue;
+
     options.push(text.trim());
     marks.push(mark);
   }
@@ -137,24 +162,33 @@ const marksToIndexes = (marks: string[], char: string = "x") => {
   return marks.map((v, i) => (v === char ? i : -1)).filter((v) => v !== -1);
 };
 
-export type RadioQuizType = { options: string[]; answer: number };
+export type RadioQuizType = { options: string[]; answer: string };
 
 const parseRadioQuiz = (quiz: string): RadioQuizType | null => {
   const { options, marks } = parseListOptions(quiz);
-  const answer = marksToIndexes(marks);
-  if (answer.length !== 1) return null; // must be exactly one correct
 
-  return { options, answer: answer[0] };
+  const optionIndex = marks.findIndex((m) => m === "x");
+  if (optionIndex === -1) return null;
+
+  const answer = options[optionIndex];
+  if (!answer) return null;
+
+  return { options, answer };
 };
 
-export type CheckListQuizType = { options: string[]; answer: number[] };
+export type CheckListQuizType = { options: string[]; answers: string[] };
 
 const parseCheckListQuiz = (quiz: string): CheckListQuizType | null => {
   const { options, marks } = parseListOptions(quiz);
-  const answer = marksToIndexes(marks);
-  if (answer.length === 0) return null;
+  const answerIndexes = marksToIndexes(marks);
+  if (answerIndexes.length === 0) return null;
 
-  return { options, answer };
+  const answers: string[] = [];
+  answerIndexes.forEach((i) => {
+    if (options[i]) answers.push(options[i]);
+  });
+
+  return { options, answers };
 };
 
 export type FillQuizType = {

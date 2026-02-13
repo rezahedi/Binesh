@@ -30,7 +30,6 @@ const PlacementQuiz = ({
   const handleCheckAnswer = () => {
     if (isSomeBlanksEmpty) return;
 
-    console.log(userAnswer, quizBlock.zones);
     setIsCorrect(userAnswer.every((v, i) => quizBlock.zones[i] === v.value));
   };
 
@@ -68,6 +67,13 @@ const PlacementQuiz = ({
       next[emptySlotIndex] = option;
       return next;
     });
+  };
+
+  const handleResetAnswer = () => {
+    setIsCorrect(null);
+
+    setOptions(quizBlock.options);
+    setUserAnswer(quizBlock.options.map(() => ({ value: "" })));
   };
 
   return (
@@ -146,7 +152,11 @@ const PlacementQuiz = ({
         </div>
       </QuizLayout>
       {isActive && !isCorrect && (
-        <QuizActions disabled={isSomeBlanksEmpty} onCheck={handleCheckAnswer} />
+        <QuizActions
+          disabled={isSomeBlanksEmpty}
+          onCheck={handleCheckAnswer}
+          onReset={!isSomeBlanksEmpty ? handleResetAnswer : undefined}
+        />
       )}
     </>
   );

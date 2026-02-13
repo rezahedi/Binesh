@@ -1,4 +1,7 @@
-import SquareFractionGrid from "./Blocks/SquareFractionGrid";
+import { InteractiveComponentProps } from "./types";
+import SquareFractionGrid, {
+  SquareFractionGridProps,
+} from "./Blocks/SquareFractionGrid";
 
 /**
  * Interactive Components are self-contained standalone components that are for user's to play with inputs and see the output result
@@ -8,38 +11,22 @@ import SquareFractionGrid from "./Blocks/SquareFractionGrid";
  * Example use in markdown: <component name="component name" prop1="xyz" prop2="123" />
  * Then this component could have props and use above values.
  */
-const FractionHalf04 = ({
-  onAnswer,
+const FractionHalf = ({
+  onChange,
   isActive = true,
-}: {
-  onAnswer?: (answer: unknown) => void | null;
-  isActive?: boolean;
-}) => {
+  ...props
+}: InteractiveComponentProps) => {
+  const handleChange = (num: number) => {
+    if (onChange) onChange(String(num));
+  };
+
   return (
     <SquareFractionGrid
-      pairPoints={{
-        coordinate: [5, 2],
-        points: [
-          [2, 1],
-          [0, 0],
-
-          [1, 1],
-          [1, 1],
-
-          [2, 1],
-          [0, 0],
-
-          [1, 1],
-          [1, 1],
-
-          [2, 1],
-          [0, 0],
-        ],
-      }}
-      onChange={onAnswer}
+      {...(props as SquareFractionGridProps)}
+      onChange={handleChange}
       isActive={isActive}
     />
   );
 };
 
-export default FractionHalf04;
+export default FractionHalf;

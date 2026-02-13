@@ -1,10 +1,10 @@
 import { RadioQuizType } from "@/lib/quizParser";
-import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { QuizLayout, QuizActions } from "./components";
 import ReactMarkdown from "@/lib/markdown";
 import { getAnswerFeedbackClasses } from "./utils";
+import { useQuiz } from "@/contexts/QuizContext";
 
 const RadioQuiz = ({
   quiz,
@@ -12,21 +12,31 @@ const RadioQuiz = ({
   quizResult: isCorrect,
   onCheck: setIsCorrect,
 }: IQuizProp) => {
-  const [userAnswer, setUserAnswer] = useState<number | null>(null);
+  const { userAnswer, setUserAnswer, setRevealResult } = useQuiz();
   const quizBlock = quiz.quizBlock as RadioQuizType;
+
   // TODO: Keep track of options selected by user as answer but it's wrong and disable them.
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isActive) return;
 
     setIsCorrect(null);
-    setUserAnswer(Number(e.target.value));
+    setRevealResult(false);
+    setUserAnswer(e.target.value);
   };
 
   const handleCheckAnswer = () => {
     if (userAnswer === null) return;
 
-    setIsCorrect(userAnswer === quizBlock.answer);
+    const result = userAnswer === quizBlock.answer;
+    setIsCorrect(result);
+    setRevealResult(true);
+  };
+
+  const handleResetAnswer = () => {
+    setUserAnswer(null);
+    setRevealResult(false);
+    setIsCorrect(null);
   };
 
   return (
@@ -57,8 +67,8 @@ const RadioQuiz = ({
                 id={`${quiz.id}-${index}`}
                 type="radio"
                 name={quiz.id}
-                value={index}
-                checked={userAnswer === index}
+                value={option}
+                checked={userAnswer === option}
                 onChange={handleChange}
                 readOnly={!isActive}
                 className="hidden"
@@ -72,6 +82,7 @@ const RadioQuiz = ({
         <QuizActions
           disabled={userAnswer === null}
           onCheck={handleCheckAnswer}
+          onReset={userAnswer ? handleResetAnswer : undefined}
         />
       )}
     </>

@@ -1,8 +1,8 @@
 import { FillQuizType } from "@/lib/quizParser";
-import React, { useState } from "react";
 import { cn } from "@/utils/cn";
 import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { QuizLayout, QuizActions } from "./components";
+import { useQuiz } from "@/contexts/QuizContext";
 
 const FillInQuiz = ({
   quiz,
@@ -10,7 +10,7 @@ const FillInQuiz = ({
   quizResult: isCorrect,
   onCheck: setIsCorrect,
 }: IQuizProp) => {
-  const [userAnswer, setUserAnswer] = useState<string | null>(null);
+  const { userAnswer, setUserAnswer, setRevealResult } = useQuiz();
   const quizBlock = quiz.quizBlock as FillQuizType;
   const [pre, suf] = quizBlock.content.split("[ ]");
 
@@ -18,6 +18,7 @@ const FillInQuiz = ({
     if (!isActive) return;
 
     setIsCorrect(null);
+    setRevealResult(false);
     setUserAnswer(e.target.value);
   };
 
@@ -31,6 +32,7 @@ const FillInQuiz = ({
     else result = userAnswer === quizBlock.answer;
 
     setIsCorrect(result);
+    setRevealResult(true);
   };
 
   return (

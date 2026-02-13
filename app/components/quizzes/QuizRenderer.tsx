@@ -8,6 +8,7 @@ import {
   PlacementQuiz,
   SentenceBuilderQuiz,
 } from ".";
+import { QuizProvider } from "@/contexts/QuizContext";
 
 export interface IQuizProp {
   quiz: QuizType & { id: string };
@@ -28,7 +29,11 @@ const quizComponentMap: Record<QuizKind, React.FC<IQuizProp>> = {
 
 const QuizRenderer = (prop: IQuizProp) => {
   const Component = quizComponentMap[prop.quiz.type];
-  return <Component {...prop} />;
+  return (
+    <QuizProvider>
+      <Component {...prop} />
+    </QuizProvider>
+  );
 };
 
 export default QuizRenderer;

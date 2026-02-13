@@ -1,5 +1,5 @@
-import { useState } from "react";
 import SquareFraction from "@/components/Interactive/Blocks/SquareFraction";
+import { InteractiveComponentProps } from "./types";
 
 /**
  * Accept a callback function to trigger whenever user interact with the component, select/deselect, type and etc.
@@ -9,31 +9,16 @@ import SquareFraction from "@/components/Interactive/Blocks/SquareFraction";
  */
 // TODO: add another prop isActive to freeze quiz component interactivity
 const InteractiveQuizComponent = ({
-  onAnswer,
+  onChange,
   isActive = true,
-}: {
-  onAnswer?: (answer: unknown) => void | null;
-  isActive?: boolean;
-}) => {
-  // Store user's input state, it could be selecting, typing, changing values or anything
-  const [selected, setSelected] = useState<boolean[] | null>(null);
-
-  // User's event handler
-  const handleSelect = (index: number) => {
-    // Update state
-    const newSelected = [...(selected || [false, false, false])];
-    newSelected[index] = !newSelected[index];
-    setSelected(newSelected);
-
-    // Trigger callback to send up user's answer value
-    if (onAnswer) {
-      const userAnswer =
-        newSelected.reduce((accu, curr) => accu + (curr ? 1 : 0), 0) || null;
-      onAnswer(userAnswer);
-    }
+}: InteractiveComponentProps) => {
+  const handleChange = (num: number) => {
+    if (onChange) onChange(String(num));
   };
 
-  return <SquareFraction total={3} onChange={onAnswer} isActive={isActive} />;
+  return (
+    <SquareFraction total={3} onChange={handleChange} isActive={isActive} />
+  );
 };
 
 export default InteractiveQuizComponent;
