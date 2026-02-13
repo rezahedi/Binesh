@@ -14,4 +14,5 @@ export const componentRegistry = {
   LeverScale,
 } as const;
 
-export type RegistryComponentName = keyof typeof componentRegistry;
+export type Registry = typeof componentRegistry;
+export type RegistryComponentName = keyof Registry;

@@ -3,6 +3,7 @@ import { IQuizProp } from "@/components/quizzes/QuizRenderer";
 import { ComponentRenderer } from "@/components/Interactive/ComponentRenderer";
 import { QuizLayout, QuizActions } from "./components";
 import { useQuiz } from "@/contexts/QuizContext";
+import { RegistryComponentName } from "@/components/Interactive";
 
 const ComponentQuiz = ({
   quiz,
@@ -44,11 +45,11 @@ const ComponentQuiz = ({
     <>
       <QuizLayout content={quiz.content}>
         <ComponentRenderer
-          component={quizBlock.componentName}
-          props={{
+          component={quizBlock.componentName as RegistryComponentName}
+          componentProps={{
             onChange: handleChange,
             isActive,
-            props: quizBlock.props,
+            ...quizBlock.props,
           }}
         />
         {isCorrect === false && <p>😩 Incorrect</p>}

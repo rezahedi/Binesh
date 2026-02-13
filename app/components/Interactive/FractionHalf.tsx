@@ -14,15 +14,15 @@ import SquareFractionGrid, {
 const FractionHalf = ({
   onChange,
   isActive = true,
-  props,
-}: InteractiveComponentProps & { props: SquareFractionGridProps }) => {
+  ...props
+}: InteractiveComponentProps) => {
   const handleChange = (num: number) => {
     if (onChange) onChange(String(num));
   };
 
   return (
     <SquareFractionGrid
-      {...props}
+      {...(props as SquareFractionGridProps)}
       onChange={handleChange}
       isActive={isActive}
     />

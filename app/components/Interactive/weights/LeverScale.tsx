@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn";
 import Scale from "./Scale";
-import { InteractiveComponentProps } from "@/components/Interactive/types";
 import { useQuiz } from "@/contexts/QuizContext";
+import { InteractiveComponentProps } from "../types";
 
 const WIDTH = 540;
 const HEIGHT = 250;
@@ -17,13 +17,19 @@ export type LeverScaleProps = {
 };
 
 const LeverScale = ({
+  onChange: _,
   isActive = true,
-  props,
-}: InteractiveComponentProps & { props: LeverScaleProps }) => {
-  const { fulcrum, rodLength, draggableWeightIndex = null } = props;
+  ...props
+}: InteractiveComponentProps) => {
+  const {
+    masses: initialMasses,
+    fulcrum,
+    rodLength,
+    draggableWeightIndex = null,
+  } = props as LeverScaleProps;
   const { userAnswer, revealResult } = useQuiz();
 
-  if (!props.masses || !fulcrum || !rodLength || rodLength <= 2) {
+  if (!initialMasses || !fulcrum || !rodLength || rodLength <= 2) {
     return (
       <div className="border border-destructive px-8 py-4 text-destructive">
         <p>Component: LeverScale</p>
@@ -34,10 +40,10 @@ const LeverScale = ({
   }
 
   const masses = (() => {
-    if (!userAnswer) return props.masses;
+    if (!userAnswer) return initialMasses;
 
     return replaceUndefined(
-      props.masses,
+      initialMasses,
       Number(userAnswer),
       draggableWeightIndex
     );
@@ -65,7 +71,7 @@ const LeverScale = ({
         y={30}
         width={WIDTH * 0.8}
         angle={angle}
-        {...props}
+        {...(props as LeverScaleProps)}
         isActive={revealResult ? false : isActive}
         masses={masses}
       />

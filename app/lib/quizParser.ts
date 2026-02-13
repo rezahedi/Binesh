@@ -102,7 +102,7 @@ const parseQuizComponent = (str: string): QuizType | null => {
   try {
     props = JSON.parse(parsedProps?.props || "{}");
   } catch (_) {
-    return null;
+    props = {};
   }
   if (!componentName || !answer) return null;
 

@@ -5,16 +5,15 @@ import {
 
 type ComponentRendererProps = {
   component: string;
-  props?: Record<string, unknown>;
+  componentProps?: Record<string, unknown>;
 };
 
 export function ComponentRenderer({
   component,
-  props,
+  componentProps,
 }: ComponentRendererProps) {
   const Component = componentRegistry[component as RegistryComponentName];
-
   if (!Component) return null;
 
-  return <Component {...props} />;
+  return <Component {...componentProps} />;
 }
