@@ -12,6 +12,16 @@ type ContextType = {
   setRevealResult: (result: boolean) => void;
 };
 
+const initialValues: ContextType = {
+  userAnswer: null,
+  setUserAnswer: () => {},
+  userAnswers: [],
+  setUserAnswers: () => {},
+  setUserAnswerByIndex: () => {},
+  revealResult: false,
+  setRevealResult: () => {},
+};
+
 export const QuizContext = createContext<ContextType | undefined>(undefined);
 
 export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
@@ -51,8 +61,5 @@ export const QuizProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useQuiz = () => {
   const context = useContext(QuizContext);
-  if (!context) {
-    throw new Error("useQuiz must be used within its provider");
-  }
-  return context;
+  return context ?? initialValues;
 };
