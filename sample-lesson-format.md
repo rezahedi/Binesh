@@ -31,8 +31,8 @@ Fill-in quiz can have only one fill-in blank slot, here is the format of fill-in
 
 What is the output of $4 / 2$?
 
-```quiz:fill:<input type string or number>:<answer>
-4 / 2 = [ ]
+```quiz
+{ "type": "fill", "inputType": "number", "answer": "2", "content": "4 / 2 = [ ]" }
 ```
 
 # Fill in typing example for string type
@@ -41,8 +41,8 @@ This is an example for a string fill in.
 
 ---
 
-```quiz:fill:string:is
-Winters [ ] coming!
+```quiz
+{ "type": "fill", "inputType": "string", "answer": "is", "content": "Winters [ ] coming!" }
 ```
 
 # Check List Quiz
@@ -53,11 +53,8 @@ Check list quiz is for questions with multiple selection answers.
 
 Which of the following is a programming language?
 
-```quiz:checkList
-- [ ] HTML
-- [ ] CSS
-- [x] JavaScript
-- [x] Python
+```quiz
+{ "type": "checkList", "options": ["HTML", "CSS", "JavaScript", "Python"], "answers": ["JavaScript", "Python"] }
 ```
 
 # Radio Quiz
@@ -68,11 +65,8 @@ Radio quiz is almost the same as Check List Quiz but with only one option select
 
 Which one is the correct output of the `print(10 * 10)` code snippet?
 
-```quiz:radio
-- [x] 100
-- [ ] 10
-- [ ] 1000
-- [ ] 10000
+```quiz
+{ "type": "radio", "options": ["100", "10", "1000", "10000"], "answer": "100" }
 ```
 
 # Pick And Fill Quiz
@@ -83,8 +77,8 @@ This quiz type is look like fill in but have differences. User can't type to fil
 
 Fill in spaces by picking words from the list.
 
-```quiz:pickAndFill:[will|can|should|must|might|could]
-You [should] finish your homework today, and you [can] ask the teacher if you need help.
+```quiz
+{ "type": "pickAndFill", "options": ["will", "can", "should", "must", "might", "could"], "answers": ["should", "can"], "content": "You [ ] finish your homework today, and you [ ] ask the teacher if you need help." }
 ```
 
 # Placement Quiz
@@ -95,11 +89,8 @@ The following quiz style is placement, drag options and drop in dropping zones, 
 
 Put each one in its place.
 
-```quiz:placement:1x2:[A|B|C|D]
-- [B] Test 1
-- [D] Test 2
-- [A] Test 3
-- [C] Test 4
+```quiz
+{ "type": "placement", "aspectRatio": "1/2", "zones": ["A", "B", "C", "D"], "options": [{ "zone": "B", "content": "Test 1" }, { "zone": "D", "content": "Test 2" }, { "zone": "A", "content": "Test 3" }, { "zone": "C", "content": "Test 4" }] }
 ```
 
 # Sentence Builder Quiz
@@ -110,6 +101,6 @@ Sentence Builder quiz is more of an ordering quiz, where options should be picke
 
 Create a perfect sentence.
 
-```quiz:sentenceBuilder
-This|is|a short | sentence.
+```quiz
+{ "type": "sentenceBuilder", "options": ["This", "is", "a short", "sentence."] }
 ```

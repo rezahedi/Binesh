@@ -19,7 +19,7 @@ export const parseLesson = (
 export const parseSections = (section: string): SectionType[] => {
   if (!section) return [];
 
-  return section
+  return ("\n" + section)
     .split("\n# ")
     .filter((str) => str.trim())
     .map((step, index) => {
@@ -75,6 +75,29 @@ export type ComponentQuizType = {
   props: Record<string, unknown>;
 };
 
+export type RadioQuizType = { options: string[]; answer: string };
+export type CheckListQuizType = { options: string[]; answers: string[] };
+export type FillQuizType = {
+  inputType: string;
+  answer: string;
+  content: string;
+};
+export type PickAndFillQuizType = {
+  answers: string[];
+  content: string;
+  options: string[];
+};
+export type PlacementQuizType = {
+  aspectRatio: string;
+  zones: string[];
+  options: { zone: string; content: string }[];
+};
+export type SentenceBuilderQuizType = {
+  options: string[];
+};
+
+// ─── Component Quiz Parser (HTML-in-markdown, kept as-is) ────────────
+
 const parseQuizComponent = (str: string): QuizType | null => {
   if (!str) return null;
 
@@ -117,196 +140,35 @@ const parseQuizComponent = (str: string): QuizType | null => {
   };
 };
 
+// ─── Unified JSON Quiz Parser ────────────────────────────────────────
+
 const parseQuizBlock = (str: string): QuizType | null => {
   if (!str) return null;
 
-  const regex = /([\s\S]*?)```quiz:(\w+)\s*([\s\S]*?)```/m;
+  const regex = /([\s\S]*?)```quiz\s*([\s\S]*?)```/m;
   const match = str.match(regex);
   if (!match) return null;
 
-  let [, content, quizType, quizBody] = match;
+  let [, content, jsonBody] = match;
   content = content.trim();
-  quizType = quizType.trim();
-  quizBody = quizBody.trim();
+  jsonBody = jsonBody.trim();
 
-  if (!QUIZ_TYPES.includes(quizType as QuizKind)) return null;
-
-  const parser = QUIZ_PARSERS[quizType as QuizKind];
-  const quizBlock = parser(quizBody);
-  if (!quizBlock) return null;
-
-  return { content, type: quizType as QuizKind, quizBlock };
-};
-
-const OPTION_REGEX = /- \[([a-zA-Z0-9\s])\] (.+)/g;
-
-const parseListOptions = (quiz: string) => {
-  const options: string[] = [];
-  const marks: string[] = [];
-
-  let match;
-  while ((match = OPTION_REGEX.exec(quiz)) !== null) {
-    const [, mark, text] = match;
-
-    // Remove duplicates
-    if (options.includes(text)) continue;
-
-    options.push(text.trim());
-    marks.push(mark);
+  let parsed: Record<string, unknown>;
+  try {
+    parsed = JSON.parse(jsonBody);
+  } catch {
+    return null;
   }
 
-  return { options, marks };
-};
+  const quizType = parsed.type as string;
+  if (!quizType || !QUIZ_TYPES.includes(quizType as QuizKind)) return null;
 
-const marksToIndexes = (marks: string[], char: string = "x") => {
-  return marks.map((v, i) => (v === char ? i : -1)).filter((v) => v !== -1);
-};
-
-export type RadioQuizType = { options: string[]; answer: string };
-
-const parseRadioQuiz = (quiz: string): RadioQuizType | null => {
-  const { options, marks } = parseListOptions(quiz);
-
-  const optionIndex = marks.findIndex((m) => m === "x");
-  if (optionIndex === -1) return null;
-
-  const answer = options[optionIndex];
-  if (!answer) return null;
-
-  return { options, answer };
-};
-
-export type CheckListQuizType = { options: string[]; answers: string[] };
-
-const parseCheckListQuiz = (quiz: string): CheckListQuizType | null => {
-  const { options, marks } = parseListOptions(quiz);
-  const answerIndexes = marksToIndexes(marks);
-  if (answerIndexes.length === 0) return null;
-
-  const answers: string[] = [];
-  answerIndexes.forEach((i) => {
-    if (options[i]) answers.push(options[i]);
-  });
-
-  return { options, answers };
-};
-
-export type FillQuizType = {
-  inputType: string;
-  answer: string;
-  content: string;
-};
-
-const parseFillQuiz = (quiz: string): FillQuizType | null => {
-  const regex = /:(\w+):([^\r\n]*)\r?\n(.*\[ ?\].*)/m;
-  const match = quiz.match(regex);
-  if (!match) return null;
-
-  const [, inputType, answer, content] = match;
+  // The JSON object (minus the `type` field) IS the QuizBlock
+  const { type: _, ...quizBlock } = parsed;
 
   return {
-    inputType: inputType.trim(),
-    answer: answer.trim(),
-    content: content.trim(),
+    content,
+    type: quizType as QuizKind,
+    quizBlock: quizBlock as QuizBlock,
   };
-};
-
-/*
-```quiz:pickAndFill:[is|are|going|been|gonna|were]
-Winters is [cold] and summer [is] not!
-```
- */
-export type PickAndFillQuizType = {
-  answers: string[];
-  content: string;
-  options: string[];
-};
-const parsePickAndFillQuiz = (quiz: string): PickAndFillQuizType | null => {
-  // Check quiz format and it should include the :[options with | separator] and the content including at least one bracket with a word in between.
-  const formatRegex = /:\[([^\]]+)\]\r?\n([\s\S]*\[[^\]]+\][\s\S]*)/m;
-  const match = quiz.match(formatRegex);
-  console.log("pick", match, quiz);
-  if (!match) return null;
-
-  const [, optionsValue, content] = match;
-
-  // Split option string with | separator
-  const options = optionsValue.split(/\s*\|\s*/);
-
-  // Extract bracket and answers
-  const bracketRegex = /\[([^\]]+)\]/g;
-  const answersMatches = content.matchAll(bracketRegex);
-
-  const answers = [...answersMatches].map((match) => match[1]);
-
-  return {
-    answers,
-    content: content.trim().replaceAll(bracketRegex, "[ ]"),
-    options,
-  };
-};
-
-/*
-```quiz:placement:1x2:[A|B|C|D]
-- [B] Test 1
-- [D] Test 2
-- [A] Test 3
-- [C] Test 4
-```
- */
-export type PlacementQuizType = {
-  aspectRatio: string;
-  zones: string[];
-  options: { zone: string; content: string }[];
-};
-const parsePlacementQuiz = (quiz: string): PlacementQuizType | null => {
-  // Check quiz format and it should include the :<aspect ration format ex: 1x2> and the content is a list.
-  const formatRegex = /(:(\dx\d))?:\[([^\]]+)\]\r?\n([\s\S]*)/m;
-  const match = quiz.match(formatRegex);
-  if (!match) return null;
-
-  const [, , aspectRatio = "1x1", dropZones, content] = match;
-
-  const { options, marks } = parseListOptions(content);
-
-  // Split option string with | separator
-  const zones = dropZones.split(/\s*\|\s*/);
-
-  return {
-    aspectRatio: aspectRatio.replace("x", "/"),
-    zones,
-    options: options.map((option, index) => ({
-      zone: marks[index],
-      content: option,
-    })),
-  };
-};
-
-/*
-```quiz:sentenceBuilder
-This|is|a short | sentence.
-```
- */
-export type SentenceBuilderQuizType = {
-  options: string[];
-};
-const parseSentenceBuilderQuiz = (
-  quiz: string
-): SentenceBuilderQuizType | null => {
-  // Split string into options using | separator
-  const options = quiz.split(/\s*\|\s*/);
-
-  return {
-    options,
-  };
-};
-
-const QUIZ_PARSERS: Record<QuizKind, (body: string) => QuizBlock | null> = {
-  radio: parseRadioQuiz,
-  checkList: parseCheckListQuiz,
-  fill: parseFillQuiz,
-  pickAndFill: parsePickAndFillQuiz,
-  placement: parsePlacementQuiz,
-  sentenceBuilder: parseSentenceBuilderQuiz,
-  component: () => null,
 };
