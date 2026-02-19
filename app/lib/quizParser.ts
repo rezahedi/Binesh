@@ -181,3 +181,64 @@ const parseQuizBlock = (str: string): QuizType | null => {
     quizBlock: quizBlock as QuizBlock,
   };
 };
+
+export const serializeLessonDocument = (document: LessonDocument): string => {
+  const content = serializeSections(document.steps);
+  const hasMetadata = Object.keys(document.metadata).length > 0;
+  if (!hasMetadata) return content;
+
+  return matter.stringify(content, document.metadata);
+};
+
+export const serializeSections = (steps: SectionType[]): string => {
+  return steps
+    .map((step) => {
+      const title = step.title.trim() || "Untitled Step";
+      const content = step.content.trim();
+      const base = [`# ${title}`];
+
+      if (content) base.push(content);
+
+      if (step.quiz) {
+        const serializedQuiz = serializeQuiz(step.quiz);
+        if (serializedQuiz) {
+          base.push("---", serializedQuiz);
+        }
+      }
+
+      return base.join("\n\n");
+    })
+    .join("\n\n");
+};
+
+const serializeQuiz = (quiz: QuizType): string => {
+  if (quiz.type === "component") {
+    const quizBlock = quiz.quizBlock as ComponentQuizType;
+    const serializedProps = JSON.stringify(quizBlock.props || {}).replaceAll(
+      "'",
+      "\\u0027"
+    );
+    const componentName = sanitizeAttributeValue(quizBlock.componentName);
+    const answer = sanitizeAttributeValue(quizBlock.answer);
+
+    const lines = [];
+    if (quiz.content.trim()) lines.push(quiz.content.trim());
+    lines.push(
+      `<component name='${componentName}' answer='${answer}' props='${serializedProps}' />`
+    );
+    return lines.join("\n\n");
+  }
+
+  const payload = {
+    type: quiz.type,
+    ...(quiz.quizBlock as Record<string, unknown>),
+  };
+  const lines = [];
+  if (quiz.content.trim()) lines.push(quiz.content.trim());
+  lines.push("```quiz", JSON.stringify(payload, null, 2), "```");
+  return lines.join("\n\n");
+};
+
+const sanitizeAttributeValue = (value: string): string => {
+  return String(value).replaceAll("'", "\\u0027");
+};
