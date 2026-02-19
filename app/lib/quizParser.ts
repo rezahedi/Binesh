@@ -1,6 +1,12 @@
 import { generateRandomString } from "@/utils/string";
 import matter from "gray-matter";
 
+export type LessonMetadata = Record<string, unknown>;
+export type LessonDocument = {
+  metadata: LessonMetadata;
+  steps: SectionType[];
+};
+
 export type SectionType = {
   id: string;
   title: string;
@@ -8,12 +14,12 @@ export type SectionType = {
   quiz: QuizType | null;
 };
 
-export const parseLesson = (
+export const parseLessonDocument = (
   markdownContent: string
-): { metadata: Record<string, string>; steps: SectionType[] } => {
+): LessonDocument => {
   const { data: metadata, content } = matter(markdownContent);
   const steps: SectionType[] = parseSections(content);
-  return { metadata, steps };
+  return { metadata: metadata as LessonMetadata, steps };
 };
 
 export const parseSections = (section: string): SectionType[] => {
@@ -115,7 +121,9 @@ const parseQuizComponent = (str: string): QuizType | null => {
 
   const parsedProps: Record<string, string> = {};
   [...propsMatches].forEach((match) => {
-    const [_, name, value] = match;
+    const name = match[1];
+    const value = match[2];
+    if (!name) return;
     parsedProps[name] = value;
   });
 
@@ -124,7 +132,7 @@ const parseQuizComponent = (str: string): QuizType | null => {
   let props = {};
   try {
     props = JSON.parse(parsedProps?.props || "{}");
-  } catch (_) {
+  } catch {
     props = {};
   }
   if (!componentName || !answer) return null;
@@ -164,7 +172,8 @@ const parseQuizBlock = (str: string): QuizType | null => {
   if (!quizType || !QUIZ_TYPES.includes(quizType as QuizKind)) return null;
 
   // The JSON object (minus the `type` field) IS the QuizBlock
-  const { type: _, ...quizBlock } = parsed;
+  const quizBlock = { ...parsed };
+  delete quizBlock.type;
 
   return {
     content,

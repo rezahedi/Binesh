@@ -30,10 +30,7 @@ export default function Page() {
     e.preventDefault();
     setSavingMsg(null);
     const formData = new FormData(e.currentTarget);
-    const json = Object.fromEntries(
-      formData.entries().filter(([_, v]) => v !== "")
-    );
-    console.log(json);
+    const json = Object.fromEntries(formData.entries());
     const response = await fetch(
       `/api/admin/courses/${courseId}/lessons/${lessonId}`,
       {
