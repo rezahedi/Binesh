@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import LessonForm from "../LessonForm";
+import LessonForm from "../components/LessonForm";
 import { CourseProps } from "@/lib/types";
 import useFetch from "@/lib/swr/useFetch";
 
