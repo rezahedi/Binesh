@@ -20,8 +20,10 @@ const LessonContentEditor = ({
   content,
   onContentChange,
 }: LessonContentEditorProps) => {
-  const [mode, setMode] = useState<ContentEditorMode>("raw");
-  const [document, setDocument] = useState<LessonDocument | null>(null);
+  const [mode, setMode] = useState<ContentEditorMode>("blocks");
+  const [document, setDocument] = useState<LessonDocument | null>(
+    parseLessonDocument(content)
+  );
   const [parseError, setParseError] = useState<string | null>(null);
 
   const switchToBlocks = () => {
