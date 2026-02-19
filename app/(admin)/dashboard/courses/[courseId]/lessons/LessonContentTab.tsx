@@ -1,5 +1,4 @@
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import LessonContentEditor from "./LessonContentEditor";
 
 type LessonContentTabProps = {
   content: string;
@@ -11,18 +10,7 @@ const LessonContentTab = ({
   onContentChange,
 }: LessonContentTabProps) => {
   return (
-    <div>
-      <Label htmlFor="content">Content *:</Label>
-      <Textarea
-        id="content"
-        name="content"
-        required
-        value={content}
-        onChange={(e) => onContentChange(e.target.value)}
-        rows={15}
-        className="resize-y"
-      />
-    </div>
+    <LessonContentEditor content={content} onContentChange={onContentChange} />
   );
 };
 
