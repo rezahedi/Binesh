@@ -1,5 +1,6 @@
 import { QuizType, SectionType } from "@/lib/quizParser";
 import LessonStepCard from "./LessonStepCard";
+import { QuizValidationErrorMap } from "./quizzes/types";
 
 type LessonBlocksEditorProps = {
   steps: SectionType[];
@@ -7,11 +8,13 @@ type LessonBlocksEditorProps = {
     index: number,
     patch: { title?: string; content?: string; quiz?: QuizType | null }
   ) => void;
+  stepErrors: Record<number, QuizValidationErrorMap>;
 };
 
 const LessonBlocksEditor = ({
   steps,
   onStepChange,
+  stepErrors,
 }: LessonBlocksEditorProps) => {
   if (steps.length === 0) {
     return (
@@ -29,6 +32,7 @@ const LessonBlocksEditor = ({
           step={step}
           index={index}
           onStepChange={onStepChange}
+          validationErrors={stepErrors[index] || {}}
         />
       ))}
     </div>

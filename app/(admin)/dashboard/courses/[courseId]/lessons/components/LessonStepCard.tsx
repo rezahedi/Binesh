@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { QuizType, SectionType } from "@/lib/quizParser";
 import QuizEditor from "./quizzes/QuizEditor";
+import { QuizValidationErrorMap } from "./quizzes/types";
 
 type LessonStepCardProps = {
   index: number;
@@ -11,16 +12,26 @@ type LessonStepCardProps = {
     index: number,
     patch: { title?: string; content?: string; quiz?: QuizType | null }
   ) => void;
+  validationErrors: QuizValidationErrorMap;
 };
 
-const LessonStepCard = ({ index, step, onStepChange }: LessonStepCardProps) => {
+const LessonStepCard = ({
+  index,
+  step,
+  onStepChange,
+  validationErrors,
+}: LessonStepCardProps) => {
   const quizLabel = step.quiz ? `Has quiz (${step.quiz.type})` : "No quiz";
+  const hasQuizErrors = Object.keys(validationErrors).length > 0;
 
   return (
     <div className="space-y-3 rounded-md border p-4">
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-medium">Step {index + 1}</h4>
         <div className="flex items-center gap-2">
+          {hasQuizErrors && (
+            <p className="text-xs font-medium text-destructive">Quiz invalid</p>
+          )}
           <p className="text-xs text-muted-foreground">{quizLabel}</p>
         </div>
       </div>
@@ -45,6 +56,7 @@ const LessonStepCard = ({ index, step, onStepChange }: LessonStepCardProps) => {
       <QuizEditor
         quiz={step.quiz}
         onChange={(quiz) => onStepChange(index, { quiz })}
+        errors={validationErrors}
       />
     </div>
   );

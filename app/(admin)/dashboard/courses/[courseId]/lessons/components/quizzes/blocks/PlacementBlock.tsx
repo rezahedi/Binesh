@@ -2,9 +2,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PlacementQuizType } from "@/lib/quizParser";
+import { QuizValidationErrorMap } from "../types";
 
 type PlacementBlockProps = {
   value: PlacementQuizType;
+  errors: QuizValidationErrorMap;
   onChange: (next: PlacementQuizType) => void;
 };
 
@@ -25,7 +27,7 @@ const parseOptions = (value: string): PlacementQuizType["options"] => {
   });
 };
 
-const PlacementBlock = ({ value, onChange }: PlacementBlockProps) => {
+const PlacementBlock = ({ value, errors, onChange }: PlacementBlockProps) => {
   return (
     <div className="space-y-3">
       <div>
@@ -35,6 +37,9 @@ const PlacementBlock = ({ value, onChange }: PlacementBlockProps) => {
           value={value.aspectRatio}
           onChange={(e) => onChange({ ...value, aspectRatio: e.target.value })}
         />
+        {errors.aspectRatio && (
+          <p className="mt-1 text-xs text-destructive">{errors.aspectRatio}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="placement-zones">Zones (one per line)</Label>
@@ -46,6 +51,9 @@ const PlacementBlock = ({ value, onChange }: PlacementBlockProps) => {
             onChange({ ...value, zones: splitLines(e.target.value) })
           }
         />
+        {errors.zones && (
+          <p className="mt-1 text-xs text-destructive">{errors.zones}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="placement-options">
@@ -60,6 +68,9 @@ const PlacementBlock = ({ value, onChange }: PlacementBlockProps) => {
           }
         />
         <p className="mt-1 text-xs text-muted-foreground">Example: A|Heart</p>
+        {errors.options && (
+          <p className="mt-1 text-xs text-destructive">{errors.options}</p>
+        )}
       </div>
     </div>
   );

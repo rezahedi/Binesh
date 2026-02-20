@@ -2,13 +2,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FillQuizType } from "@/lib/quizParser";
+import { QuizValidationErrorMap } from "../types";
 
 type FillBlockProps = {
   value: FillQuizType;
+  errors: QuizValidationErrorMap;
   onChange: (next: FillQuizType) => void;
 };
 
-const FillBlockProps = ({ value, onChange }: FillBlockProps) => {
+const FillBlockProps = ({ value, errors, onChange }: FillBlockProps) => {
   return (
     <div className="space-y-3">
       <div>
@@ -22,6 +24,9 @@ const FillBlockProps = ({ value, onChange }: FillBlockProps) => {
           <option value="string">string</option>
           <option value="number">number</option>
         </select>
+        {errors.inputType && (
+          <p className="mt-1 text-xs text-destructive">{errors.inputType}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="fill-answer">Answer</Label>
@@ -30,6 +35,9 @@ const FillBlockProps = ({ value, onChange }: FillBlockProps) => {
           value={value.answer}
           onChange={(e) => onChange({ ...value, answer: e.target.value })}
         />
+        {errors.answer && (
+          <p className="mt-1 text-xs text-destructive">{errors.answer}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="fill-content">Blank Content</Label>
@@ -42,6 +50,9 @@ const FillBlockProps = ({ value, onChange }: FillBlockProps) => {
         <p className="mt-1 text-xs text-muted-foreground">
           Use [ ] as the blank placeholder.
         </p>
+        {errors.content && (
+          <p className="mt-1 text-xs text-destructive">{errors.content}</p>
+        )}
       </div>
     </div>
   );

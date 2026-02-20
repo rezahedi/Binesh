@@ -1,9 +1,11 @@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckListQuizType } from "@/lib/quizParser";
+import { QuizValidationErrorMap } from "../types";
 
 type CheckListBlockProps = {
   value: CheckListQuizType;
+  errors: QuizValidationErrorMap;
   onChange: (next: CheckListQuizType) => void;
 };
 
@@ -14,7 +16,7 @@ const splitLines = (value: string): string[] =>
     .map((item) => item.trim())
     .filter(Boolean);
 
-const CheckListBlock = ({ value, onChange }: CheckListBlockProps) => {
+const CheckListBlock = ({ value, errors, onChange }: CheckListBlockProps) => {
   return (
     <div className="space-y-3">
       <div>
@@ -27,6 +29,9 @@ const CheckListBlock = ({ value, onChange }: CheckListBlockProps) => {
             onChange({ ...value, options: splitLines(e.target.value) })
           }
         />
+        {errors.options && (
+          <p className="mt-1 text-xs text-destructive">{errors.options}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="checklist-answers">
@@ -40,6 +45,9 @@ const CheckListBlock = ({ value, onChange }: CheckListBlockProps) => {
             onChange({ ...value, answers: splitLines(e.target.value) })
           }
         />
+        {errors.answers && (
+          <p className="mt-1 text-xs text-destructive">{errors.answers}</p>
+        )}
       </div>
     </div>
   );

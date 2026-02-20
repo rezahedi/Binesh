@@ -9,6 +9,7 @@ import {
 } from "@/lib/quizParser";
 import { useMemo, useState } from "react";
 import LessonBlocksEditor from "./LessonBlocksEditor";
+import { validateLessonQuizSteps } from "./quizzes/quizValidation";
 
 export type ContentEditorMode = "raw" | "blocks";
 
@@ -84,6 +85,17 @@ const LessonContentEditor = ({
     return content;
   }, [content, document, mode]);
 
+  const validationState = useMemo(() => {
+    if (mode !== "blocks" || !document) {
+      return {
+        isValid: true,
+        stepErrors: {},
+        summary: [] as string[],
+      };
+    }
+    return validateLessonQuizSteps(document.steps);
+  }, [document, mode]);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -128,14 +140,36 @@ const LessonContentEditor = ({
       {mode === "blocks" && (
         <>
           <input
+            name="contentValidation"
+            value={validationState.isValid ? "ok" : ""}
+            required
+            readOnly
+            tabIndex={-1}
+            aria-hidden="true"
+            className="sr-only h-0 w-0 border-0 p-0"
+          />
+          <input
             type="hidden"
             name="content"
             value={contentForSubmit}
             required
           />
+          {!validationState.isValid && (
+            <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3">
+              <p className="text-sm font-medium text-destructive">
+                Resolve quiz issues before saving.
+              </p>
+              <ul className="mt-2 list-disc pl-5 text-sm text-destructive">
+                {validationState.summary.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <LessonBlocksEditor
             steps={document?.steps || []}
             onStepChange={handleStepChange}
+            stepErrors={validationState.stepErrors}
           />
         </>
       )}

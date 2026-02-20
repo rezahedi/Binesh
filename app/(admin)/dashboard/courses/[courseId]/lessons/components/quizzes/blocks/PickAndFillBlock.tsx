@@ -1,9 +1,11 @@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PickAndFillQuizType } from "@/lib/quizParser";
+import { QuizValidationErrorMap } from "../types";
 
 type PickAndFillBlockProp = {
   value: PickAndFillQuizType;
+  errors: QuizValidationErrorMap;
   onChange: (next: PickAndFillQuizType) => void;
 };
 
@@ -14,7 +16,11 @@ const splitLines = (value: string) =>
     .map((item) => item.trim())
     .filter(Boolean);
 
-const PickAndFillBlock = ({ value, onChange }: PickAndFillBlockProp) => {
+const PickAndFillBlock = ({
+  value,
+  errors,
+  onChange,
+}: PickAndFillBlockProp) => {
   return (
     <div className="space-y-3">
       <div>
@@ -27,6 +33,9 @@ const PickAndFillBlock = ({ value, onChange }: PickAndFillBlockProp) => {
             onChange({ ...value, options: splitLines(e.target.value) })
           }
         />
+        {errors.options && (
+          <p className="mt-1 text-xs text-destructive">{errors.options}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="pick-fill-answers">Answers (one per line)</Label>
@@ -38,6 +47,9 @@ const PickAndFillBlock = ({ value, onChange }: PickAndFillBlockProp) => {
             onChange({ ...value, answers: splitLines(e.target.value) })
           }
         />
+        {errors.answers && (
+          <p className="mt-1 text-xs text-destructive">{errors.answers}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="pick-fill-content">Blank Content</Label>
@@ -50,6 +62,9 @@ const PickAndFillBlock = ({ value, onChange }: PickAndFillBlockProp) => {
         <p className="mt-1 text-xs text-muted-foreground">
           Use [ ] blanks and match their count with answers.
         </p>
+        {errors.content && (
+          <p className="mt-1 text-xs text-destructive">{errors.content}</p>
+        )}
       </div>
     </div>
   );

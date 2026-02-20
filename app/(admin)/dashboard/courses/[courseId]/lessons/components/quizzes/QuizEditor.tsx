@@ -6,14 +6,15 @@ import { useState } from "react";
 import QuizEditorFields from "./QuizEditorFields";
 import QuizTypeSelect from "./QuizTypeSelect";
 import { createDefaultQuiz } from "./quizDefaults";
-import { EditableQuizKind } from "./types";
+import { EditableQuizKind, QuizValidationErrorMap } from "./types";
 
 type QuizEditorProps = {
   quiz: QuizType | null;
   onChange: (nextQuiz: QuizType | null) => void;
+  errors: QuizValidationErrorMap;
 };
 
-const QuizEditor = ({ quiz, onChange }: QuizEditorProps) => {
+const QuizEditor = ({ quiz, onChange, errors }: QuizEditorProps) => {
   const [nextType, setNextType] = useState<EditableQuizKind>("radio");
 
   if (!quiz) {
@@ -68,9 +69,13 @@ const QuizEditor = ({ quiz, onChange }: QuizEditorProps) => {
           value={quiz.content}
           onChange={(e) => onChange({ ...quiz, content: e.target.value })}
         />
+        {errors.content && (
+          <p className="mt-1 text-xs text-destructive">{errors.content}</p>
+        )}
       </div>
       <QuizEditorFields
         quiz={quiz}
+        errors={errors}
         onQuizBlockChange={(quizBlock) => onChange({ ...quiz, quizBlock })}
       />
     </div>
