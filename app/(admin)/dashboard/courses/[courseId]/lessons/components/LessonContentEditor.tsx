@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   LessonDocument,
+  QuizType,
   parseLessonDocument,
   serializeLessonDocument,
 } from "@/lib/quizParser";
@@ -56,7 +57,7 @@ const LessonContentEditor = ({
 
   const handleStepChange = (
     index: number,
-    patch: { title?: string; content?: string }
+    patch: { title?: string; content?: string; quiz?: QuizType | null }
   ) => {
     setDocument((prev) => {
       if (!prev) return prev;
@@ -66,6 +67,7 @@ const LessonContentEditor = ({
           ...step,
           title: patch.title ?? step.title,
           content: patch.content ?? step.content,
+          quiz: patch.quiz !== undefined ? patch.quiz : step.quiz,
         };
       });
       return {

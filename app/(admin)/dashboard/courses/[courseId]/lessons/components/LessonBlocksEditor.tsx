@@ -1,11 +1,11 @@
-import { SectionType } from "@/lib/quizParser";
+import { QuizType, SectionType } from "@/lib/quizParser";
 import LessonStepCard from "./LessonStepCard";
 
 type LessonBlocksEditorProps = {
   steps: SectionType[];
   onStepChange: (
     index: number,
-    patch: { title?: string; content?: string }
+    patch: { title?: string; content?: string; quiz?: QuizType | null }
   ) => void;
 };
 
