@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { QuizType, SectionType } from "@/lib/quizParser";
+import { cn } from "@/utils/cn";
 import QuizEditor from "./quizzes/QuizEditor";
 import { QuizValidationErrorMap } from "./quizzes/types";
 
@@ -13,6 +14,8 @@ type LessonStepCardProps = {
     patch: { title?: string; content?: string; quiz?: QuizType | null }
   ) => void;
   validationErrors: QuizValidationErrorMap;
+  isSelected: boolean;
+  onSelect: () => void;
 };
 
 const LessonStepCard = ({
@@ -20,12 +23,28 @@ const LessonStepCard = ({
   step,
   onStepChange,
   validationErrors,
+  isSelected,
+  onSelect,
 }: LessonStepCardProps) => {
   const quizLabel = step.quiz ? `Has quiz (${step.quiz.type})` : "No quiz";
   const hasQuizErrors = Object.keys(validationErrors).length > 0;
 
   return (
-    <div className="space-y-3 rounded-md border p-4">
+    <div
+      className={cn(
+        "space-y-3 rounded-md border p-4 transition-colors",
+        isSelected ? "border-primary ring-1 ring-primary/30 bg-primary/5" : ""
+      )}
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+    >
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-medium">Step {index + 1}</h4>
         <div className="flex items-center gap-2">

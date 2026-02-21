@@ -27,6 +27,7 @@ const LessonContentEditor = ({
     parseLessonDocument(content)
   );
   const [parseError, setParseError] = useState<string | null>(null);
+  const [selectedStepIndex, setSelectedStepIndex] = useState<number>(0);
 
   const switchToBlocks = () => {
     try {
@@ -95,6 +96,11 @@ const LessonContentEditor = ({
     }
     return validateLessonQuizSteps(document.steps);
   }, [document, mode]);
+
+  const clampedSelectedStepIndex = useMemo(() => {
+    if (mode !== "blocks" || !document || document.steps.length === 0) return 0;
+    return Math.min(selectedStepIndex, document.steps.length - 1);
+  }, [document, mode, selectedStepIndex]);
 
   return (
     <div className="space-y-4">
@@ -170,6 +176,8 @@ const LessonContentEditor = ({
             steps={document?.steps || []}
             onStepChange={handleStepChange}
             stepErrors={validationState.stepErrors}
+            selectedStepIndex={clampedSelectedStepIndex}
+            onSelectStep={setSelectedStepIndex}
           />
         </>
       )}
