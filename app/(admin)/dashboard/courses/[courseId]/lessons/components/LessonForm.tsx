@@ -3,8 +3,8 @@ import { STATUS_VALUES } from "@/db/schema";
 import { LessonProps } from "@/lib/types";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import LessonContentTab from "./LessonContentTab";
 import LessonDetailsTab from "./LessonDetailsTab";
+import LessonContentTab from "./LessonContentTab";
 
 const LessonForm = ({ lesson }: { lesson?: LessonProps | null }) => {
   const [name, setName] = useState<string>(lesson?.name || "");
