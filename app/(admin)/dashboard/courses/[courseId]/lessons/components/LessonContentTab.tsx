@@ -59,8 +59,8 @@ const LessonContentTab = ({
   const cloneStep = (step: SectionType): SectionType => {
     return {
       id: `${generateRandomString()}${Date.now()}`,
-      title: step.title ? `${step.title} (Copy)` : "Untitled Step (Copy)",
-      content: step.content,
+      title: step.title,
+      content: `(Copy) \n${step.content}`,
       quiz: step.quiz ? structuredClone(step.quiz) : null,
     };
   };
