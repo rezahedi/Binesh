@@ -1,8 +1,8 @@
 import { QuizType, SectionType } from "@/lib/quizParser";
-import LessonStepCard from "./LessonStepCard";
+import StepCard from "./block/StepCard";
 import SidebarFrame from "./preview/SidebarFrame";
 import { QuizValidationErrorMap } from "./quizzes/types";
-import BetweenButton from "./step/BetweenButton";
+import BetweenButton from "./block/BetweenButton";
 
 type LessonBlocksEditorProps = {
   steps: SectionType[];
@@ -43,7 +43,7 @@ const LessonBlocksEditor = ({
       <div className="min-w-0 grow space-y-4">
         {steps.map((step, index) => (
           <div key={step.id} className="space-y-4">
-            <LessonStepCard
+            <StepCard
               step={step}
               index={index}
               onStepChange={onStepChange}

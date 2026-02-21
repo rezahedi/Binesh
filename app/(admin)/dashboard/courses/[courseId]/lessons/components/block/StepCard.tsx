@@ -4,11 +4,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { QuizType, SectionType } from "@/lib/quizParser";
 import { cn } from "@/utils/cn";
-import QuizEditor from "./quizzes/QuizEditor";
-import { QuizValidationErrorMap } from "./quizzes/types";
+import QuizEditor from "../quizzes/QuizEditor";
+import { QuizValidationErrorMap } from "../quizzes/types";
 import { CopyPlusIcon, TrashIcon } from "lucide-react";
 
-type LessonStepCardProps = {
+type StepCardProps = {
   index: number;
   step: SectionType;
   onStepChange: (
@@ -22,7 +22,7 @@ type LessonStepCardProps = {
   onRemoveStep: () => void;
 };
 
-const LessonStepCard = ({
+const StepCard = ({
   index,
   step,
   onStepChange,
@@ -31,7 +31,7 @@ const LessonStepCard = ({
   onSelect,
   onDuplicateStep,
   onRemoveStep,
-}: LessonStepCardProps) => {
+}: StepCardProps) => {
   const hasQuizErrors = Object.keys(validationErrors).length > 0;
 
   return (
@@ -105,4 +105,4 @@ const LessonStepCard = ({
   );
 };
 
-export default LessonStepCard;
+export default StepCard;
