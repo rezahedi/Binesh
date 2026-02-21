@@ -30,6 +30,21 @@ const LessonBlocksEditor = ({
 }: LessonBlocksEditorProps) => {
   const selectedStep = steps[selectedStepIndex] || null;
 
+  if (steps.length === 0)
+    return (
+      <div className="flex items-start gap-3">
+        <div className="min-w-0 grow space-y-4">
+          <div className="rounded-md bg-muted p-3 py-30 space-y-4">
+            <div className="text-muted-foreground text-3xl text-center font-semibold">
+              Create your first step.
+            </div>
+            <BetweenButton index={0} onAddStepAfter={onAddStepAfter} />
+          </div>
+        </div>
+        <SidebarFrame step={selectedStep} />
+      </div>
+    );
+
   return (
     <div className="flex items-start gap-3">
       <div className="min-w-0 grow space-y-4">
