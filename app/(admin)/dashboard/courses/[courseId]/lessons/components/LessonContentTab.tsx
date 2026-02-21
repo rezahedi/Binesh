@@ -134,8 +134,6 @@ const LessonContentTab = ({
 
   return (
     <div className="space-y-4">
-      <Label>Content Editor</Label>
-
       <input
         name="contentValidation"
         value={validationState.isValid ? "ok" : ""}
