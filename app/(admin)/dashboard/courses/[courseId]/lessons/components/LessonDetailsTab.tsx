@@ -8,39 +8,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { STATUS_VALUES } from "@/db/schema";
+import { StatusType } from "@/db/schema";
 import { LessonProps } from "@/lib/types";
 import { cn } from "@/utils/cn";
-import { useParams } from "next/navigation";
-import { useState } from "react";
 
-const LessonForm = ({ lesson }: { lesson?: LessonProps | null }) => {
-  const [slug, setSlug] = useState<string>(lesson?.slug || "");
-  const [isSlugUnique, setIsSlugUnique] = useState<boolean | null>(null);
-  const { courseId } = useParams();
+type LessonDetailsFieldsProps = {
+  lesson?: LessonProps | null;
+  name: string;
+  slug: string;
+  description: string;
+  isSlugUnique: boolean | null;
+  statuses: readonly StatusType[];
+  onNameChange: (value: string) => void;
+  onSlugChange: (value: string) => void;
+  onSlugBlur: (slug: string) => Promise<void>;
+  onDescriptionChange: (value: string) => void;
+};
 
-  const createSlug = (str: string) => {
-    return str
-      .toLowerCase()
-      .replace(/ /g, "-")
-      .replace(/[^\w-]+/g, "");
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (lesson) return;
-    setSlug(createSlug(e.target.value));
-  };
-
-  const handleCheckSlug = async (slug: string) => {
-    setIsSlugUnique(null);
-    if (slug === "" || (lesson && lesson.slug === slug)) return;
-
-    const res = await fetch(
-      `/api/admin/courses/${courseId}/lessons/slug/${slug}`
-    ).then((body) => body.text());
-    setIsSlugUnique(Boolean(Number(res)));
-  };
-
+const LessonDetailsTab = ({
+  lesson,
+  name,
+  slug,
+  description,
+  isSlugUnique,
+  statuses,
+  onNameChange,
+  onSlugChange,
+  onSlugBlur,
+  onDescriptionChange,
+}: LessonDetailsFieldsProps) => {
   return (
     <>
       <div>
@@ -49,8 +45,8 @@ const LessonForm = ({ lesson }: { lesson?: LessonProps | null }) => {
           id="name"
           name="name"
           required
-          defaultValue={lesson?.name}
-          onChange={handleNameChange}
+          value={name}
+          onChange={(e) => onNameChange(e.target.value)}
         />
       </div>
       <div>
@@ -60,8 +56,8 @@ const LessonForm = ({ lesson }: { lesson?: LessonProps | null }) => {
           name="slug"
           required
           value={slug}
-          onChange={(e) => setSlug(e.target.value)}
-          onBlur={(e) => handleCheckSlug(e.target.value)}
+          onChange={(e) => onSlugChange(e.target.value)}
+          onBlur={(e) => onSlugBlur(e.target.value)}
         />
         {isSlugUnique !== null && (
           <i
@@ -80,30 +76,20 @@ const LessonForm = ({ lesson }: { lesson?: LessonProps | null }) => {
           id="description"
           name="description"
           required
-          defaultValue={lesson?.description}
+          value={description}
+          onChange={(e) => onDescriptionChange(e.target.value)}
           rows={5}
           className="resize-y"
         />
       </div>
       <div>
-        <Label htmlFor="content">Content *:</Label>
-        <Textarea
-          id="content"
-          name="content"
-          required
-          defaultValue={lesson?.content}
-          rows={15}
-          className="resize-y"
-        />
-      </div>
-      <div>
         <Label htmlFor="status">Status:</Label>
-        <Select name="status" defaultValue={lesson?.status || STATUS_VALUES[0]}>
+        <Select name="status" defaultValue={lesson?.status || statuses[0]}>
           <SelectTrigger id="status">
             <SelectValue placeholder="Select Status" />
           </SelectTrigger>
           <SelectContent>
-            {STATUS_VALUES.map((status) => (
+            {statuses.map((status) => (
               <SelectItem key={status} value={status}>
                 {status}
               </SelectItem>
@@ -126,4 +112,4 @@ const LessonForm = ({ lesson }: { lesson?: LessonProps | null }) => {
   );
 };
 
-export default LessonForm;
+export default LessonDetailsTab;
