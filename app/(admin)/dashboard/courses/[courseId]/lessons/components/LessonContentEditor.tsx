@@ -90,6 +90,25 @@ const LessonContentEditor = ({
     };
   };
 
+  const createEmptyStep = (): SectionType => {
+    return {
+      id: `${generateRandomString()}${Date.now()}`,
+      title: "New Step",
+      content: "",
+      quiz: null,
+    };
+  };
+
+  const handleAddStepAfter = (index: number) => {
+    setDocument((prev) => {
+      if (!prev) return prev;
+      const nextSteps = [...prev.steps];
+      nextSteps.splice(index + 1, 0, createEmptyStep());
+      return { ...prev, steps: nextSteps };
+    });
+    setSelectedStepIndex(index + 1);
+  };
+
   const handleDuplicateStep = (index: number) => {
     setDocument((prev) => {
       if (!prev) return prev;
@@ -211,6 +230,7 @@ const LessonContentEditor = ({
           <LessonBlocksEditor
             steps={document?.steps || []}
             onStepChange={handleStepChange}
+            onAddStepAfter={handleAddStepAfter}
             onDuplicateStep={handleDuplicateStep}
             onRemoveStep={handleRemoveStep}
             stepErrors={validationState.stepErrors}

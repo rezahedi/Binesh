@@ -2,6 +2,7 @@ import { QuizType, SectionType } from "@/lib/quizParser";
 import LessonStepCard from "./LessonStepCard";
 import SidebarFrame from "./preview/SidebarFrame";
 import { QuizValidationErrorMap } from "./quizzes/types";
+import BetweenButton from "./step/BetweenButton";
 
 type LessonBlocksEditorProps = {
   steps: SectionType[];
@@ -9,6 +10,7 @@ type LessonBlocksEditorProps = {
     index: number,
     patch: { title?: string; content?: string; quiz?: QuizType | null }
   ) => void;
+  onAddStepAfter: (index: number) => void;
   onDuplicateStep: (index: number) => void;
   onRemoveStep: (index: number) => void;
   stepErrors: Record<number, QuizValidationErrorMap>;
@@ -19,6 +21,7 @@ type LessonBlocksEditorProps = {
 const LessonBlocksEditor = ({
   steps,
   onStepChange,
+  onAddStepAfter,
   onDuplicateStep,
   onRemoveStep,
   stepErrors,
@@ -39,17 +42,19 @@ const LessonBlocksEditor = ({
     <div className="flex items-start gap-3">
       <div className="min-w-0 grow space-y-4">
         {steps.map((step, index) => (
-          <LessonStepCard
-            key={step.id}
-            step={step}
-            index={index}
-            onStepChange={onStepChange}
-            validationErrors={stepErrors[index] || {}}
-            isSelected={index === selectedStepIndex}
-            onSelect={() => onSelectStep(index)}
-            onDuplicateStep={() => onDuplicateStep(index)}
-            onRemoveStep={() => onRemoveStep(index)}
-          />
+          <div key={step.id} className="space-y-4">
+            <LessonStepCard
+              step={step}
+              index={index}
+              onStepChange={onStepChange}
+              validationErrors={stepErrors[index] || {}}
+              isSelected={index === selectedStepIndex}
+              onSelect={() => onSelectStep(index)}
+              onDuplicateStep={() => onDuplicateStep(index)}
+              onRemoveStep={() => onRemoveStep(index)}
+            />
+            <BetweenButton index={index} onAddStepAfter={onAddStepAfter} />
+          </div>
         ))}
       </div>
       <SidebarFrame step={selectedStep} />
