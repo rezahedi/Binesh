@@ -48,7 +48,7 @@ const LessonBlocksEditor = ({
   return (
     <div className="flex items-start gap-3">
       <div className="min-w-0 grow space-y-4">
-        <BetweenButton index={0} onAddStepAfter={onAddStepAfter} />
+        <BetweenButton index={-1} onAddStepAfter={onAddStepAfter} />
         {steps.map((step, index) => (
           <div key={step.id} className="space-y-4">
             <StepCard
