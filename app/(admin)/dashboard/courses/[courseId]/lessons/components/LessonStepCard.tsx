@@ -43,12 +43,6 @@ const LessonStepCard = ({
       role="button"
       tabIndex={0}
       onClick={onSelect}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onSelect();
-        }
-      }}
     >
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-medium">Step {index + 1}</h4>
