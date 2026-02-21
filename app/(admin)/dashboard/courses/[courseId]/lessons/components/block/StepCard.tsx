@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { QuizType, SectionType } from "@/lib/quizParser";
@@ -77,14 +76,6 @@ const StepCard = ({
             <p className="text-xs font-medium text-destructive">Quiz invalid</p>
           )}
         </div>
-      </div>
-      <div>
-        <Label htmlFor={`step-title-${step.id}`}>Title</Label>
-        <Input
-          id={`step-title-${step.id}`}
-          value={step.title}
-          onChange={(e) => onStepChange(index, { title: e.target.value })}
-        />
       </div>
       <div>
         <Label htmlFor={`step-content-${step.id}`}>Content</Label>
