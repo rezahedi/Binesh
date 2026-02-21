@@ -28,19 +28,12 @@ const LessonBlocksEditor = ({
   selectedStepIndex,
   onSelectStep,
 }: LessonBlocksEditorProps) => {
-  if (steps.length === 0) {
-    return (
-      <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-        No steps found in this lesson content.
-      </div>
-    );
-  }
-
   const selectedStep = steps[selectedStepIndex] || null;
 
   return (
     <div className="flex items-start gap-3">
       <div className="min-w-0 grow space-y-4">
+        <BetweenButton index={0} onAddStepAfter={onAddStepAfter} />
         {steps.map((step, index) => (
           <div key={step.id} className="space-y-4">
             <StepCard
