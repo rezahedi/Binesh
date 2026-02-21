@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -5,6 +6,7 @@ import { QuizType, SectionType } from "@/lib/quizParser";
 import { cn } from "@/utils/cn";
 import QuizEditor from "./quizzes/QuizEditor";
 import { QuizValidationErrorMap } from "./quizzes/types";
+import { CopyPlusIcon, TrashIcon } from "lucide-react";
 
 type LessonStepCardProps = {
   index: number;
@@ -16,6 +18,8 @@ type LessonStepCardProps = {
   validationErrors: QuizValidationErrorMap;
   isSelected: boolean;
   onSelect: () => void;
+  onDuplicateStep: () => void;
+  onRemoveStep: () => void;
 };
 
 const LessonStepCard = ({
@@ -25,8 +29,9 @@ const LessonStepCard = ({
   validationErrors,
   isSelected,
   onSelect,
+  onDuplicateStep,
+  onRemoveStep,
 }: LessonStepCardProps) => {
-  const quizLabel = step.quiz ? `Has quiz (${step.quiz.type})` : "No quiz";
   const hasQuizErrors = Object.keys(validationErrors).length > 0;
 
   return (
@@ -48,10 +53,35 @@ const LessonStepCard = ({
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-medium">Step {index + 1}</h4>
         <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="link"
+            size="icon"
+            title="Duplicate Step"
+            className="text-muted-foreground hover:text-foreground hover:bg-muted"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDuplicateStep();
+            }}
+          >
+            <CopyPlusIcon className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="link"
+            size="icon"
+            className="text-muted-foreground hover:text-destructive hover:bg-muted"
+            title="Remove step"
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemoveStep();
+            }}
+          >
+            <TrashIcon className="h-4 w-4" />
+          </Button>
           {hasQuizErrors && (
             <p className="text-xs font-medium text-destructive">Quiz invalid</p>
           )}
-          <p className="text-xs text-muted-foreground">{quizLabel}</p>
         </div>
       </div>
       <div>

@@ -9,6 +9,8 @@ type LessonBlocksEditorProps = {
     index: number,
     patch: { title?: string; content?: string; quiz?: QuizType | null }
   ) => void;
+  onDuplicateStep: (index: number) => void;
+  onRemoveStep: (index: number) => void;
   stepErrors: Record<number, QuizValidationErrorMap>;
   selectedStepIndex: number;
   onSelectStep: (index: number) => void;
@@ -17,6 +19,8 @@ type LessonBlocksEditorProps = {
 const LessonBlocksEditor = ({
   steps,
   onStepChange,
+  onDuplicateStep,
+  onRemoveStep,
   stepErrors,
   selectedStepIndex,
   onSelectStep,
@@ -43,6 +47,8 @@ const LessonBlocksEditor = ({
             validationErrors={stepErrors[index] || {}}
             isSelected={index === selectedStepIndex}
             onSelect={() => onSelectStep(index)}
+            onDuplicateStep={() => onDuplicateStep(index)}
+            onRemoveStep={() => onRemoveStep(index)}
           />
         ))}
       </div>

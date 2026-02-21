@@ -3,10 +3,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   LessonDocument,
+  SectionType,
   QuizType,
   parseLessonDocument,
   serializeLessonDocument,
 } from "@/lib/quizParser";
+import { generateRandomString } from "@/utils/string";
 import { useMemo, useState } from "react";
 import LessonBlocksEditor from "./LessonBlocksEditor";
 import { validateLessonQuizSteps } from "./quizzes/quizValidation";
@@ -76,6 +78,40 @@ const LessonContentEditor = ({
         ...prev,
         steps: nextSteps,
       };
+    });
+  };
+
+  const cloneStep = (step: SectionType): SectionType => {
+    return {
+      id: `${generateRandomString()}${Date.now()}`,
+      title: step.title ? `${step.title} (Copy)` : "Untitled Step (Copy)",
+      content: step.content,
+      quiz: step.quiz ? structuredClone(step.quiz) : null,
+    };
+  };
+
+  const handleDuplicateStep = (index: number) => {
+    setDocument((prev) => {
+      if (!prev) return prev;
+      const source = prev.steps[index];
+      if (!source) return prev;
+      const nextSteps = [...prev.steps];
+      nextSteps.splice(index + 1, 0, cloneStep(source));
+      return { ...prev, steps: nextSteps };
+    });
+    setSelectedStepIndex(index + 1);
+  };
+
+  const handleRemoveStep = (index: number) => {
+    setDocument((prev) => {
+      if (!prev) return prev;
+      const nextSteps = prev.steps.filter((_, i) => i !== index);
+      return { ...prev, steps: nextSteps };
+    });
+    setSelectedStepIndex((prevSelected) => {
+      if (prevSelected > index) return prevSelected - 1;
+      if (prevSelected === index) return Math.max(0, index - 1);
+      return prevSelected;
     });
   };
 
@@ -175,6 +211,8 @@ const LessonContentEditor = ({
           <LessonBlocksEditor
             steps={document?.steps || []}
             onStepChange={handleStepChange}
+            onDuplicateStep={handleDuplicateStep}
+            onRemoveStep={handleRemoveStep}
             stepErrors={validationState.stepErrors}
             selectedStepIndex={clampedSelectedStepIndex}
             onSelectStep={setSelectedStepIndex}
