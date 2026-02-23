@@ -40,7 +40,7 @@ const LessonForm = ({ lesson }: { lesson?: LessonProps | null }) => {
   };
 
   return (
-    <Tabs defaultValue="details" className="w-full">
+    <Tabs defaultValue={lesson ? "content" : "details"} className="w-full">
       <TabsList>
         <TabsTrigger value="details">Details</TabsTrigger>
         <TabsTrigger value="content">Content</TabsTrigger>
