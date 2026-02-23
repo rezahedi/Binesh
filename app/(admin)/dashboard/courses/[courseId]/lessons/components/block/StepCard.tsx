@@ -36,15 +36,17 @@ const StepCard = ({
   return (
     <div
       className={cn(
-        "space-y-3 rounded-md border p-4 transition-colors",
-        isSelected ? "border-primary ring-1 ring-primary/30 bg-primary/5" : ""
+        "space-y-3 rounded-md p-4 transition-colors border border-transparent bg-muted/30",
+        isSelected ? "border-border" : ""
       )}
       role="button"
       tabIndex={0}
       onClick={onSelect}
     >
       <div className="flex items-center justify-between">
-        <h4 className="text-sm font-medium">Step {index + 1}</h4>
+        <h4 className="text-sm font-medium text-muted-foreground">
+          Step {index + 1}
+        </h4>
         <div className="flex items-center gap-2">
           <Button
             type="button"
@@ -77,14 +79,18 @@ const StepCard = ({
           )}
         </div>
       </div>
-      <div>
-        <Label htmlFor={`step-content-${step.id}`}>Content</Label>
+      <div className="group/step relative">
+        <label
+          htmlFor={`step-content-${step.id}`}
+          className="opacity-0 group-hover/step:opacity-100 absolute top-0 right-0 px-2 py-1 text-xs font-semibold text-muted-foreground bg-muted"
+        >
+          Step Content
+        </label>
         <Textarea
           id={`step-content-${step.id}`}
           value={step.content}
           onChange={(e) => onStepChange(index, { content: e.target.value })}
-          rows={6}
-          className="resize-y"
+          className="field-sizing-content bg-transparent border-none hover:bg-muted resize-none min-h-14"
         />
       </div>
       <QuizEditor
