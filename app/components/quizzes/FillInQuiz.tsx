@@ -13,6 +13,7 @@ const FillInQuiz = ({
   const { userAnswer, setUserAnswer, setRevealResult } = useQuiz();
   const quizBlock = quiz.quizBlock as FillQuizType;
   const [pre, suf] = quizBlock.content.split("[ ]");
+  const hasBlank = suf !== undefined;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isActive) return;
@@ -25,13 +26,7 @@ const FillInQuiz = ({
   const handleCheckAnswer = () => {
     if (userAnswer === null) return;
 
-    let result: boolean;
-
-    if (quizBlock.inputType === "string")
-      result = userAnswer.toLowerCase() === quizBlock.answer.toLowerCase();
-    else result = userAnswer === quizBlock.answer;
-
-    setIsCorrect(result);
+    setIsCorrect(userAnswer.toLowerCase() === quizBlock.answer.toLowerCase());
     setRevealResult(true);
   };
 
@@ -39,29 +34,29 @@ const FillInQuiz = ({
     <>
       <QuizLayout content={quiz.content}>
         {pre}
-        <input
-          className={cn(
-            `rounded-xl p-2 px-3 text-center font-medium border-2 border-border hover:border-quiz-select hover:bg-quiz-select-light field-sizing-content max-w-2xs transition-all duration-100`,
-            quizBlock.inputType == "number" &&
-              `[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`,
-            isCorrect !== null
-              ? isCorrect === true
-                ? `border-quiz-success bg-quiz-success-light text-quiz-success-dark`
-                : `border-quiz-error bg-quiz-error-light text-quiz-error-dark`
-              : ``,
-            !isActive && `pointer-events-none`
-          )}
-          id={quiz.id}
-          name={quiz.id}
-          type={quizBlock.inputType}
-          size={quizBlock.answer.length}
-          style={{
-            minWidth: `${quizBlock.answer.length + (quizBlock.inputType == "number" ? 3 : 0)}em`,
-          }}
-          defaultValue={userAnswer || ""}
-          onChange={handleChange}
-          readOnly={!isActive}
-        />
+        {hasBlank && (
+          <input
+            className={cn(
+              `rounded-xl p-2 px-3 text-center font-medium border-2 border-border hover:border-quiz-select hover:bg-quiz-select-light field-sizing-content max-w-2xs transition-all duration-100`,
+              isCorrect !== null
+                ? isCorrect === true
+                  ? `border-quiz-success bg-quiz-success-light text-quiz-success-dark`
+                  : `border-quiz-error bg-quiz-error-light text-quiz-error-dark`
+                : ``,
+              !isActive && `pointer-events-none`
+            )}
+            id={quiz.id}
+            name={quiz.id}
+            type="string"
+            size={quizBlock.answer.length}
+            style={{
+              minWidth: `${quizBlock.answer.length}em`,
+            }}
+            defaultValue={userAnswer || ""}
+            onChange={handleChange}
+            readOnly={!isActive}
+          />
+        )}
         {suf}
       </QuizLayout>
       {isActive && !isCorrect && (

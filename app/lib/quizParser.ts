@@ -84,7 +84,6 @@ export type ComponentQuizType = {
 export type RadioQuizType = { options: string[]; answer: string };
 export type CheckListQuizType = { options: string[]; answers: string[] };
 export type FillQuizType = {
-  inputType: string;
   answer: string;
   content: string;
 };

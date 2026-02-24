@@ -70,9 +70,6 @@ const validateFill = (
   quizBlock: FillQuizType,
   errors: QuizValidationErrorMap
 ) => {
-  if (quizBlock.inputType !== "string" && quizBlock.inputType !== "number") {
-    errors.inputType = "Input type must be string or number.";
-  }
   if (!quizBlock.answer.trim()) {
     errors.answer = "Answer is required.";
   }

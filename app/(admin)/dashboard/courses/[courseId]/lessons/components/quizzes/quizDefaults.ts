@@ -27,9 +27,8 @@ const defaultQuizBlocks: Record<
     answers: ["Option 1"],
   },
   fill: {
-    inputType: "string",
-    answer: "",
-    content: "[ ]",
+    answer: "France",
+    content: "The capital of [France] is Paris.",
   },
   pickAndFill: {
     options: ["Option 1", "Option 2"],
