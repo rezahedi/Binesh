@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { QuizType, SectionType } from "@/lib/quizParser";
 import { cn } from "@/utils/cn";
 import QuizEditor from "../quizzes/QuizEditor";
 import { QuizValidationErrorMap } from "../quizzes/types";
 import { CopyPlusIcon, TrashIcon } from "lucide-react";
+import TextareaBlock from "./TextareaBlock";
 
 type StepCardProps = {
   index: number;
@@ -79,20 +78,12 @@ const StepCard = ({
           )}
         </div>
       </div>
-      <div className="group/step relative">
-        <label
-          htmlFor={`step-content-${step.id}`}
-          className="opacity-0 group-hover/step:opacity-100 absolute top-0 right-0 px-2 py-1 text-xs font-semibold text-muted-foreground bg-muted"
-        >
-          Step Content
-        </label>
-        <textarea
-          id={`step-content-${step.id}`}
-          value={step.content}
-          onChange={(e) => onStepChange(index, { content: e.target.value })}
-          className="w-full p-1 field-sizing-content bg-transparent border-none hover:bg-muted resize-none min-h-14 ring-0 outline-none focus:bg-muted"
-        />
-      </div>
+      <TextareaBlock
+        id={step.id}
+        label="Step Content"
+        value={step.content}
+        onChange={(e) => onStepChange(index, { content: e.target.value })}
+      />
       <QuizEditor
         quiz={step.quiz}
         onChange={(quiz) => onStepChange(index, { quiz })}
