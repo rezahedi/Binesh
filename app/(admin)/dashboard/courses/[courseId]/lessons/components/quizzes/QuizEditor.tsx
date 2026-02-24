@@ -71,11 +71,11 @@ const QuizEditor = ({ quiz, onChange, errors }: QuizEditorProps) => {
         >
           Quiz Prompt
         </label>
-        <Textarea
+        <textarea
           id="quiz-content"
           value={quiz.content}
           onChange={(e) => onChange({ ...quiz, content: e.target.value })}
-          className="field-sizing-content bg-transparent border-none hover:bg-muted resize-none min-h-14"
+          className="w-full p-1 field-sizing-content bg-transparent border-none hover:bg-muted resize-none min-h-14 ring-0 outline-none focus:bg-muted"
         />
         {errors.content && (
           <p className="mt-1 text-xs text-destructive">{errors.content}</p>

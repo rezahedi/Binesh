@@ -86,11 +86,11 @@ const StepCard = ({
         >
           Step Content
         </label>
-        <Textarea
+        <textarea
           id={`step-content-${step.id}`}
           value={step.content}
           onChange={(e) => onStepChange(index, { content: e.target.value })}
-          className="field-sizing-content bg-transparent border-none hover:bg-muted resize-none min-h-14"
+          className="w-full p-1 field-sizing-content bg-transparent border-none hover:bg-muted resize-none min-h-14 ring-0 outline-none focus:bg-muted"
         />
       </div>
       <QuizEditor
