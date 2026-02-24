@@ -20,8 +20,8 @@ export const EDITABLE_QUIZ_TYPES: EditableQuizKind[] = [
 export const EDITABLE_QUIZ_LABELS: Record<EditableQuizKind, string> = {
   radio: "Radio",
   checkList: "Checklist",
-  fill: "Fill",
-  pickAndFill: "Pick And Fill",
+  fill: "Fill-in",
+  pickAndFill: "Fill-in with Options",
   placement: "Placement",
   sentenceBuilder: "Sentence Builder",
 };
