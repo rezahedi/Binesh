@@ -2,7 +2,7 @@ import { QuizType, SectionType } from "@/lib/quizParser";
 import StepCard from "./block/StepCard";
 import SidebarFrame from "./preview/SidebarFrame";
 import { QuizValidationErrorMap } from "./quizzes/types";
-import BetweenButton from "./block/BetweenButton";
+import AddBlockButton from "./block/AddBlockButton";
 
 type LessonBlocksEditorProps = {
   steps: SectionType[];
@@ -38,7 +38,7 @@ const LessonBlocksEditor = ({
             <div className="text-muted-foreground text-3xl text-center font-semibold">
               Create your first step.
             </div>
-            <BetweenButton onClick={() => onAddStepAfter(0)} />
+            <AddBlockButton onClick={() => onAddStepAfter(0)} />
           </div>
         </div>
         <SidebarFrame step={selectedStep} />
@@ -48,7 +48,7 @@ const LessonBlocksEditor = ({
   return (
     <div className="flex items-start gap-3">
       <div className="min-w-0 grow space-y-4">
-        <BetweenButton onClick={() => onAddStepAfter(-1)} />
+        <AddBlockButton onClick={() => onAddStepAfter(-1)} />
         {steps.map((step, index) => (
           <div key={step.id} className="space-y-4">
             <StepCard
@@ -61,7 +61,7 @@ const LessonBlocksEditor = ({
               onDuplicateStep={() => onDuplicateStep(index)}
               onRemoveStep={() => onRemoveStep(index)}
             />
-            <BetweenButton onClick={() => onAddStepAfter(index)} />
+            <AddBlockButton onClick={() => onAddStepAfter(index)} />
           </div>
         ))}
       </div>

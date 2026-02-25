@@ -1,6 +1,6 @@
 import { PlusIcon } from "lucide-react";
 
-const BetweenButton = ({ onClick }: { onClick: () => void }) => {
+const AddBlockButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <button
       type="button"
@@ -16,4 +16,4 @@ const BetweenButton = ({ onClick }: { onClick: () => void }) => {
   );
 };
 
-export default BetweenButton;
+export default AddBlockButton;

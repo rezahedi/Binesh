@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BetweenButton from "./BetweenButton";
+import AddBlockButton from "./AddBlockButton";
 
 interface TextareaBlockProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -10,7 +10,7 @@ const TextareaBlock = ({ id, label, value, ...props }: TextareaBlockProps) => {
   const [isVisible, setIsVisible] = useState(value ? true : false);
 
   if (!isVisible) {
-    return <BetweenButton onClick={() => setIsVisible(true)} />;
+    return <AddBlockButton onClick={() => setIsVisible(true)} />;
   }
 
   return (
