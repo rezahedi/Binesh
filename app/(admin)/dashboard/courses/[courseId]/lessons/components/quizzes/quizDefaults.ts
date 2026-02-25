@@ -31,9 +31,10 @@ const defaultQuizBlocks: Record<
     content: "The capital of [France] is Paris.",
   },
   pickAndFill: {
-    options: ["Option 1", "Option 2"],
-    answers: ["Option 1"],
-    content: "[ ]",
+    options: ["France", "Brazil", "California", "Germany", "Ontario"],
+    answers: ["France", "Brazil"],
+    content:
+      "The capital of [ ] is Paris, and the largest city in [ ] is Rio de Janeiro.",
   },
   placement: {
     aspectRatio: "1/1",
