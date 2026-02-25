@@ -1,6 +1,6 @@
-import { Textarea } from "@/components/ui/textarea";
 import { FillQuizType } from "@/lib/quizParser";
 import { QuizValidationErrorMap } from "../types";
+import TextareaBlock from "../../block/TextareaBlock";
 
 type FillBlockProps = {
   value: FillQuizType;
@@ -12,9 +12,11 @@ const FillBlockProps = ({ value, errors, onChange }: FillBlockProps) => {
   return (
     <div className="space-y-3">
       <div>
-        <Textarea
+        <TextareaBlock
+          label="Fill-in Content"
           rows={3}
           value={value.content.replace("[ ]", `[${value.answer}]`)}
+          autoFocus
           onChange={(e) =>
             onChange({
               ...value,
