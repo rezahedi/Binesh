@@ -73,7 +73,7 @@ const validateFill = (
   if (!quizBlock.answer.trim()) {
     errors.answer = "Answer is required.";
   }
-  if (!quizBlock.content.includes("[ ]")) {
+  if (!/\[.*\]/.test(quizBlock.content)) {
     errors.content = "Fill content must include one [ ] blank.";
   }
 };
