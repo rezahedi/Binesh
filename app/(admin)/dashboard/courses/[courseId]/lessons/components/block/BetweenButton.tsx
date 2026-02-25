@@ -1,16 +1,10 @@
 import { PlusIcon } from "lucide-react";
 
-const BetweenButton = ({
-  index,
-  onAddStepAfter,
-}: {
-  index: number;
-  onAddStepAfter: (index: number) => void;
-}) => {
+const BetweenButton = ({ onClick }: { onClick: () => void }) => {
   return (
     <button
       type="button"
-      onClick={() => onAddStepAfter(index)}
+      onClick={onClick}
       className="group/between block w-full border border-transparent cursor-pointer"
     >
       <div className="flex justify-center border border-transparent h-0 w-1/3 mx-auto my-4 group-hover/between:w-full rounded transition-all duration-150 group-hover/between:border-muted-foreground">

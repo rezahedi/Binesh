@@ -38,7 +38,7 @@ const LessonBlocksEditor = ({
             <div className="text-muted-foreground text-3xl text-center font-semibold">
               Create your first step.
             </div>
-            <BetweenButton index={0} onAddStepAfter={onAddStepAfter} />
+            <BetweenButton onClick={() => onAddStepAfter(0)} />
           </div>
         </div>
         <SidebarFrame step={selectedStep} />
@@ -48,7 +48,7 @@ const LessonBlocksEditor = ({
   return (
     <div className="flex items-start gap-3">
       <div className="min-w-0 grow space-y-4">
-        <BetweenButton index={-1} onAddStepAfter={onAddStepAfter} />
+        <BetweenButton onClick={() => onAddStepAfter(-1)} />
         {steps.map((step, index) => (
           <div key={step.id} className="space-y-4">
             <StepCard
@@ -61,7 +61,7 @@ const LessonBlocksEditor = ({
               onDuplicateStep={() => onDuplicateStep(index)}
               onRemoveStep={() => onRemoveStep(index)}
             />
-            <BetweenButton index={index} onAddStepAfter={onAddStepAfter} />
+            <BetweenButton onClick={() => onAddStepAfter(index)} />
           </div>
         ))}
       </div>
