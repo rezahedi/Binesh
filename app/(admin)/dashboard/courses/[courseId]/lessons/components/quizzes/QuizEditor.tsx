@@ -70,9 +70,6 @@ const QuizEditor = ({ quiz, onChange, errors }: QuizEditorProps) => {
         value={quiz.content}
         onChange={(e) => onChange({ ...quiz, content: e.target.value })}
       />
-      {errors.content && (
-        <p className="mt-1 text-xs text-destructive">{errors.content}</p>
-      )}
       <QuizEditorFields
         quiz={quiz}
         errors={errors}
