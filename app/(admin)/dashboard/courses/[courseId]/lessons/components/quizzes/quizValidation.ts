@@ -21,11 +21,6 @@ const hasDuplicates = (items: string[]): boolean => {
   return new Set(items).size !== items.length;
 };
 
-const countBlanks = (value: string): number => {
-  const matches = value.match(/\[\s*\]/g);
-  return matches?.length || 0;
-};
-
 const validateRadio = (
   quizBlock: RadioQuizType,
   errors: QuizValidationErrorMap
@@ -85,8 +80,8 @@ const validatePickAndFill = (
   const options = listFromText(quizBlock.options);
   const answers = listFromText(quizBlock.answers);
 
-  if (options.length < 2) {
-    errors.options = "Pick and fill quiz needs at least 2 options.";
+  if (options.length < 1) {
+    errors.options = "Pick and fill quiz needs at least 1 option.";
   } else if (hasDuplicates(options)) {
     errors.options = "Options must be unique.";
   }
@@ -97,11 +92,6 @@ const validatePickAndFill = (
     errors.answers = "Answers must be unique.";
   } else if (!answers.every((answer) => options.includes(answer))) {
     errors.answers = "Each answer must exist in options.";
-  }
-
-  const blanksCount = countBlanks(quizBlock.content);
-  if (blanksCount !== answers.length) {
-    errors.content = "Blank count in content must match answers count.";
   }
 };
 
