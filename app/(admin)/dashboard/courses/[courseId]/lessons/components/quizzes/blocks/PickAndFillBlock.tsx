@@ -26,19 +26,6 @@ const contentToEditorText = (content: string, answers: string[]): string => {
   });
 };
 
-const editorTextToQuiz = (text: string): PickAndFillQuizType => {
-  const answers = sanitizeWords(
-    Array.from(text.matchAll(blankRegex)).map((match) => match[1] || "")
-  );
-  const content = text.replace(blankRegex, "[ ]");
-
-  return {
-    content,
-    answers,
-    options: [...answers],
-  };
-};
-
 const PickAndFillBlock = ({
   value,
   errors,
@@ -47,9 +34,16 @@ const PickAndFillBlock = ({
   const displayText = contentToEditorText(value.content, value.answers);
 
   const handleContentChange = (nextText: string) => {
+    const answers = sanitizeWords(
+      Array.from(nextText.matchAll(blankRegex)).map((match) => match[1] || "")
+    );
+    const content = nextText.replace(blankRegex, "[ ]");
+    const options = value.options.slice(value.answers.length);
+
     onChange({
-      ...value,
-      ...editorTextToQuiz(nextText),
+      content,
+      answers,
+      options: [...new Set([...answers, ...options])].filter(Boolean),
     });
   };
 
