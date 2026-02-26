@@ -19,12 +19,12 @@ const defaultQuizBlocks: Record<
   | SentenceBuilderQuizType
 > = {
   radio: {
-    options: ["Option 1", "Option 2"],
-    answer: "Option 1",
+    options: ["Madrid", "Berlin"],
+    answer: "Madrid",
   },
   checkList: {
-    options: ["Option 1", "Option 2"],
-    answers: ["Option 1"],
+    options: ["2", "3", "5", "4"],
+    answers: ["2", "4"],
   },
   fill: {
     answer: "France",
@@ -38,21 +38,32 @@ const defaultQuizBlocks: Record<
   },
   placement: {
     aspectRatio: "1/1",
-    zones: ["A", "B"],
+    zones: ["1", "2", "3", "4"],
     options: [
-      { zone: "A", content: "Option 1" },
-      { zone: "B", content: "Option 2" },
+      { zone: "4", content: "Cuatro" },
+      { zone: "2", content: "Dos" },
+      { zone: "1", content: "Uno" },
+      { zone: "3", content: "Tres" },
     ],
   },
   sentenceBuilder: {
-    options: ["word1", "word2"],
+    options: ["TypeScript", "improves", "code", "safety."],
   },
+};
+
+const defaultQuizPrompts: Record<EditableQuizKind, string> = {
+  radio: "Which city is the capital of Spain?",
+  checkList: "Select all even numbers.",
+  fill: "Fill in the blank with the correct name.",
+  pickAndFill: "Fill each blank using the correct option.",
+  placement: "Place the correct word in each zone.",
+  sentenceBuilder: "Arrange the words to build a meaningful sentence.",
 };
 
 export const createDefaultQuiz = (type: EditableQuizKind): QuizType => {
   return {
     type,
-    content: "",
+    content: defaultQuizPrompts[type],
     quizBlock: structuredClone(defaultQuizBlocks[type]),
   };
 };
