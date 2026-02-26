@@ -90,6 +90,7 @@ const PickAndFillQuiz = ({
             <Button
               key={option}
               variant={"outline"}
+              type="button"
               tabIndex={0}
               className={cn(
                 "border rounded-xl",
