@@ -88,7 +88,7 @@ const PickAndFillBlock = ({
             <div
               key={`${index}-${option}`}
               className={cn(
-                "flex items-center gap-2 rounded-xl border-2 border-border p-3 px-4",
+                "flex items-center gap-2 rounded-xl border-2 border-border p-1 px-4",
                 value.answers.includes(option) && "border-quiz-success-dark"
               )}
             >
@@ -103,7 +103,7 @@ const PickAndFillBlock = ({
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="text-muted-foreground hover:bg-muted hover:text-foreground"
+                  className="text-muted-foreground hover:bg-muted hover:text-foreground -mr-3"
                   title="Remove"
                   onClick={() => handleRemoveOption(index)}
                 >
