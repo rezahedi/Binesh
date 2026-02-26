@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import LessonForm from "../LessonForm";
+import LessonForm from "../components/LessonForm";
 import { CourseProps } from "@/lib/types";
 import useFetch from "@/lib/swr/useFetch";
 
@@ -27,10 +27,7 @@ export default function Page() {
     e.preventDefault();
     setSavingMsg(null);
     const formData = new FormData(e.currentTarget);
-    const json = Object.fromEntries(
-      formData.entries().filter(([_, v]) => v !== "")
-    );
-    console.log(json);
+    const json = Object.fromEntries(formData.entries());
     const response = await fetch(`/api/admin/courses/${courseId}/lessons`, {
       method: "POST",
       headers: {

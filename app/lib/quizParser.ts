@@ -1,6 +1,12 @@
 import { generateRandomString } from "@/utils/string";
 import matter from "gray-matter";
 
+export type LessonMetadata = Record<string, unknown>;
+export type LessonDocument = {
+  metadata: LessonMetadata;
+  steps: SectionType[];
+};
+
 export type SectionType = {
   id: string;
   title: string;
@@ -8,12 +14,12 @@ export type SectionType = {
   quiz: QuizType | null;
 };
 
-export const parseLesson = (
+export const parseLessonDocument = (
   markdownContent: string
-): { metadata: Record<string, string>; steps: SectionType[] } => {
+): LessonDocument => {
   const { data: metadata, content } = matter(markdownContent);
   const steps: SectionType[] = parseSections(content);
-  return { metadata, steps };
+  return { metadata: metadata as LessonMetadata, steps };
 };
 
 export const parseSections = (section: string): SectionType[] => {
@@ -78,7 +84,6 @@ export type ComponentQuizType = {
 export type RadioQuizType = { options: string[]; answer: string };
 export type CheckListQuizType = { options: string[]; answers: string[] };
 export type FillQuizType = {
-  inputType: string;
   answer: string;
   content: string;
 };
@@ -115,7 +120,9 @@ const parseQuizComponent = (str: string): QuizType | null => {
 
   const parsedProps: Record<string, string> = {};
   [...propsMatches].forEach((match) => {
-    const [_, name, value] = match;
+    const name = match[1];
+    const value = match[2];
+    if (!name) return;
     parsedProps[name] = value;
   });
 
@@ -124,7 +131,7 @@ const parseQuizComponent = (str: string): QuizType | null => {
   let props = {};
   try {
     props = JSON.parse(parsedProps?.props || "{}");
-  } catch (_) {
+  } catch {
     props = {};
   }
   if (!componentName || !answer) return null;
@@ -164,11 +171,73 @@ const parseQuizBlock = (str: string): QuizType | null => {
   if (!quizType || !QUIZ_TYPES.includes(quizType as QuizKind)) return null;
 
   // The JSON object (minus the `type` field) IS the QuizBlock
-  const { type: _, ...quizBlock } = parsed;
+  const quizBlock = { ...parsed };
+  delete quizBlock.type;
 
   return {
     content,
     type: quizType as QuizKind,
     quizBlock: quizBlock as QuizBlock,
   };
+};
+
+export const serializeLessonDocument = (document: LessonDocument): string => {
+  const content = serializeSections(document.steps);
+  const hasMetadata = Object.keys(document.metadata).length > 0;
+  if (!hasMetadata) return content;
+
+  return matter.stringify(content, document.metadata);
+};
+
+export const serializeSections = (steps: SectionType[]): string => {
+  return steps
+    .map((step) => {
+      const title = step.title.trim() || "Untitled Step";
+      const content = step.content.trim();
+      const base = [`# ${title}`];
+
+      if (content) base.push(content);
+
+      if (step.quiz) {
+        const serializedQuiz = serializeQuiz(step.quiz);
+        if (serializedQuiz) {
+          base.push("---", serializedQuiz);
+        }
+      }
+
+      return base.join("\n\n");
+    })
+    .join("\n\n");
+};
+
+const serializeQuiz = (quiz: QuizType): string => {
+  if (quiz.type === "component") {
+    const quizBlock = quiz.quizBlock as ComponentQuizType;
+    const serializedProps = JSON.stringify(quizBlock.props || {}).replaceAll(
+      "'",
+      "\\u0027"
+    );
+    const componentName = sanitizeAttributeValue(quizBlock.componentName);
+    const answer = sanitizeAttributeValue(quizBlock.answer);
+
+    const lines = [];
+    if (quiz.content.trim()) lines.push(quiz.content.trim());
+    lines.push(
+      `<component name='${componentName}' answer='${answer}' props='${serializedProps}' />`
+    );
+    return lines.join("\n\n");
+  }
+
+  const payload = {
+    type: quiz.type,
+    ...(quiz.quizBlock as Record<string, unknown>),
+  };
+  const lines = [];
+  if (quiz.content.trim()) lines.push(quiz.content.trim());
+  lines.push("```quiz", JSON.stringify(payload, null, 2), "```");
+  return lines.join("\n\n");
+};
+
+const sanitizeAttributeValue = (value: string): string => {
+  return String(value).replaceAll("'", "\\u0027");
 };

@@ -1,0 +1,96 @@
+import { Button } from "@/components/ui/button";
+import { QuizType, SectionType } from "@/lib/quizParser";
+import { cn } from "@/utils/cn";
+import QuizEditor from "../quizzes/QuizEditor";
+import { QuizValidationErrorMap } from "../quizzes/types";
+import { CopyPlusIcon, TrashIcon } from "lucide-react";
+import TextareaBlock from "./TextareaBlock";
+
+type StepCardProps = {
+  index: number;
+  step: SectionType;
+  onStepChange: (
+    index: number,
+    patch: { title?: string; content?: string; quiz?: QuizType | null }
+  ) => void;
+  validationErrors: QuizValidationErrorMap;
+  isSelected: boolean;
+  onSelect: () => void;
+  onDuplicateStep: () => void;
+  onRemoveStep: () => void;
+};
+
+const StepCard = ({
+  index,
+  step,
+  onStepChange,
+  validationErrors,
+  isSelected,
+  onSelect,
+  onDuplicateStep,
+  onRemoveStep,
+}: StepCardProps) => {
+  const hasQuizErrors = Object.keys(validationErrors).length > 0;
+
+  return (
+    <div
+      className={cn(
+        "space-y-3 rounded-md p-4 transition-colors border border-transparent bg-muted/30",
+        isSelected ? "border-border" : ""
+      )}
+      role="button"
+      tabIndex={0}
+      onClick={onSelect}
+    >
+      <div className="flex items-center justify-between">
+        <h4 className="text-sm font-medium text-muted-foreground">
+          Step {index + 1}
+        </h4>
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="link"
+            size="icon"
+            title="Duplicate Step"
+            className="text-muted-foreground hover:text-foreground hover:bg-muted"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDuplicateStep();
+            }}
+          >
+            <CopyPlusIcon className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="link"
+            size="icon"
+            className="text-muted-foreground hover:text-destructive hover:bg-muted"
+            title="Remove step"
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemoveStep();
+            }}
+          >
+            <TrashIcon className="h-4 w-4" />
+          </Button>
+          {hasQuizErrors && (
+            <p className="text-xs font-medium text-destructive">Quiz invalid</p>
+          )}
+        </div>
+      </div>
+      <TextareaBlock
+        id={step.id}
+        label="Step Content"
+        value={step.content}
+        onChange={(e) => onStepChange(index, { content: e.target.value })}
+      />
+      <QuizEditor
+        quiz={step.quiz}
+        onChange={(quiz) => onStepChange(index, { quiz })}
+        errors={validationErrors}
+      />
+    </div>
+  );
+};
+
+export default StepCard;

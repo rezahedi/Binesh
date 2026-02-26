@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { parseLesson } from "@/lib/quizParser";
+import { parseLessonDocument } from "@/lib/quizParser";
 import { stackServerApp } from "@stack/server";
 import { getCourseBySlug, getLessonBySlug } from "@/(learningMode)/utils/db";
 import { LessonProps } from "@/lib/types";
@@ -42,7 +42,7 @@ export const GET = async (
   }
 
   // Parse markdown content
-  const { steps } = parseLesson(lesson.content);
+  const { steps } = parseLessonDocument(lesson.content);
 
   return NextResponse.json({
     ...lesson,
