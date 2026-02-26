@@ -168,7 +168,7 @@ const PickAndFillBlock = ({
           ))}
           <button
             type="button"
-            className="flex items-center gap-2 rounded-xl border-2 border-dashed border-border p-1 px-4 text-muted-foreground hover:text-foreground cursor-pointer"
+            className="flex items-center gap-2 rounded-xl border-2 border-dashed border-border p-3 px-4 text-muted-foreground hover:text-foreground cursor-pointer"
             onClick={handleAddOption}
           >
             <PlusIcon className="size-4" />
