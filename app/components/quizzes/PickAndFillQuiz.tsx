@@ -15,8 +15,12 @@ const PickAndFillQuiz = ({
   const [userAnswer, setUserAnswer] = useState<{ value: string }[]>(
     quizBlock.answers.map(() => ({ value: "" }))
   );
-  const [options, setOptions] = useState<string[]>(quizBlock.options);
   const contentParts = quizBlock.content.split("[ ]");
+
+  const availableOptions = useMemo(() => {
+    const used = userAnswer.map((b) => b.value).filter(Boolean);
+    return quizBlock.options.filter((opt) => !used.includes(opt));
+  }, [quizBlock.options, userAnswer]);
 
   const emptyBlankIndex = useMemo(
     () => userAnswer.findIndex((b) => b.value === ""),
@@ -35,7 +39,6 @@ const PickAndFillQuiz = ({
 
     setIsCorrect(null);
 
-    setOptions((prev) => prev.filter((v) => v != word));
     setUserAnswer((prev) => {
       const next = [...prev];
       next[emptyBlankIndex] = { value: word };
@@ -54,7 +57,6 @@ const PickAndFillQuiz = ({
       next[blankIndex] = { value: "" };
       return next;
     });
-    setOptions((prev) => [...prev, word]);
   };
 
   return (
@@ -84,7 +86,7 @@ const PickAndFillQuiz = ({
           </span>
         ))}
         <div className="pt-10 flex gap-6 justify-center flex-wrap">
-          {options.map((option) => (
+          {availableOptions.map((option) => (
             <Button
               key={option}
               variant={"outline"}
