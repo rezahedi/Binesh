@@ -17,11 +17,6 @@ const PickAndFillQuiz = ({
   );
   const contentParts = quizBlock.content.split("[ ]");
 
-  const availableOptions = useMemo(() => {
-    const used = userAnswer.map((b) => b.value).filter(Boolean);
-    return quizBlock.options.filter((opt) => !used.includes(opt));
-  }, [quizBlock.options, userAnswer]);
-
   const emptyBlankIndex = useMemo(
     () => userAnswer.findIndex((b) => b.value === ""),
     [userAnswer]
@@ -86,21 +81,26 @@ const PickAndFillQuiz = ({
           </span>
         ))}
         <div className="pt-10 flex gap-6 justify-center flex-wrap">
-          {availableOptions.map((option) => (
-            <Button
-              key={option}
-              variant={"outline"}
-              type="button"
-              tabIndex={0}
-              className={cn(
-                "border rounded-xl",
-                !isActive && `pointer-events-none`
-              )}
-              onClick={() => handleOptionClick(option)}
-            >
-              {option}
-            </Button>
-          ))}
+          {quizBlock.options.map((option) => {
+            const used = userAnswer.some((b) => b.value === option);
+            return (
+              <Button
+                key={option}
+                variant={"outline"}
+                type="button"
+                tabIndex={0}
+                className={cn(
+                  "border rounded-xl",
+                  used && "border-muted/50 shadow-muted/50 bg-muted/50"
+                )}
+                onClick={() => handleOptionClick(option)}
+              >
+                <span className={used ? "invisible" : "inline-block"}>
+                  {option}
+                </span>
+              </Button>
+            );
+          })}
         </div>
       </QuizLayout>
       {isActive && !isCorrect && (
