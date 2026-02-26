@@ -13,8 +13,20 @@ type PickAndFillBlockProps = {
 
 const blankRegex = /\[(.*?)\]/g;
 
-const sanitizeWords = (words: string[]): string[] => {
-  return words.map((word) => word.trim()).filter(Boolean);
+const extractManualOptions = (
+  answers: string[],
+  options: string[]
+): string[] => {
+  const remaining = [...options];
+
+  answers.forEach((answer) => {
+    const answerIndex = remaining.indexOf(answer);
+    if (answerIndex >= 0) {
+      remaining.splice(answerIndex, 1);
+    }
+  });
+
+  return remaining;
 };
 
 const contentToEditorText = (content: string, answers: string[]): string => {
@@ -32,26 +44,67 @@ const PickAndFillBlock = ({
   onChange,
 }: PickAndFillBlockProps) => {
   const displayText = contentToEditorText(value.content, value.answers);
+  const options = [
+    ...value.answers,
+    ...extractManualOptions(value.answers, value.options),
+  ];
 
   const handleContentChange = (nextText: string) => {
-    const answers = sanitizeWords(
-      Array.from(nextText.matchAll(blankRegex)).map((match) => match[1] || "")
+    const nextAnswers = Array.from(nextText.matchAll(blankRegex)).map(
+      (match) => match[1] || ""
     );
-    const content = nextText.replace(blankRegex, "[ ]");
-    const options = value.options.slice(value.answers.length);
+    const nextContent = nextText.replace(blankRegex, "[ ]");
+    const manualOptions = extractManualOptions(value.answers, value.options);
 
     onChange({
-      content,
-      answers,
-      options: [...new Set([...answers, ...options])].filter(Boolean),
+      content: nextContent,
+      answers: nextAnswers,
+      options: [...nextAnswers, ...manualOptions],
     });
   };
 
   const handleRemoveOption = (index: number) => {
-    const nextOptions = value.options.filter((_, i) => i !== index);
+    if (index < value.answers.length) return;
+
+    const manualIndex = index - value.answers.length;
+    const manualOptions = extractManualOptions(value.answers, value.options);
+    const nextManualOptions = manualOptions.filter(
+      (_, optionIndex) => optionIndex !== manualIndex
+    );
     onChange({
       ...value,
-      options: nextOptions,
+      options: [...value.answers, ...nextManualOptions],
+    });
+  };
+
+  const handleAddOption = () => {
+    const nextIndex = options.length + 1;
+    onChange({
+      ...value,
+      options: [...options, `Option ${nextIndex}`],
+    });
+  };
+
+  const handleOptionChange = (index: number, nextText: string) => {
+    if (index < value.answers.length) {
+      const nextAnswers = [...value.answers];
+      nextAnswers[index] = nextText;
+      const manualOptions = extractManualOptions(value.answers, value.options);
+      onChange({
+        ...value,
+        answers: nextAnswers,
+        options: [...nextAnswers, ...manualOptions],
+      });
+      return;
+    }
+
+    const manualIndex = index - value.answers.length;
+    const manualOptions = extractManualOptions(value.answers, value.options);
+    const nextManualOptions = [...manualOptions];
+    nextManualOptions[manualIndex] = nextText;
+    onChange({
+      ...value,
+      options: [...value.answers, ...nextManualOptions],
     });
   };
 
@@ -78,9 +131,9 @@ const PickAndFillBlock = ({
           Answer words
         </p>
         <div className="mt-2 flex flex-wrap gap-3">
-          {value.options.map((option, index) => (
+          {options.map((option, index) => (
             <div
-              key={`${index}-${option}`}
+              key={`${index}`}
               className={cn(
                 "flex items-center gap-2 rounded-xl border-2 border-border p-1 px-4",
                 value.answers.includes(option) && "border-quiz-success-dark"
@@ -91,7 +144,14 @@ const PickAndFillBlock = ({
               ) : (
                 <SquareIcon className="size-5 text-muted-foreground" />
               )}
-              <span className="min-w-0 grow truncate">{option}</span>
+              <input
+                value={option}
+                onChange={(e) =>
+                  handleOptionChange(index, e.currentTarget.value)
+                }
+                className=" field-sizing-content min-w-10 bg-transparent outline-none p-2"
+                type="text"
+              />
               {!value.answers.includes(option) && (
                 <Button
                   type="button"
@@ -106,7 +166,15 @@ const PickAndFillBlock = ({
               )}
             </div>
           ))}
-          {value.options.length === 0 && (
+          <button
+            type="button"
+            className="flex items-center gap-2 rounded-xl border-2 border-dashed border-border p-1 px-4 text-muted-foreground hover:text-foreground cursor-pointer"
+            onClick={handleAddOption}
+          >
+            <PlusIcon className="size-4" />
+            Add option
+          </button>
+          {options.length === 0 && (
             <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-border p-3 text-muted-foreground">
               <PlusIcon className="size-4" />
               Add bracketed words in content to create answers
