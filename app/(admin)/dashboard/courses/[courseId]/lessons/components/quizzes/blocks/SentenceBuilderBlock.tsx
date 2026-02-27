@@ -1,7 +1,6 @@
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { SentenceBuilderQuizType } from "@/lib/quizParser";
 import { QuizValidationErrorMap } from "../types";
+import TextareaBlock from "../../block/TextareaBlock";
 
 type SentenceBuilderBlockProps = {
   value: SentenceBuilderQuizType;
@@ -9,12 +8,8 @@ type SentenceBuilderBlockProps = {
   onChange: (next: SentenceBuilderQuizType) => void;
 };
 
-const joinLines = (items: string[]) => items.join("\n");
-const splitLines = (value: string) =>
-  value
-    .split("\n")
-    .map((item) => item.trim())
-    .filter(Boolean);
+const joinOptions = (items: string[]) => items.join("|");
+const splitOptions = (value: string) => value.split("|");
 
 const SentenceBuilderBlock = ({
   value,
@@ -24,15 +19,18 @@ const SentenceBuilderBlock = ({
   return (
     <div className="space-y-3">
       <div>
-        <Label htmlFor="sentence-builder-options">Options (one per line)</Label>
-        <Textarea
-          id="sentence-builder-options"
+        <TextareaBlock
+          label="Sentence Builder Content"
           rows={4}
-          value={joinLines(value.options)}
+          value={joinOptions(value.options)}
           onChange={(e) =>
-            onChange({ ...value, options: splitLines(e.target.value) })
+            onChange({ ...value, options: splitOptions(e.target.value) })
           }
         />
+        <p className="mt-1 text-xs text-muted-foreground">
+          Type the correct sentence and split parts with |. Example: This is| my
+          |simple | example.
+        </p>
         {errors.options && (
           <p className="mt-1 text-xs text-destructive">{errors.options}</p>
         )}
