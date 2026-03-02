@@ -68,11 +68,8 @@ const SentenceBuilderBlock = ({
           Type the correct sentence and split parts with |. Example: This is| my
           |simple | example.
         </p>
-        {errors.options && (
+        {errors.parts && (
           <p className="mt-1 text-xs text-destructive">{errors.options}</p>
-        )}
-        {errors.answers && (
-          <p className="mt-1 text-xs text-destructive">{errors.answers}</p>
         )}
       </div>
     </div>

@@ -140,21 +140,22 @@ const validateSentenceBuilder = (
   quizBlock: SentenceBuilderQuizType,
   errors: QuizValidationErrorMap
 ) => {
-  const options = listFromText(quizBlock.options);
-  const answers = listFromText(quizBlock.answer || []);
+  const options = quizBlock.options || [];
+  const answers = quizBlock.answer || [];
 
-  if (answers.length < 4) {
-    errors.answers = "Sentence builder answer needs at least 4 parts.";
+  if (answers.some((part) => part.trim().length === 0)) {
+    errors.parts = "Parts cannot be empty or whitespace.";
   }
 
-  if (options.length < 4) {
-    errors.options = "Sentence builder needs at least 4 options.";
-  } else if (
-    answers.length > 0 &&
-    (options.length !== answers.length ||
-      !answers.every((answer) => options.includes(answer)))
+  if (!errors.answers && answers.length < 4) {
+    errors.parts = "Needs at least 4 parts.";
+  }
+
+  if (
+    options.length !== answers.length ||
+    !answers.every((answer) => options.includes(answer))
   ) {
-    errors.options = "Options must contain all answer parts.";
+    errors.parts = "Options must contain all answer parts.";
   }
 };
 
