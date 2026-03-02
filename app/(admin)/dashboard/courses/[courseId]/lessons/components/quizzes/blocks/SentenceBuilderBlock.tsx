@@ -10,7 +10,20 @@ type SentenceBuilderBlockProps = {
 
 const SPECIAL_CHAR = "|"; //"\u00A0";
 const joinOptions = (items: string[]) => items.join(SPECIAL_CHAR);
-const splitOptions = (value: string) => value.split(SPECIAL_CHAR);
+const splitOptions = (value: string) =>
+  value
+    .split(SPECIAL_CHAR)
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+const shuffle = (items: string[]) => {
+  const next = [...items];
+  for (let i = next.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+};
 
 const SentenceBuilderBlock = ({
   value,
@@ -40,8 +53,8 @@ const SentenceBuilderBlock = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
-    const options = splitOptions(inputValue);
-    onChange({ ...value, options });
+    const answer = splitOptions(inputValue);
+    onChange({ ...value, answer, options: shuffle(answer) });
   };
 
   return (
@@ -50,7 +63,7 @@ const SentenceBuilderBlock = ({
         <TextareaBlock
           label="Sentence"
           rows={4}
-          value={joinOptions(value.options)}
+          value={joinOptions(value.answer || value.options)}
           onKeyDown={specialCharListener}
           onChange={handleChange}
         />
@@ -60,6 +73,9 @@ const SentenceBuilderBlock = ({
         </p>
         {errors.options && (
           <p className="mt-1 text-xs text-destructive">{errors.options}</p>
+        )}
+        {errors.answers && (
+          <p className="mt-1 text-xs text-destructive">{errors.answers}</p>
         )}
       </div>
     </div>

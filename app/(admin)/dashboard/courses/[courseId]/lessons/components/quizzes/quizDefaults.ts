@@ -47,7 +47,8 @@ const defaultQuizBlocks: Record<
     ],
   },
   sentenceBuilder: {
-    options: ["TypeScript", "improves", "code", "safety."],
+    answer: ["TypeScript", "improves", "code", "safety."],
+    options: ["code", "safety.", "TypeScript", "improves"],
   },
 };
 

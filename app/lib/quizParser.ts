@@ -98,6 +98,7 @@ export type PlacementQuizType = {
   options: { zone: string; content: string }[];
 };
 export type SentenceBuilderQuizType = {
+  answer: string[];
   options: string[];
 };
 
