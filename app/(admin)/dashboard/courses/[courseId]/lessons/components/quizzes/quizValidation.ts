@@ -143,16 +143,12 @@ const validateSentenceBuilder = (
   const options = listFromText(quizBlock.options);
   const answers = listFromText(quizBlock.answer || []);
 
-  if (answers.length < 2) {
-    errors.answers = "Sentence builder answer needs at least 2 parts.";
-  } else if (hasDuplicates(answers)) {
-    errors.answers = "Answer parts must be unique.";
+  if (answers.length < 4) {
+    errors.answers = "Sentence builder answer needs at least 4 parts.";
   }
 
-  if (options.length < 2) {
-    errors.options = "Sentence builder needs at least 2 options.";
-  } else if (hasDuplicates(options)) {
-    errors.options = "Options must be unique.";
+  if (options.length < 4) {
+    errors.options = "Sentence builder needs at least 4 options.";
   } else if (
     answers.length > 0 &&
     (options.length !== answers.length ||
