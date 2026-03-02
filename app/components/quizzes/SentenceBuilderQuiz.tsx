@@ -12,11 +12,8 @@ const SentenceBuilderQuiz = ({
   quizResult: isCorrect,
   onCheck: setIsCorrect,
 }: IQuizProp) => {
-  const quizBlock = quiz.quizBlock as SentenceBuilderQuizType;
-  const answerParts =
-    quizBlock.answer?.length > 0 ? quizBlock.answer : quizBlock.options;
-  const optionParts = quizBlock.options;
-
+  const { answer: answerParts, options: optionParts } =
+    quiz.quizBlock as SentenceBuilderQuizType;
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
 
   const isSentenceCompleted = selectedIndexes.length === answerParts.length;
@@ -45,6 +42,7 @@ const SentenceBuilderQuiz = ({
     setIsCorrect(null);
     setSelectedIndexes([]);
   };
+
   return (
     <>
       <QuizLayout content={quiz.content}>
