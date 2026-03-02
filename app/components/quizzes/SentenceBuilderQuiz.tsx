@@ -15,8 +15,22 @@ const SentenceBuilderQuiz = ({
   onCheck: setIsCorrect,
 }: IQuizProp) => {
   const quizBlock = quiz.quizBlock as SentenceBuilderQuizType;
-  const [userAnswer, setUserAnswer] = useState<Option[]>([]);
-  const [options, setOptions] = useState<Option[]>(shuffle(quizBlock.options));
+
+  // only local interactive state
+  const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
+
+  // always fresh from props
+  const allOptions = quizBlock.options;
+
+  const userAnswer = selectedIndexes.map((i) => ({
+    index: i,
+    value: allOptions[i] ?? "",
+  }));
+
+  const options: Option[] = shuffle(allOptions).map((o) => ({
+    index: o.index,
+    value: selectedIndexes.includes(o.index) ? "" : o.value,
+  }));
 
   const isSentenceCompleted = userAnswer.length === quizBlock.options.length;
 
@@ -28,41 +42,22 @@ const SentenceBuilderQuiz = ({
   };
 
   const handleOptionClick = (index: number) => {
-    if (!isActive) return;
+    if (!isActive || selectedIndexes.includes(index)) return;
 
     setIsCorrect(null);
-
-    const word = options.find((v) => v.index === index);
-    if (!word) return;
-
-    setOptions((prev) =>
-      prev.map((p) => ({
-        index: p.index,
-        value: p.index === index ? "" : p.value,
-      }))
-    );
-    setUserAnswer((prev) => [...prev, word]);
+    setSelectedIndexes((prev) => [...prev, index]);
   };
 
   const handlePartClick = (index: number) => {
     if (!isActive) return;
-
     setIsCorrect(null);
-
-    const word = userAnswer.find((v) => v.index === index);
-    if (!word) return;
-
-    setUserAnswer((prev) => prev.filter((v) => v.index != index));
-    setOptions((prev) => prev.map((p) => (p.index === index ? word : p)));
+    setSelectedIndexes((prev) => prev.filter((i) => i !== index));
   };
 
   const handleResetAnswer = () => {
     setIsCorrect(null);
-
-    setOptions(shuffle(quizBlock.options));
-    setUserAnswer([]);
+    setSelectedIndexes([]);
   };
-
   return (
     <>
       <QuizLayout content={quiz.content}>
