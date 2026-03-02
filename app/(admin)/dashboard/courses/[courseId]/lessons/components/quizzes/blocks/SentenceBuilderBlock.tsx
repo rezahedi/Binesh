@@ -2,19 +2,16 @@ import { SentenceBuilderQuizType } from "@/lib/quizParser";
 import { QuizValidationErrorMap } from "../types";
 import TextareaBlock from "../../block/TextareaBlock";
 
+const SPECIAL_CHAR = "|"; //"\u00A0";
+
 type SentenceBuilderBlockProps = {
   value: SentenceBuilderQuizType;
   errors: QuizValidationErrorMap;
   onChange: (next: SentenceBuilderQuizType) => void;
 };
 
-const SPECIAL_CHAR = "|"; //"\u00A0";
 const joinOptions = (items: string[]) => items.join(SPECIAL_CHAR);
-const splitOptions = (value: string) =>
-  value
-    .split(SPECIAL_CHAR)
-    .map((item) => item.trim())
-    .filter(Boolean);
+const splitOptions = (value: string) => value.split(SPECIAL_CHAR);
 
 const shuffle = (items: string[]) => {
   const next = [...items];
