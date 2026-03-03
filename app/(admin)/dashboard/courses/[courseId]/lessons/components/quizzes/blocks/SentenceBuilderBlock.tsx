@@ -2,7 +2,7 @@ import { SentenceBuilderQuizType } from "@/lib/quizParser";
 import { QuizValidationErrorMap } from "../types";
 import TextareaBlock from "../../block/TextareaBlock";
 
-const SPECIAL_CHAR = "|"; //"\u00A0";
+const SPECIAL_CHAR = "\u00A0";
 
 type SentenceBuilderBlockProps = {
   value: SentenceBuilderQuizType;
@@ -94,8 +94,9 @@ const SentenceBuilderBlock = ({
           onChange={handleChange}
         />
         <p className="mt-1 text-xs text-muted-foreground">
-          Type the correct sentence and split parts with |. Example: This is| my
-          |simple | example.
+          Type the sentence and split it using{" "}
+          <kbd className="bg-muted p-0.5 px-1 rounded">shift + space</kbd> to
+          create parts.
         </p>
         {errors.parts && (
           <p className="mt-1 text-xs text-destructive">{errors.parts}</p>
