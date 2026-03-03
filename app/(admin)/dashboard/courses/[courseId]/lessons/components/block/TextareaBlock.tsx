@@ -14,20 +14,20 @@ const TextareaBlock = ({ id, label, value, ...props }: TextareaBlockProps) => {
   }
 
   return (
-    <div className="group/step relative">
-      <label
-        htmlFor={`step-content-${id}`}
-        className="opacity-0 group-hover/step:opacity-100 absolute top-0 right-0 px-2 py-1 text-xs font-semibold text-muted-foreground bg-muted"
-      >
-        {label}
-      </label>
+    <div className="relative">
       <textarea
         id={`step-content-${id}`}
         value={value}
         {...props}
         autoFocus
-        className="w-full p-1 field-sizing-content bg-transparent border-none hover:bg-muted resize-none min-h-14 ring-0 outline-none focus:bg-muted"
+        className="peer w-full p-1 field-sizing-content bg-transparent border-none hover:bg-muted resize-none min-h-14 ring-0 outline-none focus:bg-muted"
       />
+      <label
+        htmlFor={`step-content-${id}`}
+        className="pointer-events-none opacity-0 absolute top-0 right-0 px-2 py-1 text-xs font-semibold text-muted-foreground bg-muted peer-hover:opacity-100 peer-focus:opacity-100"
+      >
+        {label}
+      </label>
     </div>
   );
 };
