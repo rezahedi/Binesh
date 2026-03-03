@@ -69,7 +69,7 @@ const SentenceBuilderBlock = ({
           |simple | example.
         </p>
         {errors.parts && (
-          <p className="mt-1 text-xs text-destructive">{errors.options}</p>
+          <p className="mt-1 text-xs text-destructive">{errors.parts}</p>
         )}
       </div>
     </div>
