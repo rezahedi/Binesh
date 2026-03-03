@@ -101,6 +101,13 @@ const SentenceBuilderBlock = ({
         {errors.parts && (
           <p className="mt-1 text-xs text-destructive">{errors.parts}</p>
         )}
+        <div className="flex flex-wrap m-1 pt-6">
+          {value.answer.map((v, i) => (
+            <span key={i} className="inline-block">
+              <span className="bg-foreground/10 py-1 rounded">{v}</span>&nbsp;
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );
