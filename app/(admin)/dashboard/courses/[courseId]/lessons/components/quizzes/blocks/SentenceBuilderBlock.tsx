@@ -22,6 +22,27 @@ const shuffle = (items: string[]) => {
   return next;
 };
 
+const updateOptionsKeepingOrder = (
+  previousAnswer: string[],
+  previousOptions: string[],
+  nextAnswer: string[]
+): string[] => {
+  const indexByValue = new Map<string, number[]>();
+
+  previousAnswer.forEach((value, index) => {
+    const queue = indexByValue.get(value) || [];
+    queue.push(index);
+    indexByValue.set(value, queue);
+  });
+
+  return previousOptions.map((optionValue) => {
+    const queue = indexByValue.get(optionValue);
+    const sourceIndex = queue?.shift();
+    if (sourceIndex === undefined) return optionValue;
+    return nextAnswer[sourceIndex] ?? optionValue;
+  });
+};
+
 const SentenceBuilderBlock = ({
   value,
   errors,
@@ -50,8 +71,16 @@ const SentenceBuilderBlock = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
-    const answer = splitOptions(inputValue);
-    onChange({ ...value, answer, options: shuffle(answer) });
+    const nextAnswer = splitOptions(inputValue);
+    const previousAnswer = value.answer || [];
+    const previousOptions = value.options || [];
+
+    const nextOptions =
+      previousAnswer.length === nextAnswer.length
+        ? updateOptionsKeepingOrder(previousAnswer, previousOptions, nextAnswer)
+        : shuffle(nextAnswer);
+
+    onChange({ ...value, answer: nextAnswer, options: nextOptions });
   };
 
   return (
