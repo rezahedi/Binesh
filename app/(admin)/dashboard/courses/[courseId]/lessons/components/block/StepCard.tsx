@@ -36,7 +36,8 @@ const StepCard = ({
     <div
       className={cn(
         "space-y-3 rounded-md p-4 transition-colors border border-transparent bg-muted/30",
-        isSelected ? "border-border" : ""
+        isSelected ? "border-border" : "",
+        hasQuizErrors && "border-destructive"
       )}
       role="button"
       tabIndex={0}
@@ -73,9 +74,6 @@ const StepCard = ({
           >
             <TrashIcon className="h-4 w-4" />
           </Button>
-          {hasQuizErrors && (
-            <p className="text-xs font-medium text-destructive">Quiz invalid</p>
-          )}
         </div>
       </div>
       <TextareaBlock
