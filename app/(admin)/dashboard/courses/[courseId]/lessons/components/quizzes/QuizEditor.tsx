@@ -50,9 +50,11 @@ const QuizEditor = ({ quiz, onChange, errors }: QuizEditorProps) => {
   }
 
   return (
-    <div className="space-y-4 rounded-xl my-4 p-6 bg-muted/50">
-      <div className="flex items-center justify-between">
-        <Label className="text-muted-foreground">Quiz ({quiz.type})</Label>
+    <div className="group/quiz space-y-4 rounded-xl my-4 p-4 bg-muted/50">
+      <h5 className="-translate-y-6 -m-4 -ml-2 text-sm font-medium text-muted capitalize group-hover/quiz:text-muted-foreground">
+        {quiz.type} quiz
+      </h5>
+      <div className="flex items-center justify-end group-hover/quiz:opacity-100 opacity-0 transition-opacity mt-2">
         <Button
           type="button"
           variant="link"
