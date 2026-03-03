@@ -1,4 +1,3 @@
-import { Label } from "@/components/ui/label";
 import {
   LessonDocument,
   SectionType,
@@ -144,18 +143,6 @@ const LessonContentTab = ({
         className="sr-only h-0 w-0 border-0 p-0"
       />
       <input type="hidden" name="content" value={contentForSubmit} required />
-      {!validationState.isValid && (
-        <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3">
-          <p className="text-sm font-medium text-destructive">
-            Resolve quiz issues before saving.
-          </p>
-          <ul className="mt-2 list-disc pl-5 text-sm text-destructive">
-            {validationState.summary.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-        </div>
-      )}
       <LessonBlocksEditor
         steps={document?.steps || []}
         onStepChange={handleStepChange}
