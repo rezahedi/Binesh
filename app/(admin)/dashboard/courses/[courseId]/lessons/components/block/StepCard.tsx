@@ -35,7 +35,7 @@ const StepCard = ({
   return (
     <div
       className={cn(
-        "space-y-3 rounded-md p-4 transition-colors border border-transparent bg-muted/30",
+        "group/step space-y-3 rounded-md p-4 transition-colors border border-transparent bg-muted/30",
         isSelected ? "border-border" : "",
         hasQuizErrors && "border-destructive"
       )}
@@ -43,10 +43,10 @@ const StepCard = ({
       tabIndex={0}
       onClick={onSelect}
     >
-      <div className="flex items-center justify-between">
-        <h4 className="text-sm font-medium text-muted-foreground">
-          Step {index + 1}
-        </h4>
+      <h4 className="-translate-y-6 -m-4 -ml-2 text-sm font-medium text-muted group-hover/step:text-muted-foreground">
+        Step {index + 1}
+      </h4>
+      <div className="flex items-center justify-end group-hover/step:opacity-100 opacity-0 transition-opacity mt-2">
         <div className="flex items-center gap-2">
           <Button
             type="button"
