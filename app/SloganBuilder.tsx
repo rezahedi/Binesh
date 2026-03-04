@@ -38,6 +38,7 @@ const SloganBuilder = () => {
     (optionIndex) => SHUFFLED_SLOGAN[optionIndex] || ""
   );
   const isSentenceCompleted = selectedIndexes.length === SLOGAN.length;
+  const firstWord = SLOGAN[0];
 
   useEffect(() => {
     if (isCorrect !== true) return;
@@ -116,7 +117,7 @@ const SloganBuilder = () => {
                 tabIndex={0}
                 className={cn(
                   "rounded-xl max-sm:px-4",
-                  optionIndex === 0 &&
+                  SHUFFLED_SLOGAN[optionIndex] === firstWord &&
                     "not-dark:bg-secondary-light dark:text-secondary-dark dark:border-secondary-dark dark:shadow-secondary-dark",
                   isCorrect &&
                     "not-dark:bg-background border-primary-light text-primary-dark dark:text-primary-light shadow-primary dark:border-primary dark:shadow-primary animate-bounce-once"
@@ -142,7 +143,7 @@ const SloganBuilder = () => {
                 tabIndex={0}
                 className={cn(
                   "rounded-xl max-sm:px-4 mb-2",
-                  optionIndex === 0 &&
+                  optionValue === firstWord &&
                     !isPicked &&
                     "not-dark:bg-secondary-light dark:border-secondary-dark dark:shadow-secondary-dark dark:text-secondary-dark",
                   isPicked && "border-muted/50 shadow-muted/50 bg-muted/50"
