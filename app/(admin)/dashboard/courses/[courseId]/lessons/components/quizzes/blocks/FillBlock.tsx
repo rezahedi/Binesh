@@ -9,6 +9,17 @@ type FillBlockProps = {
 };
 
 const FillBlockProps = ({ value, errors, onChange }: FillBlockProps) => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const content = e.target.value;
+    const answerMatch = content.match(/\[(.*?)\]/);
+    const answer = answerMatch ? answerMatch[1] : "";
+    onChange({
+      ...value,
+      content: content.replace(/\[(.*?)\]/, "[ ]"),
+      answer,
+    });
+  };
+
   return (
     <div className="space-y-3">
       <div>
@@ -17,13 +28,7 @@ const FillBlockProps = ({ value, errors, onChange }: FillBlockProps) => {
           rows={3}
           value={value.content.replace("[ ]", `[${value.answer}]`)}
           autoFocus
-          onChange={(e) =>
-            onChange({
-              ...value,
-              content: e.target.value.replace(`[${value.answer}]`, "[ ]"),
-              answer: e.target.value.match(/\[(.*?)\]/)?.[1] || "",
-            })
-          }
+          onChange={handleContentChange}
         />
         <p className="mt-1 text-xs text-muted-foreground">
           Wrap a word in square brackets to indicate the blank: The capital of
