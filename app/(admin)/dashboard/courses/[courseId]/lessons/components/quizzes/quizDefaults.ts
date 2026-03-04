@@ -28,7 +28,7 @@ const defaultQuizBlocks: Record<
   },
   fill: {
     answer: "France",
-    content: "The capital of [France] is Paris.",
+    content: "The capital of [ ] is Paris.",
   },
   pickAndFill: {
     options: ["France", "Brazil", "California", "Germany", "Ontario"],
