@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { PickAndFillQuizType } from "@/lib/quizParser";
 import { cn } from "@/utils/cn";
-import { PlusIcon, SquareCheckBigIcon, XIcon } from "lucide-react";
+import {
+  PlusIcon,
+  RotateCwIcon,
+  SquareCheckBigIcon,
+  XIcon,
+} from "lucide-react";
 import TextareaBlock from "../../block/TextareaBlock";
 import { QuizValidationErrorMap } from "../types";
 
@@ -126,6 +131,20 @@ const PickAndFillBlock = ({
     });
   };
 
+  const handleShuffle = () => {
+    const nextOptions = [...options];
+    for (let i = nextOptions.length - 1; i > 0; i -= 1) {
+      // eslint-disable-next-line react-hooks/purity
+      const j = Math.floor(Math.random() * (i + 1));
+      [nextOptions[i], nextOptions[j]] = [nextOptions[j], nextOptions[i]];
+    }
+
+    onChange({
+      ...value,
+      options: nextOptions.map((o) => o.value),
+    });
+  };
+
   return (
     <div className="space-y-3">
       <div>
@@ -145,7 +164,7 @@ const PickAndFillBlock = ({
       </div>
 
       <div className="space-y-2">
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap gap-3 items-center">
           {options.map((option) => (
             <div
               key={`${option.id}`}
@@ -181,12 +200,22 @@ const PickAndFillBlock = ({
           ))}
           <button
             type="button"
-            className="flex items-center gap-2 rounded-xl border-2 border-dashed border-border p-3 px-4 text-muted-foreground hover:text-foreground cursor-pointer"
+            className="flex items-center gap-2 rounded-xl border-2 border-border p-3 text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground cursor-pointer"
             onClick={handleAddOption}
+            title="Add New Option"
           >
-            <PlusIcon className="size-4" />
-            Add option
+            <PlusIcon className="size-5" />
           </button>
+          {options.length > 1 && (
+            <button
+              title="Shuffle Options"
+              type="button"
+              className="rounded-xl border-2 border-border p-3 text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground cursor-pointer"
+              onClick={handleShuffle}
+            >
+              <RotateCwIcon className="size-5" />
+            </button>
+          )}
         </div>
         {errors.options && (
           <p className="mt-1 text-xs text-destructive">{errors.options}</p>
