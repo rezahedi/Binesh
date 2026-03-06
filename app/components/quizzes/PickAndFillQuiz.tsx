@@ -93,6 +93,7 @@ const PickAndFillQuiz = ({
                   "border rounded-xl",
                   used && "border-muted/50 shadow-muted/50 bg-muted/50"
                 )}
+                disabled={used}
                 onClick={() => handleOptionClick(option)}
               >
                 <span className={used ? "invisible" : "inline-block"}>

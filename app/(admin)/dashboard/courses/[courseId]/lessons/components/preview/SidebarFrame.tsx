@@ -29,6 +29,7 @@ const SidebarFrame = ({ step }: { step: SectionType | null }) => {
             "flex gap-1 items-center p-1 px-3 border rounded-lg cursor-pointer hover:border-foreground/70 hover:text-foreground rounded-r-none",
             isMobile && "bg-muted-foreground text-foreground"
           )}
+          type="button"
           onClick={handleSwitchToMobile}
         >
           <SmartphoneIcon className="size-4" />

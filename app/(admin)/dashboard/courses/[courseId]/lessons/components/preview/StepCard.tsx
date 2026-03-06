@@ -11,7 +11,7 @@ const StepCard = ({ step }: { step: SectionType | null }) => {
     );
   }
 
-  if (step.content === "" && !step.quiz)
+  if (step.content.trim() === "" && !step.quiz)
     return (
       <div className="rounded-lg bg-muted text-muted-foreground p-4 py-30 text-center">
         Blank step, nothing to preview.

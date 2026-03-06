@@ -47,7 +47,7 @@ const FillInQuiz = ({
             )}
             id={quiz.id}
             name={quiz.id}
-            type="string"
+            type="text"
             size={quizBlock.answer.length}
             style={{
               minWidth: `${quizBlock.answer.length}em`,
