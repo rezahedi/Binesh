@@ -61,27 +61,27 @@ const PickAndFillBlock = ({
     );
     const nextContent = nextText.replace(blankRegex, "[ ]");
 
+    const nextOptions = [...newOptions];
+
     nextAnswers.forEach((answer, index) => {
-      const existingIndex = newOptions.findIndex(
+      const existingIndex = nextOptions.findIndex(
         (o) => o.answerIndex === index
       );
       if (existingIndex >= 0) {
-        newOptions[existingIndex].value = answer;
+        nextOptions[existingIndex].value = answer;
       } else {
-        newOptions.push({
-          id: newOptions.length,
+        nextOptions.push({
+          id: nextOptions.length,
           value: answer,
           answerIndex: index,
         });
       }
     });
 
-    const nextOptions = newOptions.map((option) => option.value);
-
     onChange({
       content: nextContent,
       answers: nextAnswers,
-      options: nextOptions,
+      options: nextOptions.map((option) => option.value),
     });
   };
 
