@@ -181,9 +181,6 @@ const PickAndFillBlock = ({
             </div>
           )}
         </div>
-        {errors.answers && (
-          <p className="mt-1 text-xs text-destructive">{errors.answers}</p>
-        )}
         {errors.options && (
           <p className="mt-1 text-xs text-destructive">{errors.options}</p>
         )}

@@ -87,11 +87,11 @@ const validatePickAndFill = (
   }
 
   if (answers.length < 1) {
-    errors.answers = "At least one answer is required.";
+    errors.options = "At least one answer is required.";
   } else if (hasDuplicates(answers)) {
-    errors.answers = "Answers must be unique.";
+    errors.options = "Answers must be unique.";
   } else if (!answers.every((answer) => options.includes(answer))) {
-    errors.answers = "Each answer must exist in options.";
+    errors.options = "Each answer must exist in options.";
   }
 };
 
