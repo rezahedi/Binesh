@@ -53,7 +53,7 @@ const PickAndFillBlock = ({
 }: PickAndFillBlockProps) => {
   const displayText = contentToEditorText(value.content, value.answers);
 
-  const newOptions: OptionProps[] = mapOptions(value.options, value.answers);
+  const options: OptionProps[] = mapOptions(value.options, value.answers);
 
   const handleContentChange = (nextText: string) => {
     const nextAnswers = Array.from(nextText.matchAll(blankRegex)).map(
@@ -61,7 +61,7 @@ const PickAndFillBlock = ({
     );
     const nextContent = nextText.replace(blankRegex, "[ ]");
 
-    const nextOptions = [...newOptions];
+    const nextOptions = [...options];
 
     nextAnswers.forEach((answer, index) => {
       const existingIndex = nextOptions.findIndex(
@@ -86,11 +86,11 @@ const PickAndFillBlock = ({
   };
 
   const handleRemoveOption = (optionId: number) => {
-    if (newOptions[optionId].answerIndex >= 0) return;
+    if (options[optionId].answerIndex >= 0) return;
 
-    const optionIndex = newOptions.findIndex((o) => o.id === optionId);
+    const optionIndex = options.findIndex((o) => o.id === optionId);
 
-    const nextOptions = newOptions.toSpliced(optionIndex, 1);
+    const nextOptions = options.toSpliced(optionIndex, 1);
 
     onChange({
       ...value,
@@ -99,22 +99,22 @@ const PickAndFillBlock = ({
   };
 
   const handleAddOption = () => {
-    const newOption = `Option ${newOptions.length + 1}`;
+    const newOption = `Option ${options.length + 1}`;
     onChange({
       ...value,
-      options: [...newOptions.map((o) => o.value), newOption],
+      options: [...options.map((o) => o.value), newOption],
     });
   };
 
   const handleOptionChange = (optionId: number, nextText: string) => {
-    const optionIndex = newOptions.findIndex((o) => o.id === optionId);
+    const optionIndex = options.findIndex((o) => o.id === optionId);
     if (optionIndex === -1) return;
 
-    const nextOptions = [...newOptions];
+    const nextOptions = [...options];
     nextOptions[optionIndex].value = nextText;
 
     const nextAnswers = [...value.answers];
-    const answerIndex = newOptions[optionIndex].answerIndex;
+    const answerIndex = options[optionIndex].answerIndex;
     if (answerIndex >= 0) {
       nextAnswers[answerIndex] = nextText;
     }
@@ -146,7 +146,7 @@ const PickAndFillBlock = ({
 
       <div className="space-y-2">
         <div className="mt-6 flex flex-wrap gap-3">
-          {newOptions.map((option) => (
+          {options.map((option) => (
             <div
               key={`${option.id}`}
               className={cn(
