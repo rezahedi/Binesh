@@ -22,6 +22,22 @@ const contentToEditorText = (content: string, answers: string[]): string => {
   });
 };
 
+type OptionProps = {
+  id: number;
+  value: string;
+  answerIndex: number;
+};
+const mapOptions = (options: string[], answers: string[]): OptionProps[] => {
+  return options.map((option, index) => {
+    const answerIndex = answers.indexOf(option);
+    return {
+      id: index,
+      value: option,
+      answerIndex,
+    };
+  });
+};
+
 const PickAndFillBlock = ({
   value,
   errors,
@@ -29,15 +45,7 @@ const PickAndFillBlock = ({
 }: PickAndFillBlockProps) => {
   const displayText = contentToEditorText(value.content, value.answers);
 
-  const newOptions: { id: number; value: string; answerIndex: number }[] =
-    value.options.map((option, index) => {
-      const answerIndex = value.answers.indexOf(option);
-      return {
-        id: index,
-        value: option,
-        answerIndex,
-      };
-    });
+  const newOptions: OptionProps[] = mapOptions(value.options, value.answers);
 
   const handleContentChange = (nextText: string) => {
     const nextAnswers = Array.from(nextText.matchAll(blankRegex)).map(
