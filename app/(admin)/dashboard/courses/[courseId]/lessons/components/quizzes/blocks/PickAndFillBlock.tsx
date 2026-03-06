@@ -108,6 +108,7 @@ const PickAndFillBlock = ({
 
   const handleOptionChange = (optionId: number, nextText: string) => {
     const optionIndex = newOptions.findIndex((o) => o.id === optionId);
+    if (optionIndex === -1) return;
 
     const nextOptions = [...newOptions];
     nextOptions[optionIndex].value = nextText;
