@@ -170,12 +170,6 @@ const PickAndFillBlock = ({
             <PlusIcon className="size-4" />
             Add option
           </button>
-          {options.length === 0 && (
-            <div className="flex items-center gap-2 rounded-xl border-2 border-dashed border-border p-3 text-muted-foreground">
-              <PlusIcon className="size-4" />
-              Add bracketed words in content to create answers
-            </div>
-          )}
         </div>
         {errors.options && (
           <p className="mt-1 text-xs text-destructive">{errors.options}</p>
