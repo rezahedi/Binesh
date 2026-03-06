@@ -1,0 +1,116 @@
+import { SentenceBuilderQuizType } from "@/lib/quizParser";
+import { QuizValidationErrorMap } from "../types";
+import TextareaBlock from "../../block/TextareaBlock";
+
+const SPECIAL_CHAR = "\u00A0";
+
+type SentenceBuilderBlockProps = {
+  value: SentenceBuilderQuizType;
+  errors: QuizValidationErrorMap;
+  onChange: (next: SentenceBuilderQuizType) => void;
+};
+
+const joinOptions = (items: string[]) => items.join(SPECIAL_CHAR);
+const splitOptions = (value: string) => value.split(SPECIAL_CHAR);
+
+const shuffle = (items: string[]) => {
+  const next = [...items];
+  for (let i = next.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+};
+
+const updateOptionsKeepingOrder = (
+  previousAnswer: string[],
+  previousOptions: string[],
+  nextAnswer: string[]
+): string[] => {
+  const indexByValue = new Map<string, number[]>();
+
+  previousAnswer.forEach((value, index) => {
+    const queue = indexByValue.get(value) || [];
+    queue.push(index);
+    indexByValue.set(value, queue);
+  });
+
+  return previousOptions.map((optionValue) => {
+    const queue = indexByValue.get(optionValue);
+    const sourceIndex = queue?.shift();
+    if (sourceIndex === undefined) return optionValue;
+    return nextAnswer[sourceIndex] ?? optionValue;
+  });
+};
+
+const SentenceBuilderBlock = ({
+  value,
+  errors,
+  onChange,
+}: SentenceBuilderBlockProps) => {
+  const specialCharListener = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.shiftKey && e.code === "Space") {
+      e.preventDefault();
+      const textarea = e.currentTarget;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const newValue =
+        textarea.value.substring(0, start) +
+        SPECIAL_CHAR +
+        textarea.value.substring(end);
+      textarea.value = newValue;
+      // move cursor to after the inserted character
+      textarea.selectionStart = textarea.selectionEnd = start + 1;
+
+      // trigger change event
+      handleChange({
+        target: textarea,
+      } as React.ChangeEvent<HTMLTextAreaElement>);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const inputValue = e.target.value;
+    const nextAnswer = splitOptions(inputValue);
+    const previousAnswer = value.answer || [];
+    const previousOptions = value.options || [];
+
+    const nextOptions =
+      previousAnswer.length === nextAnswer.length
+        ? updateOptionsKeepingOrder(previousAnswer, previousOptions, nextAnswer)
+        : shuffle(nextAnswer);
+
+    onChange({ ...value, answer: nextAnswer, options: nextOptions });
+  };
+
+  return (
+    <div className="space-y-3">
+      <div>
+        <TextareaBlock
+          label="Sentence"
+          rows={4}
+          value={joinOptions(value.answer || value.options)}
+          onKeyDown={specialCharListener}
+          onChange={handleChange}
+        />
+        <p className="mt-1 text-xs text-muted-foreground">
+          Type the sentence and split it using{" "}
+          <kbd className="bg-muted p-0.5 px-1 rounded">shift + space</kbd> to
+          create parts.
+        </p>
+        {errors.parts && (
+          <p className="mt-1 text-xs text-destructive">{errors.parts}</p>
+        )}
+        <div className="flex flex-wrap m-1 pt-6">
+          {value.answer.map((v, i) => (
+            <span key={i} className="inline-block">
+              <span className="bg-foreground/10 py-1 rounded">{v}</span>&nbsp;
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SentenceBuilderBlock;

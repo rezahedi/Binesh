@@ -102,5 +102,9 @@ Sentence Builder quiz is more of an ordering quiz, where options should be picke
 Create a perfect sentence.
 
 ```quiz
-{ "type": "sentenceBuilder", "options": ["This", "is", "a short", "sentence."] }
+{
+  "type": "sentenceBuilder",
+  "answer": ["This", "is", "a short", "sentence."],
+  "options": ["a short", "sentence.", "This", "is"]
+}
 ```

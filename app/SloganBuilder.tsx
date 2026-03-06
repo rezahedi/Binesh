@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils/cn";
-import { shuffle } from "@/components/quizzes/SentenceBuilderQuiz";
 import { useAuthModal } from "@/contexts/AuthModalContext";
 import { ANIMATE_DELAY_PER_PART } from "@/constants/learningMode";
 
@@ -18,22 +17,28 @@ const SLOGAN = [
   "platform.",
 ];
 
-type Option = { index: number; value: string };
+const SHUFFLED_SLOGAN = [
+  "platform.",
+  "deep",
+  "understanding",
+  "through",
+  "Transform",
+  "interactive",
+  "into",
+  "curiosity",
+];
 
 const SloganBuilder = () => {
-  const [userAnswer, setUserAnswer] = useState<Option[]>([]);
-  const [options, setOptions] = useState<Option[]>([]);
+  const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [hint, setHint] = useState<string | null>(null);
   const { showSignup } = useAuthModal();
 
-  const isSentenceCompleted = userAnswer.length === SLOGAN.length;
-
-  useEffect(() => {
-    if (options.length === 0)
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setOptions(shuffle(SLOGAN));
-  }, []);
+  const userAnswer = selectedIndexes.map(
+    (optionIndex) => SHUFFLED_SLOGAN[optionIndex] || ""
+  );
+  const isSentenceCompleted = selectedIndexes.length === SLOGAN.length;
+  const firstWord = SLOGAN[0];
 
   useEffect(() => {
     if (isCorrect !== true) return;
@@ -53,7 +58,7 @@ const SloganBuilder = () => {
 
     if (isCorrect === true) return showSignup();
 
-    const checkResult = userAnswer.every((v, i) => SLOGAN[i] === v.value);
+    const checkResult = userAnswer.every((value, i) => SLOGAN[i] === value);
     setIsCorrect(checkResult);
 
     if (checkResult) return;
@@ -62,7 +67,7 @@ const SloganBuilder = () => {
     if (hint !== "") setHint("");
     if (hint === null) {
       const mismatchIndex = userAnswer.findIndex(
-        (v, i) => SLOGAN[i] !== v.value
+        (value, i) => SLOGAN[i] !== value
       );
       setHint(
         mismatchIndex > 0
@@ -73,26 +78,13 @@ const SloganBuilder = () => {
   };
 
   const handleOptionClick = (index: number) => {
-    const word = options.find((v) => v.index === index);
-    if (!word) return;
-
-    setOptions((prev) =>
-      prev.map((p) => ({
-        index: p.index,
-        value: p.index === index ? "" : p.value,
-      }))
-    );
-    setUserAnswer((prev) => [...prev, word]);
+    if (selectedIndexes.includes(index)) return;
+    setSelectedIndexes((prev) => [...prev, index]);
   };
 
   const handlePartClick = (index: number) => {
     setIsCorrect(null);
-
-    const word = userAnswer.find((v) => v.index === index);
-    if (!word) return;
-
-    setUserAnswer((prev) => prev.filter((v) => v.index != index));
-    setOptions((prev) => prev.map((p) => (p.index === index ? word : p)));
+    setSelectedIndexes((prev) => prev.filter((i) => i !== index));
   };
 
   return (
@@ -118,14 +110,14 @@ const SloganBuilder = () => {
             <div></div>
           </div>
           <div className="flex gap-x-2 gap-y-4 sm:gap-y-6 flex-wrap">
-            {userAnswer.map((part, i) => (
+            {selectedIndexes.map((optionIndex, i) => (
               <Button
-                key={part.index}
+                key={`${optionIndex}-${i}`}
                 variant={"outline"}
                 tabIndex={0}
                 className={cn(
                   "rounded-xl max-sm:px-4",
-                  part.index === 0 &&
+                  SHUFFLED_SLOGAN[optionIndex] === firstWord &&
                     "not-dark:bg-secondary-light dark:text-secondary-dark dark:border-secondary-dark dark:shadow-secondary-dark",
                   isCorrect &&
                     "not-dark:bg-background border-primary-light text-primary-dark dark:text-primary-light shadow-primary dark:border-primary dark:shadow-primary animate-bounce-once"
@@ -133,39 +125,40 @@ const SloganBuilder = () => {
                 {...(isCorrect && {
                   style: { animationDelay: `${ANIMATE_DELAY_PER_PART * i}ms` },
                 })}
-                onClick={() => handlePartClick(part.index)}
+                onClick={() => handlePartClick(optionIndex)}
               >
-                {part.value}
+                {SHUFFLED_SLOGAN[optionIndex]}
               </Button>
             ))}
           </div>
         </div>
         <div className="flex gap-x-2 gap-y-4 sm:gap-y-6 flex-wrap justify-center sm:gap-x-4">
-          {options.map((option) => (
-            <Button
-              key={option.index}
-              variant={"outline"}
-              tabIndex={0}
-              className={cn(
-                "rounded-xl max-sm:px-4 mb-2",
-                option.index === 0 &&
-                  option.value !== "" &&
-                  "not-dark:bg-secondary-light dark:border-secondary-dark dark:shadow-secondary-dark dark:text-secondary-dark",
-                option.value === "" &&
-                  "border-muted/50 shadow-muted/50 bg-muted/50"
-              )}
-              disabled={option.value === ""}
-              onClick={() => handleOptionClick(option.index)}
-            >
-              {option.value === "" ? (
-                <span className="invisible">
-                  {userAnswer.find((v) => v.index === option.index)?.value}
-                </span>
-              ) : (
-                option.value
-              )}
-            </Button>
-          ))}
+          {SHUFFLED_SLOGAN.map((optionValue, optionIndex) => {
+            const isPicked = selectedIndexes.includes(optionIndex);
+
+            return (
+              <Button
+                key={optionIndex}
+                variant={"outline"}
+                tabIndex={0}
+                className={cn(
+                  "rounded-xl max-sm:px-4 mb-2",
+                  optionValue === firstWord &&
+                    !isPicked &&
+                    "not-dark:bg-secondary-light dark:border-secondary-dark dark:shadow-secondary-dark dark:text-secondary-dark",
+                  isPicked && "border-muted/50 shadow-muted/50 bg-muted/50"
+                )}
+                disabled={isPicked}
+                onClick={() => handleOptionClick(optionIndex)}
+              >
+                {isPicked ? (
+                  <span className="invisible">{optionValue}</span>
+                ) : (
+                  optionValue
+                )}
+              </Button>
+            );
+          })}
         </div>
       </div>
       <div>

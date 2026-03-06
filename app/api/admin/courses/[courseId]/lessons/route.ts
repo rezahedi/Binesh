@@ -13,7 +13,7 @@ import db from "@/db";
 import { lessons, courses, StatusType } from "@/db/schema";
 import { getSearchParams } from "@/utils/urls";
 import { withAdmin } from "@/lib/auth";
-import { parseLesson } from "@/lib/quizParser";
+import { parseLessonDocument } from "@/lib/quizParser";
 import { NewLessonProps } from "@/lib/types";
 
 export const GET = withAdmin(
@@ -80,7 +80,7 @@ export const POST = withAdmin(async ({ req, params }) => {
   const body: NewLessonProps = await req.json();
 
   try {
-    const { steps } = parseLesson(body.content || "");
+    const { steps } = parseLessonDocument(body.content || "");
     const part = steps.length;
     const exercises = steps.filter((s) => s.quiz !== null).length;
     const estimatedDuration = part * 2 + exercises * 4;

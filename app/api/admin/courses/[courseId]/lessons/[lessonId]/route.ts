@@ -5,7 +5,7 @@ import { withAdmin } from "@/lib/auth";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { updateCourseStats } from "../route";
-import { parseLesson } from "@/lib/quizParser";
+import { parseLessonDocument } from "@/lib/quizParser";
 
 export const GET = withAdmin(async ({ params }) => {
   const { lessonId } = await params;
@@ -33,7 +33,7 @@ export const PATCH = withAdmin(
     const body: NewLessonProps = await req.json();
 
     try {
-      const { steps } = parseLesson(body.content || "");
+      const { steps } = parseLessonDocument(body.content || "");
       const part = steps.length;
       const exercises = steps.filter((s) => s.quiz !== null).length;
       const estimatedDuration = part * 2 + exercises * 4;
