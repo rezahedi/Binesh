@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { PickAndFillQuizType } from "@/lib/quizParser";
 import { cn } from "@/utils/cn";
-import { PlusIcon, SquareCheckBigIcon, SquareIcon, XIcon } from "lucide-react";
+import { PlusIcon, SquareCheckBigIcon, XIcon } from "lucide-react";
 import TextareaBlock from "../../block/TextareaBlock";
 import { QuizValidationErrorMap } from "../types";
 
@@ -12,22 +12,6 @@ type PickAndFillBlockProps = {
 };
 
 const blankRegex = /\[(.*?)\]/g;
-
-const extractManualOptions = (
-  answers: string[],
-  options: string[]
-): string[] => {
-  const remaining = [...options];
-
-  answers.forEach((answer) => {
-    const answerIndex = remaining.indexOf(answer);
-    if (answerIndex >= 0) {
-      remaining.splice(answerIndex, 1);
-    }
-  });
-
-  return remaining;
-};
 
 const contentToEditorText = (content: string, answers: string[]): string => {
   let answerIndex = 0;
@@ -44,67 +28,84 @@ const PickAndFillBlock = ({
   onChange,
 }: PickAndFillBlockProps) => {
   const displayText = contentToEditorText(value.content, value.answers);
-  const options = [
-    ...value.answers,
-    ...extractManualOptions(value.answers, value.options),
-  ];
+
+  const newOptions: { id: number; value: string; answerIndex: number }[] =
+    value.options.map((option, index) => {
+      const answerIndex = value.answers.indexOf(option);
+      return {
+        id: index,
+        value: option,
+        answerIndex,
+      };
+    });
 
   const handleContentChange = (nextText: string) => {
     const nextAnswers = Array.from(nextText.matchAll(blankRegex)).map(
       (match) => match[1] || ""
     );
     const nextContent = nextText.replace(blankRegex, "[ ]");
-    const manualOptions = extractManualOptions(value.answers, value.options);
+
+    nextAnswers.forEach((answer, index) => {
+      const existingIndex = newOptions.findIndex(
+        (o) => o.answerIndex === index
+      );
+      if (existingIndex >= 0) {
+        newOptions[existingIndex].value = answer;
+      } else {
+        newOptions.push({
+          id: newOptions.length,
+          value: answer,
+          answerIndex: index,
+        });
+      }
+    });
+
+    const nextOptions = newOptions.map((option) => option.value);
 
     onChange({
       content: nextContent,
       answers: nextAnswers,
-      options: [...nextAnswers, ...manualOptions],
+      options: nextOptions,
     });
   };
 
-  const handleRemoveOption = (index: number) => {
-    if (index < value.answers.length) return;
+  const handleRemoveOption = (optionId: number) => {
+    if (newOptions[optionId].answerIndex >= 0) return;
 
-    const manualIndex = index - value.answers.length;
-    const manualOptions = extractManualOptions(value.answers, value.options);
-    const nextManualOptions = manualOptions.filter(
-      (_, optionIndex) => optionIndex !== manualIndex
-    );
+    const optionIndex = newOptions.findIndex((o) => o.id === optionId);
+
+    const nextOptions = newOptions.toSpliced(optionIndex, 1);
+
     onChange({
       ...value,
-      options: [...value.answers, ...nextManualOptions],
+      options: nextOptions.map((o) => o.value),
     });
   };
 
   const handleAddOption = () => {
-    const nextIndex = options.length + 1;
+    const newOption = `Option ${newOptions.length + 1}`;
     onChange({
       ...value,
-      options: [...options, `Option ${nextIndex}`],
+      options: [...newOptions.map((o) => o.value), newOption],
     });
   };
 
-  const handleOptionChange = (index: number, nextText: string) => {
-    if (index < value.answers.length) {
-      const nextAnswers = [...value.answers];
-      nextAnswers[index] = nextText;
-      const manualOptions = extractManualOptions(value.answers, value.options);
-      onChange({
-        ...value,
-        answers: nextAnswers,
-        options: [...nextAnswers, ...manualOptions],
-      });
-      return;
+  const handleOptionChange = (optionId: number, nextText: string) => {
+    const optionIndex = newOptions.findIndex((o) => o.id === optionId);
+
+    const nextOptions = [...newOptions];
+    nextOptions[optionIndex].value = nextText;
+
+    const nextAnswers = [...value.answers];
+    const answerIndex = newOptions[optionIndex].answerIndex;
+    if (answerIndex >= 0) {
+      nextAnswers[answerIndex] = nextText;
     }
 
-    const manualIndex = index - value.answers.length;
-    const manualOptions = extractManualOptions(value.answers, value.options);
-    const nextManualOptions = [...manualOptions];
-    nextManualOptions[manualIndex] = nextText;
     onChange({
       ...value,
-      options: [...value.answers, ...nextManualOptions],
+      answers: nextAnswers,
+      options: nextOptions.map((o) => o.value),
     });
   };
 
@@ -127,39 +128,34 @@ const PickAndFillBlock = ({
       </div>
 
       <div className="space-y-2">
-        <p className="text-xs font-medium text-muted-foreground">
-          Answer words
-        </p>
-        <div className="mt-2 flex flex-wrap gap-3">
-          {options.map((option, index) => (
+        <div className="mt-6 flex flex-wrap gap-3">
+          {newOptions.map((option) => (
             <div
-              key={`${index}`}
+              key={`${option.id}`}
               className={cn(
                 "flex items-center gap-2 rounded-xl border-2 border-border p-1 px-4",
-                value.answers.includes(option) && "border-quiz-success-dark"
+                option.answerIndex >= 0 && "border-quiz-success-dark"
               )}
             >
-              {value.answers.includes(option) ? (
+              {option.answerIndex >= 0 && (
                 <SquareCheckBigIcon className="size-5" />
-              ) : (
-                <SquareIcon className="size-5 text-muted-foreground" />
               )}
               <input
-                value={option}
+                value={option.value}
                 onChange={(e) =>
-                  handleOptionChange(index, e.currentTarget.value)
+                  handleOptionChange(option.id, e.currentTarget.value)
                 }
                 className=" field-sizing-content min-w-10 bg-transparent outline-none p-2"
                 type="text"
               />
-              {!value.answers.includes(option) && (
+              {option.answerIndex === -1 && (
                 <Button
                   type="button"
                   variant="ghost"
                   size="icon"
                   className="text-muted-foreground hover:bg-muted hover:text-foreground -mr-3"
                   title="Remove"
-                  onClick={() => handleRemoveOption(index)}
+                  onClick={() => handleRemoveOption(option.id)}
                 >
                   <XIcon className="size-4" />
                 </Button>
