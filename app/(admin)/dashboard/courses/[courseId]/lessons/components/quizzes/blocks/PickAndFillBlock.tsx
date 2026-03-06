@@ -28,8 +28,16 @@ type OptionProps = {
   answerIndex: number;
 };
 const mapOptions = (options: string[], answers: string[]): OptionProps[] => {
+  const usedAnswerIndexes = new Set<number>();
   return options.map((option, index) => {
-    const answerIndex = answers.indexOf(option);
+    const answerIndex = answers.findIndex(
+      (answer, i) => answer === option && !usedAnswerIndexes.has(i)
+    );
+
+    if (answerIndex !== -1) {
+      usedAnswerIndexes.add(answerIndex);
+    }
+
     return {
       id: index,
       value: option,
