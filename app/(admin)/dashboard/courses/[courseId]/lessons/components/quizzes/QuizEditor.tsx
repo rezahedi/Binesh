@@ -10,12 +10,13 @@ import { TrashIcon } from "lucide-react";
 import TextareaBlock from "../block/TextareaBlock";
 
 type QuizEditorProps = {
+  id: string;
   quiz: QuizType | null;
   onChange: (nextQuiz: QuizType | null) => void;
   errors: QuizValidationErrorMap;
 };
 
-const QuizEditor = ({ quiz, onChange, errors }: QuizEditorProps) => {
+const QuizEditor = ({ id, quiz, onChange, errors }: QuizEditorProps) => {
   const [nextType, setNextType] = useState<EditableQuizKind>("radio");
 
   if (!quiz) {
@@ -67,7 +68,7 @@ const QuizEditor = ({ quiz, onChange, errors }: QuizEditorProps) => {
         </Button>
       </div>
       <TextareaBlock
-        id="quiz-content"
+        id={`quiz-content-${id}`}
         label="Quiz Prompt"
         value={quiz.content}
         onChange={(e) => onChange({ ...quiz, content: e.target.value })}

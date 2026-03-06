@@ -83,6 +83,7 @@ const StepCard = ({
         onChange={(e) => onStepChange(index, { content: e.target.value })}
       />
       <QuizEditor
+        id={step.id}
         quiz={step.quiz}
         onChange={(quiz) => onStepChange(index, { quiz })}
         errors={validationErrors}
