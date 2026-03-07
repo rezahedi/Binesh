@@ -6,7 +6,8 @@ export type EditableQuizKind =
   | "fill"
   | "pickAndFill"
   | "placement"
-  | "sentenceBuilder";
+  | "sentenceBuilder"
+  | "component";
 
 export const EDITABLE_QUIZ_TYPES: EditableQuizKind[] = [
   "radio",
@@ -15,6 +16,7 @@ export const EDITABLE_QUIZ_TYPES: EditableQuizKind[] = [
   "pickAndFill",
   "placement",
   "sentenceBuilder",
+  "component",
 ];
 
 export const EDITABLE_QUIZ_LABELS: Record<EditableQuizKind, string> = {
@@ -24,6 +26,7 @@ export const EDITABLE_QUIZ_LABELS: Record<EditableQuizKind, string> = {
   pickAndFill: "Fill-in with Options",
   placement: "Placement",
   sentenceBuilder: "Sentence Builder",
+  component: "Component",
 };
 
 export type QuizValidationErrorMap = Record<string, string>;
