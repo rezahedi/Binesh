@@ -9,7 +9,7 @@ import {
   EDITABLE_QUIZ_TYPES,
   EditableQuizKind,
 } from "./types";
-import { PlusIcon } from "lucide-react";
+import AddBlockButton from "../block/AddBlockButton";
 
 type QuizTypeSelectProps = {
   onSelect: (value: EditableQuizKind) => void;
@@ -21,9 +21,7 @@ const QuizTypeSelect = ({ onSelect }: QuizTypeSelectProps) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <button type="button" className="cursor-pointer">
-          <PlusIcon />
-        </button>
+        <AddBlockButton />
       </PopoverTrigger>
       <PopoverContent className="w-full max-w-md p-4 bg-background shadow-xl">
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
