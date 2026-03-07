@@ -39,17 +39,6 @@ const QuizEditor = ({ id, quiz, onChange, errors }: QuizEditorProps) => {
     );
   }
 
-  if (quiz.type === "component") {
-    return (
-      <div className="space-y-4 rounded-xl my-4 p-6 bg-muted/50">
-        <Label>Quiz</Label>
-        <p className="text-sm text-muted-foreground">
-          Component quiz (read-only for now).
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="group/quiz space-y-4 rounded-xl my-4 p-4 bg-muted/50">
       <h5 className="-translate-y-6 -m-4 -ml-2 text-sm font-medium text-muted capitalize group-hover/quiz:text-muted-foreground">
