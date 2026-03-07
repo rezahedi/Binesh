@@ -1,8 +1,8 @@
 import { ComponentQuizType } from "@/lib/quizParser";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
 import { QuizValidationErrorMap } from "../types";
+import { useState } from "react";
 
 type ComponentBlockProps = {
   value: ComponentQuizType;
@@ -15,11 +15,20 @@ const ComponentBlock = ({ value, errors, onChange }: ComponentBlockProps) => {
     typeof value.props === "object" && value.props !== null
       ? JSON.stringify(value.props)
       : "{}";
-  const [propsText, setPropsText] = useState(nextPropsText);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    setPropsText(nextPropsText);
-  }, [nextPropsText]);
+  const handlePropsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setError(null);
+      const parsed = JSON.parse(e.target.value) as Record<string, unknown>;
+      onChange({
+        ...value,
+        props: parsed && typeof parsed === "object" ? parsed : {},
+      });
+    } catch {
+      setError("Invalid JSON");
+    }
+  };
 
   return (
     <div className="space-y-3">
@@ -64,26 +73,13 @@ const ComponentBlock = ({ value, errors, onChange }: ComponentBlockProps) => {
         <Input
           id="component-quiz-props"
           type="text"
-          value={propsText}
-          onChange={(e) => setPropsText(e.target.value)}
-          onBlur={() => {
-            try {
-              const parsed = JSON.parse(propsText) as Record<string, unknown>;
-              onChange({
-                ...value,
-                props: parsed && typeof parsed === "object" ? parsed : {},
-              });
-            } catch {
-              onChange({
-                ...value,
-                props: {},
-              });
-            }
-          }}
+          value={nextPropsText}
+          onChange={handlePropsChange}
         />
         {errors.props && (
           <p className="mt-1 text-xs text-destructive">{errors.props}</p>
         )}
+        {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
       </div>
     </div>
   );
