@@ -26,6 +26,7 @@ const ComponentBlock = ({ value, errors, onChange }: ComponentBlockProps) => {
         props: parsed && typeof parsed === "object" ? parsed : {},
       });
     } catch {
+      // TODO: This error handling is temporary and should change later.
       setError("Invalid JSON");
     }
   };
