@@ -1,4 +1,14 @@
 import { QuizType } from "@/lib/quizParser";
+import {
+  ArrowUpDownIcon,
+  CheckSquareIcon,
+  CircleCheckBigIcon,
+  ListChecksIcon,
+  LucideIcon,
+  PuzzleIcon,
+  TextCursorInputIcon,
+  WholeWordIcon,
+} from "lucide-react";
 
 export type EditableQuizKind =
   | "radio"
@@ -19,14 +29,17 @@ export const EDITABLE_QUIZ_TYPES: EditableQuizKind[] = [
   "component",
 ];
 
-export const EDITABLE_QUIZ_LABELS: Record<EditableQuizKind, string> = {
-  radio: "Radio",
-  checkList: "Checklist",
-  fill: "Fill-in",
-  pickAndFill: "Fill-in with Options",
-  placement: "Placement",
-  sentenceBuilder: "Sentence Builder",
-  component: "Component",
+export const EDITABLE_QUIZ: Record<
+  EditableQuizKind,
+  { label: string; icon: LucideIcon }
+> = {
+  radio: { label: "Single Choice", icon: CircleCheckBigIcon },
+  checkList: { label: "Multi Choice", icon: CheckSquareIcon },
+  fill: { label: "Fill Blank", icon: TextCursorInputIcon },
+  pickAndFill: { label: "Word Bank", icon: ListChecksIcon },
+  placement: { label: "Cards Ordering", icon: ArrowUpDownIcon },
+  sentenceBuilder: { label: "Sentence Building", icon: WholeWordIcon },
+  component: { label: "Interactive Component", icon: PuzzleIcon },
 };
 
 export type QuizValidationErrorMap = Record<string, string>;
