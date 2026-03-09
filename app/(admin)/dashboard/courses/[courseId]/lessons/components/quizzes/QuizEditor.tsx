@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { QuizType } from "@/lib/quizParser";
 import QuizEditorFields from "./QuizEditorFields";
-import QuizTypeSelect from "./QuizTypeSelect";
+import ComponentCollection from "./ComponentCollection";
 import { createDefaultQuiz } from "./quizDefaults";
 import { QuizValidationErrorMap } from "./types";
 import { TrashIcon } from "lucide-react";
@@ -18,7 +18,7 @@ const QuizEditor = ({ id, quiz, onChange, errors }: QuizEditorProps) => {
   if (!quiz) {
     return (
       <div className="space-y-4 rounded-xl my-4 p-6 bg-muted/50">
-        <QuizTypeSelect
+        <ComponentCollection
           onSelect={(type) => onChange(createDefaultQuiz(type))}
         />
       </div>

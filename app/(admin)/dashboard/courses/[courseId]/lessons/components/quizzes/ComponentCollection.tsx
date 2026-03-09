@@ -7,11 +7,11 @@ import {
 import { EDITABLE_QUIZ, EDITABLE_QUIZ_TYPES, EditableQuizKind } from "./types";
 import AddBlockButton from "../block/AddBlockButton";
 
-type QuizTypeSelectProps = {
+type ComponentCollectionProps = {
   onSelect: (value: EditableQuizKind) => void;
 };
 
-const QuizTypeSelect = ({ onSelect }: QuizTypeSelectProps) => {
+const ComponentCollection = ({ onSelect }: ComponentCollectionProps) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -46,4 +46,4 @@ const QuizTypeSelect = ({ onSelect }: QuizTypeSelectProps) => {
   );
 };
 
-export default QuizTypeSelect;
+export default ComponentCollection;
