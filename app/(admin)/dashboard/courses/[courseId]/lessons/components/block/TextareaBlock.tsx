@@ -4,10 +4,17 @@ import AddBlockButton from "./AddBlockButton";
 interface TextareaBlockProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
+  visible?: boolean;
 }
 
-const TextareaBlock = ({ id, label, value, ...props }: TextareaBlockProps) => {
-  const [isVisible, setIsVisible] = useState(value ? true : false);
+const TextareaBlock = ({
+  id,
+  label,
+  value,
+  visible = false,
+  ...props
+}: TextareaBlockProps) => {
+  const [isVisible, setIsVisible] = useState(value ? true : visible);
 
   if (!isVisible) {
     return <AddBlockButton onClick={() => setIsVisible(true)} />;

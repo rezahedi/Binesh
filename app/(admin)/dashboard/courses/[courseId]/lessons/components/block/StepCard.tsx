@@ -80,6 +80,7 @@ const StepCard = ({
         id={step.id}
         label="Step Content"
         value={step.content}
+        visible
         onChange={(e) => onStepChange(index, { content: e.target.value })}
       />
       <QuizEditor
