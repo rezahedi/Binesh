@@ -19,7 +19,9 @@ const QuizEditor = ({ id, quiz, onChange, errors }: QuizEditorProps) => {
     return (
       <div className="space-y-4 rounded-xl my-4 p-6 bg-muted/50">
         <ComponentCollection
-          onSelect={(type) => onChange(createDefaultQuiz(type))}
+          onSelect={({ type, componentName }) =>
+            onChange(createDefaultQuiz(type, componentName))
+          }
         />
       </div>
     );

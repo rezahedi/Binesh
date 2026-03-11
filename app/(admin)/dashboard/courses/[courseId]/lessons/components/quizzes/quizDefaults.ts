@@ -69,10 +69,23 @@ const defaultQuizPrompts: Record<EditableQuizKind, string> = {
   component: "Complete the interactive component and submit your answer.",
 };
 
-export const createDefaultQuiz = (type: EditableQuizKind): QuizType => {
-  return {
+export const createDefaultQuiz = (
+  type: EditableQuizKind,
+  componentName?: string
+): QuizType => {
+  const quiz = {
     type,
     content: defaultQuizPrompts[type],
     quizBlock: structuredClone(defaultQuizBlocks[type]),
   };
+
+  if (type === "component" && componentName) {
+    (quiz.quizBlock as ComponentQuizType) = {
+      componentName: componentName,
+      answer: "",
+      props: {},
+    };
+  }
+
+  return quiz;
 };

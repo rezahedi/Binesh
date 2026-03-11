@@ -8,6 +8,9 @@ import {
   PuzzleIcon,
   TextCursorInputIcon,
   WholeWordIcon,
+  ShapesIcon,
+  SlidersHorizontalIcon,
+  BlocksIcon,
 } from "lucide-react";
 
 export type EditableQuizKind =
@@ -41,6 +44,34 @@ export const EDITABLE_QUIZ: Record<
   sentenceBuilder: { label: "Sentence Building", icon: WholeWordIcon },
   component: { label: "Interactive Component", icon: PuzzleIcon },
 };
+
+export const ADDABLE_QUIZ_TYPES = EDITABLE_QUIZ_TYPES.filter(
+  (type) => type !== "component"
+);
+
+export type InteractiveComponentItem = {
+  name: string;
+  label: string;
+  icon: LucideIcon;
+};
+
+export const DUMMY_INTERACTIVE_COMPONENTS: InteractiveComponentItem[] = [
+  {
+    name: "word-matcher",
+    label: "Word Matcher",
+    icon: ShapesIcon,
+  },
+  {
+    name: "timeline-sort",
+    label: "Timeline Sort",
+    icon: SlidersHorizontalIcon,
+  },
+  {
+    name: "block-sequence",
+    label: "Block Sequence",
+    icon: BlocksIcon,
+  },
+];
 
 export type QuizValidationErrorMap = Record<string, string>;
 
