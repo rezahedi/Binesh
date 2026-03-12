@@ -68,11 +68,12 @@ export const DUMMY_INTERACTIVE_COMPONENTS: InteractiveComponentItem[] = [
     },
   },
   {
-    name: "FractionHalf",
-    label: "Fraction Half",
+    name: "SquareFractionQuiz",
+    label: "Square Fraction",
     icon: SlidersHorizontalIcon,
     props: {
-      pairPoints: "string",
+      coordinate: "string",
+      points: "string",
     },
   },
   {
@@ -80,7 +81,7 @@ export const DUMMY_INTERACTIVE_COMPONENTS: InteractiveComponentItem[] = [
     label: "Lever Scale",
     icon: BlocksIcon,
     props: {
-      masses: "[number, number]",
+      masses: "string",
       draggableWeightIndex: "number",
       rodLength: "number",
       fulcrum: "number",
