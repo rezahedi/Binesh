@@ -1,5 +1,6 @@
 import {
   CheckListQuizType,
+  ComponentQuizType,
   FillQuizType,
   PickAndFillQuizType,
   PlacementQuizType,
@@ -17,6 +18,7 @@ const defaultQuizBlocks: Record<
   | PickAndFillQuizType
   | PlacementQuizType
   | SentenceBuilderQuizType
+  | ComponentQuizType
 > = {
   radio: {
     options: ["Madrid", "Berlin"],
@@ -50,6 +52,11 @@ const defaultQuizBlocks: Record<
     answer: ["TypeScript", "improves", "code", "safety."],
     options: ["code", "safety.", "TypeScript", "improves"],
   },
+  component: {
+    componentName: "",
+    answer: "",
+    props: {},
+  },
 };
 
 const defaultQuizPrompts: Record<EditableQuizKind, string> = {
@@ -59,12 +66,26 @@ const defaultQuizPrompts: Record<EditableQuizKind, string> = {
   pickAndFill: "Fill each blank using the correct option.",
   placement: "Place the correct word in each zone.",
   sentenceBuilder: "Arrange the words to build a meaningful sentence.",
+  component: "Complete the interactive component and submit your answer.",
 };
 
-export const createDefaultQuiz = (type: EditableQuizKind): QuizType => {
-  return {
+export const createDefaultQuiz = (
+  type: EditableQuizKind,
+  componentName?: string
+): QuizType => {
+  const quiz = {
     type,
     content: defaultQuizPrompts[type],
     quizBlock: structuredClone(defaultQuizBlocks[type]),
   };
+
+  if (type === "component" && componentName) {
+    (quiz.quizBlock as ComponentQuizType) = {
+      componentName: componentName,
+      answer: "",
+      props: {},
+    };
+  }
+
+  return quiz;
 };

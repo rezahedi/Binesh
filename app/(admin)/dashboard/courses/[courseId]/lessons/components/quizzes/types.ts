@@ -1,4 +1,17 @@
 import { QuizType } from "@/lib/quizParser";
+import {
+  ArrowUpDownIcon,
+  CheckSquareIcon,
+  CircleCheckBigIcon,
+  ListChecksIcon,
+  LucideIcon,
+  PuzzleIcon,
+  TextCursorInputIcon,
+  WholeWordIcon,
+  ShapesIcon,
+  SlidersHorizontalIcon,
+  BlocksIcon,
+} from "lucide-react";
 
 export type EditableQuizKind =
   | "radio"
@@ -6,7 +19,8 @@ export type EditableQuizKind =
   | "fill"
   | "pickAndFill"
   | "placement"
-  | "sentenceBuilder";
+  | "sentenceBuilder"
+  | "component";
 
 export const EDITABLE_QUIZ_TYPES: EditableQuizKind[] = [
   "radio",
@@ -15,16 +29,65 @@ export const EDITABLE_QUIZ_TYPES: EditableQuizKind[] = [
   "pickAndFill",
   "placement",
   "sentenceBuilder",
+  "component",
 ];
 
-export const EDITABLE_QUIZ_LABELS: Record<EditableQuizKind, string> = {
-  radio: "Radio",
-  checkList: "Checklist",
-  fill: "Fill-in",
-  pickAndFill: "Fill-in with Options",
-  placement: "Placement",
-  sentenceBuilder: "Sentence Builder",
+export const EDITABLE_QUIZ: Record<
+  EditableQuizKind,
+  { label: string; icon: LucideIcon }
+> = {
+  radio: { label: "Single Choice", icon: CircleCheckBigIcon },
+  checkList: { label: "Multi Choice", icon: CheckSquareIcon },
+  fill: { label: "Fill Blank", icon: TextCursorInputIcon },
+  pickAndFill: { label: "Word Bank", icon: ListChecksIcon },
+  placement: { label: "Cards Ordering", icon: ArrowUpDownIcon },
+  sentenceBuilder: { label: "Sentence Building", icon: WholeWordIcon },
+  component: { label: "Interactive Component", icon: PuzzleIcon },
 };
+
+export const ADDABLE_QUIZ_TYPES = EDITABLE_QUIZ_TYPES.filter(
+  (type) => type !== "component"
+);
+
+export type InteractiveComponentItem = {
+  name: string;
+  label: string;
+  icon: LucideIcon;
+  props?: Record<string, string>;
+};
+
+export const DUMMY_INTERACTIVE_COMPONENTS: InteractiveComponentItem[] = [
+  {
+    name: "Fraction",
+    label: "Fraction",
+    icon: ShapesIcon,
+    props: {
+      name: "string",
+      numerator: "number",
+      denominator: "number",
+    },
+  },
+  {
+    name: "SquareFractionQuiz",
+    label: "Square Fraction",
+    icon: SlidersHorizontalIcon,
+    props: {
+      coordinate: "string",
+      points: "string",
+    },
+  },
+  {
+    name: "LeverScale",
+    label: "Lever Scale",
+    icon: BlocksIcon,
+    props: {
+      masses: "string",
+      draggableWeightIndex: "number",
+      rodLength: "number",
+      fulcrum: "number",
+    },
+  },
+];
 
 export type QuizValidationErrorMap = Record<string, string>;
 

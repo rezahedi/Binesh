@@ -11,7 +11,7 @@ import SquareFractionGrid, {
  * Example use in markdown: <component name="component name" prop1="xyz" prop2="123" />
  * Then this component could have props and use above values.
  */
-const FractionSplit = ({
+const SquareFractionQuiz = ({
   onChange,
   isActive = true,
   ...props
@@ -29,4 +29,4 @@ const FractionSplit = ({
   );
 };
 
-export default FractionSplit;
+export default SquareFractionQuiz;

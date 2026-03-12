@@ -6,11 +6,13 @@ const PADDING = 11;
 const SPACE_WIDTH = SQUARE_WIDTH - 2 * PADDING;
 
 export type SquareFractionGridProps = {
-  pairPoints: { coordinate: [number, number]; points: [number, number][] };
+  coordinate: [number, number];
+  points: [number, number][];
 };
 
 const SquareFractionGrid = ({
-  pairPoints,
+  coordinate,
+  points,
   onChange,
   isActive = true,
 }: SquareFractionGridProps & {
@@ -18,14 +20,12 @@ const SquareFractionGrid = ({
   isActive?: boolean;
 }) => {
   const [selected, setSelected] = useState<boolean[] | null>(null);
-  const [rows, columns] = pairPoints.coordinate;
+  const [rows, columns] = coordinate || [1, 1];
   const widthUnit = SPACE_WIDTH / columns;
   const heightUnit = SPACE_WIDTH / rows;
 
   const handleSelect = (index: number) => {
-    const newSelected = [
-      ...(selected || Array(pairPoints.points.length).fill(false)),
-    ];
+    const newSelected = [...(selected || Array(points.length).fill(false))];
     newSelected[index] = !newSelected[index];
     console.log(newSelected);
     setSelected(newSelected);
@@ -33,8 +33,8 @@ const SquareFractionGrid = ({
     if (onChange) {
       const selectedCount =
         newSelected.reduce((accu, curr, i) => {
-          if (pairPoints.points[i][0] === 0 || !curr) return accu;
-          return accu + pairPoints.points[i][0] * pairPoints.points[i][1];
+          if (points[i][0] === 0 || !curr) return accu;
+          return accu + points[i][0] * points[i][1];
         }, 0) || 0;
       onChange(selectedCount);
     }
@@ -60,22 +60,25 @@ const SquareFractionGrid = ({
           <g key={y}>
             {Array.from({ length: columns }, (_, x) => (
               <g key={`c${columns * y + x}`}>
-                {pairPoints.points[columns * y + x][0] !== 0 && (
-                  <rect
-                    key={columns * y + x}
-                    x={x * widthUnit}
-                    y={y * heightUnit}
-                    width={pairPoints.points[columns * y + x][0] * widthUnit}
-                    height={pairPoints.points[columns * y + x][1] * heightUnit}
-                    strokeWidth={1}
-                    className={cn(
-                      "fill-background stroke-foreground cursor-pointer hover:fill-amber-100",
-                      selected && selected[columns * y + x] && "fill-amber-200",
-                      !isActive && "pointer-events-none"
-                    )}
-                    onClick={() => handleSelect(columns * y + x)}
-                  />
-                )}
+                {points[columns * y + x] &&
+                  points[columns * y + x][0] !== 0 && (
+                    <rect
+                      key={columns * y + x}
+                      x={x * widthUnit}
+                      y={y * heightUnit}
+                      width={points[columns * y + x][0] * widthUnit}
+                      height={points[columns * y + x][1] * heightUnit}
+                      strokeWidth={1}
+                      className={cn(
+                        "fill-background stroke-foreground cursor-pointer hover:fill-amber-100",
+                        selected &&
+                          selected[columns * y + x] &&
+                          "fill-amber-200",
+                        !isActive && "pointer-events-none"
+                      )}
+                      onClick={() => handleSelect(columns * y + x)}
+                    />
+                  )}
               </g>
             ))}
           </g>
