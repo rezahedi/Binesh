@@ -73,8 +73,6 @@ export const DUMMY_INTERACTIVE_COMPONENTS: InteractiveComponentItem[] = [
     icon: SlidersHorizontalIcon,
     props: {
       pairPoints: "string",
-      numerator: "number",
-      denominator: "number",
     },
   },
   {
