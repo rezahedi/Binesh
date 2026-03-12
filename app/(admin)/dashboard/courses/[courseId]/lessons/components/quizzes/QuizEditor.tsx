@@ -17,13 +17,11 @@ type QuizEditorProps = {
 const QuizEditor = ({ id, quiz, onChange, errors }: QuizEditorProps) => {
   if (!quiz) {
     return (
-      <div className="space-y-4 rounded-xl my-4 p-6 bg-muted/50">
-        <ComponentCollection
-          onSelect={({ type, componentName }) =>
-            onChange(createDefaultQuiz(type, componentName))
-          }
-        />
-      </div>
+      <ComponentCollection
+        onSelect={({ type, componentName }) =>
+          onChange(createDefaultQuiz(type, componentName))
+        }
+      />
     );
   }
 

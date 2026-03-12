@@ -22,7 +22,7 @@ const ComponentCollection = ({ onSelect }: ComponentCollectionProps) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <AddBlockButton />
+        <AddBlockButton className="opacity-0 group-hover/step:opacity-100" />
       </PopoverTrigger>
       <PopoverContent className="w-full max-w-md p-4 bg-background shadow-xl">
         <div className="space-y-4">
