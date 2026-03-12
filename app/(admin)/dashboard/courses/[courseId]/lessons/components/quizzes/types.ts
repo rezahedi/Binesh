@@ -53,23 +53,40 @@ export type InteractiveComponentItem = {
   name: string;
   label: string;
   icon: LucideIcon;
+  props?: Record<string, string>;
 };
 
 export const DUMMY_INTERACTIVE_COMPONENTS: InteractiveComponentItem[] = [
   {
-    name: "word-matcher",
-    label: "Word Matcher",
+    name: "Fraction",
+    label: "Fraction",
     icon: ShapesIcon,
+    props: {
+      name: "string",
+      numerator: "number",
+      denominator: "number",
+    },
   },
   {
-    name: "timeline-sort",
-    label: "Timeline Sort",
+    name: "FractionHalf",
+    label: "Fraction Half",
     icon: SlidersHorizontalIcon,
+    props: {
+      pairPoints: "string",
+      numerator: "number",
+      denominator: "number",
+    },
   },
   {
-    name: "block-sequence",
-    label: "Block Sequence",
+    name: "LeverScale",
+    label: "Lever Scale",
     icon: BlocksIcon,
+    props: {
+      masses: "[number, number]",
+      draggableWeightIndex: "number",
+      rodLength: "number",
+      fulcrum: "number",
+    },
   },
 ];
 

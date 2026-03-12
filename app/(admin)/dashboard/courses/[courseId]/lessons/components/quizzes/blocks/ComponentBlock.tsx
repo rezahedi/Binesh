@@ -1,8 +1,9 @@
 import { ComponentQuizType } from "@/lib/quizParser";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { QuizValidationErrorMap } from "../types";
+import { DUMMY_INTERACTIVE_COMPONENTS, QuizValidationErrorMap } from "../types";
 import { useState } from "react";
+import ConfigPanel from "./componentBlock/ConfigPanel";
 
 type ComponentBlockProps = {
   value: ComponentQuizType;
@@ -31,21 +32,28 @@ const ComponentBlock = ({ value, errors, onChange }: ComponentBlockProps) => {
     }
   };
 
+  const componentDetail = DUMMY_INTERACTIVE_COMPONENTS.find(
+    (component) => component.name === value.componentName
+  );
+
+  if (!componentDetail)
+    return (
+      <div className="text-destructive">
+        &apos;{value.componentName}&apos; Component not found!
+      </div>
+    );
+
+  const handleComponentConfigChange = (next: Record<string, unknown>) => {
+    onChange({
+      ...value,
+      props: next,
+    });
+  };
+
   return (
     <div className="space-y-3">
       <div>
-        <Label htmlFor="component-quiz-name">Component Name</Label>
-        <Input
-          id="component-quiz-name"
-          type="text"
-          value={value.componentName}
-          onChange={(e) =>
-            onChange({
-              ...value,
-              componentName: e.target.value,
-            })
-          }
-        />
+        <p>{componentDetail.label}</p>
         {errors.componentName && (
           <p className="mt-1 text-xs text-destructive">
             {errors.componentName}
@@ -70,6 +78,11 @@ const ComponentBlock = ({ value, errors, onChange }: ComponentBlockProps) => {
         )}
       </div>
       <div>
+        <ConfigPanel
+          props={componentDetail.props}
+          propValues={value.props}
+          onChange={handleComponentConfigChange}
+        />
         <Label htmlFor="component-quiz-props">Props (JSON)</Label>
         <Input
           id="component-quiz-props"
