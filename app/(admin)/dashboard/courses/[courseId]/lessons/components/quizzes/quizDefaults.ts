@@ -8,7 +8,7 @@ import {
   RadioQuizType,
   SentenceBuilderQuizType,
 } from "@/lib/quizParser";
-import { EditableQuizKind } from "./types";
+import { EditableQuizKind, getDefaultValueForComponent } from "./types";
 
 const defaultQuizBlocks: Record<
   EditableQuizKind,
@@ -83,7 +83,7 @@ export const createDefaultQuiz = (
     (quiz.quizBlock as ComponentQuizType) = {
       componentName: componentName,
       answer: "",
-      props: {},
+      props: getDefaultValueForComponent(componentName),
     };
   }
 
