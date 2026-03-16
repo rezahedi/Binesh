@@ -1,20 +1,12 @@
 import { cn } from "@/utils/cn";
-import Scale from "./Scale";
+import Scale from "./components/Scale";
 import { useQuiz } from "@/contexts/QuizContext";
 import { InteractiveComponentProps } from "../types";
+import { LeverScaleProps } from "./";
 
 const WIDTH = 540;
 const HEIGHT = 250;
 const MAX_ANGLE = 20;
-
-export type LeverScaleProps = {
-  masses: [number, number][];
-  draggableWeightIndex?: number;
-  rodLength: number;
-  fulcrum: number;
-  showResult: boolean;
-  isActive: boolean;
-};
 
 const LeverScale = ({
   onChange: _,

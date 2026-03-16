@@ -2,7 +2,7 @@ import InteractiveQuizComponent from "@/components/Interactive/InteractiveQuizCo
 import InteractiveComponent from "@/components/Interactive/InteractiveComponent";
 import Fraction from "@/components/Interactive/Fraction";
 import SquareFractionQuiz from "@/components/Interactive/SquareFractionQuiz";
-import LeverScale from "@/components/Interactive/weights/LeverScale";
+import LeverScale from "@/components/Interactive/LeverScale";
 
 export const componentRegistry = {
   InteractiveQuizComponent,

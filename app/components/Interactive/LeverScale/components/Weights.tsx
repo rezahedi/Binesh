@@ -1,4 +1,4 @@
-import { LeverScaleProps } from "./LeverScale";
+import { LeverScaleProps } from "../";
 import Weight from "./Weight";
 
 type WeightsProps = {
