@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { QuizType } from "@/lib/quizParser";
-import { useState } from "react";
 import QuizEditorFields from "./QuizEditorFields";
-import QuizTypeSelect from "./QuizTypeSelect";
+import ComponentCollection from "./ComponentCollection";
 import { createDefaultQuiz } from "./quizDefaults";
-import { EditableQuizKind, QuizValidationErrorMap } from "./types";
+import { QuizValidationErrorMap } from "./types";
 import { TrashIcon } from "lucide-react";
 import TextareaBlock from "../block/TextareaBlock";
 
@@ -17,36 +15,13 @@ type QuizEditorProps = {
 };
 
 const QuizEditor = ({ id, quiz, onChange, errors }: QuizEditorProps) => {
-  const [nextType, setNextType] = useState<EditableQuizKind>("radio");
-
   if (!quiz) {
     return (
-      <div className="space-y-4 rounded-xl my-4 p-6 bg-muted/50">
-        <Label>Add quiz</Label>
-        <div className="flex items-end gap-2">
-          <div className="grow">
-            <QuizTypeSelect value={nextType} onChange={setNextType} />
-          </div>
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => onChange(createDefaultQuiz(nextType))}
-          >
-            Add quiz
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  if (quiz.type === "component") {
-    return (
-      <div className="space-y-4 rounded-xl my-4 p-6 bg-muted/50">
-        <Label>Quiz</Label>
-        <p className="text-sm text-muted-foreground">
-          Component quiz (read-only for now).
-        </p>
-      </div>
+      <ComponentCollection
+        onSelect={({ type, componentName }) =>
+          onChange(createDefaultQuiz(type, componentName))
+        }
+      />
     );
   }
 
@@ -55,7 +30,7 @@ const QuizEditor = ({ id, quiz, onChange, errors }: QuizEditorProps) => {
       <h5 className="-translate-y-6 -m-4 -ml-2 text-sm font-medium text-muted capitalize group-hover/quiz:text-muted-foreground">
         {quiz.type} quiz
       </h5>
-      <div className="flex items-center justify-end group-hover/quiz:opacity-100 opacity-0 transition-opacity mt-2">
+      <div className="flex items-center justify-end group-hover/quiz:opacity-100 group-focus-within/quiz:opacity-100 opacity-0 transition-opacity mt-2">
         <Button
           type="button"
           variant="link"

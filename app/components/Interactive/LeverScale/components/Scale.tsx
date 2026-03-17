@@ -1,5 +1,5 @@
 import Lever from "./Lever";
-import { LeverScaleProps } from "./LeverScale";
+import { LeverScaleProps } from "../";
 import Rod from "./Rod";
 import Weights from "./Weights";
 

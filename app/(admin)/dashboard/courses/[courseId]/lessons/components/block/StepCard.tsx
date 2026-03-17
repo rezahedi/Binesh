@@ -46,7 +46,7 @@ const StepCard = ({
       <h4 className="-translate-y-6 -m-4 -ml-2 text-sm font-medium text-muted group-hover/step:text-muted-foreground">
         Step {index + 1}
       </h4>
-      <div className="flex items-center justify-end group-hover/step:opacity-100 opacity-0 transition-opacity mt-2">
+      <div className="flex items-center justify-end group-hover/step:opacity-100 group-focus-within/step:opacity-100 opacity-0 transition-opacity mt-2">
         <div className="flex items-center gap-2">
           <Button
             type="button"
@@ -80,6 +80,7 @@ const StepCard = ({
         id={step.id}
         label="Step Content"
         value={step.content}
+        visible
         onChange={(e) => onStepChange(index, { content: e.target.value })}
       />
       <QuizEditor

@@ -1,4 +1,4 @@
-import { LeverScaleProps } from "./LeverScale";
+import { LeverScaleProps } from "../";
 
 const ROD_HEIGHT = 10;
 const LABELS_WIDTH = 6;

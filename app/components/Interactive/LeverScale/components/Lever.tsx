@@ -1,4 +1,4 @@
-import { LeverScaleProps } from "./LeverScale";
+import { LeverScaleProps } from "../";
 
 type LeverProps = {
   axisWidth: number;

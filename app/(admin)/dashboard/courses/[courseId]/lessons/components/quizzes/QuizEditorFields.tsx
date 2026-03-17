@@ -1,5 +1,6 @@
 import {
   CheckListQuizType,
+  ComponentQuizType,
   FillQuizType,
   PickAndFillQuizType,
   PlacementQuizType,
@@ -9,6 +10,7 @@ import {
   SentenceBuilderQuizType,
 } from "@/lib/quizParser";
 import CheckListBlock from "./blocks/CheckListBlock";
+import ComponentBlock from "./blocks/ComponentBlock";
 import FillBlock from "./blocks/FillBlock";
 import PickAndFillBlock from "./blocks/PickAndFillBlock";
 import PlacementBlock from "./blocks/PlacementBlock";
@@ -81,6 +83,16 @@ const QuizEditorFields = ({
     return (
       <SentenceBuilderBlock
         value={quiz.quizBlock as SentenceBuilderQuizType}
+        errors={errors}
+        onChange={(next) => onQuizBlockChange(next)}
+      />
+    );
+  }
+
+  if (quiz.type === "component") {
+    return (
+      <ComponentBlock
+        value={quiz.quizBlock as ComponentQuizType}
         errors={errors}
         onChange={(next) => onQuizBlockChange(next)}
       />
