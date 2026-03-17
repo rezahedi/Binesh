@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PropsType } from "../../types";
 
-const ConfigPanel = ({
+const DefaultPanel = ({
   props,
   propValues,
   onChange,
@@ -45,4 +45,4 @@ const ConfigPanel = ({
   );
 };
 
-export default ConfigPanel;
+export default DefaultPanel;

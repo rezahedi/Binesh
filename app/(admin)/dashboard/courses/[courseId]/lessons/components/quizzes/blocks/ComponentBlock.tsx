@@ -2,8 +2,6 @@ import { ComponentQuizType } from "@/lib/quizParser";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DUMMY_INTERACTIVE_COMPONENTS, QuizValidationErrorMap } from "../types";
-import ConfigPanel from "./componentBlock/ConfigPanel";
-import TemporaryCommonPanel from "./componentBlock/TemporaryCommonPanel";
 import { PanelRenderer } from "./componentBlock/PanelRenderer";
 
 type ComponentBlockProps = {
@@ -16,13 +14,6 @@ const ComponentBlock = ({ value, errors, onChange }: ComponentBlockProps) => {
   const componentDetail = DUMMY_INTERACTIVE_COMPONENTS.find(
     (component) => component.name === value.componentName
   );
-
-  const handleComponentConfigChange = (next: Record<string, unknown>) => {
-    onChange({
-      ...value,
-      props: next,
-    });
-  };
 
   return (
     <div className="space-y-3">
@@ -56,19 +47,6 @@ const ComponentBlock = ({ value, errors, onChange }: ComponentBlockProps) => {
         props={value.props}
         onChange={(next) => onChange({ ...value, props: next })}
       />
-      {componentDetail ? (
-        <ConfigPanel
-          props={componentDetail.props}
-          propValues={value.props}
-          onChange={handleComponentConfigChange}
-        />
-      ) : (
-        <TemporaryCommonPanel
-          value={value}
-          errors={errors}
-          onChange={onChange}
-        />
-      )}
     </div>
   );
 };
