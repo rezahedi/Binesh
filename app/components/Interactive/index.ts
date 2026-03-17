@@ -2,8 +2,11 @@ import InteractiveQuizComponent from "@/components/Interactive/InteractiveQuizCo
 import InteractiveComponent from "@/components/Interactive/InteractiveComponent";
 import Fraction from "@/components/Interactive/Fraction";
 import SquareFractionQuiz from "@/components/Interactive/SquareFractionQuiz";
-import LeverScale from "@/components/Interactive/LeverScale";
+import LeverScale, {
+  LeverScaleConfig,
+} from "@/components/Interactive/LeverScale";
 
+// Component Registry
 export const componentRegistry = {
   InteractiveQuizComponent,
   InteractiveComponent,
@@ -14,3 +17,11 @@ export const componentRegistry = {
 
 export type Registry = typeof componentRegistry;
 export type RegistryComponentName = keyof Registry;
+
+// Config Panel Registry
+export const panelRegistry = {
+  LeverScale: LeverScaleConfig,
+} as const;
+
+export type PanelRegistry = typeof panelRegistry;
+export type PanelRegistryName = keyof PanelRegistry;

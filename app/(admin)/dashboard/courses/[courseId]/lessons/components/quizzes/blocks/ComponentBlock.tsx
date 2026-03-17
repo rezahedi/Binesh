@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { DUMMY_INTERACTIVE_COMPONENTS, QuizValidationErrorMap } from "../types";
 import ConfigPanel from "./componentBlock/ConfigPanel";
 import TemporaryCommonPanel from "./componentBlock/TemporaryCommonPanel";
+import { PanelRenderer } from "./componentBlock/PanelRenderer";
 
 type ComponentBlockProps = {
   value: ComponentQuizType;
@@ -50,6 +51,11 @@ const ComponentBlock = ({ value, errors, onChange }: ComponentBlockProps) => {
           <p className="mt-1 text-xs text-destructive">{errors.answer}</p>
         )}
       </div>
+      <PanelRenderer
+        component={value.componentName}
+        props={value.props}
+        onChange={(next) => onChange({ ...value, props: next })}
+      />
       {componentDetail ? (
         <ConfigPanel
           props={componentDetail.props}

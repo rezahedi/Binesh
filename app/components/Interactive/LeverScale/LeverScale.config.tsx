@@ -1,25 +1,64 @@
 import { LeverScaleProps } from "@/components/Interactive/LeverScale";
 
 const LeverScaleConfig = ({
-  obj,
+  props,
   onChange,
 }: {
-  obj: LeverScaleProps;
+  props: LeverScaleProps;
   onChange: (obj: LeverScaleProps) => void;
 }) => {
+  if (!props) return null;
+
   return (
     <div>
       <h3>Lever Scale Panel</h3>
-      Masses:
-      {obj.masses.map((m, i) => (
+      {props.masses.map((m, i) => (
         <div key={i}>
-          <input defaultValue={m[0]} type="range" />
-          <input defaultValue={m[1]} type="number" />
+          Masse {i + 1}:
+          <input
+            defaultValue={m[0]}
+            min={0}
+            max={10}
+            step={1}
+            type="range"
+          />{" "}
+          {m[0]}
+          <input
+            defaultValue={m[1]}
+            min={-Math.floor(props.rodLength / 2)}
+            max={Math.floor(props.rodLength / 2)}
+            step={1}
+            type="number"
+          />
         </div>
       ))}
-      <input defaultValue={obj.fulcrum} type="number" />
-      <input defaultValue={obj.rodLength} type="number" />
-      <input defaultValue={obj.draggableWeightIndex} type="number" />
+      Fulcrum:{" "}
+      <input
+        defaultValue={props.fulcrum}
+        type="number"
+        onChange={(e) =>
+          onChange({ ...props, fulcrum: Number(e.currentTarget.value) })
+        }
+      />
+      Rod Length:{" "}
+      <input
+        defaultValue={props.rodLength}
+        type="number"
+        onChange={(e) =>
+          onChange({ ...props, rodLength: Number(e.currentTarget.value) })
+        }
+      />
+      Draggable Mass Index:{" "}
+      <input
+        defaultValue={props.draggableWeightIndex}
+        type="number"
+        onChange={(e) =>
+          onChange({
+            ...props,
+            draggableWeightIndex: Number(e.currentTarget.value),
+          })
+        }
+      />
     </div>
   );
 };
